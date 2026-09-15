@@ -1,0 +1,7 @@
+{
+  "name": "@mand-mobile/golden",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "L3 golden HTML baseline: renders scenarios with mand-mobile@2.7.0 + vue@2.7, snapshots normalized HTML for v3 migration contracts"
+}
