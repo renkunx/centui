@@ -3,5 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "L3 golden HTML baseline: renders scenarios with mand-mobile@2.7.0 + vue@2.7, snapshots normalized HTML for v3 migration contracts"
+  "description": "L3 golden HTML baseline: renders scenarios with mand-mobile@2.7.0 + vue@2.7, snapshots normalized HTML for v3 migration contracts",
+  "devDependencies": {
+    "@vue/test-utils": "1.3.6",
+    "mand-mobile": "2.7.0",
+    "vue": "2.7.16"
+  },
+  "scripts": {
+    "capture": "GOLDEN_UPDATE=1 vitest run",
+    "test": "vitest run"
+  }
 }
