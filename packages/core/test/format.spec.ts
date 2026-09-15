@@ -88,3 +88,19 @@ describe('trimValue', () => {
     expect(trimValue(undefined)).toBe('')
   })
 })
+
+describe('无 range 的增删分支', () => {
+  it('keeps range undefined when deleting without gap change', () => {
+    expect(formatValueByGapStep(3, '12345', ' ', 'right', undefined, -1, '123456')).toEqual({
+      value: '12 345',
+      range: undefined,
+    })
+  })
+
+  it('keeps range undefined when adding without gap change', () => {
+    expect(formatValueByGapStep(4, '12345678', ' ', 'right', undefined, 1, '123456789')).toEqual({
+      value: '1234 5678',
+      range: undefined,
+    })
+  })
+})

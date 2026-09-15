@@ -128,3 +128,25 @@ describe('isEmptyObject', () => {
     expect(isEmptyObject({ a: 1 })).toBe(false)
   })
 })
+
+describe('traverse 参数怪癖分支', () => {
+  it('returns silently for falsy data', () => {
+    expect(() => traverse(null as never, ['children'], () => {})).not.toThrow()
+  })
+
+  it('treats string childrenKeys as property name whose .length gates depth (unused in v2)', () => {
+    // 'children'.length = 8 > level，所有节点进入 else continue，一个都不访问
+    const visited: string[] = []
+    traverse(
+      [
+        { value: 'a', children: [{ value: 'a-1' }] },
+        { value: 'b' },
+      ] as never,
+      'children',
+      (node) => {
+        visited.push((node as { value: string }).value)
+      },
+    )
+    expect(visited).toEqual([])
+  })
+})

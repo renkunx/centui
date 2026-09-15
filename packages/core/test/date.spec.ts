@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { DateColumnItem } from '../src/picker/date'
 import {
   buildDateColumns,
@@ -166,5 +166,55 @@ describe('formatDate', () => {
     ]
     expect(formatDate(values, 'hh:mm')).toBe('09:05')
     expect(formatDate(values, 'HH:mm')).toBe('09:05')
+  })
+})
+
+describe('边界告警分支', () => {
+  it('returns empty year column when minDate year is after maxDate year', () => {
+    const warnSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const { columns } = buildDateColumns({
+      type: 'date',
+      now: NOW,
+      minDate: new Date(2030, 0, 1),
+      maxDate: new Date(2020, 0, 1),
+    })
+    expect(columns[0]).toEqual([])
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('MinDate Year'))
+    warnSpy.mockRestore()
+  })
+
+  it('falls back to hour 23 when min hour exceeds max hour', () => {
+    const warnSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const { columns } = buildDateColumns({
+      type: 'datetime',
+      now: NOW,
+      minDate: new Date(2026, 5, 15, 22, 30),
+      maxDate: new Date(2026, 5, 15, 10, 0),
+    })
+    // end<start → 23；start>end → warn 后空列
+    expect(columns[3][0].value).toBeGreaterThanOrEqual(22)
+    warnSpy.mockRestore()
+  })
+})
+
+describe('custom 类型分支', () => {
+  it('accepts raw type names like Year/Hour', () => {
+    const { generators } = getDateColumnGenerators({
+      type: 'custom',
+      customTypes: ['Year' as never, 'Hour' as never],
+      now: NOW,
+    })
+    expect(generators.map(g => g.type)).toEqual(['Year', 'Hour'])
+  })
+
+  it('builds columns without defaultDate using first options', () => {
+    const { columns, defaults } = buildDateColumns({
+      type: 'custom',
+      customTypes: ['yyyy', 'MM'],
+      now: NOW,
+    })
+    expect(defaults).toEqual([])
+    expect(columns[0][0].value).toBe(2006)
+    expect(columns[1].length).toBe(12)
   })
 })

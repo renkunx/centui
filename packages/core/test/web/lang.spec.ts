@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { functionToUrl, getDpr, requireRemoteScript } from '../../src/web/lang'
 
 const setViewport = (content: string) => {
@@ -50,5 +50,15 @@ describe('web functionToUrl', () => {
   it('creates a blob url for the function', () => {
     const url = functionToUrl(() => 1)
     expect(url).toMatch(/^blob:/)
+  })
+})
+
+describe('web requireRemoteScript onload', () => {
+  it('invokes callback after script loads', () => {
+    const cb = vi.fn()
+    requireRemoteScript('https://example.com/b.js', cb)
+    const node = document.head.querySelector('script') as HTMLScriptElement
+    node.dispatchEvent(new Event('load'))
+    expect(cb).toHaveBeenCalledTimes(1)
   })
 })

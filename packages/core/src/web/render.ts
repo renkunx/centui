@@ -38,7 +38,8 @@ export const translate3dRender: RenderFn = (content, left, top, zoom = 1, useNat
   content.style.setProperty('transform', transform)
 }
 
-function detectTransformRender(doc: Document): RenderFn {
+/** 能力探测（导出以供分支测试；运行时经 render 惰性调用） */
+export function detectTransformRender(doc: Document): RenderFn {
   const style = doc.createElement('div').style
   if ('transform' in style) {
     return 'perspective' in style ? translate3dRender : translateRender

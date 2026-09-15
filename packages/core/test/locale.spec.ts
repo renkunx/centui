@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { setLocale, t } from '../src/locale'
+import { getLocale, setLocale, t } from '../src/locale'
 import enUS from '../src/locale/lang/en-US'
 import zhCN from '../src/locale/lang/zh-CN'
 
@@ -30,5 +30,31 @@ describe('locale t()', () => {
 
   it('ignores falsy path or option', () => {
     expect(t('')).toBe('')
+  })
+})
+
+describe('getLocale', () => {
+  it('returns the active locale pack', () => {
+    expect(getLocale()).toBe(zhCN)
+    setLocale(enUS)
+    expect(getLocale()).toBe(enUS)
+  })
+
+  it('setLocale ignores falsy input', () => {
+    setLocale(enUS)
+    setLocale(undefined)
+    expect(getLocale()).toBe(enUS)
+  })
+})
+
+describe('模板插值', () => {
+  it('interpolates {word} placeholders with custom pack', () => {
+    setLocale({ md: { greet: 'hello {name}' } })
+    expect(t('md.greet', { name: 'mand' })).toBe('hello mand')
+  })
+
+  it('keeps placeholder when option key missing', () => {
+    setLocale({ md: { greet: 'hello {name}' } })
+    expect(t('md.greet', { other: 'x' })).toBe('hello {name}')
   })
 })

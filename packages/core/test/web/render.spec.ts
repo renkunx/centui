@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { marginRender, render, translate3dRender, translateRender } from '../../src/web/render'
+import {
+  detectTransformRender,
+  marginRender,
+  render,
+  translate3dRender,
+  translateRender,
+} from '../../src/web/render'
 
 /**
  * jsdom 支持 transform（perspective 支持与否由探测决定），
@@ -59,5 +65,37 @@ describe('marginRender (degraded strategy)', () => {
     marginRender(el, 0, 0)
     expect(el.style.marginLeft).toBe('')
     expect(el.style.marginTop).toBe('')
+  })
+})
+
+describe('detectTransformRender（探测分支）', () => {
+  const fakeDoc = (style: Record<string, unknown>): Document =>
+    ({
+      documentElement: { style: {} },
+      createElement: () => ({ style }),
+      defaultView: { navigator: {} },
+    }) as unknown as Document
+
+  it('selects translate3d when transform and perspective exist', () => {
+    const fn = detectTransformRender(fakeDoc({ transform: '', perspective: '' }))
+    const el = document.createElement('div')
+    fn(el, 5, 5)
+    expect(el.style.transform).toContain('translate3d(-5px')
+  })
+
+  it('selects translate when only transform exists', () => {
+    const fn = detectTransformRender(fakeDoc({ transform: '' }))
+    const el = document.createElement('div')
+    fn(el, 5, 5)
+    expect(el.style.transform).toContain('translate(-5px')
+    expect(el.style.transform).not.toContain('translate3d')
+  })
+
+  it('falls back to marginRender without transform', () => {
+    const fn = detectTransformRender(fakeDoc({}))
+    const el = document.createElement('div')
+    fn(el, 5, 6)
+    expect(el.style.marginLeft).toBe('-5px')
+    expect(el.style.transform).toBe('')
   })
 })

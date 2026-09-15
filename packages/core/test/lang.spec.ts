@@ -72,3 +72,15 @@ describe('throttle', () => {
     vi.useRealTimers()
   })
 })
+
+describe('默认参数分支', () => {
+  it('debounce/throttle 默认 fn 与 delay 生效', () => {
+    vi.useFakeTimers()
+    const debounced = debounce()
+    expect(() => debounced()).not.toThrow()
+    vi.advanceTimersByTime(300)
+    const throttled = throttle()
+    expect(() => throttled()).not.toThrow()
+    vi.useRealTimers()
+  })
+})

@@ -3,7 +3,7 @@
  */
 export { mdDocument, mdBody, dom } from './dom'
 export type { MdDocument, MdBody } from './dom'
-export { render, marginRender, translateRender, translate3dRender } from './render'
+export { render, marginRender, translateRender, translate3dRender, detectTransformRender } from './render'
 export type { RenderFn } from './render'
 export { getDpr, requireRemoteScript, functionToUrl } from './lang'
 export { Animate } from './animate'

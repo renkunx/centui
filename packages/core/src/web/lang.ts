@@ -22,6 +22,7 @@ export function requireRemoteScript(src: string, callback?: () => void): void {
   if (supportOnload) {
     node.onload = onload
   } else {
+    /* istanbul ignore next: IE 时代的 onreadystatechange 分支，现代环境不可达 */
     const legacyNode = node as unknown as { onreadystatechange: (() => void) | null; readyState?: string }
     legacyNode.onreadystatechange = () => {
       if (/loaded|complete/.test(legacyNode.readyState ?? '')) {
