@@ -23,7 +23,9 @@
   "files": ["dist"],
   "scripts": {
     "build": "vite build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "vite-plugin-dts": "^5.1.0"

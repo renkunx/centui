@@ -1,3 +1,10 @@
 packages:
   - packages/*
   - test/*
+
+# pnpm 12+: pnpm 设置只在 workspace.yaml 生效（.npmrc 仅 auth/registry）
+# vue 排除隐藏提升：避免 .pnpm/node_modules/vue 命中 3.x，
+# 干扰 test/golden 锁定的 vue@2.7（mand-mobile@2.7.0 的幽灵依赖）
+hoistPattern:
+  - "*"
+  - "!vue"

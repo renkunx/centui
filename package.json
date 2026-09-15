@@ -12,12 +12,13 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "coverage": "vitest run --coverage",
+    "coverage": "pnpm -r --filter './packages/*' run test:coverage",
     "lint": "eslint .",
     "format": "prettier --write .",
     "build": "pnpm -r --filter './packages/*' run build",
     "golden:capture": "pnpm --filter @mand-mobile/golden run capture",
     "golden:test": "pnpm --filter @mand-mobile/golden run test",
+    "playground": "pnpm --filter mand-mobile run playground",
     "test:visual": "playwright test"
   },
   "devDependencies": {
