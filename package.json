@@ -1,0 +1,21 @@
+{
+  "name": "mand-mobile-repo",
+  "version": "3.0.0-alpha.0",
+  "private": true,
+  "description": "mand-mobile monorepo — Vue 3 / React multi-framework mobile UI toolkit",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@12.4.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "build": "pnpm -r --filter './packages/*' run build",
+    "golden:capture": "pnpm --filter @mand-mobile/golden run capture",
+    "golden:test": "pnpm --filter @mand-mobile/golden run test"
+  }
+}

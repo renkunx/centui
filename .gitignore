@@ -24,3 +24,8 @@ coverage/
 *.ntvs*
 *.njsproj
 *.sln
+
+# v3 monorepo
+.zcode/
+*.tsbuildinfo
+.pnpm-store/
