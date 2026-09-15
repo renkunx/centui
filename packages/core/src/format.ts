@@ -113,3 +113,152 @@ export function trimValue(value: string | undefined, gap = ' '): string {
   const reg = new RegExp(gap, 'g')
   return val.toString().replace(reg, '')
 }
+
+/**
+ * 金额/数字展示格式化（自 v2 components/amount filters 迁移，供 Vue/React 双端复用）。
+ */
+
+/**
+ * 指定精度舍入并输出定点字符串
+ * @param precision 小数位数（< 0 时按 0 处理）
+ * @param roundUp true 四舍五入 / false 向下取整
+ */
+export function toFixedPrecision(value: number, precision: number, roundUp = true): string {
+  const p = precision > 0 ? precision : 0
+  const exponentialForm = Number(`${value}e${p}`)
+  const rounded = roundUp ? Math.round(exponentialForm) : Math.floor(exponentialForm)
+  return Number(`${rounded}e-${p}`).toFixed(p)
+}
+
+/**
+ * 千分位等分组展示：仅格式化整数部分，小数部分原样保留，负号前置
+ */
+export function formatNumberWithSeparator(value: string, separator = ','): string {
+  const numberParts = value.split('.')
+  let integerValue = numberParts[0]
+  const decimalValue = numberParts[1] || ''
+
+  let sign = ''
+  if (integerValue.startsWith('-')) {
+    integerValue = integerValue.substring(1)
+    sign = '-'
+  }
+
+  const formatedValue = formatValueByGapStep(3, integerValue, separator, 'right', 0, 1)
+  return decimalValue
+    ? `${sign}${formatedValue.value}.${decimalValue}`
+    : `${sign}${formatedValue.value}`
+}
+
+const cnNums = [
+  '\u96f6',
+  '\u58f9',
+  '\u8d30',
+  '\u53c1',
+  '\u8086',
+  '\u4f0d',
+  '\u9646',
+  '\u67d2',
+  '\u634c',
+  '\u7396',
+]
+// 拾 佰 仟
+const cnIntRadice = ['', '\u62fe', '\u4f70', '\u4edf']
+// 万 亿 兆
+const cnIntUnits = ['', '\u4e07', '\u4ebf', '\u5146']
+// 角 分 厘 毫
+const cnDecUnits = ['\u89d2', '\u5206', '\u5398', '\u6beb']
+const cnInteger = '\u6574' // 整
+const cnIntLast = '\u5143' // 元
+const cnNegative = '\u8d1f' // 负
+
+const maxCapitalNum = 1e15 // v2 字面量 999999999999999.9999 的实际 double 值
+
+/**
+ * 数字转中文大写金额（精确到毫，超出上限返回空串）
+ */
+export function numberToChineseCapital(number: number | string): string {
+  let capitalStr = ''
+
+  if (number === '') {
+    return ''
+  }
+
+  let num = parseFloat(String(number))
+
+  if (Number.isNaN(num)) {
+    return ''
+  }
+
+  let negative = false
+  if (num < 0) {
+    negative = true
+    num = Math.abs(num)
+  }
+
+  if (num >= maxCapitalNum) {
+    return ''
+  }
+
+  if (num === 0) {
+    return cnNums[0] + cnIntLast + cnInteger
+  }
+
+  const numberStr = String(num)
+  let integerNum: string
+  let decimalNum: string
+
+  if (numberStr.indexOf('.') === -1) {
+    integerNum = numberStr
+    decimalNum = ''
+  } else {
+    const parts = numberStr.split('.')
+    integerNum = parts[0]
+    decimalNum = parts[1].slice(0, 4)
+  }
+
+  // Convert integer part
+  if (parseInt(integerNum, 10) > 0) {
+    let zeroCount = 0
+    for (let i = 0, intLen = integerNum.length; i < intLen; i++) {
+      const n = integerNum.charAt(i)
+      const p = intLen - i - 1
+      const q = Math.floor(p / 4)
+      const m = p % 4
+      if (n === '0') {
+        zeroCount++
+      } else {
+        if (zeroCount > 0) {
+          capitalStr += cnNums[0]
+        }
+        zeroCount = 0
+        capitalStr += cnNums[parseInt(n)] + cnIntRadice[m]
+      }
+      if (m === 0 && zeroCount < 4) {
+        capitalStr += cnIntUnits[q]
+      }
+    }
+    capitalStr += cnIntLast
+  }
+
+  // Convert decimal part
+  if (decimalNum !== '') {
+    for (let i = 0, decLen = decimalNum.length; i < decLen; i++) {
+      const n = decimalNum.charAt(i)
+      if (n !== '0') {
+        capitalStr += cnNums[Number(n)] + cnDecUnits[i]
+      }
+    }
+  }
+
+  if (capitalStr === '') {
+    capitalStr += cnNums[0] + cnIntLast + cnInteger
+  } else if (decimalNum === '') {
+    capitalStr += cnInteger
+  }
+
+  if (negative) {
+    capitalStr = `${cnNegative}${capitalStr}`
+  }
+  return capitalStr
+}

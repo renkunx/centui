@@ -3,7 +3,14 @@
  * 是 input-item / amount 等组件输入格式化的行为契约。
  */
 import { describe, expect, it } from 'vitest'
-import { formatValueByGapRule, formatValueByGapStep, trimValue } from '../src/format'
+import {
+  formatNumberWithSeparator,
+  formatValueByGapRule,
+  formatValueByGapStep,
+  numberToChineseCapital,
+  toFixedPrecision,
+  trimValue,
+} from '../src/format'
 
 describe('formatValueByGapRule', () => {
   it('formats bank card style 4|4|4|4', () => {
@@ -102,5 +109,74 @@ describe('无 range 的增删分支', () => {
       value: '1234 5678',
       range: undefined,
     })
+  })
+})
+
+describe('toFixedPrecision', () => {
+  it('rounds up by default and floors when roundUp is false', () => {
+    expect(toFixedPrecision(1.005, 2)).toBe('1.01')
+    expect(toFixedPrecision(1.005, 2, false)).toBe('1.00')
+    expect(toFixedPrecision(1234.56, 2)).toBe('1234.56')
+  })
+
+  it('treats negative precision as 0', () => {
+    expect(toFixedPrecision(12.34, -1)).toBe('12')
+    expect(toFixedPrecision(12.34, 0)).toBe('12')
+  })
+
+  it('pads decimals to requested precision', () => {
+    expect(toFixedPrecision(1, 4)).toBe('1.0000')
+  })
+})
+
+describe('formatNumberWithSeparator', () => {
+  it('groups integer part from right by 3 and keeps decimals', () => {
+    expect(formatNumberWithSeparator('1234567.89')).toBe('1,234,567.89')
+    expect(formatNumberWithSeparator('1234567')).toBe('1,234,567')
+  })
+
+  it('supports custom separator', () => {
+    expect(formatNumberWithSeparator('1234567.89', ' ')).toBe('1 234 567.89')
+  })
+
+  it('keeps negative sign in front', () => {
+    expect(formatNumberWithSeparator('-1234567.89')).toBe('-1,234,567.89')
+  })
+})
+
+describe('numberToChineseCapital', () => {
+  it('converts regular amounts with decimals', () => {
+    expect(numberToChineseCapital(1234.56)).toBe('壹仟贰佰叁拾肆元伍角陆分')
+    expect(numberToChineseCapital('1234.56')).toBe('壹仟贰佰叁拾肆元伍角陆分')
+  })
+
+  it('appends 整 for integer amounts', () => {
+    expect(numberToChineseCapital(100)).toBe('壹佰元整')
+    expect(numberToChineseCapital(0)).toBe('零元整')
+  })
+
+  it('handles zeros inside the integer part', () => {
+    expect(numberToChineseCapital(1001)).toBe('壹仟零壹元整')
+    expect(numberToChineseCapital(100000001)).toBe('壹亿零壹元整')
+  })
+
+  it('prefixes 负 for negative amounts', () => {
+    expect(numberToChineseCapital(-12.34)).toBe('负壹拾贰元叁角肆分')
+  })
+
+  it('truncates decimals to 毫 (4 digits)', () => {
+    expect(numberToChineseCapital(0.1234)).toBe('壹角贰分叁厘肆毫')
+    expect(numberToChineseCapital(0.12345)).toBe('壹角贰分叁厘肆毫')
+  })
+
+  it('returns empty for empty, NaN or out-of-range input', () => {
+    expect(numberToChineseCapital('')).toBe('')
+    expect(numberToChineseCapital('abc')).toBe('')
+    expect(numberToChineseCapital(1e16)).toBe('')
+  })
+
+  it('falls back to 零元整 when integer part is all zero', () => {
+    expect(numberToChineseCapital(0.5)).toBe('伍角')
+    expect(numberToChineseCapital(0.05)).toBe('伍分')
   })
 })
