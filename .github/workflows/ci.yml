@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [master, v3-monorepo]
+  pull_request:
+    branches: [master, v3-monorepo]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        # version 读取 packageManager 字段
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm -r --filter './packages/*' run typecheck
+
+      # L1/L2/L3：core 单测 + golden 基线对比
+      - name: Test
+        run: pnpm test
+
+      # 覆盖率硬门禁：行/语句/函数 ≥90%，分支 ≥85%
+      - name: Coverage gate
+        run: pnpm coverage
+
+      - name: Build
+        run: pnpm build
+
+      # L4 视觉回归（M3/M4 组件落地后启用实际用例）
+      # - name: Visual regression
+      #   run: pnpm test:visual
