@@ -70,7 +70,7 @@ export function formatValueByGapStep(
     return { value, range }
   }
 
-  const arr = value && value.split('')
+  const arr: string[] = value.split('')
   let _range = range
   let showValue = ''
 
@@ -82,23 +82,23 @@ export function formatValueByGapStep(
     if (isAdd === 1) {
       // 在添加的情况下，如果添加前字符串的长度减去新的字符串的长度为2，说明多了一个间隔符，需要调整range
       if (oldValue.length - showValue.length === -2) {
-        _range = range + 1
+        _range = (range as number) + 1
       }
     } else {
       // 在删除情况下，如果删除前字符串的长度减去新的字符串的长度为2，说明少了一个间隔符，需要调整range
       if (oldValue.length - showValue.length === 2) {
-        _range = range - 1
+        _range = (range as number) - 1
       }
       // 删除到最开始，range 保持 0
-      if (_range <= 0) {
+      if (_range !== undefined && _range <= 0) {
         _range = 0
       }
     }
   } else {
-    arr.some((n, i) => {
+    arr.forEach((n, i) => {
       showValue = i > 0 && i % step === 0 ? showValue + gap + n : showValue + '' + n
     })
-    const adapt = range % (step + 1) === 0 ? 1 * isAdd : 0
+    const adapt = range !== undefined && range % (step + 1) === 0 ? 1 * isAdd : 0
     _range = typeof range !== 'undefined' ? (range === 0 ? 0 : range + adapt) : showValue.length
   }
 
