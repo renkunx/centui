@@ -1,0 +1,7 @@
+legacy/
+pnpm-lock.yaml
+**/dist/
+**/coverage/
+**/*.html
+**/*.css
+.changeset/
