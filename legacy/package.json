@@ -1,7 +1,7 @@
 {
-  "name": "mand-mobile",
+  "name": "mand-mobile-legacy",
   "version": "2.7.0",
-  "description": "A Vue.js 2.0 Mobile UI Toolkit",
+  "description": "[FROZEN] mand-mobile v2 (Vue 2) source archive - reference only, not built anymore",
   "homepage": "https://didi.github.io/mand-mobile",
   "main": "lib/mand-mobile.umd.js",
   "style": "lib/mand-mobile.css",
@@ -229,5 +229,6 @@
     "node": ">=6",
     "npm": ">=3"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "private": true
 }
