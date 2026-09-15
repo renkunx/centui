@@ -4,3 +4,7 @@
  * 供 Vue/React Web 端引用；RN 与小程序端只依赖本入口。
  */
 export const CORE_VERSION = '0.1.0'
+
+export * from './lang'
+export * from './format'
+export * from './animate'
