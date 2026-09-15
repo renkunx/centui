@@ -1,0 +1,37 @@
+/* Extracted from legacy/components/tab-picker — do not edit by hand; re-run scripts/extract.mjs */
+/* --- index.vue --- */
+.md-tab-picker
+  .md-popup
+    z-index tab-picker-zindex
+  .md-tab-bar
+    position relative
+    margin-left tab-picker-h-gap
+    margin-right tab-picker-h-gap
+    padding-left 0
+    padding-right 0
+    background-color tab-picker-bg
+    hairline(bottom, color-border-base)
+  .md-tabs-content
+    height tab-picker-height
+    overflow auto
+    -webkit-overflow-scrolling touch
+    &::-webkit-scrollbar
+      display none
+  .md-tab-bar-list
+    justify-content flex-start
+    .md-tab-bar-item
+      flex none
+      margin 0 0
+      padding 0 30px
+      font-size font-caption-normal
+  .md-tab-pane
+    padding-left tab-picker-h-gap
+    padding-right tab-picker-h-gap
+    box-sizing border-box
+  .md-popup-cancel
+    width 90px !important
+.md-tab-picker-content
+  background-color tab-picker-bg
+  .md-radio-item.is-selected
+    .md-cell-item-body .md-cell-item-title
+      color radio-color

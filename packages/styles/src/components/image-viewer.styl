@@ -1,0 +1,51 @@
+/* Extracted from legacy/components/image-viewer — do not edit by hand; re-run scripts/extract.mjs */
+/* --- index.vue --- */
+.md-image-viewer
+  position fixed
+  top 0
+  left 0
+  bottom 0
+  right 0
+  z-index image-viewer-zindex
+  transform translate3d(0,0,0)
+  overflow hidden
+
+  .viewer-index
+    position absolute
+    bottom image-viewer-index-bottom
+    left 0
+    width 100%
+    text-align center
+    color #FFF
+    font-size image-viewer-index-font-size
+    text-shadow 0 1px 1px #333
+    z-index 101
+  .viewer-container
+    position fixed
+    top 0
+    left 0
+    bottom 0
+    right 0
+    background-color rgba(0, 0, 0, 0.85)
+    z-index 100
+  .viewer-items
+      list-style none
+      position absolute
+      left 0
+      top 0
+      height 100%
+      width 100%
+  .viewer-items .viewer-item-wrap
+      position absolute
+      top 0
+      height 100%
+      width 100%
+  .viewer-item-wrap .item
+      width 100%
+      display inline-block
+      position absolute
+      top 50%
+      transform translateY(-50%)
+  .viewer-item-wrap .item>img
+      width 100%
+      display block

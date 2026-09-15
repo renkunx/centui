@@ -1,0 +1,76 @@
+/* Extracted from legacy/components/activity-indicator — do not edit by hand; re-run scripts/extract.mjs */
+/* --- index.vue --- */
+.md-activity-indicator
+  .indicator-container
+    display flex
+    flex-direction row
+    align-items center
+    .indicator-text
+      margin 0 0 0 15px
+      color color-text-minor
+    &.vertical
+      flex-direction column
+      justify-content center
+      .indicator-text
+        margin 15px 0 0 0
+
+/* --- carousel.vue --- */
+.md-activity-indicator-carousel
+  clearfix()
+  .carouseling
+    float left
+    overflow visible
+
+/* --- roller-success.vue --- */
+.md-activity-indicator-rolling-success
+  position relative
+  .right
+    position absolute
+    left 50%
+    top 50%
+    line
+      will-change auto
+      &:first-child
+        animation md-activity-indicator-rolling-line0 .2s cubic-bezier(1.0, 0.5, 0.8, 1.0) forwards
+      &:last-child
+        opacity 0
+        animation md-activity-indicator-rolling-line1 .2s cubic-bezier(1.0, 0.5, 0.8, 1.0) .2s forwards
+
+@keyframes md-activity-indicator-rolling-line0
+  from
+    stroke-dashoffset 20
+  to
+    stroke-dashoffset 0
+@keyframes md-activity-indicator-rolling-line1
+  from
+    opacity 1
+    stroke-dashoffset 35
+  to
+    opacity 1
+    stroke-dashoffset 0
+
+/* --- roller.vue --- */
+.md-activity-indicator-rolling
+  clearfix()
+  .rolling-container
+    position relative
+    float left
+  .rolling
+    float left
+    circle.stroke
+      will-change auto
+  .content
+    position absolute
+    absolute-pos()
+    display flex
+    justify-content center
+    align-items center
+
+/* --- spinner.vue --- */
+.md-activity-indicator-spinning
+  clearfix()
+  .md-icon
+    float left
+  &.dark
+    .md-icon
+      filter invert(1)

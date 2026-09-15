@@ -1,0 +1,58 @@
+/* Extracted from legacy/components/notice-bar — do not edit by hand; re-run scripts/extract.mjs */
+/* --- index.vue --- */
+.md-notice-bar
+  display flex
+  z-index notice-bar-zindex
+  font-size notice-bar-font-size
+  min-height 64px
+  background-color notice-bar-fill
+  color notice-bar-color
+  position relative
+  padding-left 32px
+  box-sizing border-box
+  &.md-notice-bar-round
+    border-radius notice-bar-border-radius
+  &.activity
+    background-color notice-bar-fill-activity
+    color notice-bar-color-activity
+  &.warning
+    background-color notice-bar-fill-warning
+    color notice-bar-color-warning
+
+.md-notice-bar-left,
+.md-notice-bar-right
+  display flex
+  align-items center
+
+.md-notice-bar-left
+  padding-right 16px
+.md-notice-bar-right
+  padding-right 32px
+.md-notice-bar-empty
+  padding-right 0
+
+.md-notice-bar-content
+  flex 1
+  margin auto
+  width auto
+  margin-right 40px
+  line-height 64px
+  white-space nowrap
+  overflow hidden
+  &.md-notice-bar-multi-content
+    padding h-gap-md 0
+    line-height font-caption-large
+    white-space normal
+  .md-notice-bar-content-animate
+    padding-left 100%
+    display inline-block
+    animation md-notice-bar-animation linear 16s infinite both
+
+@keyframes md-notice-bar-animation {
+  0% {
+    transform translate3d(0, 0, 0)
+  }
+  100% {
+    transform translate3d(-100%, 0, 0)
+  }
+}

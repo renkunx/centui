@@ -1,0 +1,39 @@
+/* Extracted from legacy/components/selector — do not edit by hand; re-run scripts/extract.mjs */
+/* --- index.vue --- */
+.md-selector
+  .md-popup
+    z-index selector-zindex
+  // .md-popup-title-bar .md-popup-cancel
+  //   .md-icon
+  //     align-self flex-start
+  .md-radio-item
+    padding-left h-gap-sl
+    padding-right h-gap-sl
+    transition background-color .3s
+    .md-cell-item-body.multilines .md-cell-item-title
+      font-weight font-weight-normal
+    &.is-selected
+      .md-cell-item-title
+        color color-primary
+    &:active
+      background-color color-bg-tap
+  &.is-check
+    .md-radio-item.is-selected
+      .md-cell-item-title
+        color inherit
+  .md-check-item
+    padding-left h-gap-sl
+    padding-right h-gap-sl
+
+
+.md-selector-container
+  padding-bottom constant(safe-area-inset-bottom)
+  overflow hidden
+
+.md-selector
+  &.is-normal
+    .md-radio-item
+      text-align center
+      .md-cell-item-left,
+      .md-cell-item-right
+        display none

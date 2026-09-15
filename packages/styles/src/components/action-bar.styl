@@ -1,0 +1,40 @@
+/* Extracted from legacy/components/action-bar — do not edit by hand; re-run scripts/extract.mjs */
+/* --- index.vue --- */
+.md-action-bar
+  position fixed
+  z-index action-bar-zindex
+  left 0
+  bottom 0
+  right 0
+  display flex
+  padding action-bar-padding-v action-bar-padding-h 36px
+  background color-bg-inverse
+  clearfix()
+
+.md-action-bar-container
+  display flex
+  flex 1
+  padding-bottom constant(safe-area-inset-bottom)
+  padding-bottom env(safe-area-inset-bottom)
+
+.md-action-bar-text
+  display flex
+  flex 1
+  height action-bar-slot-height
+  margin-right action-bar-button-gap
+  align-items center
+  overflow hidden
+
+.md-action-bar-group
+  display flex
+  flex 1
+  height 100%
+
+.md-action-bar-button
+  display flex
+  float right
+  align-items center
+  justify-content center
+  flex 1
+  &:nth-of-type(2)
+    margin-left action-bar-button-gap

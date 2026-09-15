@@ -1,0 +1,99 @@
+/* Extracted from legacy/components/number-keyboard — do not edit by hand; re-run scripts/extract.mjs */
+/* --- index.vue --- */
+.md-number-keyboard
+  .md-popup
+    z-index number-keyboard-zindex
+  .md-popup-box
+    padding-top 1px
+    background-color color-bg-base
+    padding-bottom constant(safe-area-inset-bottom)
+    padding-bottom env(safe-area-inset-bottom)
+
+/* --- board.vue --- */
+.md-number-keyboard-container
+  position relative
+  -webkit-user-select none
+  -webkit-tap-highlight-color transparent
+  display flex
+  width number-keyboard-width
+  height number-keyboard-height
+  hairline(top, number-keyboard-key-border-color)
+  .keyboard-number, .keyboard-operate
+    display flex
+  .keyboard-number
+    flex 3
+    background number-keyboard-bg
+    .keyboard-number-list
+      float left
+      width 100%
+      .keyboard-number-item
+        position relative
+        float left
+        width 33.3%
+        height number-keyboard-key-height
+        padding-top 5px
+        hairline(right, number-keyboard-key-border-color)
+        hairline(top, number-keyboard-key-border-color)
+        text-align center
+        line-height number-keyboard-key-height
+        font-size number-keyboard-key-font-size
+        font-weight number-keyboard-key-font-weight
+        font-family font-family-number
+        color number-keyboard-key-color
+        transition background .3s
+        background number-keyboard-key-bg
+        box-sizing border-box
+        &.no-bg
+          background transparent
+        &:nth-of-type(-n+3)
+          remove-hairline(top)
+        &:nth-of-type(3n)
+          width 33.4%
+        &.delete
+          background url(../images/keyboard-del.png) center no-repeat
+          background-size 46px
+        &.slidedown
+          background number-keyboard-key-bg url(../images/keyboard-hide.png) center no-repeat
+          background-size 54px
+        &.large-item
+          width 66.6%
+        &:active, &.active
+          background-color number-keyboard-key-bg-tap
+        &:before, &:after
+          pointer-events none
+  .keyboard-operate
+    flex 1
+    .keyboard-operate-list
+      position relative
+      float left
+      width 100%
+      display flex
+      flex-direction column
+      .keyboard-operate-item
+        position relative
+        float left
+        width 100%
+        background number-keyboard-key-bg
+        transition background .3s
+        &.delete
+          height number-keyboard-key-height
+          background number-keyboard-key-bg url(../images/keyboard-del.png) center no-repeat
+          background-size 42px
+          display flex
+          flex 1
+          &:active
+            background-color number-keyboard-key-bg-tap
+        &.confirm
+          padding-top 5px
+          color number-keyboard-key-confirm-color
+          font-size font-caption-large
+          background number-keyboard-key-confirm-bg
+          display flex
+          flex 1
+          align-items center
+          justify-content center
+          &:active
+            background-color number-keyboard-key-confirm-bg-tap
+  &.disabled
+    .keyboard-operate-item.confirm
+      background-color color-text-disabled !important

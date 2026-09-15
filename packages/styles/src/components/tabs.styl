@@ -1,0 +1,36 @@
+/* Extracted from legacy/components/tabs — do not edit by hand; re-run scripts/extract.mjs */
+/* --- index.vue --- */
+.md-tabs-content
+  position relative
+  width 100%
+  overflow hidden
+
+/* --- tab-pane.vue --- */
+.md-tab-pane
+  position relative
+  width 100%
+  transform translateZ(0)
+
+.md-tab-slide-left,
+.md-tab-slide-right
+  &-enter
+    opacity 0.01
+  &-enter-active
+    transition all 300ms
+  &-leave-active
+    position absolute
+    top 0
+    transition all 300ms
+  &-leave-to
+    opacity 0.01
+
+.md-tab-slide-left
+  &-enter
+    transform translateX(100%)
+  &-leave-to
+    transform translateX(-100%)
+.md-tab-slide-right
+  &-enter
+    transform translateX(-100%)
+  &-leave-to
+    transform translateX(100%)

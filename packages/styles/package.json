@@ -1,0 +1,31 @@
+{
+  "name": "@mand-mobile/styles",
+  "version": "0.1.0",
+  "description": "mand-mobile design tokens & component styles (stylus sources + compiled css)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./dist/index.css",
+  "style": "./dist/index.css",
+  "exports": {
+    ".": "./dist/index.css",
+    "./global.css": "./dist/global.css",
+    "./es/*": "./dist/es/*",
+    "./mixin/*": "./src/mixin/*",
+    "./src/*": "./src/*"
+  },
+  "files": ["dist", "src"],
+  "scripts": {
+    "extract": "node scripts/extract.mjs",
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^7.0.0",
+    "postcss": "^8.5.0",
+    "postcss-url": "^10.1.3",
+    "stylus": "^0.64.0"
+  }
+}

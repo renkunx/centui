@@ -1,0 +1,93 @@
+/* Extracted from legacy/components/captcha — do not edit by hand; re-run scripts/extract.mjs */
+/* --- index.vue --- */
+.md-captcha
+  .md-dialog
+    .md-popup
+      z-index captcha-zindex
+    .md-dialog-body
+      padding 60px 60px 30px 60px
+    .md-dialog-content
+      margin-bottom number-keyboard-height
+  .md-codebox
+    margin-bottom 28px
+
+.md-captcha-content
+  font-size captcha-font-size
+  color captcha-color
+  text-align center
+  line-height 1.2
+  margin-bottom 50px
+
+.md-captcha-title
+  color captcha-title-color
+  font-size captcha-title-font-size
+  font-weight normal
+  line-height 1.15
+  margin 0 0 16px 0
+
+.md-captcha-footer
+  margin 28px 0
+  display flex
+  font-size captcha-footer-font-size
+  justify-content space-between
+  align-items center
+  overflow hidden
+
+.md-captcha-error, .md-captcha-brief
+  flex 1 1 0%
+.md-captcha-error
+  color captcha-error-color
+.md-captcha-brief
+  color captcha-brief-color
+
+.md-captcha-btn
+  display inline-block
+  color captcha-btn-color
+  font-size captcha-footer-font-size
+  padding 0
+  margin 0 0 0 12px
+  border 0
+  border-radius 0
+  background none
+  &:disabled
+    color color-text-disabled
+// 半屏样式
+.md-captcha-half-container
+  background-color #fff
+  border-radius 40px 40px 0 0
+  .md-popup-title-bar
+    height auto !important
+    margin-bottom 24px
+    .title-bar-title
+      .title
+        font-weight bold
+        line-height 56px
+      p.describe
+        font-size 24px !important
+        color #91989F !important
+        line-height 33px !important
+        margin-top: 4px !important
+  .md-captcha-half-content
+    padding 0px 40px
+  .md-codebox-wrapper
+    .md-codebox
+      padding 75px 40px 0px
+      margin 0px
+    .md-captcha-footer
+      padding 32px 40px 745px
+      margin 0px
+      &.halfStyle
+        padding-bottom 40px
+      .md-captcha-btn
+        padding 5px 16px
+        background-color color-primary
+        border-radius radius-medium
+        color color-text-base-inverse
+        &:disabled
+          color #61686F
+          background none
+          border-radius inherit
+          padding 10px 0px
+        &.is-disabled-send
+          background rgba(145,152,159,0.1)
+          color #61686F

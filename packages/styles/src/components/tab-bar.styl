@@ -1,0 +1,86 @@
+/* Extracted from legacy/components/tab-bar — do not edit by hand; re-run scripts/extract.mjs */
+/* --- index.vue --- */
+.md-tab-bar
+  position relative
+  padding-left tab-offset
+  padding-right tab-offset
+  background-color tab-bg
+
+.md-tab-bar-inner
+  position relative
+  width 100%
+  // line-height 0
+
+.md-tab-bar-list
+  display flex
+  justify-content space-between
+  min-width 100%
+
+.md-tab-bar-item
+  flex auto
+  flex-shrink 0
+  position relative
+  display inline-flex
+  align-items center
+  justify-content center
+  color tab-text-color
+  font-size tab-font-size
+  font-weight tab-font-weight
+  min-height tab-height
+  padding 0 tab-item-gap
+  margin 0 auto
+  box-sizing border-box
+  -webkit-user-select none
+  -webkit-tap-highlight-color transparent
+  &.is-active
+    color tab-active-color
+  &.is-disabled
+    color tab-disabled-color
+.more-than-five
+  padding 0
+  margin-right tab-item-gap
+.md-tab-bar-ink
+  position absolute
+  bottom 10px
+  left 0
+  display block
+  height tab-ink-height
+  background-color tab-active-color
+  border-radius 2000px
+  transition all 300ms
+  &.is-disabled
+    background-color tab-disabled-color
+
+.md-tab-bar-start,
+.md-tab-bar-end
+  position absolute
+  top 0
+  left 0
+  width 14px
+  height tab-height
+  overflow hidden
+  &::after
+    content ''
+    display block
+    position absolute
+    left -14px
+    top 50%
+    width 14px
+    if tab-height is a 'unit'
+      margin-top 0 - tab-height * 0.4
+      height tab-height * 0.8
+    else
+      margin-top "calc(0 - %s * 0.4)" % tab-height
+      height "calc(%s * 0.8)" % tab-height
+    border-radius 50%
+    box-shadow: -1px 0 12px 0 rgba(0,0,0,0.2)
+.md-tab-bar-end
+  left auto
+  right 0
+  transform rotate(180deg)
+
+.md-tab-bar
+  .md-scroll-view
+    display block
+  .scroll-view-container
+    min-width 100%

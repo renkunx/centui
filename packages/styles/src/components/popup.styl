@@ -1,0 +1,137 @@
+/* Extracted from legacy/components/popup — do not edit by hand; re-run scripts/extract.mjs */
+/* --- index.vue --- */
+.md-popup
+  absolute-pos()
+  position fixed
+  display flex
+  pointer-events none
+  z-index popup-zindex
+
+  &.center
+    align-items center
+    justify-content center
+
+  &.top
+    flex-direction column
+    justify-content flex-start
+    .md-popup-box
+      width 100%
+
+  &.bottom
+    flex-direction column
+    justify-content flex-end
+    .md-popup-box
+      width 100%
+
+  &.left
+    justify-content flex-start
+    .md-popup-box
+      height 100%
+
+  &.right
+    justify-content flex-end
+    .md-popup-box
+      height 100%
+
+  &.inner-popup .md-popup-box
+    background-color color-bg-inverse
+    border-radius popup-title-bar-radius popup-title-bar-radius 0 0
+  &.large-radius.inner-popup .md-popup-box
+    border-radius popup-title-bar-radius-large popup-title-bar-radius-large 0 0
+
+.md-popup-mask
+  absolute-pos()
+  position absolute
+  pointer-events auto
+  z-index 1
+  background-color popup-mask-bg
+
+.md-popup-box
+  position relative
+  pointer-events auto
+  z-index 2
+  max-width 100%
+  max-height 100%
+  overflow auto
+
+.md-mask-fade
+  &-enter, &-leave-to
+    opacity 0.01
+  &-enter-active, &-leave-active
+    transition opacity 250ms
+
+/* --- title-bar.vue --- */
+.md-popup-title-bar
+  position relative
+  width 100%
+  height popup-title-bar-height
+  background-color popup-title-bar-bg
+  border-radius popup-title-bar-radius-large popup-title-bar-radius-large 0 0
+  clearfix()
+  overflow hidden
+  &.large
+    height popup-title-bar-height-large
+  &.large-radius
+    border-radius popup-title-bar-radius-large popup-title-bar-radius-large 0 0
+  &.title-align-left
+    .title-bar-title
+      padding-left h-gap-sl
+      align-items flex-start
+    .title-bar-left
+      display none
+  &.title-align-right
+    .title-bar-title
+      padding-right h-gap-sl
+      align-items flex-end
+    .title-bar-right
+      display none
+  &>div
+    display flex
+    float left
+    height 100%
+    padding-top 60px
+    flex-direction column
+    align-items center
+    justify-content flex-start
+    overflow hidden
+    text-overflow ellipsis
+    word-break break-word
+    white-space nowrap
+  .title-bar-left, .title-bar-right
+    position absolute
+    width 20%
+    max-height popup-title-bar-height
+    font-size popup-title-bar-font-size-button
+    font-weight popup-title-bar-font-weight-button
+    box-sizing border-box
+    line-height 1
+  .title-bar-title
+    width 100%
+    padding-left 20%
+    padding-right 20%
+    box-sizing border-box
+    line-height 1
+    p.title
+      font-size popup-title-bar-font-size-title
+      color popup-title-bar-color-title
+      // font-family PingFangSC-Medium
+    p.describe
+      margin-top 15px
+      font-size popup-title-bar-font-size-describe
+      color popup-title-bar-color-describe
+  .title-bar-left
+    left 0
+    padding-left h-gap-sl
+    align-items flex-start
+  .title-bar-right
+    right 0
+    padding-right h-gap-sl
+    align-items flex-end
+  .md-popup-cancel
+    color popup-title-bar-color-button-left
+  .md-popup-confirm
+    color popup-title-bar-color-button-right
+  .md-popup-close
+    padding-top h-gap-sl
+    color popup-title-bar-color-button-left
+    justify-content flex-start
