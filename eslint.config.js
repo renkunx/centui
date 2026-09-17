@@ -9,6 +9,7 @@ export default tseslint.config(
       '**/node_modules/**',
       '**/coverage/**',
       'legacy/**',
+      'docs/**',
       'pnpm-lock.yaml',
       '**/*.html',
       '**/*.css',

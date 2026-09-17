@@ -309,14 +309,28 @@ export const scenarios: Record<string, Scenario[]> = {
   ],
   'input-item': [
     { name: 'basic', component: InputItem, props: { title: '姓名', placeholder: '请输入' } },
-    { name: 'phone', component: InputItem, props: { title: '手机号', type: 'phone', value: '13812345678' } },
-    { name: 'bankcard', component: InputItem, props: { title: '银行卡', type: 'bankCard', value: '6222021234561234' } },
+    {
+      name: 'phone',
+      component: InputItem,
+      props: { title: '手机号', type: 'phone', value: '13812345678' },
+    },
+    {
+      name: 'bankcard',
+      component: InputItem,
+      props: { title: '银行卡', type: 'bankCard', value: '6222021234561234' },
+    },
   ],
   'radio-list': [
     {
       name: 'basic',
       component: RadioList,
-      props: { value: 'a', options: [{ value: 'a', text: '选项一' }, { value: 'b', text: '选项二' }] },
+      props: {
+        value: 'a',
+        options: [
+          { value: 'a', text: '选项一' },
+          { value: 'b', text: '选项二' },
+        ],
+      },
     },
   ],
   picker: [
