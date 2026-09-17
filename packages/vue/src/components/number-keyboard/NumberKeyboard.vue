@@ -102,12 +102,12 @@ const isKeyboardShow = ref(false)
 
 watch(
   () => props.modelValue,
-  val => {
+  (val) => {
     isKeyboardShow.value = val
   },
 )
 
-watch(isKeyboardShow, val => {
+watch(isKeyboardShow, (val) => {
   emit('update:modelValue', val)
 })
 

@@ -46,7 +46,10 @@
             :value="keyNumberList[9]"
             @press="onNumberKeyClick"
           ></MdKeyboardKey>
-          <MdKeyboardKey class="keyboard-number-item no-bg delete" @press="onDeleteClick"></MdKeyboardKey>
+          <MdKeyboardKey
+            class="keyboard-number-item no-bg delete"
+            @press="onDeleteClick"
+          ></MdKeyboardKey>
         </template>
       </ul>
     </div>
@@ -116,7 +119,7 @@ generateKeyNumber()
 function generateKeyNumber() {
   const baseStack = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
   const baseStackTmp = [...baseStack]
-  keyNumberList.value = baseStack.map(item => {
+  keyNumberList.value = baseStack.map((item) => {
     const val = props.disorder
       ? (baseStackTmp.splice(parseInt(`${Math.random() * baseStackTmp.length}`), 1)[0] ?? 0)
       : item

@@ -1,8 +1,15 @@
 <template>
-  <div ref="root" class="md-picker-column" :style="{ height: `${style.indicatorHeight + 2 * style.maskerHeight}px` }">
+  <div
+    ref="root"
+    class="md-picker-column"
+    :style="{ height: `${style.indicatorHeight + 2 * style.maskerHeight}px` }"
+  >
     <div class="md-picker-column-container">
       <div class="md-picker-column-masker top" :style="{ height: `${style.maskerHeight}px` }"></div>
-      <div class="md-picker-column-masker bottom" :style="{ height: `${style.maskerHeight}px` }"></div>
+      <div
+        class="md-picker-column-masker bottom"
+        :style="{ height: `${style.maskerHeight}px` }"
+      ></div>
       <div class="md-picker-column-list">
         <div v-for="(colunm, i) in columnValues" :key="i" class="md-picker-column-item">
           <ul class="column-list" :style="{ 'padding-top': `${style.maskerHeight}px` }">
@@ -53,7 +60,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onBeforeMount, ref, watch } from 'vue'
-import { inArray, traverse, warn } from '@mand-mobile/core'
+import { inArray, traverse, warn, type TraverseNode } from '@mand-mobile/core'
 import { getDpr, render, Scroller, type Scroller as ScrollerType } from '@mand-mobile/core/web'
 
 defineOptions({ name: 'md-picker-column' })
@@ -81,7 +88,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (e: 'initialed'): void
-  (e: 'change', columnIndex: number, itemIndex: number, values: PickerColumnItem[]): void
+  (e: 'change', columnIndex: number, itemIndex: number, value: PickerColumnItem): void
 }>()
 
 const dpr = getDpr()
@@ -89,7 +96,8 @@ const dpr = getDpr()
 const root = ref<HTMLElement>()
 
 const columnValues = ref<PickerColumnItem[][]>([])
-const scrollers = ref<ScrollerType[]>([])
+// 命令式实例表：不入响应式（ref 深解包会剥离 class 私有字段同一性）
+const scrollers: ScrollerType[] = []
 const scrollDirect = ref(1)
 const scrollPosition = ref(0)
 const activedIndexs = ref<number[]>([])
@@ -104,7 +112,7 @@ const style = computed(() => ({
 
 watch(
   () => props.data,
-  val => {
+  (val) => {
     columnValues.value = [...val]
   },
   { deep: true },
@@ -182,7 +190,7 @@ function initSingleColumnScroller(container: HTMLElement, index: number) {
   scroller.setSnapSize(0, style.value.indicatorHeight)
 
   // save scroller instance
-  scrollers.value[index] = scroller
+  scrollers[index] = scroller
 
   // reset scrolling position
   resetScrollingPosition(index)
@@ -191,40 +199,45 @@ function initSingleColumnScroller(container: HTMLElement, index: number) {
 // each column scroll to active item by defaultIndex
 function initColumnIndex() {
   const data = columnValues.value
-  const scrollerList = scrollers.value
+  const scrollerList = scrollers
 
-  getColumnIndexByDefault(data, props.defaultIndex, props.defaultValue, (columnIndex, itemIndex) => {
-    const scroller = scrollerList[columnIndex]
+  getColumnIndexByDefault(
+    data,
+    props.defaultIndex,
+    props.defaultValue,
+    (columnIndex, itemIndex) => {
+      const scroller = scrollerList[columnIndex]
 
-    if (!scroller) {
-      warn(`initialColumnIndex: scroller of column ${columnIndex} is undefined`)
-      return
-    }
+      if (!scroller) {
+        warn(`initialColumnIndex: scroller of column ${columnIndex} is undefined`)
+        return
+      }
 
-    /**
-     * If the initial selection item is invalid,
-     * then a valid item is automatically selected
-     */
-    if (isColumnIndexInvalid(columnIndex, itemIndex)) {
-      scrollToValidIndex(scroller, columnIndex, itemIndex)
-    } else {
-      scrollToIndex(scroller, columnIndex, itemIndex)
-      activedIndexs.value[columnIndex] = itemIndex
-    }
-  })
+      /**
+       * If the initial selection item is invalid,
+       * then a valid item is automatically selected
+       */
+      if (isColumnIndexInvalid(columnIndex, itemIndex)) {
+        scrollToValidIndex(scroller, columnIndex, itemIndex)
+      } else {
+        scrollToIndex(scroller, columnIndex, itemIndex)
+        activedIndexs.value[columnIndex] = itemIndex
+      }
+    },
+  )
 }
 
 function getColumnIndexByDefault(
   data: PickerColumnItem[][],
   defaultIndex: number[] = [],
-  defaultValue: unknown[] = [],
+  defaultValue: unknown[],
   fn: (columnIndex: number, itemIndex: number) => void | number = () => {},
 ) {
   if (!data) {
     return
   }
 
-  traverse(data, (item, _level, indexs) => {
+  traverse(data as unknown as TraverseNode[], (item, _level, indexs) => {
     const columnIndex = indexs[0]
     const itemIndex = indexs[1]
     let itemDefaultIndex = defaultIndex[columnIndex]
@@ -242,7 +255,9 @@ function getColumnIndexByDefault(
     if (
       (itemDefaultIndex !== undefined && itemIndex === itemDefaultIndex) ||
       (itemDefaultValue !== undefined &&
-        (item.text === itemDefaultValue || item.label === itemDefaultValue || item.value === itemDefaultValue))
+        (item.text === itemDefaultValue ||
+          item.label === itemDefaultValue ||
+          item.value === itemDefaultValue))
     ) {
       fn(columnIndex, itemIndex)
       return 2
@@ -298,7 +313,7 @@ function findValidIndex(columnIndex: number, count: number): number {
 }
 
 function resetScrollingPosition(columnIndex: number) {
-  const scroller = scrollers.value[columnIndex]
+  const scroller = scrollers[columnIndex]
   const columnValue = columnValues.value[columnIndex] || []
   let oldColumnActiveIndex = activedIndexs.value[columnIndex] || 0
 
@@ -341,8 +356,10 @@ function scrollInZoon(scroller: ScrollerType, top: number) {
 function onColumnTouchStart(event: TouchEvent | MouseEvent, index: number, isMouse = false) {
   event.preventDefault()
 
-  const scroller = scrollers.value[index]
-  const touches = isMouse ? [{ pageX: (event as MouseEvent).pageX, pageY: (event as MouseEvent).pageY }] : (event as TouchEvent).touches
+  const scroller = scrollers[index]
+  const touches = isMouse
+    ? [{ pageX: (event as MouseEvent).pageX, pageY: (event as MouseEvent).pageY }]
+    : Array.from((event as TouchEvent).touches)
 
   if (!scroller) {
     warn(`touchstart: scroller of column ${index} is undefined`)
@@ -358,14 +375,18 @@ function onColumnTouchStart(event: TouchEvent | MouseEvent, index: number, isMou
 }
 
 function onColumnTouchMove(event: TouchEvent | MouseEvent, index: number, isMouse = false) {
-  const scroller = scrollers.value[index]
-  const touches = isMouse ? [{ pageX: (event as MouseEvent).pageX, pageY: (event as MouseEvent).pageY }] : (event as TouchEvent).touches
+  const scroller = scrollers[index]
+  const touches = isMouse
+    ? [{ pageX: (event as MouseEvent).pageX, pageY: (event as MouseEvent).pageY }]
+    : Array.from((event as TouchEvent).touches)
 
   if (!scroller || (isMouse && !isMouseDown.value)) {
     return
   }
 
-  const diff = scrollPosition.value - (isMouse ? (event as MouseEvent).pageY : (event as TouchEvent).touches[0].pageY)
+  const diff =
+    scrollPosition.value -
+    (isMouse ? (event as MouseEvent).pageY : (event as TouchEvent).touches[0].pageY)
   scrollDirect.value = diff ? diff / Math.abs(diff) : 1
 
   scroller.doTouchMove(touches, event.timeStamp)
@@ -373,7 +394,7 @@ function onColumnTouchMove(event: TouchEvent | MouseEvent, index: number, isMous
 }
 
 function onColumnTouchEnd(event: TouchEvent | MouseEvent, index: number, isMouse = false) {
-  const scroller = scrollers.value[index]
+  const scroller = scrollers[index]
 
   if (!scroller || (isMouse && !isMouseDown.value)) {
     return
@@ -384,7 +405,7 @@ function onColumnTouchEnd(event: TouchEvent | MouseEvent, index: number, isMouse
 }
 
 function onColumnScrollEnd(index: number) {
-  const scroller = scrollers.value[index]
+  const scroller = scrollers[index]
   if (!scroller) {
     return
   }
@@ -474,7 +495,6 @@ defineExpose({
 
 <script lang="ts">
 import type { ComponentPublicInstance } from 'vue'
-import type { Scroller as ScrollerType } from '@mand-mobile/core/web'
 
 export interface PickerColumnItem {
   text?: string

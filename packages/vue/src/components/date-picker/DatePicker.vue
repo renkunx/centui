@@ -15,7 +15,7 @@
       :data="columnData"
       :cols="columnData.length"
       :default-value="columnDataDefault"
-      @update:model-value="val => emit('update:modelValue', val)"
+      @update:model-value="(val) => emit('update:modelValue', val)"
       @initialed="onPickerInitialed"
       @change="onPickerChange"
       @confirm="onPickerConfirm"
@@ -28,11 +28,10 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { t, warn } from '@mand-mobile/core'
+import { warn } from '@mand-mobile/core'
 import {
   buildDateColumns,
   formatDate,
-  getDateColumnGenerators,
   type DateColumnGenerator,
   type DateColumnItem,
   type DatePickerColumnOptions,
@@ -195,8 +194,8 @@ function onPickerChange(columnIndex: number, itemIndex: number, value: PickerCol
   }
 }
 
-function onPickerConfirm(columnsValue: DateColumnItem[]) {
-  emit('confirm', columnsValue)
+function onPickerConfirm(columnsValue: Array<PickerColumnItem | undefined>) {
+  emit('confirm', columnsValue as DateColumnItem[])
 }
 
 function onPickerCancel() {

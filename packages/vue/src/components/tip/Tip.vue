@@ -63,9 +63,10 @@ export default defineComponent({
 
     const instance = getCurrentInstance()
 
-    // 当前渲染的插槽节点元素（Tip 的根即触发元素）
+    // 当前渲染的插槽节点元素（Tip 的根即触发元素；无插槽时为注释节点）
     function getCurrentInstanceEl(): HTMLElement | null {
-      return (instance?.proxy?.$el as HTMLElement) ?? null
+      const el = instance?.proxy?.$el as HTMLElement | null
+      return el && el.nodeType === 1 ? el : null
     }
 
     onMounted(() => {

@@ -8,7 +8,7 @@
       }"
       @click="focus"
     >
-      <template v-if="maxlength > 0">
+      <template v-if="Number(maxlength) > 0">
         <span
           v-for="i in num"
           :key="i"
@@ -66,12 +66,12 @@
       v-show="!system"
       ref="keyboard"
       class="md-codebox-keyboard"
-      :type="maxlength > 0 ? 'simple' : 'professional'"
+      :type="Number(maxlength) > 0 ? 'simple' : 'professional'"
       :ok-text="okText"
       :disorder="disorder"
       :is-view="isView"
       :model-value="focused"
-      @update:model-value="val => (focused = val)"
+      @update:model-value="(val) => (focused = val)"
       @delete="onDelete"
       @enter="onEnter"
       @confirm="onConfirm"
@@ -134,10 +134,11 @@ const code = ref('')
 const focused = ref(props.autofocus)
 
 const num = computed(() => Math.abs(parseInt(String(props.maxlength), 10)) || 1)
+const maxLengthNum = computed(() => Number(props.maxlength))
 
 watch(
   () => props.modelValue,
-  val => {
+  (val) => {
     if (val !== code.value) {
       code.value = val
     }
@@ -174,11 +175,11 @@ function handleOutClick(e: MouseEvent) {
 
 function onInputChange(e: Event) {
   const value = (e.target as HTMLInputElement).value
-  if (Number(props.maxlength) < 0 || value.length <= Number(props.maxlength)) {
+  if (maxLengthNum.value < 0 || value.length <= maxLengthNum.value) {
     code.value = value
   }
 
-  if (code.value.length === Number(props.maxlength)) {
+  if (code.value.length === maxLengthNum.value) {
     emit('submit', code.value)
   }
 
@@ -191,11 +192,11 @@ function onSubmit(e: Event) {
 }
 
 function onEnter(val: string | number) {
-  if ((Number(props.maxlength) < 0 || code.value.length < Number(props.maxlength)) && val !== '.') {
+  if ((maxLengthNum.value < 0 || code.value.length < maxLengthNum.value) && val !== '.') {
     code.value += val
   }
 
-  if (code.value.length === Number(props.maxlength)) {
+  if (code.value.length === maxLengthNum.value) {
     nextTick(() => {
       emit('submit', code.value)
     })

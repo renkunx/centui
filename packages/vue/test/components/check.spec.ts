@@ -97,7 +97,7 @@ describe('MdCheckGroup', () => {
 
     // 组的 toggle 基于当前 props 值做增删（宿主负责回写）
     const seeded = mount(GroupHost, { props: { modelValue: ['a', 'b'] } })
-    seeded.findComponent(MdCheckGroup).vm.toggle('a')
+    seeded.findComponent(MdCheckGroup).vm.toggle?.('a')
     expect(seeded.emitted('update:modelValue')?.at(-1)).toEqual([['b']])
   })
 

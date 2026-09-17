@@ -14,7 +14,7 @@ import { defineComponent } from 'vue'
 /** Picker 列滚动初始化走 setTimeout(0)，宏任务 flush 后再断言 */
 async function flushAll() {
   await flushPromises()
-  await new Promise(resolve => setTimeout(resolve, 0))
+  await new Promise((resolve) => setTimeout(resolve, 0))
   await flushPromises()
 }
 import {
@@ -74,8 +74,8 @@ describe('MdNumberKeyboard', () => {
     })
     const texts = disordered
       .findAll('.keyboard-number-item')
-      .map(k => k.text())
-      .filter(t => /^\d$/.test(t))
+      .map((k) => k.text())
+      .filter((t) => /^\d$/.test(t))
       .sort()
     expect(texts).toEqual(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])
   })
@@ -263,9 +263,9 @@ describe('MdDatePicker', () => {
     const columns = wrapper.findAll('.md-picker-column-item')
     expect(columns).toHaveLength(3)
     // 年/月列受 min/max 收敛（同月内）
-    const yearTexts = columns[0].findAll('.column-item').map(li => li.text())
+    const yearTexts = columns[0].findAll('.column-item').map((li) => li.text())
     expect(yearTexts).toEqual(['2024年'])
-    const dayTexts = columns[2].findAll('.column-item').map(li => li.text())
+    const dayTexts = columns[2].findAll('.column-item').map((li) => li.text())
     expect(dayTexts[0]).toBe('1日')
     expect(dayTexts.at(-1)).toBe('20日')
     wrapper.unmount()

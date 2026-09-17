@@ -89,7 +89,7 @@ function hasSlot(name: 'left' | 'right' | 'children'): boolean {
   if (!fn) {
     return false
   }
-  return fn().some(node => !isVNodeEmpty(node))
+  return fn().some((node) => !isVNodeEmpty(node))
 }
 
 const inputEnv = computed(() => {

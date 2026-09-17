@@ -26,7 +26,7 @@
       <input
         class="md-input-item-input"
         :type="inputType"
-        :name="name"
+        :name="String(name)"
         :value="inputBindValue"
         :placeholder="inputPlaceholder"
         :disabled="isDisabled"
@@ -193,7 +193,9 @@ const name = props.name ?? randomId('input-item')
 
 const inputValue = ref('')
 const inputBindValue = ref('')
-const inputNumberKeyboard = ref<InstanceType<typeof MdNumberKeyboard> | { $el?: HTMLElement } | null>(null)
+const inputNumberKeyboard = ref<
+  InstanceType<typeof MdNumberKeyboard> | { $el?: HTMLElement } | null
+>(null)
 const isInputFocus = ref(false)
 const isInputEditing = ref(false)
 const isPreview = ref(false)
@@ -221,7 +223,11 @@ const isInputEmpty = computed(() => !inputValue.value.length)
 const isInputFormative = computed(() => {
   const type = inputItemType.value
   return (
-    props.isFormative || type === 'bankCard' || type === 'phone' || type === 'money' || type === 'digit'
+    props.isFormative ||
+    type === 'bankCard' ||
+    type === 'phone' ||
+    type === 'money' ||
+    type === 'digit'
   )
 })
 const isDisabled = computed(() => !!rootField?.disabled || props.disabled)
@@ -234,7 +240,7 @@ const briefSlot = computed(() => !!slots.brief)
 
 watch(
   () => props.modelValue,
-  val => {
+  (val) => {
     // Filter out two-way binding
     if (val !== trimValue(inputValue.value, '\\s|,')) {
       inputValue.value = formateValue(subValue(`${val}`)).value
@@ -244,13 +250,13 @@ watch(
 
 watch(
   () => props.previewType,
-  val => {
+  (val) => {
     isPreview.value = !!val
   },
   { immediate: true },
 )
 
-watch(inputValue, val => {
+watch(inputValue, (val) => {
   inputBindValue.value = val
   const emitted = isInputFormative.value ? trimValue(val, '\\s|,') : val
   if (emitted !== props.modelValue) {
@@ -259,7 +265,7 @@ watch(inputValue, val => {
   }
 })
 
-watch(isInputFocus, val => {
+watch(isInputFocus, (val) => {
   if (!props.isVirtualKeyboard || !inputNumberKeyboard.value) {
     return
   }
@@ -400,9 +406,11 @@ function blurFakeInput() {
  * （内置键盘走模板绑定，无需处理）
  */
 function initNumberKeyBoard() {
-  const kb = (props.virtualKeyboardVm && typeof props.virtualKeyboardVm === 'object'
-    ? props.virtualKeyboardVm
-    : numberKeyboard.value) as { $el?: HTMLElement } | null
+  const kb = (
+    props.virtualKeyboardVm && typeof props.virtualKeyboardVm === 'object'
+      ? props.virtualKeyboardVm
+      : numberKeyboard.value
+  ) as { $el?: HTMLElement } | null
 
   if (!kb) {
     return

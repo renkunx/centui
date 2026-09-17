@@ -21,7 +21,7 @@
         position="bottom"
         :mask-closable="maskClosable"
         prevent-scroll
-        @update:model-value="val => (isPickerShow = val)"
+        @update:model-value="(val) => (isPickerShow = val)"
         @before-show="onPickerBeforeShow"
         @show="onPickerShow"
         @hide="onPickerHide"
@@ -55,7 +55,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { cascade, compareObjects, t } from '@mand-mobile/core'
+import { cascade, compareObjects, t, type CascadeNode } from '@mand-mobile/core'
 import MdPopup from '../popup/Popup.vue'
 import MdPopupTitleBar from '../popup/PopupTitleBar.vue'
 import MdPickerColumn from './PickerColumn.vue'
@@ -107,7 +107,7 @@ const emit = defineEmits<{
   (e: 'initialed'): void
   (e: 'confirm', values: Array<PickerColumnItem | undefined>): void
   (e: 'cancel'): void
-  (e: 'change', columnIndex: number, itemIndex: number, values: PickerColumnItem[]): void
+  (e: 'change', columnIndex: number, itemIndex: number, value: PickerColumnItem): void
   (e: 'show'): void
   (e: 'hide'): void
 }>()
@@ -124,13 +124,13 @@ const oldActivedIndexs = ref<number[] | null>(null)
 
 watch(
   () => props.modelValue,
-  val => {
+  (val) => {
     isPickerShow.value = val
     val && initPicker()
   },
 )
 
-watch(isPickerShow, val => {
+watch(isPickerShow, (val) => {
   if (!val) {
     emit('update:modelValue', val)
   }
@@ -198,9 +198,9 @@ function initPickerColumn() {
     cascade(col, {
       currentLevel: -1,
       maxLevel: props.cols,
-      values: props.data || [],
+      values: (props.data || []) as unknown as CascadeNode[][],
       defaultIndex,
-      defaultValue,
+      defaultValue: defaultValue as Array<string | number | null>,
     })
   })
 }
@@ -224,7 +224,7 @@ function onPickerConfirm() {
   }
   const columnValues = col.getColumnValues()
   let isScrolling = false
-  col.scrollers.forEach(scroller => {
+  col.scrollers.forEach((scroller) => {
     if (
       (scroller as unknown as { _isAnimating?: boolean })._isAnimating !== false ||
       (scroller as unknown as { _isDecelerating?: boolean })._isDecelerating !== false ||
@@ -256,7 +256,7 @@ function onPickerCancel() {
   })
 }
 
-function onPickerChange(columnIndex: number, itemIndex: number, values: PickerColumnItem[]) {
+function onPickerChange(columnIndex: number, itemIndex: number, value: PickerColumnItem) {
   if (props.isCascade) {
     const col = column()
     if (col) {
@@ -265,7 +265,7 @@ function onPickerChange(columnIndex: number, itemIndex: number, values: PickerCo
         {
           currentLevel: columnIndex,
           maxLevel: props.cols,
-          values,
+          values: [value] as unknown as CascadeNode[],
         },
         () => {
           // reinitiate columns after the changing column
@@ -274,7 +274,7 @@ function onPickerChange(columnIndex: number, itemIndex: number, values: PickerCo
       )
     }
   }
-  emit('change', columnIndex, itemIndex, values)
+  emit('change', columnIndex, itemIndex, value)
 }
 
 function onPickerBeforeShow() {

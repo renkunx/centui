@@ -39,7 +39,7 @@
       :title="inputLabel"
       :placeholder="inputPlaceholder"
       :model-value="inputValue"
-      @update:model-value="value => (inputValue = value)"
+      @update:model-value="(value) => (inputValue = value)"
       @focus="inputSelected = true"
     />
   </div>
@@ -92,7 +92,6 @@ const emit = defineEmits<{
 }>()
 
 const slots = useSlots()
-const inputItem = ref<InstanceType<typeof MdInputItem>>()
 
 const selectedValue = ref(props.modelValue)
 const inputSelected = ref(false)
@@ -107,14 +106,14 @@ const iconSlotName = computed(() => (props.iconPosition === 'right' ? 'right' : 
 
 watch(
   () => props.modelValue,
-  val => {
+  (val) => {
     if (val !== selectedValue.value) {
       selectedValue.value = val
     }
   },
 )
 
-watch(currentValue, val => {
+watch(currentValue, (val) => {
   emit('update:modelValue', val)
 })
 

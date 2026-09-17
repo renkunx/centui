@@ -14,11 +14,7 @@ export * from './debug'
 export * from './locale'
 export { cascade } from './picker/cascade'
 export type { CascadeNode, CascadeOptions, CascadePickerLike } from './picker/cascade'
-export {
-  buildDateColumns,
-  formatDate,
-  getDateColumnGenerators,
-} from './picker/date'
+export { buildDateColumns, formatDate, getDateColumnGenerators } from './picker/date'
 export type {
   DateColumnGenerator,
   DateColumnItem,
@@ -26,4 +22,5 @@ export type {
   DateColumnTypeFormat,
   DatePickerColumnOptions,
   DatePickerColumns,
+  PrevColumnRef,
 } from './picker/date'

@@ -336,7 +336,11 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   codebox: [
     { name: 'basic', component: MdCodebox, props: { modelValue: '12' } },
     { name: 'mask', component: MdCodebox, props: { modelValue: '1234', mask: true } },
-    { name: 'disabled', component: MdCodebox, props: { modelValue: '1', disabled: true, maxlength: 4 } },
+    {
+      name: 'disabled',
+      component: MdCodebox,
+      props: { modelValue: '1', disabled: true, maxlength: 4 },
+    },
   ],
   'input-item': [
     { name: 'basic', component: MdInputItem, props: { title: '姓名', placeholder: '请输入' } },
