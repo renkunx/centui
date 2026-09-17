@@ -11,14 +11,21 @@ import {
   MdCellItem,
   MdCheckBox,
   MdCheck,
+  MdCodebox,
+  MdDatePicker,
   MdDialog,
   MdField,
+  MdFieldItem,
   MdIcon,
+  MdInputItem,
   MdNoticeBar,
+  MdNumberKeyboard,
+  MdPicker,
   MdPopup,
   MdPopupTitleBar,
   MdProgress,
   MdRadioBox,
+  MdRadioList,
   MdRadio,
   MdSkeleton,
   MdStepper,
@@ -299,6 +306,90 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
       component: MdField,
       props: { plain: true },
       slots: { default: '<p>内容</p>' },
+    },
+  ],
+  'field-item': [
+    {
+      name: 'basic',
+      component: MdFieldItem,
+      props: { title: '标题', addon: '附加', arrow: true },
+      slots: { default: '内容' },
+    },
+    {
+      name: 'placeholder',
+      component: MdFieldItem,
+      props: { title: '标题', placeholder: '占位', solid: true },
+    },
+  ],
+  'number-keyboard': [
+    {
+      name: 'professional-view',
+      component: MdNumberKeyboard,
+      props: { isView: true, modelValue: true },
+    },
+    {
+      name: 'simple-view',
+      component: MdNumberKeyboard,
+      props: { isView: true, modelValue: true, type: 'simple' },
+    },
+  ],
+  codebox: [
+    { name: 'basic', component: MdCodebox, props: { modelValue: '12' } },
+    { name: 'mask', component: MdCodebox, props: { modelValue: '1234', mask: true } },
+    { name: 'disabled', component: MdCodebox, props: { modelValue: '1', disabled: true, maxlength: 4 } },
+  ],
+  'input-item': [
+    { name: 'basic', component: MdInputItem, props: { title: '姓名', placeholder: '请输入' } },
+    {
+      name: 'phone',
+      component: MdInputItem,
+      props: { title: '手机号', type: 'phone', modelValue: '13812345678' },
+    },
+    {
+      name: 'bankcard',
+      component: MdInputItem,
+      props: { title: '银行卡', type: 'bankCard', modelValue: '6222021234561234' },
+    },
+  ],
+  'radio-list': [
+    {
+      name: 'basic',
+      component: MdRadioList,
+      props: {
+        modelValue: 'a',
+        options: [
+          { value: 'a', text: '选项一' },
+          { value: 'b', text: '选项二' },
+        ],
+      },
+    },
+  ],
+  picker: [
+    {
+      name: 'view',
+      component: MdPicker,
+      props: {
+        isView: true,
+        cols: 2,
+        data: [
+          [{ text: 'A' }, { text: 'B' }, { text: 'C' }],
+          [{ text: '1' }, { text: '2' }],
+        ],
+        defaultValue: ['B', '2'],
+      },
+    },
+  ],
+  'date-picker': [
+    {
+      name: 'view',
+      component: MdDatePicker,
+      props: {
+        isView: true,
+        type: 'date',
+        defaultDate: new Date(2024, 5, 15),
+        minDate: new Date(2020, 0, 1),
+        maxDate: new Date(2025, 11, 31),
+      },
     },
   ],
 }

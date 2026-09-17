@@ -25,6 +25,7 @@ export function readGolden(component: string, scenario: string): string {
  * 7. 属性顺序：Vue2 将 style/class 后置，Vue3 按模板顺序 → 标签内属性按名排序（HTML 属性顺序无语义）
  * 8. VTU v1 采集 v2 基线时的 <transition-stub> 包装（真实 DOM 无此元素）与 scoped 的
  *    data-v-<hash>（v3 样式走全局 CSS，无 scoped）→ 一律移除
+ * 9. input 的 name 属性：v2 基线采集时 randomId 产物为随机值（不可复现）→ 剥离
  */
 export function normalizeForCompare(html: string): string {
   return html
@@ -39,6 +40,7 @@ export function normalizeForCompare(html: string): string {
     .replace(/([:a-zA-Z-]+)="true"/g, '$1=""')
     .replace(/\s*style=""/g, '')
     .replace(/(<input[^>]*?)\svalue="[^"]*"/g, '$1')
+    .replace(/(<input[^>]*?)\sname="[^"]*"/g, '$1')
     .replace(/class="([^"]*)"/g, (_m, cls: string) => {
       const tokens = cls.split(/\s+/).filter(Boolean).sort()
       return `class="${tokens.join(' ')}"`

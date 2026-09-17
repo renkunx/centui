@@ -8,15 +8,22 @@ import {
   CellItem,
   Check,
   CheckBox,
+  Codebox,
+  DatePicker,
   Dialog,
   Field,
+  FieldItem,
   Icon,
+  InputItem,
   NoticeBar,
+  NumberKeyboard,
+  Picker,
   Popup,
   PopupTitleBar,
   Progress,
   Radio,
   RadioBox,
+  RadioList,
   Skeleton,
   Stepper,
   Switch,
@@ -269,5 +276,75 @@ export const scenarios: Record<string, Scenario[]> = {
       slots: { default: '<div>内容</div>', action: '<a>操作</a>' },
     },
     { name: 'plain', component: Field, props: { plain: true }, slots: { default: '<p>内容</p>' } },
+  ],
+  'field-item': [
+    {
+      name: 'basic',
+      component: FieldItem,
+      props: { title: '标题', addon: '附加', arrow: true },
+      slots: { default: '内容' },
+    },
+    {
+      name: 'placeholder',
+      component: FieldItem,
+      props: { title: '标题', placeholder: '占位', solid: true },
+    },
+  ],
+  'number-keyboard': [
+    {
+      name: 'professional-view',
+      component: NumberKeyboard,
+      props: { isView: true, value: true },
+    },
+    {
+      name: 'simple-view',
+      component: NumberKeyboard,
+      props: { isView: true, value: true, type: 'simple' },
+    },
+  ],
+  codebox: [
+    { name: 'basic', component: Codebox, props: { value: '12' } },
+    { name: 'mask', component: Codebox, props: { value: '1234', mask: true } },
+    { name: 'disabled', component: Codebox, props: { value: '1', disabled: true, maxlength: 4 } },
+  ],
+  'input-item': [
+    { name: 'basic', component: InputItem, props: { title: '姓名', placeholder: '请输入' } },
+    { name: 'phone', component: InputItem, props: { title: '手机号', type: 'phone', value: '13812345678' } },
+    { name: 'bankcard', component: InputItem, props: { title: '银行卡', type: 'bankCard', value: '6222021234561234' } },
+  ],
+  'radio-list': [
+    {
+      name: 'basic',
+      component: RadioList,
+      props: { value: 'a', options: [{ value: 'a', text: '选项一' }, { value: 'b', text: '选项二' }] },
+    },
+  ],
+  picker: [
+    {
+      name: 'view',
+      component: Picker,
+      props: {
+        isView: true,
+        cols: 2,
+        data: [
+          [{ text: 'A' }, { text: 'B' }, { text: 'C' }],
+          [{ text: '1' }, { text: '2' }],
+        ],
+        defaultValue: ['B', '2'],
+      },
+    },
+  ],
+  'date-picker': [
+    {
+      name: 'view',
+      component: DatePicker,
+      props: {
+        isView: true,
+        type: 'date',
+        defaultDate: new Date(2024, 5, 15),
+        minDate: new Date(2020, 0, 1),
+        maxDate: new Date(2025, 11, 31),
+      },
+    },
   ],
 }

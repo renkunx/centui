@@ -54,6 +54,16 @@
       "import": "./dist/check-base.js",
       "require": "./dist/check-base.cjs"
     },
+    "./es/codebox": {
+      "types": "./dist/codebox.d.ts",
+      "import": "./dist/codebox.js",
+      "require": "./dist/codebox.cjs"
+    },
+    "./es/date-picker": {
+      "types": "./dist/date-picker.d.ts",
+      "import": "./dist/date-picker.js",
+      "require": "./dist/date-picker.cjs"
+    },
     "./es/dialog": {
       "types": "./dist/dialog.d.ts",
       "import": "./dist/dialog.js",
@@ -64,15 +74,35 @@
       "import": "./dist/field.js",
       "require": "./dist/field.cjs"
     },
+    "./es/field-item": {
+      "types": "./dist/field-item.d.ts",
+      "import": "./dist/field-item.js",
+      "require": "./dist/field-item.cjs"
+    },
     "./es/icon": {
       "types": "./dist/icon.d.ts",
       "import": "./dist/icon.js",
       "require": "./dist/icon.cjs"
     },
+    "./es/input-item": {
+      "types": "./dist/input-item.d.ts",
+      "import": "./dist/input-item.js",
+      "require": "./dist/input-item.cjs"
+    },
     "./es/notice-bar": {
       "types": "./dist/notice-bar.d.ts",
       "import": "./dist/notice-bar.js",
       "require": "./dist/notice-bar.cjs"
+    },
+    "./es/number-keyboard": {
+      "types": "./dist/number-keyboard.d.ts",
+      "import": "./dist/number-keyboard.js",
+      "require": "./dist/number-keyboard.cjs"
+    },
+    "./es/picker": {
+      "types": "./dist/picker.d.ts",
+      "import": "./dist/picker.js",
+      "require": "./dist/picker.cjs"
     },
     "./es/popup": {
       "types": "./dist/popup.d.ts",
@@ -88,6 +118,11 @@
       "types": "./dist/radio.d.ts",
       "import": "./dist/radio.js",
       "require": "./dist/radio.cjs"
+    },
+    "./es/radio-list": {
+      "types": "./dist/radio-list.d.ts",
+      "import": "./dist/radio-list.js",
+      "require": "./dist/radio-list.cjs"
     },
     "./es/skeleton": {
       "types": "./dist/skeleton.d.ts",
