@@ -1,0 +1,82 @@
+{
+  "component": "number-keyboard",
+  "props": [
+    {
+      "name": "modelValue",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "default": "undefined",
+      "desc": "simple | professional",
+      "required": false
+    },
+    {
+      "name": "isView",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "hideDot",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "disorder",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isHideConfirm",
+      "type": "boolean",
+      "default": "true",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "okText",
+      "type": "string",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "textRender",
+      "type": "(val: string | number) => string | number | undefined",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "duplicateZero",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    }
+  ]
+}

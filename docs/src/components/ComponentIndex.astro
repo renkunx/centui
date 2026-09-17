@@ -1,0 +1,74 @@
+---
+import { COMPONENTS, GROUPS, GROUP_OF } from '../lib/registry'
+
+interface Props {
+  /** 'zh-CN' | 'en'，决定文案与链接前缀 */
+  locale: 'zh-CN' | 'en'
+}
+const { locale } = Astro.props
+const isZh = locale === 'zh-CN'
+const linkPrefix = isZh ? '/components' : '/en/components'
+---
+
+{
+  GROUPS.map(group => {
+    const items = COMPONENTS.filter(c => GROUP_OF[c.name] === group.id)
+    return (
+      <section class="ci-group">
+        <h2>{isZh ? group.zh : group.en}</h2>
+        <ul class="ci-grid">
+          {items.map(c => (
+            <li>
+              <a href={`${linkPrefix}/${c.name}/`} class="ci-card">
+                <strong>{isZh ? c.zh : c.en}</strong>
+                <span>{isZh ? c.zhDesc : c.enDesc}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  })}
+</template>
+
+<style>
+.ci-group {
+  margin-top: 2.5rem;
+}
+.ci-group h2 {
+  font-size: 1.05rem;
+  margin: 0 0 0.9rem;
+}
+.ci-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 0.85rem;
+}
+.ci-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.6rem;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.ci-card:hover {
+  border-color: var(--sl-color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+.ci-card strong {
+  font-size: 0.95rem;
+  color: var(--sl-color-text);
+}
+.ci-card span {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--sl-color-muted);
+}
+</style>

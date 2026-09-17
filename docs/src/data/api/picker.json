@@ -1,0 +1,119 @@
+{
+  "component": "picker",
+  "props": [
+    {
+      "name": "modelValue",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isView",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "describe",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "okText",
+      "type": "string",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "cancelText",
+      "type": "string",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "maskClosable",
+      "type": "boolean",
+      "default": "true",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "lineHeight",
+      "type": "number",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "keepIndex",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "largeRadius",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "data",
+      "type": "PickerColumnItem[][]",
+      "default": "() => []",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "cols",
+      "type": "number",
+      "default": "1",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "defaultValue",
+      "type": "unknown[]",
+      "default": "() => []",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "defaultIndex",
+      "type": "number[]",
+      "default": "() => []",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "invalidIndex",
+      "type": "Array<number | number[]>",
+      "default": "() => []",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isCascade",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": []
+}

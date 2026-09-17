@@ -1,0 +1,24 @@
+---
+title: 单元格 CellItem
+description: List cell item with title, addon, action slot and arrow indicator.
+---
+
+import ComponentDemo from '@/components/demos/cell-item/index.vue'
+import ApiTable from '@/components/ApiTable.astro'
+import api from '@/data/api/cell-item.json'
+
+Interactive preview and API reference for **CellItem**.
+
+<ComponentDemo client:visible />
+
+## Props
+
+<ApiTable title="Props" kind="props" rows={api.props} />
+
+## Events
+
+<ApiTable title="Events" kind="emits" rows={api.emits} />
+
+## Slots
+
+<ApiTable title="Slots" kind="slots" rows={api.slots} />

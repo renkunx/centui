@@ -1,0 +1,83 @@
+{
+  "component": "notice-bar",
+  "props": [
+    {
+      "name": "mode",
+      "type": "string",
+      "default": "''",
+      "desc": "link | closable",
+      "required": false
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "default": "'default'",
+      "desc": "default | activity | warning",
+      "required": false
+    },
+    {
+      "name": "time",
+      "type": "number",
+      "default": "0",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "round",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "multiRows",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "scrollable",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconSvg",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "closable",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "left",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    },
+    {
+      "name": "right",
+      "desc": "具名插槽"
+    }
+  ]
+}

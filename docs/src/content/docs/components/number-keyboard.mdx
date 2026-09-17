@@ -1,0 +1,24 @@
+---
+title: 数字键盘 NumberKeyboard
+description: 数字键盘组件，支持随机键位与简单模式，可内嵌或弹出。
+---
+
+import ComponentDemo from '@/components/demos/number-keyboard/index.vue'
+import ApiTable from '@/components/ApiTable.astro'
+import api from '@/data/api/number-keyboard.json'
+
+**数字键盘** 组件交互预览与 API 说明。
+
+<ComponentDemo client:visible />
+
+## 属性 Props
+
+<ApiTable title="属性" kind="props" rows={api.props} />
+
+## 事件 Events
+
+<ApiTable title="事件" kind="emits" rows={api.emits} />
+
+## 插槽 Slots
+
+<ApiTable title="插槽" kind="slots" rows={api.slots} />

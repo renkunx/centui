@@ -1,0 +1,24 @@
+---
+title: 表单容器 Field
+description: Form field container with title, description and content slots.
+---
+
+import ComponentDemo from '@/components/demos/field/index.vue'
+import ApiTable from '@/components/ApiTable.astro'
+import api from '@/data/api/field.json'
+
+Interactive preview and API reference for **Field**.
+
+<ComponentDemo client:visible />
+
+## Props
+
+<ApiTable title="Props" kind="props" rows={api.props} />
+
+## Events
+
+<ApiTable title="Events" kind="emits" rows={api.emits} />
+
+## Slots
+
+<ApiTable title="Slots" kind="slots" rows={api.slots} />

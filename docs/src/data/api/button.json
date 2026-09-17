@@ -1,0 +1,82 @@
+{
+  "component": "button",
+  "props": [
+    {
+      "name": "type",
+      "type": "string",
+      "default": "'default'",
+      "desc": "default | primary | warning | disabled | link",
+      "required": false
+    },
+    {
+      "name": "nativeType",
+      "type": "'button' | 'submit' | 'reset'",
+      "default": "'button'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconSvg",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "default": "'large'",
+      "desc": "large | small",
+      "required": false
+    },
+    {
+      "name": "plain",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "round",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "inline",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "inactive",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    }
+  ]
+}

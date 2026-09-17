@@ -1,0 +1,24 @@
+---
+title: 轻提示 Toast
+description: 轻提示组件，以命令式方式调用，支持多种图标与自定义图片。
+---
+
+import ComponentDemo from '@/components/demos/toast/index.vue'
+import ApiTable from '@/components/ApiTable.astro'
+import api from '@/data/api/toast.json'
+
+**轻提示** 组件交互预览与 API 说明。
+
+<ComponentDemo client:visible />
+
+## 属性 Props
+
+<ApiTable title="属性" kind="props" rows={api.props} />
+
+## 事件 Events
+
+<ApiTable title="事件" kind="emits" rows={api.emits} />
+
+## 插槽 Slots
+
+<ApiTable title="插槽" kind="slots" rows={api.slots} />

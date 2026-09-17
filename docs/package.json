@@ -1,0 +1,26 @@
+{
+  "name": "@mand-mobile/docs",
+  "version": "3.0.0-alpha.0",
+  "private": true,
+  "type": "module",
+  "description": "mand-mobile v3 文档站（Astro + Starlight，含组件实时预览）",
+  "license": "Apache-2.0",
+  "scripts": {
+    "gen": "node scripts/gen.mjs",
+    "dev": "node scripts/gen.mjs && astro dev --host 0.0.0.0",
+    "build": "node scripts/gen.mjs && astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "@astrojs/mdx": "^8.0.1",
+    "@astrojs/starlight": "^0.42.1",
+    "@astrojs/vue": "^7.0.2",
+    "@vue/compiler-sfc": "^3.5.42",
+    "astro": "^7.3.2",
+    "typescript": "^5.9.3",
+    "vue": "^3.5.42"
+  },
+  "dependencies": {
+    "@mand-mobile/styles": "workspace:*"
+  }
+}

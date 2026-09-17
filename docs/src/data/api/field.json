@@ -1,0 +1,52 @@
+{
+  "component": "field",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "brief",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "plain",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "header",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "action",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    },
+    {
+      "name": "footer",
+      "desc": "具名插槽"
+    }
+  ]
+}

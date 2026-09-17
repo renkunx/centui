@@ -1,0 +1,80 @@
+{
+  "component": "field-item",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "content",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "addon",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "arrow",
+      "type": "boolean | string",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "solid",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "alignRight",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "left",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    },
+    {
+      "name": "right",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "children",
+      "desc": "具名插槽"
+    }
+  ]
+}

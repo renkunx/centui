@@ -1,0 +1,103 @@
+{
+  "component": "radio-list",
+  "props": [
+    {
+      "name": "options",
+      "type": "RadioListOption[]",
+      "default": "() => []",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "modelValue",
+      "type": "string | number | boolean",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "hasInput",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "inputLabel",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "inputPlaceholder",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "alignCenter",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isSlotScope",
+      "type": "boolean",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "default": "'checked'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconInverse",
+      "type": "string",
+      "default": "'check'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconDisabled",
+      "type": "string",
+      "default": "'check-disabled'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconSvg",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconSize",
+      "type": "string",
+      "default": "'md'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconPosition",
+      "type": "string",
+      "default": "'left'",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    }
+  ]
+}

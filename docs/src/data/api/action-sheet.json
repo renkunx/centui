@@ -1,0 +1,56 @@
+{
+  "component": "action-sheet",
+  "props": [
+    {
+      "name": "modelValue",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "options",
+      "type": "ActionSheetOption[]",
+      "default": "() => []",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "defaultIndex",
+      "type": "number",
+      "default": "-1",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "invalidIndex",
+      "type": "number | number[]",
+      "default": "-1",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "cancelText",
+      "type": "string",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "maxHeight",
+      "type": "number",
+      "default": "400",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": []
+}

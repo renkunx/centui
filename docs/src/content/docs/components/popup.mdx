@@ -1,0 +1,24 @@
+---
+title: 弹层 Popup
+description: 通用弹层容器，支持底部、中部、漂浮等多种定位及遮罩。
+---
+
+import ComponentDemo from '@/components/demos/popup/index.vue'
+import ApiTable from '@/components/ApiTable.astro'
+import api from '@/data/api/popup.json'
+
+**弹层** 组件交互预览与 API 说明。
+
+<ComponentDemo client:visible />
+
+## 属性 Props
+
+<ApiTable title="属性" kind="props" rows={api.props} />
+
+## 事件 Events
+
+<ApiTable title="事件" kind="emits" rows={api.emits} />
+
+## 插槽 Slots
+
+<ApiTable title="插槽" kind="slots" rows={api.slots} />

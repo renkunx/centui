@@ -1,0 +1,192 @@
+{
+  "component": "input-item",
+  "props": [
+    {
+      "name": "type",
+      "type": "string",
+      "default": "'text'",
+      "desc": "text | bankCard | password | phone | money | digit",
+      "required": false
+    },
+    {
+      "name": "previewType",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "name",
+      "type": "string | number",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "brief",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "modelValue",
+      "type": "string | number",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "maxlength",
+      "type": "string | number",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "default": "'normal'",
+      "desc": "large | normal",
+      "required": false
+    },
+    {
+      "name": "align",
+      "type": "string",
+      "default": "'left'",
+      "desc": "left | center | right",
+      "required": false
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "readonly",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "solid",
+      "type": "boolean",
+      "default": "true",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "clearable",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isVirtualKeyboard",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "virtualKeyboardDisorder",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "virtualKeyboardOkText",
+      "type": "string",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "virtualKeyboardVm",
+      "type": "object | string | null",
+      "default": "null",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isTitleLatent",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isFormative",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isHighlight",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isAmount",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "formation",
+      "type": "( name: string | number, curValue: string, curPos: number, ) => FormattedValue | undefined",
+      "default": "() => undefined",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "left",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "right",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "error",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "brief",
+      "desc": "具名插槽"
+    }
+  ]
+}

@@ -1,10 +1,18 @@
 packages:
   - packages/*
   - test/*
+  - docs
 
 # pnpm 12+: pnpm 设置只在 workspace.yaml 生效（.npmrc 仅 auth/registry）
 # vue 排除隐藏提升：避免 .pnpm/node_modules/vue 命中 3.x，
 # 干扰 test/golden 锁定的 vue@2.7（mand-mobile@2.7.0 的幽灵依赖）
+allowBuilds:
+  esbuild: set this to true or false
+
 hoistPattern:
   - "*"
   - "!vue"
+
+# 允许必要依赖执行安装脚本（esbuild 为 vite/astro 必需）
+onlyBuiltDependencies:
+  - esbuild

@@ -1,0 +1,61 @@
+{
+  "component": "skeleton",
+  "props": [
+    {
+      "name": "loading",
+      "type": "boolean",
+      "default": "true",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "avatar",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "row",
+      "type": "number",
+      "default": "3",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "title",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "titleWidth",
+      "type": "number | string",
+      "default": "DEFAULT_TITLE_WIDTH",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "rowWidth",
+      "type": "number | string | Array<number | string>",
+      "default": "DEFAULT_WIDTH",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "avatarSize",
+      "type": "string",
+      "default": "'md'",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    }
+  ]
+}

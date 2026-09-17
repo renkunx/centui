@@ -1,0 +1,87 @@
+---
+title: 快速上手
+description: 安装、引入与本地预览 mand-mobile 3.0 组件库
+---
+
+mand-mobile 3.0 采用 monorepo 结构：`mand-mobile`（Vue 3 组件包）、`@mand-mobile/core`（跨框架逻辑核心）、`@mand-mobile/styles`（样式包）。本页带你完成从安装到本地预览的全部步骤。
+
+## 安装
+
+```bash
+# 在 pnpm monorepo 内直接安装（推荐，可与文档站共享同一份源码）
+pnpm add mand-mobile @mand-mobile/styles
+
+# 或普通项目
+npm install mand-mobile @mand-mobile/styles
+```
+
+需要 Node.js ≥ 20 与 pnpm ≥ 9。
+
+## 引入组件库
+
+组件统一以 `Md*` 前缀导出，支持全量或按需两种方式。
+
+**全量引入**：适合小项目或快速开始。
+
+```ts
+// main.ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import 'mand-mobile'
+import '@mand-mobile/styles/global.css'
+
+createApp(App).mount('#app')
+```
+
+**按需引入**：组件与样式分别按需加载。
+
+```vue
+<script setup lang="ts">
+import { MdButton } from 'mand-mobile'
+import '@mand-mobile/styles/es/button.css'
+</script>
+
+<template>
+  <MdButton type="primary" round>主要按钮</MdButton>
+</template>
+```
+
+:::tip[注意]
+组件样式不内嵌，使用组件前请务必引入对应样式（全量 `@mand-mobile/styles/global.css` 或按需 `@mand-mobile/styles/es/<kebab-name>.css`）。
+:::
+
+## 命令式 API
+
+Toast、Dialog、ActionSheet 除组件形式外还提供命令式调用，无需维护弹层状态：
+
+```ts
+import { Toast, Dialog, ActionSheet } from 'mand-mobile'
+
+Toast.info('操作成功')
+Dialog.confirm({ content: '确认删除该条记录？' })
+ActionSheet.create({ title: '请选择', options: [{ text: '拍照' }, { text: '相册' }] })
+```
+
+## 本地预览文档站
+
+文档站（本仓库 `docs/` 目录）通过 Vue island 直接引用 `packages/vue/src` 源码运行组件 Demo，适合**开发组件期间实时预览与调试**：
+
+```bash
+# 在仓库根目录
+pnpm install
+pnpm --filter @mand-mobile/docs dev
+```
+
+启动后访问 `http://localhost:4321`，即可浏览全部组件页并与其交互。修改 `packages/vue/src` 下的组件源码，页面会热更新——改完直接看效果。
+
+如需重新生成组件 API 表（组件增减、props 变化）：
+
+```bash
+pnpm --filter @mand-mobile/docs gen   # 仅重新生成
+pnpm --filter @mand-mobile/docs build # 生成 + 静态构建
+```
+
+## 下一步
+
+- [浏览全部组件](/components/)：每个组件页都带可交互的场景预览和完整 props / events / slots 表
+- 在 [GitHub](https://github.com/didi/mand-mobile) 提交 issue 或 PR

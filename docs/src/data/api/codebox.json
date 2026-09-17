@@ -1,0 +1,103 @@
+{
+  "component": "codebox",
+  "props": [
+    {
+      "name": "modelValue",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "maxlength",
+      "type": "number | string",
+      "default": "4",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "autofocus",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "justify",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "mask",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "closable",
+      "type": "boolean",
+      "default": "true",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "system",
+      "type": "boolean",
+      "default": "false",
+      "desc": "使用系统键盘",
+      "required": false
+    },
+    {
+      "name": "okText",
+      "type": "string",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "disorder",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isView",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "inputType",
+      "type": "string",
+      "default": "'tel'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isErrorStyle",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    }
+  ]
+}

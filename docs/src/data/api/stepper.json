@@ -1,0 +1,63 @@
+{
+  "component": "stepper",
+  "props": [
+    {
+      "name": "defaultValue",
+      "type": "number | string",
+      "default": "0",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "modelValue",
+      "type": "number | string",
+      "default": "0",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "step",
+      "type": "number | string",
+      "default": "1",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "min",
+      "type": "number | string",
+      "default": "-Number.MAX_VALUE",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "max",
+      "type": "number | string",
+      "default": "Number.MAX_VALUE",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "readOnly",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isInteger",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": []
+}

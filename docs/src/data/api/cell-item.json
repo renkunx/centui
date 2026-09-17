@@ -1,0 +1,66 @@
+{
+  "component": "cell-item",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "brief",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "addon",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "arrow",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "noBorder",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "left",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    },
+    {
+      "name": "right",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "children",
+      "desc": "具名插槽"
+    }
+  ]
+}

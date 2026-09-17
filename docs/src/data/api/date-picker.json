@@ -1,0 +1,140 @@
+{
+  "component": "date-picker",
+  "props": [
+    {
+      "name": "modelValue",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "type",
+      "type": "DatePickerColumnOptions['type']",
+      "default": "'date'",
+      "desc": "date | time | datetime | custom",
+      "required": false
+    },
+    {
+      "name": "customTypes",
+      "type": "NonNullable<DatePickerColumnOptions['customTypes']>",
+      "default": "undefined",
+      "desc": "type=custom 时的列类型序列",
+      "required": false
+    },
+    {
+      "name": "minDate",
+      "type": "Date",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "maxDate",
+      "type": "Date",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "defaultDate",
+      "type": "Date",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "minuteStep",
+      "type": "number",
+      "default": "1",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "unitText",
+      "type": "string[]",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "todayText",
+      "type": "string",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "textRender",
+      "type": "DatePickerColumnOptions['textRender']",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isView",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "describe",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "okText",
+      "type": "string",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "cancelText",
+      "type": "string",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "maskClosable",
+      "type": "boolean",
+      "default": "true",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "lineHeight",
+      "type": "number",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "keepIndex",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "largeRadius",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": []
+}

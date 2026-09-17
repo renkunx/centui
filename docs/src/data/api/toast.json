@@ -1,0 +1,61 @@
+{
+  "component": "toast",
+  "props": [
+    {
+      "name": "icon",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconSvg",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "content",
+      "type": "string | number",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "default": "0",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "position",
+      "type": "string",
+      "default": "'center'",
+      "desc": "top | center | bottom",
+      "required": false
+    },
+    {
+      "name": "hasMask",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "square",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    }
+  ]
+}

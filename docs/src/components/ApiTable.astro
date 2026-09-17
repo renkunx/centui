@@ -1,0 +1,71 @@
+---
+/**
+ * API 表：渲染 gen.mjs 提取的 props / emits / slots 数据。
+ * props: Array<{ name, type, default, desc, required }>
+ */
+interface Row {
+  name: string
+  type?: string
+  default?: string
+  desc?: string
+  required?: boolean
+  payload?: string
+  params?: string
+}
+
+interface Props {
+  title: string
+  rows: Row[]
+  kind?: 'props' | 'emits' | 'slots'
+}
+
+const { title, rows = [], kind = 'props' } = Astro.props
+---
+
+<h3>{title}</h3>
+<div class="api-table-wrap">
+  <table class="api-table">
+    <thead>
+      <tr>
+        {kind === 'props' && <th>属性</th>}
+        {kind === 'emits' && <th>事件</th>}
+        {kind === 'slots' && <th>插槽</th>}
+        {kind === 'props' && <th>类型</th>}
+        {kind === 'emits' && <th>回调参数</th>}
+        <th>{kind === 'props' ? '默认值' : '说明'}</th>
+        {kind === 'props' && <th>必填</th>}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row: Row) => (
+        <tr>
+          {kind === 'props' && (
+            <td><code>{row.name}</code></td>
+          )}
+          {kind === 'emits' && (
+            <td><code>@{row.name}</code></td>
+          )}
+          {kind === 'slots' && (
+            <td><code>{row.name}</code></td>
+          )}
+          {kind === 'props' && (
+            <td>{row.type ? <code>{row.type}</code> : '—'}</td>
+          )}
+          {kind === 'emits' && (
+            <td>{row.payload ? <code>{row.payload}</code> : <code>—</code>}</td>
+          )}
+          <td>
+            {kind === 'props' ? (
+              <>{row.default ?? '—'}</>
+            ) : (
+              <>{row.desc ?? (kind === 'slots' ? row.type ?? '' : '')}</>
+            )}
+          </td>
+          {kind === 'props' && (
+            <td>{row.required ? '是' : '否'}</td>
+          )}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

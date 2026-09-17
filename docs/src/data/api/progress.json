@@ -1,0 +1,86 @@
+{
+  "component": "progress",
+  "props": [
+    {
+      "name": "size",
+      "type": "number",
+      "default": "70",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "width",
+      "type": "number",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "default": "'#2F86F6'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "borderColor",
+      "type": "string",
+      "default": "'rgba(0, 0, 0, .1)'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "fill",
+      "type": "string",
+      "default": "'transparent'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "linecap",
+      "type": "'butt' | 'round' | 'square' | 'inherit'",
+      "default": "'round'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "rotate",
+      "type": "number",
+      "default": "0",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "default": "0",
+      "desc": "进度控制 0-1",
+      "required": false
+    },
+    {
+      "name": "transition",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "default": "1000",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    },
+    {
+      "name": "defs",
+      "desc": "具名插槽"
+    }
+  ]
+}

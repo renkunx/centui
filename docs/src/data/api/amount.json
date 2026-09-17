@@ -1,0 +1,70 @@
+{
+  "component": "amount",
+  "props": [
+    {
+      "name": "value",
+      "type": "number",
+      "default": "0",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "precision",
+      "type": "number",
+      "default": "2",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isRoundUp",
+      "type": "boolean",
+      "default": "true",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "hasSeparator",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "separator",
+      "type": "string",
+      "default": "','",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "isAnimated",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "transition",
+      "type": "boolean",
+      "default": "false",
+      "desc": "v2 遗留别名，等价于 isAnimated 的过渡开关",
+      "required": false
+    },
+    {
+      "name": "isCapital",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "duration",
+      "type": "number",
+      "default": "1000",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": []
+}

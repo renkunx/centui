@@ -1,0 +1,44 @@
+{
+  "component": "agree",
+  "props": [
+    {
+      "name": "modelValue",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "default": "'md'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconType",
+      "type": "string",
+      "default": "'circle'",
+      "desc": "circle | square",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "icon",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+---
+title: 验证码 Codebox
+description: Verification code input, auto-submits when full, supports masking.
+---
+
+import ComponentDemo from '@/components/demos/codebox/index.vue'
+import ApiTable from '@/components/ApiTable.astro'
+import api from '@/data/api/codebox.json'
+
+Interactive preview and API reference for **Codebox**.
+
+<ComponentDemo client:visible />
+
+## Props
+
+<ApiTable title="Props" kind="props" rows={api.props} />
+
+## Events
+
+<ApiTable title="Events" kind="emits" rows={api.emits} />
+
+## Slots
+
+<ApiTable title="Slots" kind="slots" rows={api.slots} />

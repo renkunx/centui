@@ -1,0 +1,61 @@
+{
+  "component": "popup",
+  "props": [
+    {
+      "name": "modelValue",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "hasMask",
+      "type": "boolean",
+      "default": "true",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "maskClosable",
+      "type": "boolean",
+      "default": "true",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "position",
+      "type": "string",
+      "default": "'center'",
+      "desc": "center | top | bottom | left | right",
+      "required": false
+    },
+    {
+      "name": "transition",
+      "type": "string",
+      "default": "undefined",
+      "desc": "覆盖默认过渡名（md-fade / md-slide-up / ...，样式由 @mand-mobile/styles 提供）",
+      "required": false
+    },
+    {
+      "name": "preventScroll",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "preventScrollExclude",
+      "type": "string | HTMLElement",
+      "default": "''",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    }
+  ]
+}

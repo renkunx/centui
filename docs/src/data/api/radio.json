@@ -1,0 +1,81 @@
+{
+  "component": "radio",
+  "props": [
+    {
+      "name": "name",
+      "type": "string | number | boolean",
+      "desc": "",
+      "required": true
+    },
+    {
+      "name": "modelValue",
+      "type": "string | number | boolean",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "default": "'md'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "inline",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "default": "'checked'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconInverse",
+      "type": "string",
+      "default": "'check'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconDisabled",
+      "type": "string",
+      "default": "'check-disabled'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconSvg",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    }
+  ]
+}

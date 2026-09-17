@@ -1,0 +1,114 @@
+{
+  "component": "dialog",
+  "props": [
+    {
+      "name": "modelValue",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "iconSvg",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "closable",
+      "type": "boolean",
+      "default": "true",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "content",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "btns",
+      "type": "DialogBtn[]",
+      "default": "() => []",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "layout",
+      "type": "string",
+      "default": "'row'",
+      "desc": "row | column",
+      "required": false
+    },
+    {
+      "name": "appendTo",
+      "type": "HTMLElement | null",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "hasMask",
+      "type": "boolean",
+      "default": "true",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "maskClosable",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "transition",
+      "type": "string",
+      "default": "'md-fade'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "preventScroll",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "preventScrollExclude",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "header",
+      "desc": "具名插槽"
+    },
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    }
+  ]
+}

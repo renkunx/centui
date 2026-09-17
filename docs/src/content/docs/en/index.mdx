@@ -1,0 +1,35 @@
+---
+title: mand-mobile 3.0
+description: Mobile UI component library (Vue 3) — docs with interactive previews
+template: splash
+hero:
+  title: 'mand-mobile 3.0'
+  tagline: Mobile-first UI component library for Vue 3 — every component ships with an interactive preview.
+  actions:
+    - text: Getting Started
+      link: /en/start/
+      variant: primary
+    - text: Browse Components
+      link: /en/components/button/
+---
+
+import ComponentIndex from '@/components/ComponentIndex.astro'
+import { Card, CardGrid } from '@astrojs/starlight/components'
+
+## Welcome
+
+mand-mobile 3.0 is the next-generation mobile component library: `packages/vue` provides Vue 3 components while `packages/core` holds the platform-agnostic logic layer. Every component page here includes an **interactive demo preview** — switch scenes and interact in the browser.
+
+<CardGrid>
+  <Card title="Live preview" icon="rocket">
+    All demos render `packages/vue/src` sources directly via Vue islands: run `pnpm docs dev` and edit components while watching the effect.
+  </Card>
+  <Card title="On-demand import" icon="puzzle">
+    Components are exported with the unified `Md*` prefix and pair with `@mand-mobile/styles` for on-demand styles.
+  </Card>
+  <Card title="Imperative API" icon="star">
+    Toast, Dialog and ActionSheet expose imperative APIs — no overlay state management in your business code.
+  </Card>
+</CardGrid>
+
+<ComponentIndex locale="en" />

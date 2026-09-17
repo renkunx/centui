@@ -1,0 +1,61 @@
+{
+  "component": "activity-indicator",
+  "props": [
+    {
+      "name": "type",
+      "type": "string",
+      "default": "'roller'",
+      "desc": "roller | spinner | carousel",
+      "required": false
+    },
+    {
+      "name": "size",
+      "type": "number",
+      "default": "70",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "width",
+      "type": "number",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "textColor",
+      "type": "string",
+      "default": "'#999'",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "textSize",
+      "type": "number",
+      "default": "undefined",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "vertical",
+      "type": "boolean",
+      "default": "false",
+      "desc": "",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "默认插槽"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+---
+title: mand-mobile 3.0
+description: 多端移动 UI 组件库（Vue 3）——文档与交互预览
+template: splash
+hero:
+  title: 'mand-mobile 3.0'
+  tagline: 多端移动 UI 组件库（Vue 3）——每个组件都配有可交互预览，所见即所得。
+  actions:
+    - text: 快速上手
+      link: /start/
+      variant: primary
+    - text: 浏览组件
+      link: /components/button/
+---
+
+import ComponentIndex from '@/components/ComponentIndex.astro'
+import { Card, CardGrid } from '@astrojs/starlight/components'
+
+## 欢迎
+
+mand-mobile 3.0 是新一代的移动端组件库：`packages/vue` 提供 Vue 3 组件，`packages/core` 下沉平台无关的逻辑层。文档站的每个组件页面都内置**可交互 Demo 预览**——场景切换、实时操作，你可以直接在浏览器里体验组件行为。
+
+<CardGrid>
+  <Card title="实时预览" icon="rocket">
+    所有组件 Demo 通过 Vue island 直接引用 `packages/vue/src` 源码运行：`pnpm docs dev` 启动后即可边改组件边看效果。
+  </Card>
+  <Card title="按需引入" icon="puzzle">
+    组件统一以 `Md*` 前缀导出，配合 `@mand-mobile/styles` 按需样式，零额外配置。
+  </Card>
+  <Card title="命令式 API" icon="star">
+    Toast、Dialog、ActionSheet 支持命令式调用，业务代码无需维护弹层状态。
+  </Card>
+</CardGrid>
+
+<ComponentIndex locale="zh-CN" />

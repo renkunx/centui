@@ -1,0 +1,34 @@
+{
+  "component": "icon",
+  "props": [
+    {
+      "name": "name",
+      "type": "string",
+      "desc": "图标名（svg sprite id 或字体图标类名）",
+      "required": true
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "default": "'md'",
+      "desc": "xss | xs | sm | md | lg",
+      "required": false
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "default": "''",
+      "desc": "",
+      "required": false
+    },
+    {
+      "name": "svg",
+      "type": "boolean",
+      "default": "true",
+      "desc": "true 渲染 svg sprite，false 渲染 icon font",
+      "required": false
+    }
+  ],
+  "emits": [],
+  "slots": []
+}
