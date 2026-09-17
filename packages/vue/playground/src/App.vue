@@ -65,10 +65,63 @@
       </div>
     </section>
 
+    <MdPopup v-model="popupShow" position="bottom">
+      <div class="popup-panel">
+        <MdPopupTitleBar title="底部弹层" only-close @cancel="popupShow = false" />
+        <p style="padding: 40px; text-align: center">弹层内容</p>
+      </div>
+    </MdPopup>
+
+    <MdActionSheet
+      v-model="sheetShow"
+      title="操作弹层"
+      :options="[{ text: '选项一' }, { text: '选项二' }, { text: '禁用项' }]"
+      :invalid-index="2"
+      @selected="onSelected"
+    />
+
+    <MdDialog
+      v-model="dialogVisible"
+      title="对话框"
+      content="这是一个对话框"
+      :btns="[
+        { text: '取消', handler: () => (dialogVisible = false) },
+        { text: '确定', handler: () => (dialogVisible = false) },
+      ]"
+    />
+
     <section>
       <h2>Skeleton</h2>
       <MdSkeleton v-if="skeletonLoading" avatar :row="2" title loading />
       <div v-else class="loaded" @click="skeletonLoading = true">内容加载完成，点击重新加载</div>
+    </section>
+
+    <section>
+      <h2>Popup / ActionSheet / Dialog / Toast / Tip</h2>
+      <div class="popups">
+        <MdButton size="small" inline @click="popupShow = true">底部弹层</MdButton>
+        <MdButton size="small" inline @click="sheetShow = true">ActionSheet</MdButton>
+        <MdButton size="small" inline @click="dialogVisible = true">Dialog</MdButton>
+        <MdButton size="small" inline @click="showToast">Toast</MdButton>
+      </div>
+      <MdTip content="点击我试试气泡提示">
+        <MdButton size="small" inline>Tip 触发</MdButton>
+      </MdTip>
+    </section>
+
+    <section>
+      <h2>Check / Radio / Field</h2>
+      <MdField title="结算周期" brief="Field 内的 Check/Radio">
+        <MdCheckGroup v-model="checkValues">
+          <MdCheck name="day">日结算</MdCheck>
+          <MdCheck name="week">周结算</MdCheck>
+          <MdCheck name="month" disabled>月结算</MdCheck>
+        </MdCheckGroup>
+        <MdRadioGroup v-model="radioValue">
+          <MdRadio name="0" inline>按单</MdRadio>
+          <MdRadio name="1" inline>按期</MdRadio>
+        </MdRadioGroup>
+      </MdField>
     </section>
 
     <section>
@@ -85,19 +138,44 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import {
+  MdActionSheet,
   MdActivityIndicator,
   MdAgree,
   MdAmount,
   MdButton,
   MdCellItem,
+  MdCheck,
+  MdCheckGroup,
+  MdDialog,
+  MdField,
   MdIcon,
   MdNoticeBar,
+  MdPopup,
+  MdPopupTitleBar,
   MdProgress,
+  MdRadio,
+  MdRadioGroup,
   MdSkeleton,
   MdStepper,
   MdSwitch,
   MdTag,
+  MdTip,
+  Toast,
 } from '@'
+
+const popupShow = ref(false)
+const sheetShow = ref(false)
+const dialogVisible = ref(false)
+const checkValues = ref<Array<string | number | boolean>>(['day'])
+const radioValue = ref<string | number | boolean>('0')
+
+function showToast() {
+  Toast.succeed('操作成功')
+}
+
+function onSelected(option: { text?: string }) {
+  Toast.info(`选择了：${option.text}`)
+}
 
 const switchOn = ref(true)
 const agreeOn = ref(false)
@@ -168,6 +246,15 @@ body {
 }
 .forms > * {
   margin: 16px 0;
+}
+.popups {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.popup-panel {
+  background: #fff;
 }
 .loaded {
   padding: 24px;

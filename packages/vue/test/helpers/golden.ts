@@ -23,10 +23,14 @@ export function readGolden(component: string, scenario: string): string {
  * 5. input 的 value attribute：Vue2 只设 DOM property，Vue3+jsdom 会反射 attribute → 移除（值由 L2 行为测试断言）
  * 6. class 令牌顺序：Vue2 把 fallthrough class 插在静态与绑定 class 之间，Vue3 追加在末尾 → 排序比较
  * 7. 属性顺序：Vue2 将 style/class 后置，Vue3 按模板顺序 → 标签内属性按名排序（HTML 属性顺序无语义）
+ * 8. VTU v1 采集 v2 基线时的 <transition-stub> 包装（真实 DOM 无此元素）与 scoped 的
+ *    data-v-<hash>（v3 样式走全局 CSS，无 scoped）→ 一律移除
  */
 export function normalizeForCompare(html: string): string {
   return html
     .replace(/<!--.*?-->/g, '')
+    .replace(/<\/?transition-stub[^>]*>/g, '')
+    .replace(/\s*data-v-[0-9a-f]+=""/g, '')
     .replace(/>\s+</g, '><')
     .replace(/\s+/g, ' ')
     .replace(/>\s+/g, '>')

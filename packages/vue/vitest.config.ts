@@ -21,6 +21,10 @@ export default defineConfig({
     name: 'vue',
     environment: 'jsdom',
     include: ['test/**/*.spec.ts'],
+    // v2 契约：测试环境下弹层 transition 钩子同步触发（跳过 CSS 动画等待）
+    env: {
+      MAND_ENV: 'test',
+    },
     coverage: {
       provider: 'istanbul',
       include: ['src/**'],

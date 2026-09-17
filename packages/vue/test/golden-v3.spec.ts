@@ -3,18 +3,28 @@ import { describe, expect, it } from 'vitest'
 import type { Component } from 'vue'
 import { normalizeForCompare, readGolden } from './helpers/golden'
 import {
+  MdActionSheet,
   MdActivityIndicator,
   MdAgree,
   MdAmount,
   MdButton,
   MdCellItem,
+  MdCheckBox,
+  MdCheck,
+  MdDialog,
+  MdField,
   MdIcon,
   MdNoticeBar,
+  MdPopup,
+  MdPopupTitleBar,
   MdProgress,
+  MdRadioBox,
+  MdRadio,
   MdSkeleton,
   MdStepper,
   MdSwitch,
   MdTag,
+  MdToast,
 } from '../src'
 
 interface V3Scenario {
@@ -145,6 +155,151 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   stepper: [
     { name: 'basic', component: MdStepper, props: { modelValue: 3, min: 0, max: 10 } },
     { name: 'disabled', component: MdStepper, props: { modelValue: 3, disabled: true } },
+  ],
+  popup: [
+    {
+      name: 'center-open',
+      component: MdPopup,
+      props: { modelValue: true },
+      slots: { default: '<p>弹层内容</p>' },
+    },
+    {
+      name: 'bottom-open',
+      component: MdPopup,
+      props: { modelValue: true, position: 'bottom' },
+      slots: { default: '<p>底部面板</p>' },
+    },
+    {
+      name: 'no-mask-open',
+      component: MdPopup,
+      props: { modelValue: true, hasMask: false },
+      slots: { default: '<p>无遮罩</p>' },
+    },
+  ],
+  'popup-title-bar': [
+    {
+      name: 'ok-cancel',
+      component: MdPopupTitleBar,
+      props: { title: '标题', okText: '确定', cancelText: '取消' },
+    },
+    {
+      name: 'describe-only-close',
+      component: MdPopupTitleBar,
+      props: { title: '标题', describe: '描述文案', onlyClose: true },
+    },
+  ],
+  toast: [
+    {
+      name: 'closed',
+      component: MdToast,
+      props: { icon: 'success', content: '操作成功' },
+    },
+    {
+      name: 'slot-closed',
+      component: MdToast,
+      slots: { default: '<span>自定义</span>' },
+    },
+  ],
+  dialog: [
+    {
+      name: 'basic-open',
+      component: MdDialog,
+      props: {
+        modelValue: true,
+        title: '对话框标题',
+        content: '对话框内容',
+        btns: [{ text: '取消' }, { text: '确定' }],
+      },
+    },
+    {
+      name: 'warning-open',
+      component: MdDialog,
+      props: {
+        modelValue: true,
+        title: '警告',
+        btns: [{ text: '确定', warning: true }],
+      },
+    },
+  ],
+  'action-sheet': [
+    {
+      name: 'open',
+      component: MdActionSheet,
+      props: {
+        modelValue: true,
+        title: '操作弹层',
+        options: [{ text: '选项1' }, { text: '选项2' }, { text: '禁用项', disabled: true }],
+        invalidIndex: 2,
+      },
+    },
+  ],
+  check: [
+    {
+      name: 'checked',
+      component: MdCheck,
+      props: { name: 'day', modelValue: 'day' },
+      slots: { default: '日结算' },
+    },
+    {
+      name: 'unchecked',
+      component: MdCheck,
+      props: { name: 'month' },
+      slots: { default: '月结算' },
+    },
+    {
+      name: 'disabled',
+      component: MdCheck,
+      props: { name: 'day', modelValue: 'day', disabled: true },
+      slots: { default: '日结算' },
+    },
+  ],
+  'check-box': [
+    // 与 v2 场景一致：未入组的数组 value 不构成选中态
+    {
+      name: 'checked',
+      component: MdCheckBox,
+      props: { name: 'a', modelValue: ['a'] as never, label: '选项一' },
+    },
+    {
+      name: 'disabled',
+      component: MdCheckBox,
+      props: { name: 'b', disabled: true, label: '选项二' },
+    },
+  ],
+  radio: [
+    {
+      name: 'checked',
+      component: MdRadio,
+      props: { name: 'day', modelValue: 'day' },
+      slots: { default: '日结算' },
+    },
+    {
+      name: 'unchecked-inline',
+      component: MdRadio,
+      props: { name: 'month', inline: true },
+      slots: { default: '月结算' },
+    },
+  ],
+  'radio-box': [
+    {
+      name: 'checked',
+      component: MdRadioBox,
+      props: { name: 'a', modelValue: 'a', label: '选项一' },
+    },
+  ],
+  field: [
+    {
+      name: 'basic',
+      component: MdField,
+      props: { title: '标题', brief: '描述' },
+      slots: { default: '<div>内容</div>', action: '<a>操作</a>' },
+    },
+    {
+      name: 'plain',
+      component: MdField,
+      props: { plain: true },
+      slots: { default: '<p>内容</p>' },
+    },
   ],
 }
 

@@ -14,6 +14,11 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./es/action-sheet": {
+      "types": "./dist/action-sheet.d.ts",
+      "import": "./dist/action-sheet.js",
+      "require": "./dist/action-sheet.cjs"
+    },
     "./es/activity-indicator": {
       "types": "./dist/activity-indicator.d.ts",
       "import": "./dist/activity-indicator.js",
@@ -39,6 +44,26 @@
       "import": "./dist/cell-item.js",
       "require": "./dist/cell-item.cjs"
     },
+    "./es/check": {
+      "types": "./dist/check.d.ts",
+      "import": "./dist/check.js",
+      "require": "./dist/check.cjs"
+    },
+    "./es/check-base": {
+      "types": "./dist/check-base.d.ts",
+      "import": "./dist/check-base.js",
+      "require": "./dist/check-base.cjs"
+    },
+    "./es/dialog": {
+      "types": "./dist/dialog.d.ts",
+      "import": "./dist/dialog.js",
+      "require": "./dist/dialog.cjs"
+    },
+    "./es/field": {
+      "types": "./dist/field.d.ts",
+      "import": "./dist/field.js",
+      "require": "./dist/field.cjs"
+    },
     "./es/icon": {
       "types": "./dist/icon.d.ts",
       "import": "./dist/icon.js",
@@ -49,10 +74,20 @@
       "import": "./dist/notice-bar.js",
       "require": "./dist/notice-bar.cjs"
     },
+    "./es/popup": {
+      "types": "./dist/popup.d.ts",
+      "import": "./dist/popup.js",
+      "require": "./dist/popup.cjs"
+    },
     "./es/progress": {
       "types": "./dist/progress.d.ts",
       "import": "./dist/progress.js",
       "require": "./dist/progress.cjs"
+    },
+    "./es/radio": {
+      "types": "./dist/radio.d.ts",
+      "import": "./dist/radio.js",
+      "require": "./dist/radio.cjs"
     },
     "./es/skeleton": {
       "types": "./dist/skeleton.d.ts",
@@ -73,6 +108,16 @@
       "types": "./dist/tag.d.ts",
       "import": "./dist/tag.js",
       "require": "./dist/tag.cjs"
+    },
+    "./es/tip": {
+      "types": "./dist/tip.d.ts",
+      "import": "./dist/tip.js",
+      "require": "./dist/tip.cjs"
+    },
+    "./es/toast": {
+      "types": "./dist/toast.d.ts",
+      "import": "./dist/toast.js",
+      "require": "./dist/toast.cjs"
     }
   },
   "files": [

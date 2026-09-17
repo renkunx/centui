@@ -19,4 +19,27 @@ export * from './components/switch'
 export * from './components/agree'
 export * from './components/stepper'
 
+// 弹层反馈：Toast/Dialog/ActionSheet 的 default 为命令式 API（工厂/静态方法）
+export { MdPopup, MdPopupTitleBar } from './components/popup'
+export { MdToast, default as Toast } from './components/toast'
+export { MdDialog, default as Dialog } from './components/dialog'
+export { MdActionSheet, default as ActionSheet } from './components/action-sheet'
+export { MdTip, MdTipContent } from './components/tip'
+
+// 表单基础
+export { MdField } from './components/field'
+export { MdCheckBaseBox } from './components/check-base'
+export {
+  MdCheck,
+  MdCheckBox,
+  MdCheckGroup,
+  MdCheckList,
+  type CheckListOption,
+} from './components/check'
+export { MdRadio, MdRadioBox, MdRadioGroup } from './components/radio'
+
+export type { ToastProps } from './components/toast'
+export type { DialogBtn, DialogConfirmOptions, DialogAlertOptions } from './components/dialog'
+export type { ActionSheetOption, ActionSheetCreateProps } from './components/action-sheet'
+
 export type { ComponentName } from './components'
