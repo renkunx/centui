@@ -19,7 +19,10 @@
     "golden:capture": "pnpm --filter @mand-mobile/golden run capture",
     "golden:test": "pnpm --filter @mand-mobile/golden run test",
     "playground": "pnpm --filter mand-mobile run playground",
-    "test:visual": "playwright test"
+    "test:visual": "playwright test",
+    "docs:dev": "pnpm --filter @mand-mobile/docs run dev",
+    "docs:build": "pnpm --filter @mand-mobile/docs run build",
+    "docs:preview": "pnpm --filter @mand-mobile/docs run preview"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.2",
