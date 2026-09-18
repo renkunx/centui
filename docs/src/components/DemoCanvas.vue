@@ -28,7 +28,10 @@ function go(i: number) {
     <div v-if="mode === 'phone'" class="demo-canvas__frame">
       <div class="phone-frame" :style="{ minHeight: minHeight ? minHeight + 'px' : undefined }">
         <div class="phone-frame__screen">
-          <slot :name="'scene-' + active" />
+          <!-- 750 设计稿像素视口（v2/v3 样式的设计基准宽），等比缩放到 iPhone 16 逻辑分辨率 -->
+          <div class="phone-frame__viewport">
+            <slot :name="'scene-' + active" />
+          </div>
         </div>
       </div>
     </div>

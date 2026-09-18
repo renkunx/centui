@@ -23,29 +23,45 @@
   background: #fff;
 }
 
-/* PhoneFrame 手机壳 */
+/*
+ * PhoneFrame 手机壳 —— 以 iPhone 16 为基准：
+ * 逻辑分辨率 440 × 956 CSS px，DPR 3（1320 × 2868 物理 px）。
+ * 组件样式为 750 设计稿像素基准（v2 语义），故屏幕内用等比视口渲染：
+ *   scale = 440 / 750 ≈ 0.5867
+ *   视口高度 = 956 / 0.5867 ≈ 1629.55px（750 基准像素）
+ * 与 Chrome 设备模拟（iPhone 16 预设）的布局/视觉比例一致；
+ * 像素密度（DPR）由浏览访客的显示器决定，页面无法改写。
+ */
 .phone-frame {
+  --phone-screen-w: 440px; /* iPhone 16 逻辑宽 */
+  --phone-screen-h: 956px; /* iPhone 16 逻辑高 */
+  --md-design-width: 750px; /* 组件样式设计稿基准宽 */
+  --md-demo-scale: calc(var(--phone-screen-w) / var(--md-design-width));
+
   position: relative;
-  width: 320px;
-  height: 620px;
+  width: calc(var(--phone-screen-w) + 20px);
+  height: calc(var(--phone-screen-h) + 20px);
   margin: 0 auto;
   background: #fff;
-  border-radius: 28px;
-  box-shadow: 0 0 0 2px #1a1a1a, 0 0 0 4px #f2f2f2, 0 12px 32px rgba(0, 0, 0, 0.18);
-  /* fixed 定位弹层以本容器为 containing block */
-  transform: translateZ(0) scale(1);
+  border-radius: 56px;
+  box-shadow:
+    0 0 0 2px #1a1a1a,
+    0 0 0 4px #f2f2f2,
+    0 12px 32px rgba(0, 0, 0, 0.18);
+  transform: translateZ(0);
   overflow: hidden;
 }
 
+/* 灵动岛 */
 .phone-frame::before {
   content: '';
   position: absolute;
-  top: 8px;
+  top: 10px;
   left: 50%;
-  width: 80px;
-  height: 14px;
-  margin-left: -40px;
-  border-radius: 10px;
+  width: 92px;
+  height: 28px;
+  margin-left: -46px;
+  border-radius: 16px;
   background: #1a1a1a;
   z-index: 20;
 }
@@ -53,8 +69,19 @@
 .phone-frame__screen {
   position: absolute;
   inset: 10px;
-  border-radius: 20px;
+  border-radius: 46px;
   overflow: hidden;
+  background: #f7f8fa;
+}
+
+/* 750 设计稿像素视口：等比缩放到屏幕逻辑宽度 */
+.phone-frame__viewport {
+  width: var(--md-design-width);
+  /* 屏幕逻辑高换算回设计稿像素：956 / scale */
+  height: calc(var(--phone-screen-h) / var(--md-demo-scale));
+  transform: scale(var(--md-demo-scale));
+  transform-origin: top left;
+  /* transformed 元素作为 fixed 弹层的 containing block（弹层定位以屏幕为准） */
   background: #f7f8fa;
 }
 
