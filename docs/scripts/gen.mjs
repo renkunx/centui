@@ -245,13 +245,27 @@ title: ${pageTitle}
 description: ${desc}
 ---
 
-import ComponentDemo from '@/components/demos/${meta.name}/index.vue'
+import ComponentDemoVue from '@/components/demos/${meta.name}/index.vue'
+import ComponentDemoReact from '@/components/demos-react/${meta.name}/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/${meta.name}.json'
 
 ${intro}
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## ${isEn ? 'Props' : '属性 Props'}
 

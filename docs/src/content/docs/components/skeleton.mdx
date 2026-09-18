@@ -3,13 +3,27 @@ title: 骨架屏 Skeleton
 description: 骨架屏组件，为加载中的内容提供占位结构。
 ---
 
-import ComponentDemo from '@/components/demos/skeleton/index.vue'
+import ComponentDemoVue from '@/components/demos/skeleton/index.vue'
+import ComponentDemoReact from '@/components/demos-react/skeleton/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/skeleton.json'
 
 **骨架屏** 组件交互预览与 API 说明。
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## 属性 Props
 

@@ -1,4 +1,5 @@
 import { fileURLToPath } from 'node:url'
+import react from '@astrojs/react'
 import vue from '@astrojs/vue'
 import starlight from '@astrojs/starlight'
 import { defineConfig } from 'astro/config'
@@ -14,6 +15,7 @@ export default defineConfig({
   base: '/',
   integrations: [
     vue(),
+    react(),
     starlight({
       title: 'mand-mobile',
       description: 'mand-mobile 3.0 —— 多端移动 UI 组件库',
@@ -45,7 +47,12 @@ export default defineConfig({
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
-        'mand-mobile': fileURLToPath(new URL('../packages/vue/src', import.meta.url)),
+        // vue 走构建产物：dev 下 vue/react 双插件管线会把 RefreshSig 注入 .vue
+        // 编译产物且页面无 preamble 导致 500；产物为纯 js 无需任何转换
+        // （改 Vue 组件后 pnpm --filter @mand-mobile/core run build 不必要，仅需 styles/vue 重建）
+        'mand-mobile': fileURLToPath(new URL('../packages/vue/dist/index.js', import.meta.url)),
+        // react demo 走源码：dev 即改即见
+        'mand-mobile-react': fileURLToPath(new URL('../packages/react/src', import.meta.url)),
       },
     },
   },

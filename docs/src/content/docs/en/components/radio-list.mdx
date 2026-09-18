@@ -3,13 +3,27 @@ title: 单选列表 RadioList
 description: Radio list component with customizable options, footer note and nested selection.
 ---
 
-import ComponentDemo from '@/components/demos/radio-list/index.vue'
+import ComponentDemoVue from '@/components/demos/radio-list/index.vue'
+import ComponentDemoReact from '@/components/demos-react/radio-list/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/radio-list.json'
 
 Interactive preview and API reference for **RadioList**.
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## Props
 

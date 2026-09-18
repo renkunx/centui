@@ -3,13 +3,27 @@ title: 复选基础 CheckBase
 description: Check base container adding a check badge to custom content.
 ---
 
-import ComponentDemo from '@/components/demos/check-base/index.vue'
+import ComponentDemoVue from '@/components/demos/check-base/index.vue'
+import ComponentDemoReact from '@/components/demos-react/check-base/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/check-base.json'
 
 Interactive preview and API reference for **CheckBase**.
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## Props
 

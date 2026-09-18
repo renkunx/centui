@@ -3,13 +3,27 @@ title: 骨架屏 Skeleton
 description: Skeleton screen providing placeholder structure for loading content.
 ---
 
-import ComponentDemo from '@/components/demos/skeleton/index.vue'
+import ComponentDemoVue from '@/components/demos/skeleton/index.vue'
+import ComponentDemoReact from '@/components/demos-react/skeleton/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/skeleton.json'
 
 Interactive preview and API reference for **Skeleton**.
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## Props
 

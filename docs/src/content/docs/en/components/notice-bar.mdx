@@ -3,13 +3,27 @@ title: 通告栏 NoticeBar
 description: Notice bar for showing scrolling announcements or alerts, closable.
 ---
 
-import ComponentDemo from '@/components/demos/notice-bar/index.vue'
+import ComponentDemoVue from '@/components/demos/notice-bar/index.vue'
+import ComponentDemoReact from '@/components/demos-react/notice-bar/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/notice-bar.json'
 
 Interactive preview and API reference for **NoticeBar**.
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## Props
 

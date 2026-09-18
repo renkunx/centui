@@ -3,13 +3,27 @@ title: 进度条 Progress
 description: Progress bar component showing task progress with multiple sizes and colors.
 ---
 
-import ComponentDemo from '@/components/demos/progress/index.vue'
+import ComponentDemoVue from '@/components/demos/progress/index.vue'
+import ComponentDemoReact from '@/components/demos-react/progress/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/progress.json'
 
 Interactive preview and API reference for **Progress**.
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## Props
 

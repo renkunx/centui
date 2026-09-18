@@ -3,13 +3,27 @@ title: 表单容器 Field
 description: Form field container with title, description and content slots.
 ---
 
-import ComponentDemo from '@/components/demos/field/index.vue'
+import ComponentDemoVue from '@/components/demos/field/index.vue'
+import ComponentDemoReact from '@/components/demos-react/field/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/field.json'
 
 Interactive preview and API reference for **Field**.
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## Props
 

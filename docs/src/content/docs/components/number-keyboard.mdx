@@ -3,13 +3,27 @@ title: 数字键盘 NumberKeyboard
 description: 数字键盘组件，支持随机键位与简单模式，可内嵌或弹出。
 ---
 
-import ComponentDemo from '@/components/demos/number-keyboard/index.vue'
+import ComponentDemoVue from '@/components/demos/number-keyboard/index.vue'
+import ComponentDemoReact from '@/components/demos-react/number-keyboard/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/number-keyboard.json'
 
 **数字键盘** 组件交互预览与 API 说明。
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## 属性 Props
 

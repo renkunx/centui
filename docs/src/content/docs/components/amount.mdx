@@ -3,13 +3,27 @@ title: 金额 Amount
 description: 金额展示组件，支持千分位、小数位、人民币符号与省略模式。
 ---
 
-import ComponentDemo from '@/components/demos/amount/index.vue'
+import ComponentDemoVue from '@/components/demos/amount/index.vue'
+import ComponentDemoReact from '@/components/demos-react/amount/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/amount.json'
 
 **金额** 组件交互预览与 API 说明。
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## 属性 Props
 

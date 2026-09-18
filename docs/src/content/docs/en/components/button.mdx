@@ -3,13 +3,27 @@ title: 按钮 Button
 description: Button component supporting multiple variants (default, primary, warning, disabled), icon, loading and sizes.
 ---
 
-import ComponentDemo from '@/components/demos/button/index.vue'
+import ComponentDemoVue from '@/components/demos/button/index.vue'
+import ComponentDemoReact from '@/components/demos-react/button/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/button.json'
 
 Interactive preview and API reference for **Button**.
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## Props
 

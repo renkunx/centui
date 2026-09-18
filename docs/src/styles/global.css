@@ -166,3 +166,37 @@
 .api-table code {
   font-size: 0.9em;
 }
+/* 组件页 Vue / React 框架切换（CSS 单选，零 JS；隐藏面板不水合） */
+.fw-tabs > input {
+  display: none;
+}
+.fw-tabs .fw-nav {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+.fw-tabs .fw-nav label {
+  padding: 4px 14px;
+  font-size: 13px;
+  line-height: 22px;
+  border: 1px solid var(--sl-color-gray-4);
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--sl-color-gray-5);
+  transition: all 0.2s;
+}
+.fw-tabs .fw-panel-react {
+  display: none;
+}
+#fw-vue:checked ~ .fw-nav label[for='fw-vue'],
+#fw-react:checked ~ .fw-nav label[for='fw-react'] {
+  background: var(--sl-color-blue);
+  border-color: var(--sl-color-blue);
+  color: #fff;
+}
+#fw-react:checked ~ .fw-panel-vue {
+  display: none;
+}
+#fw-react:checked ~ .fw-panel-react {
+  display: block;
+}

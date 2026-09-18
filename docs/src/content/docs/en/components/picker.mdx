@@ -3,13 +3,27 @@ title: 选择器 Picker
 description: Multi-column picker with scrollable column selection.
 ---
 
-import ComponentDemo from '@/components/demos/picker/index.vue'
+import ComponentDemoVue from '@/components/demos/picker/index.vue'
+import ComponentDemoReact from '@/components/demos-react/picker/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/picker.json'
 
 Interactive preview and API reference for **Picker**.
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## Props
 

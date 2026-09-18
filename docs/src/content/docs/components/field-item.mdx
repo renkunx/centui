@@ -3,13 +3,27 @@ title: 表单项 FieldItem
 description: 表单项组件，提供标题、占位与箭头布局。
 ---
 
-import ComponentDemo from '@/components/demos/field-item/index.vue'
+import ComponentDemoVue from '@/components/demos/field-item/index.vue'
+import ComponentDemoReact from '@/components/demos-react/field-item/index.tsx'
 import ApiTable from '@/components/ApiTable.astro'
 import api from '@/data/api/field-item.json'
 
 **表单项** 组件交互预览与 API 说明。
 
-<ComponentDemo client:visible />
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
 
 ## 属性 Props
 
