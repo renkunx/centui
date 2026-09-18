@@ -1,0 +1,61 @@
+{
+  "component": "slider",
+  "props": [
+    {
+      "name": "modelValue / value",
+      "type": "number | number[]",
+      "default": "0",
+      "desc": "滑块值，range 时为数组",
+      "required": false
+    },
+    {
+      "name": "min",
+      "type": "number",
+      "default": "0",
+      "desc": "最小值",
+      "required": false
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "default": "100",
+      "desc": "最大值",
+      "required": false
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "default": "1",
+      "desc": "步长",
+      "required": false
+    },
+    {
+      "name": "range",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否双柄范围选择",
+      "required": false
+    },
+    {
+      "name": "format",
+      "type": "(val: number) => number | string",
+      "default": "-",
+      "desc": "手柄提示格式化",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否禁用",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "update:modelValue / onChange",
+      "desc": "值变化时触发"
+    }
+  ],
+  "slots": []
+}

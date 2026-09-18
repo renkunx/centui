@@ -1,0 +1,41 @@
+---
+title: 滚动视图 ScrollView
+description: 滚动区域组件，支持下拉刷新、加载更多与横向/纵向滚动。
+---
+
+import ComponentDemoVue from '@/components/demos/scroll-view/index.vue'
+import ComponentDemoReact from '@/components/demos-react/scroll-view/index.tsx'
+import ApiTable from '@/components/ApiTable.astro'
+import api from '@/data/api/scroll-view.json'
+
+**ScrollView** 组件交互预览与 API 说明。
+
+<div class="fw-tabs">
+  <input type="radio" name="fw-scroll-view" id="fw-scroll-view-vue" checked />
+  <input type="radio" name="fw-scroll-view" id="fw-scroll-view-react" />
+  <div class="fw-nav">
+    <label for="fw-scroll-view-vue">Vue</label>
+    <label for="fw-scroll-view-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
+
+## 属性 Props
+
+<ApiTable title="属性" kind="props" rows={api.props} />
+
+## 事件 Events
+
+<ApiTable title="事件" kind="emits" rows={api.events} />
+
+## 方法 Methods
+
+<ApiTable title="方法" kind="emits" rows={api.methods} />
+## 插槽 Slots
+
+<ApiTable title="插槽" kind="slots" rows={api.slots} />

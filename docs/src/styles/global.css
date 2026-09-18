@@ -200,3 +200,72 @@
 #fw-react:checked ~ .fw-panel-react {
   display: block;
 }
+
+/*
+ * 滚动类组件 demo 通用样式（Vue/React 双框架共享）
+ */
+.swiper-demo-box {
+  height: 180px;
+}
+
+.swiper-demo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  color: #fff;
+  font-size: 28px;
+}
+
+.slider-demo-block {
+  padding: 40px 20px;
+}
+
+.slider-demo-value {
+  margin-top: 60px;
+  font-size: 24px;
+  color: #999;
+  text-align: center;
+}
+
+.scroll-demo-box {
+  height: 400px;
+  border: 1px solid #e2e4e9;
+}
+
+.scroll-demo-box--short {
+  height: 120px;
+  border: 1px solid #e2e4e9;
+}
+
+.scroll-demo-item {
+  padding: 24px 32px;
+  border-bottom: 1px solid #f0f1f4;
+  font-size: 26px;
+}
+
+.scroll-demo-horizon {
+  display: flex;
+  flex-direction: row;
+}
+
+.scroll-demo-card {
+  flex-shrink: 0;
+  width: 160px;
+  height: 96px;
+  margin: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ebf2fd;
+  color: #2f86f6;
+  border-radius: 8px;
+  font-size: 28px;
+}
+
+/* 包裹容器定高，滚动/轮播根节点撑满 */
+.swiper-demo-box .md-swiper,
+.scroll-demo-box .md-scroll-view,
+.scroll-demo-box--short .md-scroll-view {
+  height: 100%;
+}

@@ -73,7 +73,7 @@ describe('收尾分支 (vue)', () => {
     // 动画完成后收敛到目标 0.9：dasharray = 0.9*p 与 (1-0.9)*p
     const dash = wrapper.find('circle.stroke').attributes('stroke-dasharray')
     expect(dash).toBeTruthy()
-    const [a, b] = dash.split(' ').map(Number)
+    const [a, b] = dash!.split(' ').map(Number)
     expect(a + b).toBeCloseTo(219.905, 0)
     vi.useRealTimers()
   })

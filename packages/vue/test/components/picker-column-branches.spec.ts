@@ -23,7 +23,15 @@ vi.mock('@mand-mobile/core/web', async importOriginal => {
   return { ...orig, Scroller: FakeScrollerImpl }
 })
 
-import MdPickerColumn, { type PickerColumnExposed } from '../../src/components/picker/PickerColumn.vue'
+import MdPickerColumn from '../../src/components/picker/PickerColumn.vue'
+
+// 组件未导出类型，这里按 defineExpose 实际形状做结构化声明
+interface PickerColumnExposed {
+  refresh: (defaultIndex?: number[] | number, keepIndex?: boolean) => void
+  getColumnIndex: (colIndex?: number) => number
+  setColumnValues: (colIndex?: number, values?: unknown[]) => void
+  [key: string]: unknown
+}
 
 async function flushAll() {
   await new Promise(r => setTimeout(r, 60))

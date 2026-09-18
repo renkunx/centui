@@ -29,11 +29,12 @@
           'refresh-active': isRefreshActive,
         }"
       >
-        <slot name="refresh" :scroll-top="scrollYRef ?? 0" :is-refreshing="isRefreshing" :is-refresh-active="isRefreshActive"></slot>
+        <!-- v2 契约：作用域插槽键为 camelCase（scrollTop/isRefreshing/isRefreshActive） -->
+        <slot name="refresh" :scrollTop="scrollYRef ?? 0" :isRefreshing="isRefreshing" :isRefreshActive="isRefreshActive"></slot>
       </div>
       <slot></slot>
       <div v-if="hasMore" class="scroll-view-more" :class="{ active: isEndReachingStart || isEndReaching }">
-        <slot name="more" :is-end-reaching="isEndReachingStart || isEndReaching"></slot>
+        <slot name="more" :isEndReaching="isEndReachingStart || isEndReaching"></slot>
       </div>
     </div>
     <div v-if="$slots.footer" class="scroll-view-footer">

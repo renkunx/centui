@@ -1,0 +1,130 @@
+{
+  "component": "scroll-view",
+  "props": [
+    {
+      "name": "scrollingX",
+      "type": "boolean",
+      "default": "true",
+      "desc": "是否允许横向滚动",
+      "required": false
+    },
+    {
+      "name": "scrollingY",
+      "type": "boolean",
+      "default": "true",
+      "desc": "是否允许纵向滚动",
+      "required": false
+    },
+    {
+      "name": "bouncing",
+      "type": "boolean",
+      "default": "true",
+      "desc": "是否回弹",
+      "required": false
+    },
+    {
+      "name": "autoReflow",
+      "type": "boolean",
+      "default": "false",
+      "desc": "内容变化时是否自动重置滚动区域",
+      "required": false
+    },
+    {
+      "name": "manualInit",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否手动初始化滚动区域",
+      "required": false
+    },
+    {
+      "name": "endReachedThreshold",
+      "type": "number",
+      "default": "0",
+      "desc": "触发到达底部的阈值（px）",
+      "required": false
+    },
+    {
+      "name": "immediateCheckEndReaching",
+      "type": "boolean",
+      "default": "false",
+      "desc": "初始化后立即检查是否已到达底部",
+      "required": false
+    },
+    {
+      "name": "touchAngle",
+      "type": "number",
+      "default": "45",
+      "desc": "滚动角度阈值，防止误滚动",
+      "required": false
+    },
+    {
+      "name": "isPrevent",
+      "type": "boolean",
+      "default": "true",
+      "desc": "是否阻止默认事件",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "refreshActive",
+      "desc": "下拉刷新区域被激活时触发"
+    },
+    {
+      "name": "refreshing",
+      "desc": "下拉刷新触发时调用"
+    },
+    {
+      "name": "endReached",
+      "desc": "滚动到底部时触发"
+    },
+    {
+      "name": "scroll",
+      "desc": "滚动时触发，参数 (scrollLeft, scrollTop)"
+    }
+  ],
+  "slots": [
+    {
+      "name": "refresh",
+      "desc": "下拉刷新区域，作用域参数 scrollTop / isRefreshing / isRefreshActive"
+    },
+    {
+      "name": "more",
+      "desc": "加载更多区域，作用域参数 isEndReaching"
+    },
+    {
+      "name": "header",
+      "desc": "头部区域"
+    },
+    {
+      "name": "footer",
+      "desc": "底部区域"
+    }
+  ],
+  "methods": [
+    {
+      "name": "init()",
+      "desc": "手动初始化滚动区域（配合 manual-init）"
+    },
+    {
+      "name": "scrollTo(left, top, animate)",
+      "desc": "滚动到指定位置"
+    },
+    {
+      "name": "reflowScroller(force)",
+      "desc": "重置滚动区域尺寸"
+    },
+    {
+      "name": "triggerRefresh()",
+      "desc": "触发下拉刷新"
+    },
+    {
+      "name": "finishRefresh()",
+      "desc": "结束下拉刷新"
+    },
+    {
+      "name": "finishLoadMore()",
+      "desc": "结束加载更多"
+    }
+  ]
+}
