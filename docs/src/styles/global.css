@@ -1,7 +1,58 @@
 /* mand-mobile v3 docs 全局样式（Starlight customCss） */
 
-/* 组件库全量样式（demo 预览需要，dist/index.css 已含 reset 与图标字体） */
-@import '@mand-mobile/styles';
+/*
+ * 组件样式按需引入（es/*.css 为纯组件样式，不含 v2 的全局 reset）。
+ * 不引全量入口 dist/index.css：其携带的元素级 reset（a,abbr,...{margin:0}、
+ * li/ol/ul{list-style:none}、body 字体）会污染 Starlight 文档内容区样式。
+ */
+@import '../../../packages/styles/dist/es/transition.css';
+@import '../../../packages/styles/dist/es/action-sheet.css';
+@import '../../../packages/styles/dist/es/activity-indicator.css';
+@import '../../../packages/styles/dist/es/agree.css';
+@import '../../../packages/styles/dist/es/amount.css';
+@import '../../../packages/styles/dist/es/button.css';
+@import '../../../packages/styles/dist/es/cell-item.css';
+@import '../../../packages/styles/dist/es/check.css';
+@import '../../../packages/styles/dist/es/codebox.css';
+@import '../../../packages/styles/dist/es/date-picker.css';
+@import '../../../packages/styles/dist/es/dialog.css';
+@import '../../../packages/styles/dist/es/field.css';
+@import '../../../packages/styles/dist/es/icon.css';
+@import '../../../packages/styles/dist/es/input-item.css';
+@import '../../../packages/styles/dist/es/notice-bar.css';
+@import '../../../packages/styles/dist/es/number-keyboard.css';
+@import '../../../packages/styles/dist/es/picker.css';
+@import '../../../packages/styles/dist/es/popup.css';
+@import '../../../packages/styles/dist/es/radio.css';
+@import '../../../packages/styles/dist/es/skeleton.css';
+@import '../../../packages/styles/dist/es/stepper.css';
+@import '../../../packages/styles/dist/es/switch.css';
+@import '../../../packages/styles/dist/es/tag.css';
+@import '../../../packages/styles/dist/es/tip.css';
+@import '../../../packages/styles/dist/es/toast.css';
+
+/*
+ * v2 全局 reset 的等价物，仅作用于 demo 预览容器（手机壳屏幕 / 普通画布），
+ * 保证组件在文档站内与真实移动端一致的渲染基线。
+ */
+.phone-frame__screen,
+.demo-stage {
+  font-family: Helvetica Neue, Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 微软雅黑, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+.phone-frame__screen :is(a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video),
+.demo-stage :is(a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video) {
+  margin: 0;
+  padding: 0;
+}
+
+.phone-frame__screen :is(li, ol, ul),
+.demo-stage :is(li, ol, ul) {
+  list-style: none;
+}
 
 /* Demo 预览区 */
 .demo-frame {
