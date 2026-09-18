@@ -41,3 +41,8 @@ export {
 export { default as ActionSheet } from './components/action-sheet'
 export * from './components/picker/Picker'
 export * from './components/picker/DatePicker'
+
+// 滚动类（M6-1）
+export { MdScrollView, MdScrollViewRefresh, MdScrollViewMore, type ScrollViewProps } from './components/scroll-view'
+export { MdSwiper, MdSwiperItem, type SwiperProps, type SwiperExposed } from './components/swiper/Swiper'
+export { MdSlider, type SliderProps } from './components/slider/Slider'

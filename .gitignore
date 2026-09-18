@@ -29,3 +29,5 @@ coverage/
 .zcode/
 *.tsbuildinfo
 .pnpm-store/
+
+.vitest/

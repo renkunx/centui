@@ -31,6 +31,12 @@ import {
   MdStepper,
   MdSwitch,
   MdTag,
+  MdScrollView,
+  MdScrollViewMore,
+  MdScrollViewRefresh,
+  MdSlider,
+  MdSwiper,
+  MdSwiperItem,
   MdToast,
 } from '../src'
 
@@ -273,6 +279,44 @@ const scenarios: Record<string, Scenario[]> = {
         />
       ),
     },
+  ],
+  'scroll-view': [
+    {
+      name: 'basic',
+      element: (
+        <MdScrollView>
+          <div className="scroll-item">内容一</div>
+          <div className="scroll-item">内容二</div>
+          <MdScrollViewMore isFinished={false} />
+        </MdScrollView>
+      ),
+    },
+    {
+      name: 'refresh',
+      element: (
+        <MdScrollView>
+          <MdScrollViewRefresh scrollTop={-30} />
+          <div className="scroll-item">内容</div>
+        </MdScrollView>
+      ),
+    },
+  ],
+  swiper: [
+    {
+      name: 'three-items',
+      element: (
+        <MdSwiper>
+          <MdSwiperItem><div className="sw-item">第 1 页</div></MdSwiperItem>
+          <MdSwiperItem><div className="sw-item">第 2 页</div></MdSwiperItem>
+          <MdSwiperItem><div className="sw-item">第 3 页</div></MdSwiperItem>
+        </MdSwiper>
+      ),
+    },
+  ],
+  slider: [
+    { name: 'single', element: <MdSlider value={20} /> },
+    { name: 'range', element: <MdSlider value={[20, 80]} range /> },
+    { name: 'disabled', element: <MdSlider value={40} disabled /> },
   ],
 }
 
