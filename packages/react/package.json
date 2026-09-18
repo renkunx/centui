@@ -1,0 +1,181 @@
+{
+  "name": "@mand-mobile/react",
+  "version": "0.1.0",
+  "description": "mand-mobile React implementation — shares @mand-mobile/core logic and @mand-mobile/styles CSS with the Vue package",
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./es/action-sheet": {
+      "types": "./dist/action-sheet.d.ts",
+      "import": "./dist/action-sheet.js",
+      "require": "./dist/action-sheet.cjs"
+    },
+    "./es/activity-indicator": {
+      "types": "./dist/activity-indicator.d.ts",
+      "import": "./dist/activity-indicator.js",
+      "require": "./dist/activity-indicator.cjs"
+    },
+    "./es/agree": {
+      "types": "./dist/agree.d.ts",
+      "import": "./dist/agree.js",
+      "require": "./dist/agree.cjs"
+    },
+    "./es/amount": {
+      "types": "./dist/amount.d.ts",
+      "import": "./dist/amount.js",
+      "require": "./dist/amount.cjs"
+    },
+    "./es/button": {
+      "types": "./dist/button.d.ts",
+      "import": "./dist/button.js",
+      "require": "./dist/button.cjs"
+    },
+    "./es/cell-item": {
+      "types": "./dist/cell-item.d.ts",
+      "import": "./dist/cell-item.js",
+      "require": "./dist/cell-item.cjs"
+    },
+    "./es/check": {
+      "types": "./dist/check.d.ts",
+      "import": "./dist/check.js",
+      "require": "./dist/check.cjs"
+    },
+    "./es/codebox": {
+      "types": "./dist/codebox.d.ts",
+      "import": "./dist/codebox.js",
+      "require": "./dist/codebox.cjs"
+    },
+    "./es/date-picker": {
+      "types": "./dist/date-picker.d.ts",
+      "import": "./dist/date-picker.js",
+      "require": "./dist/date-picker.cjs"
+    },
+    "./es/dialog": {
+      "types": "./dist/dialog.d.ts",
+      "import": "./dist/dialog.js",
+      "require": "./dist/dialog.cjs"
+    },
+    "./es/field": {
+      "types": "./dist/field.d.ts",
+      "import": "./dist/field.js",
+      "require": "./dist/field.cjs"
+    },
+    "./es/field-item": {
+      "types": "./dist/field-item.d.ts",
+      "import": "./dist/field-item.js",
+      "require": "./dist/field-item.cjs"
+    },
+    "./es/icon": {
+      "types": "./dist/icon.d.ts",
+      "import": "./dist/icon.js",
+      "require": "./dist/icon.cjs"
+    },
+    "./es/input-item": {
+      "types": "./dist/input-item.d.ts",
+      "import": "./dist/input-item.js",
+      "require": "./dist/input-item.cjs"
+    },
+    "./es/notice-bar": {
+      "types": "./dist/notice-bar.d.ts",
+      "import": "./dist/notice-bar.js",
+      "require": "./dist/notice-bar.cjs"
+    },
+    "./es/number-keyboard": {
+      "types": "./dist/number-keyboard.d.ts",
+      "import": "./dist/number-keyboard.js",
+      "require": "./dist/number-keyboard.cjs"
+    },
+    "./es/picker": {
+      "types": "./dist/picker.d.ts",
+      "import": "./dist/picker.js",
+      "require": "./dist/picker.cjs"
+    },
+    "./es/popup": {
+      "types": "./dist/popup.d.ts",
+      "import": "./dist/popup.js",
+      "require": "./dist/popup.cjs"
+    },
+    "./es/progress": {
+      "types": "./dist/progress.d.ts",
+      "import": "./dist/progress.js",
+      "require": "./dist/progress.cjs"
+    },
+    "./es/radio": {
+      "types": "./dist/radio.d.ts",
+      "import": "./dist/radio.js",
+      "require": "./dist/radio.cjs"
+    },
+    "./es/radio-list": {
+      "types": "./dist/radio-list.d.ts",
+      "import": "./dist/radio-list.js",
+      "require": "./dist/radio-list.cjs"
+    },
+    "./es/skeleton": {
+      "types": "./dist/skeleton.d.ts",
+      "import": "./dist/skeleton.js",
+      "require": "./dist/skeleton.cjs"
+    },
+    "./es/stepper": {
+      "types": "./dist/stepper.d.ts",
+      "import": "./dist/stepper.js",
+      "require": "./dist/stepper.cjs"
+    },
+    "./es/switch": {
+      "types": "./dist/switch.d.ts",
+      "import": "./dist/switch.js",
+      "require": "./dist/switch.cjs"
+    },
+    "./es/tag": {
+      "types": "./dist/tag.d.ts",
+      "import": "./dist/tag.js",
+      "require": "./dist/tag.cjs"
+    },
+    "./es/tip": {
+      "types": "./dist/tip.d.ts",
+      "import": "./dist/tip.js",
+      "require": "./dist/tip.cjs"
+    },
+    "./es/toast": {
+      "types": "./dist/toast.d.ts",
+      "import": "./dist/toast.js",
+      "require": "./dist/toast.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "playground": "vite playground"
+  },
+  "dependencies": {
+    "@mand-mobile/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@mand-mobile/styles": "workspace:*",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/coverage-istanbul": "^5.0.0",
+    "vite-plugin-dts": "^5.1.0"
+  }
+}
