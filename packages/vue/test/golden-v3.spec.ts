@@ -31,6 +31,12 @@ import {
   MdStepper,
   MdSwitch,
   MdTag,
+  MdScrollView,
+  MdScrollViewMore,
+  MdScrollViewRefresh,
+  MdSlider,
+  MdSwiper,
+  MdSwiperItem,
   MdToast,
 } from '../src'
 
@@ -383,6 +389,41 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
       },
     },
   ],
+  'scroll-view': [
+    {
+      name: 'basic',
+      slots: {
+        default:
+          '<div class="scroll-item">内容一</div><div class="scroll-item">内容二</div><MdScrollViewMore :is-finished="false" />',
+      },
+      component: MdScrollView,
+    },
+    {
+      name: 'refresh',
+      slots: {
+        default: '<MdScrollViewRefresh :scroll-top="-30" /><div class="scroll-item">内容</div>',
+      },
+      component: MdScrollView,
+    },
+  ],
+  swiper: [
+    {
+      name: 'three-items',
+      slots: {
+        default: `
+          <MdSwiperItem><div class="sw-item">第 1 页</div></MdSwiperItem>
+          <MdSwiperItem><div class="sw-item">第 2 页</div></MdSwiperItem>
+          <MdSwiperItem><div class="sw-item">第 3 页</div></MdSwiperItem>
+        `,
+      },
+      component: MdSwiper,
+    },
+  ],
+  slider: [
+    { name: 'single', component: MdSlider, props: { modelValue: 20 } },
+    { name: 'range', component: MdSlider, props: { modelValue: [20, 80], range: true } },
+    { name: 'disabled', component: MdSlider, props: { modelValue: 40, disabled: true } },
+  ],
   'date-picker': [
     {
       name: 'view',
@@ -406,6 +447,9 @@ describe('L3 golden 对比（v3 渲染 vs v2 基线）', () => {
           const wrapper = mount(scenario.component, {
             props: scenario.props,
             slots: scenario.slots,
+            global: {
+              components: { MdScrollViewMore, MdScrollViewRefresh, MdSwiperItem },
+            },
           })
           const actual = normalizeForCompare(wrapper.html())
           const baseline = normalizeForCompare(readGolden(component, scenario.name))

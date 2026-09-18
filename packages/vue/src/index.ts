@@ -49,6 +49,15 @@ export { MdCodebox } from './components/codebox'
 export { MdPicker, MdPickerColumn, type PickerColumnItem } from './components/picker'
 export { MdDatePicker } from './components/date-picker'
 
+// M6 滚动类
+export {
+  MdScrollView,
+  MdScrollViewRefresh,
+  MdScrollViewMore,
+} from './components/scroll-view'
+export { MdSwiper, MdSwiperItem } from './components/swiper'
+export { MdSlider } from './components/slider'
+
 export type { ToastProps } from './components/toast'
 export type { DialogBtn, DialogConfirmOptions, DialogAlertOptions } from './components/dialog'
 export type { ActionSheetOption, ActionSheetCreateProps } from './components/action-sheet'

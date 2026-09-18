@@ -24,8 +24,14 @@ import {
   Radio,
   RadioBox,
   RadioList,
+  ScrollView,
+  ScrollViewMore,
+  ScrollViewRefresh,
   Skeleton,
+  Slider,
   Stepper,
+  Swiper,
+  SwiperItem,
   Switch,
   Tag,
   Toast,
@@ -360,5 +366,57 @@ export const scenarios: Record<string, Scenario[]> = {
         maxDate: new Date(2025, 11, 31),
       },
     },
+  ],
+  'scroll-view': [
+    {
+      name: 'basic',
+      component: {
+        render(h) {
+          return h(ScrollView, {}, [
+            h('div', { class: 'scroll-item' }, '内容一'),
+            h('div', { class: 'scroll-item' }, '内容二'),
+            h(
+              ScrollViewMore,
+              { props: { isFinished: false } },
+              ['加载更多'],
+            ),
+          ])
+        },
+      } as unknown as DefineComponent,
+    },
+    {
+      name: 'refresh',
+      component: {
+        render(h) {
+          return h(ScrollView, {}, [
+            h(
+              ScrollViewRefresh,
+              { props: { scrollTop: -30 } },
+              '下拉刷新',
+            ),
+            h('div', { class: 'scroll-item' }, '内容'),
+          ])
+        },
+      } as unknown as DefineComponent,
+    },
+  ],
+  swiper: [
+    {
+      name: 'three-items',
+      component: {
+        render(h) {
+          return h(Swiper, {}, [
+            h(SwiperItem, {}, [h('div', { class: 'sw-item' }, '第 1 页')]),
+            h(SwiperItem, {}, [h('div', { class: 'sw-item' }, '第 2 页')]),
+            h(SwiperItem, {}, [h('div', { class: 'sw-item' }, '第 3 页')]),
+          ])
+        },
+      } as unknown as DefineComponent,
+    },
+  ],
+  slider: [
+    { name: 'single', component: Slider, props: { value: 20 } },
+    { name: 'range', component: Slider, props: { value: [20, 80], range: true } },
+    { name: 'disabled', component: Slider, props: { value: 40, disabled: true } },
   ],
 }

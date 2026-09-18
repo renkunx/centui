@@ -124,15 +124,30 @@
       "import": "./dist/radio-list.js",
       "require": "./dist/radio-list.cjs"
     },
+    "./es/scroll-view": {
+      "types": "./dist/scroll-view.d.ts",
+      "import": "./dist/scroll-view.js",
+      "require": "./dist/scroll-view.cjs"
+    },
     "./es/skeleton": {
       "types": "./dist/skeleton.d.ts",
       "import": "./dist/skeleton.js",
       "require": "./dist/skeleton.cjs"
     },
+    "./es/slider": {
+      "types": "./dist/slider.d.ts",
+      "import": "./dist/slider.js",
+      "require": "./dist/slider.cjs"
+    },
     "./es/stepper": {
       "types": "./dist/stepper.d.ts",
       "import": "./dist/stepper.js",
       "require": "./dist/stepper.cjs"
+    },
+    "./es/swiper": {
+      "types": "./dist/swiper.d.ts",
+      "import": "./dist/swiper.js",
+      "require": "./dist/swiper.cjs"
     },
     "./es/switch": {
       "types": "./dist/switch.d.ts",
