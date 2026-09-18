@@ -32,6 +32,15 @@
 @import '../../../packages/styles/dist/es/toast.css';
 
 /*
+ * Starlight 的内容流间距规则（相邻块级元素 margin-top: var(--sl-content-gap-y)）
+ * 会命中 demo 岛内部的相邻元素（如 demo-switcher 的 button + button），
+ * 按钮被内容间距撑高——在 demo 岛内部关闭该流间距（岛自身与相邻内容块的间距保留）。
+ */
+.sl-markdown-content .demo-canvas :not(a, strong, em, del, span, input, code, br) + :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
+  margin-top: 0;
+}
+
+/*
  * v2 全局 reset 的等价物，仅作用于 demo 预览容器（手机壳屏幕 / 普通画布），
  * 保证组件在文档站内与真实移动端一致的渲染基线。
  */
