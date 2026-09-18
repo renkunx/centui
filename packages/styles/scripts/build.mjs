@@ -2,8 +2,12 @@
  * 样式编译流水线（对齐 v2 lib 产物语义）：
  * 1. 每个组件 .styl 经 stylus 编译（注入 theme.components/theme.basic/util 全局变量）
  * 2. postcss：autoprefixer（iOS>=8/Android>4）→ cssnano（对齐 v2 preset 微调）→ url inline
- * 3. 产物：dist/index.css（全量，含 global.styl）+ dist/es/<name>.css（按需）
- * 与 v2 差异：px 保持原样（v2 发布产物同样不落 pxtorem，rem 转换留给用户侧 postcss）
+ * 3. 产物：dist/index.css（全量，纯组件样式）+ dist/es/<name>.css（按需）
+ *    + dist/global.css（可选的全局 reset 与字体，v2 语义，由使用方显式引入）
+ * 与 v2 差异：
+ *   - index.css 不再内联 global.styl——组件库不得影响组件之外的样式，
+ *     需要 v2 全局 reset 的项目自行引入 @mand-mobile/styles/global.css
+ *   - px 保持原样（v2 发布产物同样不落 pxtorem，rem 转换留给用户侧 postcss）
  */
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
@@ -72,7 +76,8 @@ async function main() {
   const files = readdirSync(join(SRC, 'components'))
     .filter(f => f.endsWith('.styl'))
     .sort()
-  const bundles = [globalCss]
+  // index.css 为纯组件样式聚合，不含 globalCss（见文件头注释）
+  const bundles = []
   let failed = 0
 
   for (const file of files) {
