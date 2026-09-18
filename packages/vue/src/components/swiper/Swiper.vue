@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="root"
     class="md-swiper"
     :class="{ 'md-swiper-vertical': isVertical, 'md-swiper-fade': !isSlide, disabled: !isInitial }"
     @mousedown="onDragStart"
@@ -13,11 +14,13 @@
   >
     <div ref="swiperBox" class="md-swiper-box">
       <div ref="swiper" class="md-swiper-container">
+        <!-- v2 契约：lastCopy 置于最前、firstCopy 追加最后（[c3, 1, 2, 3, c1]） -->
+        <template v-if="loopCopies && $slots.default">
+          <VNodeRenderer :vnode="lastCopyVnode" v-if="lastCopyVnode" />
+        </template>
         <slot></slot>
-        <!-- loop 模式首尾拷贝（v2 为 DOM clone，Vue3 渲染级拷贝） -->
         <template v-if="loopCopies && $slots.default">
           <VNodeRenderer :vnode="firstCopyVnode" v-if="firstCopyVnode" />
-          <VNodeRenderer :vnode="lastCopyVnode" v-if="lastCopyVnode" />
         </template>
       </div>
     </div>
@@ -128,7 +131,6 @@ interface ComponentPublicInstanceLike {
 
 // 子项注册（由 MdSwiperItem 调用）
 function registerItem(item: ComponentPublicInstanceLike) {
-  console.log('[registerItem] isCopy=', (item as unknown as { $props: { isCopy?: boolean } }).$props?.isCopy)
   itemInstances.push(item)
   if (ready.value) {
     debouncedReInit()

@@ -269,3 +269,9 @@
 .scroll-demo-box--short .md-scroll-view {
   height: 100%;
 }
+
+.scroll-demo-box,
+.scroll-demo-box--short,
+.swiper-demo-box {
+  width: 100%;
+}
