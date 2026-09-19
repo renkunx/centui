@@ -47,6 +47,9 @@ import {
   Landscape,
   Selector,
   DropMenu,
+  Bill,
+  ImageViewer,
+  Captcha,
 } from 'mand-mobile'
 import { defineComponent } from 'vue'
 
@@ -449,6 +452,49 @@ export const scenarios: Record<string, Scenario[]> = {
         ],
         defaultValue: ['2'],
       },
+    },
+  ],
+  bill: [
+    {
+      name: 'basic',
+      component: Bill,
+      props: { title: '借款电子凭证', no: '12345689' },
+      slots: { default: '<md-field-item title="借款金额" content="¥30,000" />' },
+    },
+    {
+      name: 'header-slot',
+      component: Bill,
+      slots: {
+        header: '<div class="bill-header">自定义头部</div>',
+        default: '<p>内容</p>',
+        footer: '<button class="bill-footer-btn">刷新</button>',
+      },
+    },
+  ],
+  'image-viewer': [
+    {
+      name: 'closed',
+      component: ImageViewer,
+      props: {
+        list: ['https://example.com/a.png', 'https://example.com/b.png'],
+      },
+    },
+    {
+      name: 'open',
+      component: ImageViewer,
+      props: {
+        value: true,
+        list: ['https://example.com/a.png', 'https://example.com/b.png'],
+        initialIndex: 1,
+      },
+    },
+  ],
+  captcha: [
+    {
+      name: 'inline',
+      component: Captcha,
+      props: { isView: true, title: '输入验证码', brief: '验证码已发送至 138****1234', maxlength: 4 },
+      slots: { default: '短信验证码已发送' },
     },
   ],
   'date-picker': [
