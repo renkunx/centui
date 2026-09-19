@@ -1,0 +1,45 @@
+{
+  "component": "drop-menu",
+  "props": [
+    {
+      "name": "data",
+      "type": "Array<{text, options, disabled?}>",
+      "default": "[]",
+      "desc": "菜单栏数据源",
+      "required": false
+    },
+    {
+      "name": "defaultValue",
+      "type": "Array<string | number>",
+      "default": "[]",
+      "desc": "默认选中值（按栏索引）",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "change",
+      "desc": "选中列表项时触发，参数 (barItem, listItem)"
+    },
+    {
+      "name": "show / hide",
+      "desc": "展开/收起时触发"
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "选项内容插槽，作用域参数 option"
+    }
+  ],
+  "methods": [
+    {
+      "name": "getSelectedValues()",
+      "desc": "获取全部选中项"
+    },
+    {
+      "name": "getSelectedValue(index)",
+      "desc": "获取指定栏选中项"
+    }
+  ]
+}

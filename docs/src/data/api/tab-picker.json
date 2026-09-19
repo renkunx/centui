@@ -1,0 +1,81 @@
+{
+  "component": "tab-picker",
+  "props": [
+    {
+      "name": "modelValue / value",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否显示",
+      "required": false
+    },
+    {
+      "name": "data",
+      "type": "Object",
+      "default": "{}",
+      "desc": "级联数据源（name/label/options/children）",
+      "required": false
+    },
+    {
+      "name": "defaultValue",
+      "type": "Array<string | number>",
+      "default": "[]",
+      "desc": "默认选中路径",
+      "required": false
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "default": "'请选择'",
+      "desc": "未选中层级占位文案",
+      "required": false
+    },
+    {
+      "name": "title / describe",
+      "type": "string",
+      "default": "''",
+      "desc": "标题/描述",
+      "required": false
+    },
+    {
+      "name": "maskClosable",
+      "type": "boolean",
+      "default": "true",
+      "desc": "点击遮罩是否关闭",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "update:modelValue / input",
+      "desc": "显隐状态变化时触发"
+    },
+    {
+      "name": "select",
+      "desc": "选中某级选项时触发"
+    },
+    {
+      "name": "change",
+      "desc": "最后一级选中后触发，参数 values / options"
+    },
+    {
+      "name": "show / hide",
+      "desc": "显示/隐藏时触发"
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "选项内容插槽，作用域参数 option"
+    }
+  ],
+  "methods": [
+    {
+      "name": "getSelectedValues()",
+      "desc": "获取选中值路径"
+    },
+    {
+      "name": "getSelectedOptions()",
+      "desc": "获取选中项对象"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "component": "selector",
+  "props": [
+    {
+      "name": "modelValue / value",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否显示",
+      "required": false
+    },
+    {
+      "name": "data",
+      "type": "Array<{value, text, ...}>",
+      "default": "[]",
+      "desc": "选项数据源",
+      "required": false
+    },
+    {
+      "name": "defaultValue",
+      "type": "string | number | Array",
+      "default": "''",
+      "desc": "默认选中值",
+      "required": false
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "标题",
+      "required": false
+    },
+    {
+      "name": "describe",
+      "type": "string",
+      "default": "''",
+      "desc": "描述文案",
+      "required": false
+    },
+    {
+      "name": "okText",
+      "type": "string",
+      "default": "''",
+      "desc": "确认按钮文案（为空则选中即关闭）",
+      "required": false
+    },
+    {
+      "name": "cancelText",
+      "type": "string",
+      "default": "-",
+      "desc": "取消按钮文案",
+      "required": false
+    },
+    {
+      "name": "multi",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否多选",
+      "required": false
+    },
+    {
+      "name": "maskClosable",
+      "type": "boolean",
+      "default": "true",
+      "desc": "点击遮罩是否关闭",
+      "required": false
+    },
+    {
+      "name": "hideTitleBar",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否隐藏标题栏",
+      "required": false
+    },
+    {
+      "name": "maxHeight / minHeight",
+      "type": "string | number",
+      "default": "'auto'",
+      "desc": "内容区高度限制",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "update:modelValue",
+      "desc": "显隐状态变化时触发"
+    },
+    {
+      "name": "choose",
+      "desc": "选中某项时触发，参数为选中项"
+    },
+    {
+      "name": "confirm",
+      "desc": "确认时触发（okText 存在或多选）"
+    },
+    {
+      "name": "cancel / show / hide",
+      "desc": "取消/显示/隐藏时触发"
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "选项内容插槽，作用域参数 option / index / selected"
+    },
+    {
+      "name": "header / footer",
+      "desc": "列表头部/底部插槽"
+    }
+  ]
+}
