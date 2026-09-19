@@ -1,0 +1,63 @@
+{
+  "component": "landscape",
+  "props": [
+    {
+      "name": "modelValue / value",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否显示",
+      "required": false
+    },
+    {
+      "name": "scroll",
+      "type": "boolean",
+      "default": "false",
+      "desc": "内容是否滚动",
+      "required": false
+    },
+    {
+      "name": "fullScreen",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否全屏",
+      "required": false
+    },
+    {
+      "name": "hasMask",
+      "type": "boolean",
+      "default": "true",
+      "desc": "是否显示遮罩",
+      "required": false
+    },
+    {
+      "name": "maskClosable",
+      "type": "boolean",
+      "default": "false",
+      "desc": "点击遮罩是否关闭",
+      "required": false
+    },
+    {
+      "name": "transition",
+      "type": "string",
+      "default": "-",
+      "desc": "过渡动画（默认按 fullScreen 区分 md-fade / md-punch）",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "update:modelValue",
+      "desc": "关闭时触发"
+    },
+    {
+      "name": "show / hide",
+      "desc": "显示/隐藏后触发"
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "横屏内容"
+    }
+  ]
+}

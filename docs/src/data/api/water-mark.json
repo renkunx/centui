@@ -1,0 +1,58 @@
+{
+  "component": "water-mark",
+  "props": [
+    {
+      "name": "content",
+      "type": "string",
+      "default": "''",
+      "desc": "水印文字（canvas 绘制）",
+      "required": false
+    },
+    {
+      "name": "spacing",
+      "type": "string | number",
+      "default": "'20vw'",
+      "desc": "水印间距，支持 vw/vh/px",
+      "required": false
+    },
+    {
+      "name": "repeatX",
+      "type": "boolean",
+      "default": "true",
+      "desc": "横向是否平铺",
+      "required": false
+    },
+    {
+      "name": "repeatY",
+      "type": "boolean",
+      "default": "true",
+      "desc": "纵向是否平铺",
+      "required": false
+    },
+    {
+      "name": "rotate",
+      "type": "string | number",
+      "default": "-30",
+      "desc": "旋转角度",
+      "required": false
+    },
+    {
+      "name": "opacity",
+      "type": "string | number",
+      "default": "0.1",
+      "desc": "透明度",
+      "required": false
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "业务内容"
+    },
+    {
+      "name": "watermark",
+      "desc": "水印内容（插槽平铺模式），作用域参数 coord {row, col}"
+    }
+  ]
+}

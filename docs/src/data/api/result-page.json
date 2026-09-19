@@ -1,0 +1,42 @@
+{
+  "component": "result-page",
+  "props": [
+    {
+      "name": "type",
+      "type": "string",
+      "default": "'empty'",
+      "desc": "类型：empty / network / lost（决定默认图与文案）",
+      "required": false
+    },
+    {
+      "name": "imgUrl",
+      "type": "string",
+      "default": "''",
+      "desc": "自定义图片链接",
+      "required": false
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "default": "''",
+      "desc": "主文案",
+      "required": false
+    },
+    {
+      "name": "subtext",
+      "type": "string",
+      "default": "''",
+      "desc": "副文案",
+      "required": false
+    },
+    {
+      "name": "buttons",
+      "type": "Array<{text, type?, plain?, handler?}>",
+      "default": "[]",
+      "desc": "按钮组",
+      "required": false
+    }
+  ],
+  "events": [],
+  "slots": []
+}

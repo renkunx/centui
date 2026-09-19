@@ -1,0 +1,68 @@
+{
+  "component": "ruler",
+  "props": [
+    {
+      "name": "modelValue / value",
+      "type": "number",
+      "default": "0",
+      "desc": "当前值",
+      "required": false
+    },
+    {
+      "name": "scope",
+      "type": "number[]",
+      "default": "[0, 100]",
+      "desc": "可选值范围",
+      "required": false
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "default": "10",
+      "desc": "刻度步长（有数字标注的刻度间隔）",
+      "required": false
+    },
+    {
+      "name": "unit",
+      "type": "number",
+      "default": "1",
+      "desc": "刻度单位（最小刻度间隔）",
+      "required": false
+    },
+    {
+      "name": "min",
+      "type": "number",
+      "default": "0",
+      "desc": "最小可用值（边界外刻度置灰）",
+      "required": false
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "default": "100",
+      "desc": "最大可用值",
+      "required": false
+    },
+    {
+      "name": "stepTextPosition",
+      "type": "string",
+      "default": "'top'",
+      "desc": "刻度文案位置：top / bottom",
+      "required": false
+    },
+    {
+      "name": "stepTextRender",
+      "type": "(step) => string",
+      "default": "-",
+      "desc": "自定义刻度文案",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "update:modelValue / onChange",
+      "desc": "值变化时触发"
+    }
+  ],
+  "slots": []
+}
