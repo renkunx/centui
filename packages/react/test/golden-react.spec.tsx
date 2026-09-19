@@ -50,6 +50,7 @@ import {
   MdLandscape,
   MdSelector,
   MdDropMenu,
+  MdCaptcha,
 } from '../src'
 
 /**
@@ -543,6 +544,21 @@ const scenarios: Record<string, Scenario[]> = {
           ]}
           defaultValue={['2']}
         />
+      ),
+    },
+  ],
+  captcha: [
+    {
+      name: 'inline',
+      element: (
+        <MdCaptcha
+          isView
+          title="输入验证码"
+          brief="验证码已发送至 138****1234"
+          maxlength={4}
+        >
+          短信验证码已发送
+        </MdCaptcha>
       ),
     },
   ],

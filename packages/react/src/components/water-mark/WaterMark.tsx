@@ -12,6 +12,7 @@ export interface WaterMarkProps {
   watermark?: ReactNode
   /** 水印插槽作用域（v2 coord） */
   renderWatermark?: (coord: { row: number; col: number }) => ReactNode
+  className?: string
   children?: ReactNode
 }
 
@@ -28,6 +29,7 @@ export const MdWaterMark = forwardRef<HTMLDivElement, WaterMarkProps>(function M
     opacity = 0.1,
     watermark,
     renderWatermark,
+    className,
     children,
   },
   ref,
@@ -104,7 +106,7 @@ export const MdWaterMark = forwardRef<HTMLDivElement, WaterMarkProps>(function M
   const items = repeatX ? Array.from({ length: repetition }, (_, i) => i + 1) : [1]
 
   return (
-    <div className="md-water-mark" ref={ref}>
+    <div className={`md-water-mark${className ? ` ${className}` : ''}`} ref={ref}>
       <div className="water-mark-container">{children}</div>
       {hasWatermark ? (
         <div className="water-mark-list" ref={markRef}>

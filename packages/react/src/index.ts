@@ -91,3 +91,8 @@ export {
   type TabPickerProps,
   type TabPickerExposed,
 } from './components/tab-picker'
+
+// M6-5 组合展示类
+export { MdBill, type BillProps } from './components/bill'
+export { MdImageViewer, type ImageViewerItem, type ImageViewerProps } from './components/image-viewer'
+export { MdCaptcha, type CaptchaProps } from './components/captcha'

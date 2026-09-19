@@ -23,6 +23,8 @@ export interface DialogBtn {
 
 export interface DialogProps {
   value?: boolean
+  /** v2 透传属性：渲染为根节点 position attribute */
+  position?: string
   title?: string
   icon?: string
   iconSvg?: boolean
@@ -31,7 +33,7 @@ export interface DialogProps {
   btns?: DialogBtn[]
   /** row | column */
   layout?: string
-  appendTo?: HTMLElement | null
+  appendTo?: HTMLElement | null | false
   hasMask?: boolean
   maskClosable?: boolean
   transition?: string
@@ -55,6 +57,7 @@ export const MdDialog = forwardRef<DialogExposed, DialogProps>(function MdDialog
     icon = '',
     iconSvg = false,
     closable = true,
+    position,
     content = '',
     btns = [],
     layout = 'row',
@@ -77,7 +80,7 @@ export const MdDialog = forwardRef<DialogExposed, DialogProps>(function MdDialog
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null | undefined>(undefined)
 
   useEffect(() => {
-    setPortalTarget(appendTo === undefined ? document.body : appendTo)
+    setPortalTarget(appendTo === false ? null : appendTo === undefined ? document.body : appendTo)
   }, [appendTo])
 
   useImperativeHandle(ref, () => ({ close: () => onChange?.(false) }), [onChange])
@@ -96,7 +99,7 @@ export const MdDialog = forwardRef<DialogExposed, DialogProps>(function MdDialog
   }
 
   const dialogTree = (
-    <div ref={rootRef} className="md-dialog">
+    <div ref={rootRef} className="md-dialog" {...(position ? ({ position } as object) : {})}>
       <MdPopup
         value={value}
         hasMask={hasMask}
