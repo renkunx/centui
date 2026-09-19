@@ -38,6 +38,14 @@ import {
   MdSwiper,
   MdSwiperItem,
   MdToast,
+  MdActionBar,
+  MdDetailItem,
+  MdTextareaItem,
+  MdSteps,
+  MdTabs,
+  MdTabBar,
+  MdTabPane,
+  MdTransition,
 } from '../src'
 
 /**
@@ -319,6 +327,129 @@ const scenarios: Record<string, Scenario[]> = {
     { name: 'single', element: <MdSlider value={20} /> },
     { name: 'range', element: <MdSlider value={[20, 80]} range /> },
     { name: 'disabled', element: <MdSlider value={40} disabled /> },
+  ],
+  'action-bar': [
+    { name: 'single', element: <MdActionBar actions={[{ text: '主要按钮' }]} /> },
+    {
+      name: 'double',
+      element: <MdActionBar actions={[{ text: '次要按钮' }, { text: '主要按钮' }]} />,
+    },
+    {
+      name: 'disabled',
+      element: <MdActionBar actions={[{ text: '禁用按钮', disabled: true }]} />,
+    },
+    {
+      name: 'with-text',
+      element: (
+        <MdActionBar actions={[{ text: '主要按钮' }]}>
+          <p className="bar-text">合计：¥128.00</p>
+        </MdActionBar>
+      ),
+    },
+  ],
+  'detail-item': [
+    { name: 'basic', element: <MdDetailItem title="标题" content="内容" /> },
+    { name: 'bold', element: <MdDetailItem title="标题" content="内容" bold /> },
+    { name: 'slot', element: <MdDetailItem title="标题">插槽内容</MdDetailItem> },
+  ],
+  'textarea-item': [
+    { name: 'basic', element: <MdTextareaItem title="标题" placeholder="请输入" /> },
+    { name: 'value', element: <MdTextareaItem title="标题" value="预置内容" /> },
+    { name: 'clearable', element: <MdTextareaItem title="标题" value="可清除内容" clearable /> },
+    { name: 'disabled', element: <MdTextareaItem title="标题" value="禁用内容" disabled /> },
+    { name: 'error', element: <MdTextareaItem title="标题" value="出错了" error="错误提示" /> },
+    { name: 'rows', element: <MdTextareaItem title="标题" rows={5} placeholder="五行" /> },
+  ],
+  steps: [
+    {
+      name: 'horizontal',
+      element: <MdSteps steps={[{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }]} current={1} />,
+    },
+    {
+      name: 'with-desc',
+      element: (
+        <MdSteps
+          steps={[
+            { name: '下单', text: '2016-12-12' },
+            { name: '付款', text: '2016-12-13' },
+            { name: '发货', text: '2016-12-14' },
+          ]}
+          current={2}
+        />
+      ),
+    },
+    {
+      name: 'vertical',
+      element: (
+        <MdSteps steps={[{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }]} current={1} direction="vertical" />
+      ),
+    },
+    {
+      name: 'fraction-current',
+      element: <MdSteps steps={[{ name: '第一步' }, { name: '第二步' }]} current={0.5} />,
+    },
+  ],
+  'tab-bar': [
+    {
+      name: 'items',
+      element: (
+        <MdTabBar
+          items={[
+            { name: 'a', label: '第一项' },
+            { name: 'b', label: '第二项' },
+            { name: 'c', label: '第三项' },
+          ]}
+        />
+      ),
+    },
+  ],
+  tabs: [
+    {
+      name: 'basic',
+      element: (
+        <MdTabs>
+          <MdTabPane label="标签一" name="a">内容一</MdTabPane>
+          <MdTabPane label="标签二" name="b">内容二</MdTabPane>
+        </MdTabs>
+      ),
+    },
+    {
+      name: 'second-active',
+      element: (
+        <MdTabs value="b">
+          <MdTabPane label="标签一" name="a">内容一</MdTabPane>
+          <MdTabPane label="标签二" name="b">内容二</MdTabPane>
+          <MdTabPane label="标签三" name="c">内容三</MdTabPane>
+        </MdTabs>
+      ),
+    },
+    {
+      name: 'no-ink',
+      element: (
+        <MdTabs hasInk={false}>
+          <MdTabPane label="标签一" name="a">内容一</MdTabPane>
+          <MdTabPane label="标签二" name="b">内容二</MdTabPane>
+        </MdTabs>
+      ),
+    },
+  ],
+  transition: [
+    {
+      name: 'fade',
+      element: (
+        <MdTransition name="md-fade">
+          <div className="trans-demo">内容</div>
+        </MdTransition>
+      ),
+    },
+    {
+      name: 'bounce',
+      element: (
+        <MdTransition name="md-bounce">
+          <div className="trans-demo">内容</div>
+        </MdTransition>
+      ),
+    },
   ],
 }
 

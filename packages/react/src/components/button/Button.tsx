@@ -33,6 +33,7 @@ export function MdButton({
   loading = false,
   children,
   onClick,
+  className,
   ...rest
 }: ButtonProps) {
   return (
@@ -46,6 +47,8 @@ export function MdButton({
         round ? 'round' : '',
         plain ? 'plain' : '',
         size === 'small' ? 'small' : '',
+        // v2 契约：外部 class 与组件 class 合并（Vue 透传语义）
+        className,
       ]
         .filter(Boolean)
         .join(' ')}

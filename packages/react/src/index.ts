@@ -46,3 +46,26 @@ export * from './components/picker/DatePicker'
 export { MdScrollView, MdScrollViewRefresh, MdScrollViewMore, type ScrollViewProps } from './components/scroll-view'
 export { MdSwiper, MdSwiperItem, type SwiperProps, type SwiperExposed } from './components/swiper/Swiper'
 export { MdSlider, type SliderProps } from './components/slider/Slider'
+
+// M6-2 展示与排版类
+export { MdActionBar, type ActionBarAction, type ActionBarProps } from './components/action-bar'
+export { MdDetailItem, type DetailItemProps } from './components/detail-item'
+export {
+  MdTextareaItem,
+  type TextareaItemProps,
+  type TextareaItemExposed,
+} from './components/textarea-item'
+export { MdSteps, type StepItem, type StepsProps } from './components/steps'
+export {
+  MdTabs,
+  MdTabBar,
+  MdTabPane,
+  useTabsContext,
+  type TabsProps,
+  type TabsExposed,
+  type TabBarItem,
+  type TabBarProps,
+  type TabBarExposed,
+  type TabPaneProps,
+} from './components/tabs'
+export { MdTransition, type TransitionProps } from './components/transition'

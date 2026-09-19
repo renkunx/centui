@@ -40,6 +40,8 @@ export function normalizeForCompare(html: string): string {
     .replace(/([:a-zA-Z-]+)="true"/g, '$1=""')
     .replace(/\s*style=""/g, '')
     .replace(/(<input[^>]*?)\svalue="[^"]*"/g, '$1')
+    // 11. textarea 内容：值由 DOM property 承载（v2 html() 序列化为空），React+jsdom 会反射子文本 → 统一剥离
+    .replace(/(<textarea[^>]*>)[^<]*?(<\/textarea>)/g, '$1$2')
     .replace(/(<input[^>]*?)\sname="[^"]*"/g, '$1')
     // 10. 动态 transform：scroller/进度动画写入的 -webkit-transform / transform 内联声明
     //     属运行时几何状态（jsdom 几何为 0），非结构契约 → 剥离
