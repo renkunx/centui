@@ -96,3 +96,24 @@ export {
 export { MdBill, type BillProps } from './components/bill'
 export { MdImageViewer, type ImageViewerItem, type ImageViewerProps } from './components/image-viewer'
 export { MdCaptcha, type CaptchaProps } from './components/captcha'
+
+// M6-6 收官批次
+export { MdChart, type ChartDataset, type ChartProps } from './components/chart'
+export { MdImageReader, type ImageReaderProps } from './components/image-reader'
+export {
+  MdLicensePlate,
+  MdLicensePlateInput,
+  MdLicensePlateKeyboard,
+  type LicensePlateProps,
+  type LicenseKeyItem,
+} from './components/license-plate'
+export {
+  MdCashier,
+  MdCashierChannel,
+  MdCashierChannelButton,
+  MdCashierChannelItem,
+  type CashierProps,
+  type CashierScene,
+  type CashierChannel,
+} from './components/cashier'
+export { MdRollerSuccess, type RollerSuccessProps } from './components/activity-indicator'

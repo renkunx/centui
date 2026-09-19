@@ -218,6 +218,7 @@ export const MdCaptcha = forwardRef<
           justify
           autofocus={false}
           inputType={inputType}
+          onChange={setCode}
           onSubmit={onSubmit}
         >
           {footer}
@@ -261,6 +262,7 @@ export const MdCaptcha = forwardRef<
             autofocus={false}
             inputType={inputType}
             isErrorStyle={isShowErrorStyle}
+            onChange={setCode}
             onSubmit={onSubmit}
           >
             <footer className={`md-captcha-footer${isKeyboard ? ' halfStyle' : ''}`}>
@@ -314,6 +316,7 @@ export const MdCaptcha = forwardRef<
           justify
           autofocus={false}
           inputType={inputType}
+          onChange={setCode}
           onSubmit={onSubmit}
         >
           {footer}

@@ -73,10 +73,18 @@ export const MdCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function MdCod
   const maxLengthNum = Number(maxlength)
   const num = Math.abs(parseInt(String(maxlength), 10)) || 1
 
-  // 外部 value 同步（v2 watch 契约）
+  // 外部 value 同步（v2 watch 契约）：仅当外部 value 变化时覆盖内部状态
+  const prevValueRef = useRef(value)
   useEffect(() => {
-    if (value !== codeRef.current) {
-      setCode(value)
+    if (prevValueRef.current !== value) {
+      prevValueRef.current = value
+      if (value !== codeRef.current) {
+        codeRef.current = value
+        setCode(value)
+        if (inputRef.current) {
+          inputRef.current.value = value
+        }
+      }
     }
   }, [value])
 
@@ -122,6 +130,7 @@ export const MdCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function MdCod
   }))
 
   const emitChange = (next: string) => {
+    codeRef.current = next
     setCode(next)
     onChange?.(next)
   }
@@ -217,11 +226,12 @@ export const MdCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function MdCod
       >
         <input
           ref={inputRef}
-          value={code}
+          defaultValue={code}
           type={inputType}
           maxLength={maxLengthNum}
           className="md-codebox-input"
           onInput={onNativeInput}
+          onChange={onNativeInput as never}
           onFocus={() => onFocus?.()}
           onBlur={() => {
             setFocused(false)
