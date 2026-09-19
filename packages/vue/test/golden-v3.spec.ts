@@ -48,6 +48,8 @@ import {
   MdTransition,
   MdResultPage,
   MdLandscape,
+  MdSelector,
+  MdDropMenu,
 } from '../src'
 
 interface V3Scenario {
@@ -607,6 +609,52 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
       component: MdLandscape,
       props: { modelValue: true, fullScreen: true },
       slots: { default: '<p class="ls-content">横屏内容</p>' },
+    },
+  ],
+  selector: [
+    { name: 'closed', component: MdSelector, props: { data: [] } },
+    {
+      name: 'open',
+      component: MdSelector,
+      props: {
+        modelValue: true,
+        title: '选择地区',
+        data: [
+          { value: '1', text: '选项一' },
+          { value: '2', text: '选项二' },
+          { value: '3', text: '选项三' },
+        ],
+        defaultValue: '2',
+      },
+    },
+    {
+      name: 'multi-check',
+      component: MdSelector,
+      props: {
+        modelValue: true,
+        multi: true,
+        title: '多选',
+        okText: '确定',
+        data: [
+          { value: 'a', text: '选项 A' },
+          { value: 'b', text: '选项 B' },
+        ],
+        defaultValue: ['a'],
+      },
+    },
+  ],
+  'drop-menu': [
+    {
+      name: 'bar',
+      component: MdDropMenu,
+      props: {
+        data: [
+          { text: '类别', options: [{ value: '1', text: '全部' }, { value: '2', text: '数码' }] },
+          { text: '排序', options: [{ value: '3', text: '默认' }, { value: '4', text: '价格' }] },
+          { text: '禁用项', disabled: true, options: [] },
+        ],
+        defaultValue: ['2'],
+      },
     },
   ],
   'date-picker': [
