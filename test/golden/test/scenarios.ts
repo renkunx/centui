@@ -48,6 +48,10 @@ import {
   Selector,
   DropMenu,
   Captcha,
+  Chart,
+  ImageReader,
+  LicensePlate,
+  Cashier,
 } from 'mand-mobile'
 import { defineComponent } from 'vue'
 
@@ -458,6 +462,68 @@ export const scenarios: Record<string, Scenario[]> = {
       component: Captcha,
       props: { isView: true, title: '输入验证码', brief: '验证码已发送至 138****1234', maxlength: 4 },
       slots: { default: '短信验证码已发送' },
+    },
+  ],
+  chart: [
+    {
+      name: 'basic',
+      component: Chart,
+      props: {
+        labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        datasets: [
+          {
+            color: '#5b8ff9',
+            width: 1,
+            values: [120, 350, 420, 260, 180, 300, 450],
+          },
+        ],
+        size: [480, 270],
+        max: 500,
+        min: 0,
+        lines: 5,
+        step: 100,
+      },
+    },
+    {
+      name: 'region',
+      component: Chart,
+      props: {
+        labels: ['1', '2', '3', '4'],
+        datasets: [
+          {
+            color: '#fa8919',
+            theme: 'region',
+            width: 1,
+            values: [100, 200, 150, 300],
+          },
+        ],
+        size: [480, 270],
+        max: 300,
+        min: 0,
+        lines: 4,
+        step: 75,
+      },
+    },
+  ],
+  'image-reader': [
+    { name: 'default', component: ImageReader, props: {} },
+  ],
+  'license-plate': [
+    { name: 'division', component: LicensePlate, props: { defaultValue: '浙AD12345' } },
+  ],
+  cashier: [
+    {
+      name: 'choose',
+      component: Cashier,
+      props: {
+        value: true,
+        title: '支付',
+        paymentAmount: '1000.00',
+        channels: [
+          { text: '招商银行储蓄卡', desc: '招商银行(1234)' },
+          { text: '支付宝', img: 'https://img.alipay.com/static/img/alipay.png' },
+        ],
+      },
     },
   ],
   'date-picker': [
