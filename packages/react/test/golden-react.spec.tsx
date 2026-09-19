@@ -48,6 +48,8 @@ import {
   MdTransition,
   MdResultPage,
   MdLandscape,
+  MdSelector,
+  MdDropMenu,
 } from '../src'
 
 /**
@@ -492,6 +494,55 @@ const scenarios: Record<string, Scenario[]> = {
         <MdLandscape value fullScreen>
           <p className="ls-content">横屏内容</p>
         </MdLandscape>
+      ),
+    },
+  ],
+  selector: [
+    { name: 'closed', element: <MdSelector data={[]} /> },
+    {
+      name: 'open',
+      element: (
+        <MdSelector
+          value
+          title="选择地区"
+          data={[
+            { value: '1', text: '选项一' },
+            { value: '2', text: '选项二' },
+            { value: '3', text: '选项三' },
+          ]}
+          defaultValue="2"
+        />
+      ),
+    },
+    {
+      name: 'multi-check',
+      element: (
+        <MdSelector
+          value
+          multi
+          title="多选"
+          okText="确定"
+          data={[
+            { value: 'a', text: '选项 A' },
+            { value: 'b', text: '选项 B' },
+          ]}
+          defaultValue={['a']}
+        />
+      ),
+    },
+  ],
+  'drop-menu': [
+    {
+      name: 'bar',
+      element: (
+        <MdDropMenu
+          data={[
+            { text: '类别', options: [{ value: '1', text: '全部' }, { value: '2', text: '数码' }] },
+            { text: '排序', options: [{ value: '3', text: '默认' }, { value: '4', text: '价格' }] },
+            { text: '禁用项', disabled: true, options: [] },
+          ]}
+          defaultValue={['2']}
+        />
       ),
     },
   ],

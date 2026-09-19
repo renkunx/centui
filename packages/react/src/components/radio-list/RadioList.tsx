@@ -13,6 +13,8 @@ export interface RadioListOption {
 }
 
 export interface RadioListProps {
+  /** 外部附加类名（对齐 Vue 透传语义） */
+  className?: string
   options?: RadioListOption[]
   value?: CheckValue
   hasInput?: boolean
@@ -38,6 +40,7 @@ export interface RadioListExposed {
 
 export const MdRadioList = forwardRef<RadioListExposed, RadioListProps>(function MdRadioList(
   {
+    className,
     options = [],
   value = '',
   hasInput = false,
@@ -116,7 +119,7 @@ export const MdRadioList = forwardRef<RadioListExposed, RadioListProps>(function
     ) : null
 
   return (
-    <div className={`md-radio-list${alignCenter ? ' is-align-center' : ''}`}>
+    <div className={`md-radio-list${className ? ` ${className}` : ''}${alignCenter ? ' is-align-center' : ''}`}>
       {options.map((item, index) => (
         <MdCellItem
           key={index}

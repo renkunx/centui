@@ -222,6 +222,7 @@ export interface CheckGroupProps {
   value?: CheckValue[]
   max?: number
   children?: ReactNode
+  className?: string
   onChange?: (value: CheckValue[]) => void
 }
 
@@ -229,6 +230,7 @@ export function MdCheckGroup({
   value = [],
   max = 0,
   children,
+  className,
   onChange,
 }: CheckGroupProps) {
   const childrenMap = new Map<string, CheckChild>()
@@ -284,7 +286,7 @@ export function MdCheckGroup({
 
   return (
     <CheckGroupContext.Provider value={group}>
-      <div className="md-check-group">{children}</div>
+      <div className={`md-check-group${className ? ` ${className}` : ''}`}>{children}</div>
     </CheckGroupContext.Provider>
   )
 }

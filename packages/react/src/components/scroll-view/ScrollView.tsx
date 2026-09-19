@@ -9,6 +9,7 @@ import { debounce } from '@mand-mobile/core'
 import { render, Scroller, type Scroller as ScrollerType } from '@mand-mobile/core/web'
 
 export interface ScrollViewProps {
+  style?: React.CSSProperties
   scrollingX?: boolean
   scrollingY?: boolean
   bouncing?: boolean
@@ -61,6 +62,7 @@ export const MdScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
     onEndReached,
     onEndReachedKebab,
     onScroll,
+    style,
   }: ScrollViewProps,
   ref,
 ) {
@@ -396,6 +398,7 @@ export const MdScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
     <div
       ref={rootRef}
       className="md-scroll-view"
+      style={style}
       onTouchStart={onScrollerTouchStart}
       onTouchMove={onScrollerTouchMove}
       onTouchEnd={onScrollerTouchEnd}

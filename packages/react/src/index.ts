@@ -75,3 +75,19 @@ export { MdWaterMark, type WaterMarkProps } from './components/water-mark'
 export { MdResultPage, type ResultPageButton, type ResultPageProps } from './components/result-page'
 export { MdRuler, type RulerProps } from './components/ruler'
 export { MdLandscape, type LandscapeProps } from './components/landscape'
+
+// M6-4 交互选择类
+export { MdSelector, type SelectorItem, type SelectorProps } from './components/selector'
+export {
+  MdDropMenu,
+  type DropMenuItem,
+  type DropMenuProps,
+  type DropMenuExposed,
+} from './components/drop-menu'
+export {
+  MdTabPicker,
+  type TabPickerNode,
+  type TabPickerOption,
+  type TabPickerProps,
+  type TabPickerExposed,
+} from './components/tab-picker'

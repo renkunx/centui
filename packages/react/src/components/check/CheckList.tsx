@@ -16,6 +16,8 @@ export interface CheckListOption {
 }
 
 export interface CheckListProps {
+  /** 外部附加类名（对齐 Vue 透传语义） */
+  className?: string
   options?: CheckListOption[]
   value?: CheckValue[]
   alignCenter?: boolean
@@ -33,6 +35,7 @@ export interface CheckListProps {
 export function MdCheckList({
   options = [],
   value = [],
+  className,
   alignCenter = false,
   isSlotScope,
   icon = 'checked',
@@ -72,7 +75,11 @@ export function MdCheckList({
   )
 
   return (
-    <MdCheckGroup value={value} onChange={onChange}>
+    <MdCheckGroup
+      value={value}
+      onChange={onChange}
+      className={`md-check-list${className ? ` ${className}` : ''}${alignCenter ? ' is-align-center' : ''}`}
+    >
       <InnerList
         options={items}
         alignCenter={alignCenter}
@@ -120,9 +127,7 @@ function InnerList({
   groupToggle: (name: CheckValue) => void
 }) {
   return (
-    <div
-      className={`md-check-list${alignCenter ? ' is-align-center' : ''}`}
-    >
+    <>
       {options.map(({ item, index, selected }) => (
         <MdCellItem
           key={index}
@@ -137,6 +142,6 @@ function InnerList({
           {hasSlot ? slotRender?.({ option: item, index, selected }) : null}
         </MdCellItem>
       ))}
-    </div>
+    </>
   )
 }
