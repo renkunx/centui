@@ -1,0 +1,152 @@
+{
+  "component": "captcha",
+  "props": [
+    {
+      "name": "modelValue / value",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否显示",
+      "required": false
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": "-",
+      "desc": "标题",
+      "required": false
+    },
+    {
+      "name": "subtitle",
+      "type": "string",
+      "default": "-",
+      "desc": "副标题（半屏模式描述）",
+      "required": false
+    },
+    {
+      "name": "brief",
+      "type": "string",
+      "default": "''",
+      "desc": "提示文案",
+      "required": false
+    },
+    {
+      "name": "maxlength",
+      "type": "number | string",
+      "default": "4",
+      "desc": "验证码位数",
+      "required": false
+    },
+    {
+      "name": "mask",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否掩码显示",
+      "required": false
+    },
+    {
+      "name": "system",
+      "type": "boolean",
+      "default": "false",
+      "desc": "使用系统键盘",
+      "required": false
+    },
+    {
+      "name": "autoSend",
+      "type": "boolean",
+      "default": "true",
+      "desc": "初始化后自动触发发送",
+      "required": false
+    },
+    {
+      "name": "autoCountdown",
+      "type": "boolean",
+      "default": "true",
+      "desc": "发送后自动倒计时",
+      "required": false
+    },
+    {
+      "name": "count",
+      "type": "number",
+      "default": "60",
+      "desc": "倒计时秒数",
+      "required": false
+    },
+    {
+      "name": "countNormalText",
+      "type": "string",
+      "default": "'发送验证码'",
+      "desc": "重发按钮文案",
+      "required": false
+    },
+    {
+      "name": "countActiveText",
+      "type": "string",
+      "default": "'{$1}s 后重发'",
+      "desc": "倒计时文案（{$1}为秒）",
+      "required": false
+    },
+    {
+      "name": "isView",
+      "type": "boolean",
+      "default": "false",
+      "desc": "内联展示",
+      "required": false
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "default": "'dialog'",
+      "desc": "形态：inline / halfScreen / dialog",
+      "required": false
+    },
+    {
+      "name": "disableSend",
+      "type": "boolean",
+      "default": "false",
+      "desc": "禁用重发按钮",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "update:modelValue",
+      "desc": "显隐变化时触发"
+    },
+    {
+      "name": "show / hide",
+      "desc": "显示/隐藏时触发"
+    },
+    {
+      "name": "submit",
+      "desc": "验证码输满时触发，参数为码值"
+    },
+    {
+      "name": "send",
+      "desc": "重发时触发，参数为 countdown 函数"
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "提示内容"
+    }
+  ],
+  "methods": [
+    {
+      "name": "countdown()",
+      "desc": "开始倒计时"
+    },
+    {
+      "name": "resetcount()",
+      "desc": "重置倒计时"
+    },
+    {
+      "name": "setError(msg)",
+      "desc": "设置错误提示"
+    },
+    {
+      "name": "close()",
+      "desc": "关闭验证码弹层"
+    }
+  ]
+}

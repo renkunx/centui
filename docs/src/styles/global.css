@@ -405,3 +405,25 @@
   font-size: 24px;
   color: #bbb;
 }
+
+/* M6-5 demo 样式（双框架共享） */
+.bill-demo-header,
+.bill-demo-text {
+  padding: 16px 32px;
+  font-size: 26px;
+  color: #333;
+}
+
+.viewer-demo,
+.captcha-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 40px 0;
+}
+
+.captcha-demo-result {
+  font-size: 26px;
+  color: #2f86f6;
+}

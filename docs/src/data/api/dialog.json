@@ -59,7 +59,7 @@
     },
     {
       "name": "appendTo",
-      "type": "HTMLElement | null",
+      "type": "HTMLElement | null | false",
       "default": "undefined",
       "desc": "",
       "required": false

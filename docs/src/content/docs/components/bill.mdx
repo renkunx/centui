@@ -1,0 +1,38 @@
+---
+title: 账单 Bill
+description: 账单票据组件，支持水印与自定义头尾部。
+---
+
+import ComponentDemoVue from '@/components/demos/bill/index.vue'
+import ComponentDemoReact from '@/components/demos-react/bill/index.tsx'
+import ApiTable from '@/components/ApiTable.astro'
+import api from '@/data/api/bill.json'
+
+**Bill** 组件交互预览与 API 说明。
+
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
+
+## 属性 Props
+
+<ApiTable title="属性" kind="props" rows={api.props} />
+
+## 事件 Events
+
+<ApiTable title="事件" kind="emits" rows={api.events} />
+
+## 插槽 Slots
+
+<ApiTable title="插槽" kind="slots" rows={api.slots} />

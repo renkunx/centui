@@ -1,0 +1,45 @@
+{
+  "component": "bill",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "账单标题",
+      "required": false
+    },
+    {
+      "name": "no",
+      "type": "string | number",
+      "default": "''",
+      "desc": "账单编号",
+      "required": false
+    },
+    {
+      "name": "waterMark",
+      "type": "string",
+      "default": "''",
+      "desc": "水印文字（canvas）",
+      "required": false
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "账单内容"
+    },
+    {
+      "name": "header",
+      "desc": "自定义头部（覆盖 title/no）"
+    },
+    {
+      "name": "footer",
+      "desc": "底部插槽"
+    },
+    {
+      "name": "watermark",
+      "desc": "自定义水印插槽"
+    }
+  ]
+}
