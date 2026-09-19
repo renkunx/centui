@@ -275,3 +275,49 @@
 .swiper-demo-box {
   width: 100%;
 }
+
+/* M6-2 demo 样式（双框架共享） */
+.tabs-demo-content {
+  padding: 32px;
+  font-size: 26px;
+  color: #666;
+  text-align: center;
+}
+
+.transition-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 40px 0;
+}
+
+.transition-demo-btn {
+  padding: 12px 32px;
+  font-size: 24px;
+  border: 1px solid #d9dbe1;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.transition-demo-box {
+  padding: 32px 48px;
+  background: #ebf2fd;
+  color: #2f86f6;
+  border-radius: 12px;
+  font-size: 26px;
+}
+
+/* ActionBar 为 fixed 定位，demo 内转为相对定位 */
+.action-bar-demo-box .md-action-bar {
+  position: relative;
+}
+
+/* Steps 需要占满容器宽度，图标/进度条才能按空间分布 */
+.steps-demo-box {
+  width: 100%;
+}
+
+.steps-demo-box .md-steps {
+  width: 100%;
+}

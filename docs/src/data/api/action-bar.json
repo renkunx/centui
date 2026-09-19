@@ -1,0 +1,24 @@
+{
+  "component": "action-bar",
+  "props": [
+    {
+      "name": "actions",
+      "type": "Array<{text, type?, plain?, disabled?, onClick?}>",
+      "default": "[]",
+      "desc": "按钮组，最多展示两个",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "desc": "按钮点击后触发，参数 (event, action)"
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "左侧文本区域"
+    }
+  ]
+}

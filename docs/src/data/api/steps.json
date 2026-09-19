@@ -1,0 +1,62 @@
+{
+  "component": "steps",
+  "props": [
+    {
+      "name": "steps",
+      "type": "Array<{name, text?}>",
+      "default": "[]",
+      "desc": "步骤数据",
+      "required": false
+    },
+    {
+      "name": "current",
+      "type": "number",
+      "default": "0",
+      "desc": "当前步骤，支持小数表示进行中",
+      "required": false
+    },
+    {
+      "name": "direction",
+      "type": "string",
+      "default": "'horizontal'",
+      "desc": "方向：horizontal / vertical",
+      "required": false
+    },
+    {
+      "name": "transition",
+      "type": "boolean",
+      "default": "false",
+      "desc": "进度条是否使用过渡动画",
+      "required": false
+    },
+    {
+      "name": "verticalAdaptive",
+      "type": "boolean",
+      "default": "false",
+      "desc": "纵向模式下高度自适应",
+      "required": false
+    },
+    {
+      "name": "custom",
+      "type": "boolean",
+      "default": "false",
+      "desc": "完全自定义渲染",
+      "required": false
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "icon",
+      "desc": "统一自定义图标，作用域参数 index / currentIndex"
+    },
+    {
+      "name": "reached / current / unreached",
+      "desc": "按状态自定义图标"
+    },
+    {
+      "name": "content",
+      "desc": "自定义文本，作用域参数 index / step"
+    }
+  ]
+}

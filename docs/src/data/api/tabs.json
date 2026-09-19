@@ -1,0 +1,55 @@
+{
+  "component": "tabs",
+  "props": [
+    {
+      "name": "modelValue / value",
+      "type": "string",
+      "default": "-",
+      "desc": "当前标签名",
+      "required": false
+    },
+    {
+      "name": "hasInk",
+      "type": "boolean",
+      "default": "true",
+      "desc": "是否显示墨条",
+      "required": false
+    },
+    {
+      "name": "inkLength",
+      "type": "number",
+      "default": "25",
+      "desc": "墨条长度（百分比或像素）",
+      "required": false
+    },
+    {
+      "name": "immediate",
+      "type": "boolean",
+      "default": "false",
+      "desc": "初始化后立即触发 change",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "update:modelValue",
+      "desc": "标签切换时触发"
+    },
+    {
+      "name": "change",
+      "desc": "标签切换时触发，参数为当前 TabPane"
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "MdTabPane 子组件列表"
+    }
+  ],
+  "methods": [
+    {
+      "name": "reflowTabBar()",
+      "desc": "重新计算标签栏布局"
+    }
+  ]
+}

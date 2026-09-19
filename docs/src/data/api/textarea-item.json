@@ -1,0 +1,123 @@
+{
+  "component": "textarea-item",
+  "props": [
+    {
+      "name": "modelValue / value",
+      "type": "string",
+      "default": "''",
+      "desc": "输入值",
+      "required": false
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "标题",
+      "required": false
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "default": "''",
+      "desc": "占位符",
+      "required": false
+    },
+    {
+      "name": "maxLength",
+      "type": "string | number",
+      "default": "''",
+      "desc": "最大长度",
+      "required": false
+    },
+    {
+      "name": "solid",
+      "type": "boolean",
+      "default": "true",
+      "desc": "标题宽度自适应",
+      "required": false
+    },
+    {
+      "name": "readonly",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否只读",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否禁用",
+      "required": false
+    },
+    {
+      "name": "clearable",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否可清除",
+      "required": false
+    },
+    {
+      "name": "rows",
+      "type": "string | number",
+      "default": "'3'",
+      "desc": "行数",
+      "required": false
+    },
+    {
+      "name": "autosize",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否自动增高",
+      "required": false
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "default": "''",
+      "desc": "错误提示",
+      "required": false
+    },
+    {
+      "name": "formation",
+      "type": "(name, value, pos) => {value, range}",
+      "default": "-",
+      "desc": "自定义格式化",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "update:modelValue / onChange",
+      "desc": "值变化时触发"
+    },
+    {
+      "name": "focus / blur",
+      "desc": "聚焦/失焦时触发"
+    }
+  ],
+  "slots": [
+    {
+      "name": "footer",
+      "desc": "底部插槽"
+    },
+    {
+      "name": "right",
+      "desc": "右侧插槽"
+    }
+  ],
+  "methods": [
+    {
+      "name": "focus() / blur()",
+      "desc": "聚焦/失焦"
+    },
+    {
+      "name": "getValue()",
+      "desc": "获取当前值"
+    },
+    {
+      "name": "resizeTextarea()",
+      "desc": "重新计算高度（autosize）"
+    }
+  ]
+}

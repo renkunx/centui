@@ -1,0 +1,33 @@
+{
+  "component": "detail-item",
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "default": "''",
+      "desc": "标题",
+      "required": false
+    },
+    {
+      "name": "content",
+      "type": "string | number",
+      "default": "''",
+      "desc": "内容",
+      "required": false
+    },
+    {
+      "name": "bold",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否加粗",
+      "required": false
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "内容插槽，覆盖 content"
+    }
+  ]
+}

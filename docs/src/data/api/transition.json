@@ -1,0 +1,19 @@
+{
+  "component": "transition",
+  "props": [
+    {
+      "name": "name",
+      "type": "string",
+      "default": "-",
+      "desc": "动效名称：md-fade / md-slide-up / md-bounce / md-zoom 等",
+      "required": false
+    }
+  ],
+  "events": [],
+  "slots": [
+    {
+      "name": "default",
+      "desc": "过渡内容（单个元素）"
+    }
+  ]
+}
