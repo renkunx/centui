@@ -61,6 +61,12 @@ export { MdTextareaItem } from './components/textarea-item'
 export { MdSteps, type StepItem } from './components/steps'
 export { MdTabs, MdTabBar, MdTabPane, type TabBarItem } from './components/tabs'
 export { MdTransition } from './components/transition'
+
+// M6-3 展示与画布类
+export { MdWaterMark } from './components/water-mark'
+export { MdResultPage, type ResultPageButton } from './components/result-page'
+export { MdRuler } from './components/ruler'
+export { MdLandscape } from './components/landscape'
 export type { ToastProps } from './components/toast'
 export type { DialogBtn, DialogConfirmOptions, DialogAlertOptions } from './components/dialog'
 export type { ActionSheetOption, ActionSheetCreateProps } from './components/action-sheet'

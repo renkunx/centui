@@ -46,6 +46,8 @@ import {
   MdTabBar,
   MdTabPane,
   MdTransition,
+  MdResultPage,
+  MdLandscape,
 } from '../src'
 
 interface V3Scenario {
@@ -571,6 +573,40 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
         components: { MdTransition },
         template: `<md-transition name="md-bounce"><div class="trans-demo">内容</div></md-transition>`,
       },
+    },
+  ],
+  'result-page': [
+    { name: 'empty', component: MdResultPage },
+    { name: 'network', component: MdResultPage, props: { type: 'network' } },
+    { name: 'lost', component: MdResultPage, props: { type: 'lost' } },
+    {
+      name: 'custom',
+      component: MdResultPage,
+      props: {
+        imgUrl: 'https://example.com/a.png',
+        text: '自定义标题',
+        subtext: '自定义描述',
+        buttons: [{ text: '主要按钮' }, { text: '次要按钮', plain: false }],
+      },
+    },
+  ],
+  landscape: [
+    {
+      name: 'closed',
+      component: MdLandscape,
+      slots: { default: '<p class="ls-content">横屏内容</p>' },
+    },
+    {
+      name: 'open',
+      component: MdLandscape,
+      props: { modelValue: true },
+      slots: { default: '<p class="ls-content">横屏内容</p>' },
+    },
+    {
+      name: 'fullscreen',
+      component: MdLandscape,
+      props: { modelValue: true, fullScreen: true },
+      slots: { default: '<p class="ls-content">横屏内容</p>' },
     },
   ],
   'date-picker': [
