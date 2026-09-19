@@ -69,3 +69,9 @@ export {
   type TabPaneProps,
 } from './components/tabs'
 export { MdTransition, type TransitionProps } from './components/transition'
+
+// M6-3 展示与画布类
+export { MdWaterMark, type WaterMarkProps } from './components/water-mark'
+export { MdResultPage, type ResultPageButton, type ResultPageProps } from './components/result-page'
+export { MdRuler, type RulerProps } from './components/ruler'
+export { MdLandscape, type LandscapeProps } from './components/landscape'

@@ -46,6 +46,8 @@ import {
   MdTabBar,
   MdTabPane,
   MdTransition,
+  MdResultPage,
+  MdLandscape,
 } from '../src'
 
 /**
@@ -448,6 +450,48 @@ const scenarios: Record<string, Scenario[]> = {
         <MdTransition name="md-bounce">
           <div className="trans-demo">内容</div>
         </MdTransition>
+      ),
+    },
+  ],
+  'result-page': [
+    { name: 'empty', element: <MdResultPage /> },
+    { name: 'network', element: <MdResultPage type="network" /> },
+    { name: 'lost', element: <MdResultPage type="lost" /> },
+    {
+      name: 'custom',
+      element: (
+        <MdResultPage
+          imgUrl="https://example.com/a.png"
+          text="自定义标题"
+          subtext="自定义描述"
+          buttons={[{ text: '主要按钮' }, { text: '次要按钮', plain: false }]}
+        />
+      ),
+    },
+  ],
+  landscape: [
+    {
+      name: 'closed',
+      element: (
+        <MdLandscape>
+          <p className="ls-content">横屏内容</p>
+        </MdLandscape>
+      ),
+    },
+    {
+      name: 'open',
+      element: (
+        <MdLandscape value>
+          <p className="ls-content">横屏内容</p>
+        </MdLandscape>
+      ),
+    },
+    {
+      name: 'fullscreen',
+      element: (
+        <MdLandscape value fullScreen>
+          <p className="ls-content">横屏内容</p>
+        </MdLandscape>
       ),
     },
   ],
