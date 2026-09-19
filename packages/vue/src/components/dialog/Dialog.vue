@@ -89,7 +89,7 @@ const props = withDefaults(
     btns?: DialogBtn[]
     /** row | column */
     layout?: string
-    appendTo?: HTMLElement | null
+    appendTo?: HTMLElement | null | false
     hasMask?: boolean
     maskClosable?: boolean
     transition?: string
@@ -121,7 +121,9 @@ const emit = defineEmits<{
 }>()
 
 const root = ref<HTMLElement>()
-const appendTarget = props.appendTo ?? (typeof document !== 'undefined' ? document.body : null)
+const appendTarget = props.appendTo === false
+    ? null
+    : props.appendTo ?? (typeof document !== 'undefined' ? document.body : null)
 
 onMounted(() => {
   if (appendTarget) {

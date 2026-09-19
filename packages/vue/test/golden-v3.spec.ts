@@ -50,6 +50,7 @@ import {
   MdLandscape,
   MdSelector,
   MdDropMenu,
+  MdCaptcha,
 } from '../src'
 
 interface V3Scenario {
@@ -655,6 +656,14 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
         ],
         defaultValue: ['2'],
       },
+    },
+  ],
+  captcha: [
+    {
+      name: 'inline',
+      component: MdCaptcha,
+      props: { isView: true, title: '输入验证码', brief: '验证码已发送至 138****1234', maxlength: 4 },
+      slots: { default: '短信验证码已发送' },
     },
   ],
   'date-picker': [
