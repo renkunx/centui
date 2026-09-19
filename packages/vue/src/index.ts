@@ -73,6 +73,23 @@ export { MdTabPicker, type TabPickerNode } from './components/tab-picker'
 export { MdBill } from './components/bill'
 export { MdImageViewer, type ImageViewerItem } from './components/image-viewer'
 export { MdCaptcha } from './components/captcha'
+export { MdChart, type ChartDataset } from './components/chart'
+export { MdImageReader } from './components/image-reader'
+export {
+  MdLicensePlate,
+  MdLicensePlateInput,
+  MdLicensePlateKeyboard,
+  type LicenseKeyItem,
+} from './components/license-plate'
+export {
+  MdCashier,
+  MdCashierChannel,
+  MdCashierChannelButton,
+  MdCashierChannelItem,
+  type CashierScene,
+  type CashierChannel,
+} from './components/cashier'
+export { MdRollerSuccess } from './components/activity-indicator'
 export type { ToastProps } from './components/toast'
 export type { DialogBtn, DialogConfirmOptions, DialogAlertOptions } from './components/dialog'
 export type { ActionSheetOption, ActionSheetCreateProps } from './components/action-sheet'
