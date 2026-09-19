@@ -46,7 +46,7 @@ import {
  * React 侧以 flushSync 同步渲染后立即读取 innerHTML，passive effects 尚未执行，
  * 两侧行为语义一致（弹层未开、滚轮未定位、键盘未初始化）。
  */
-export function renderToHTML(element: ReactElement): string {
+export async function renderToHTML(element: ReactElement): Promise<string> {
   const container = document.createElement('div')
   document.body.appendChild(container)
   let root: Root | null = createRoot(container)
@@ -54,6 +54,8 @@ export function renderToHTML(element: ReactElement): string {
     flushSync(() => {
       root!.render(element)
     })
+    // 基线已改为「落定态」采集（flush 渲染队列 + 定时器初始化），React 侧同样 settle
+    await new Promise(r => setTimeout(r, 30))
     return container.innerHTML
   } finally {
     const rootRef = root
@@ -324,8 +326,8 @@ describe('L3 golden 对比（React 渲染 vs v2 基线）', () => {
   for (const [component, list] of Object.entries(scenarios)) {
     describe(component, () => {
       for (const scenario of list) {
-        it(scenario.name, () => {
-          const actual = normalizeForCompare(renderToHTML(scenario.element))
+        it(scenario.name, async () => {
+          const actual = normalizeForCompare(await renderToHTML(scenario.element))
           const baseline = normalizeForCompare(readGolden(component, scenario.name))
           expect(actual).toBe(baseline)
         })

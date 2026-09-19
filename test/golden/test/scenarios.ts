@@ -35,7 +35,16 @@ import {
   Switch,
   Tag,
   Toast,
+  ActionBar,
+  DetailItem,
+  TextareaItem,
+  Steps,
+  Tabs,
+  TabBar,
+  TabPane,
+  Transition,
 } from 'mand-mobile'
+import { defineComponent } from 'vue'
 
 export interface Scenario {
   name: string
@@ -418,5 +427,152 @@ export const scenarios: Record<string, Scenario[]> = {
     { name: 'single', component: Slider, props: { value: 20 } },
     { name: 'range', component: Slider, props: { value: [20, 80], range: true } },
     { name: 'disabled', component: Slider, props: { value: 40, disabled: true } },
+  ],
+
+  'action-bar': [
+    { name: 'single', component: ActionBar, props: { actions: [{ text: '主要按钮' }] } },
+    {
+      name: 'double',
+      component: ActionBar,
+      props: { actions: [{ text: '次要按钮' }, { text: '主要按钮' }] },
+    },
+    {
+      name: 'disabled',
+      component: ActionBar,
+      props: { actions: [{ text: '禁用按钮', disabled: true }] },
+    },
+    {
+      name: 'with-text',
+      component: ActionBar,
+      props: { actions: [{ text: '主要按钮' }] },
+      slots: { default: '<p class="bar-text">合计：¥128.00</p>' },
+    },
+  ],
+  'detail-item': [
+    { name: 'basic', component: DetailItem, props: { title: '标题', content: '内容' } },
+    { name: 'bold', component: DetailItem, props: { title: '标题', content: '内容', bold: true } },
+    { name: 'slot', component: DetailItem, props: { title: '标题' }, slots: { default: '插槽内容' } },
+  ],
+  'textarea-item': [
+    { name: 'basic', component: TextareaItem, props: { title: '标题', placeholder: '请输入' } },
+    { name: 'value', component: TextareaItem, props: { title: '标题', value: '预置内容' } },
+    {
+      name: 'clearable',
+      component: TextareaItem,
+      props: { title: '标题', value: '可清除内容', clearable: true },
+    },
+    {
+      name: 'disabled',
+      component: TextareaItem,
+      props: { title: '标题', value: '禁用内容', disabled: true },
+    },
+    { name: 'error', component: TextareaItem, props: { title: '标题', value: '出错了', error: '错误提示' } },
+    { name: 'rows', component: TextareaItem, props: { title: '标题', rows: 5, placeholder: '五行' } },
+  ],
+  steps: [
+    {
+      name: 'horizontal',
+      component: Steps,
+      props: {
+        steps: [{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }],
+        current: 1,
+      },
+    },
+    {
+      name: 'with-desc',
+      component: Steps,
+      props: {
+        steps: [
+          { name: '下单', text: '2016-12-12' },
+          { name: '付款', text: '2016-12-13' },
+          { name: '发货', text: '2016-12-14' },
+        ],
+        current: 2,
+      },
+    },
+    {
+      name: 'vertical',
+      component: Steps,
+      props: {
+        steps: [{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }],
+        current: 1,
+        direction: 'vertical',
+      },
+    },
+    {
+      name: 'fraction-current',
+      component: Steps,
+      props: {
+        steps: [{ name: '第一步' }, { name: '第二步' }],
+        current: 0.5,
+      },
+    },
+  ],
+  'tab-bar': [
+    {
+      name: 'items',
+      component: TabBar,
+      props: {
+        items: [
+          { name: 'a', label: '第一项' },
+          { name: 'b', label: '第二项' },
+          { name: 'c', label: '第三项' },
+        ],
+      },
+    },
+  ],
+  tabs: [
+    {
+      name: 'basic',
+      component: defineComponent({
+        name: 'TabsBasic',
+        components: { [Tabs.name]: Tabs, [TabPane.name]: TabPane },
+        template: `<md-tabs>
+          <md-tab-pane label="标签一" name="a">内容一</md-tab-pane>
+          <md-tab-pane label="标签二" name="b">内容二</md-tab-pane>
+        </md-tabs>`,
+      }),
+    },
+    {
+      name: 'second-active',
+      component: defineComponent({
+        name: 'TabsSecond',
+        components: { [Tabs.name]: Tabs, [TabPane.name]: TabPane },
+        template: `<md-tabs value="b">
+          <md-tab-pane label="标签一" name="a">内容一</md-tab-pane>
+          <md-tab-pane label="标签二" name="b">内容二</md-tab-pane>
+          <md-tab-pane label="标签三" name="c">内容三</md-tab-pane>
+        </md-tabs>`,
+      }),
+    },
+    {
+      name: 'no-ink',
+      component: defineComponent({
+        name: 'TabsNoInk',
+        components: { [Tabs.name]: Tabs, [TabPane.name]: TabPane },
+        template: `<md-tabs :has-ink="false">
+          <md-tab-pane label="标签一" name="a">内容一</md-tab-pane>
+          <md-tab-pane label="标签二" name="b">内容二</md-tab-pane>
+        </md-tabs>`,
+      }),
+    },
+  ],
+  transition: [
+    {
+      name: 'fade',
+      component: defineComponent({
+        name: 'TransitionFadeHost',
+        components: { [Transition.name]: Transition },
+        template: `<md-transition name="md-fade"><div class="trans-demo">内容</div></md-transition>`,
+      }),
+    },
+    {
+      name: 'bounce',
+      component: defineComponent({
+        name: 'TransitionBounceHost',
+        components: { [Transition.name]: Transition },
+        template: `<md-transition name="md-bounce"><div class="trans-demo">内容</div></md-transition>`,
+      }),
+    },
   ],
 }

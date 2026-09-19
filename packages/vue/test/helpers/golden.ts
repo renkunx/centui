@@ -41,6 +41,14 @@ export function normalizeForCompare(html: string): string {
     .replace(/\s*style=""/g, '')
     .replace(/(<input[^>]*?)\svalue="[^"]*"/g, '$1')
     .replace(/(<input[^>]*?)\sname="[^"]*"/g, '$1')
+    // 10. 动态 transform：scroller/进度动画写入的 -webkit-transform / transform 内联声明
+    //     属运行时几何状态（jsdom 几何为 0），非结构契约 → 剥离
+    .replace(/\s*-webkit-transform:[^;"]*;?/g, '')
+    .replace(/([\s;"])transform:[^;"]*;?/g, '$1')
+    .replace(/style="([^"]*)"/g, (_m, v: string) => {
+      const cleaned = v.replace(/\s+/g, ' ').replace(/^[\s;]+|[\s;]+$/g, '')
+      return cleaned ? `style="${cleaned}"` : ''
+    })
     .replace(/class="([^"]*)"/g, (_m, cls: string) => {
       const tokens = cls.split(/\s+/).filter(Boolean).sort()
       return `class="${tokens.join(' ')}"`

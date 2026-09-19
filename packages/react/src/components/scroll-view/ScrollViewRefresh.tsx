@@ -34,7 +34,7 @@ export function MdScrollViewRefresh({
     if (isRefreshing) {
       return undefined
     }
-    if (elHeight === null || !scrollTop) {
+    if (elHeight === null || elHeight <= 0 || !scrollTop) {
       return +scrollTop
     }
     if (Math.abs(scrollTop) < elHeight / 2) {

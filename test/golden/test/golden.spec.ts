@@ -22,11 +22,13 @@ describe('L3 golden 基线（mand-mobile@2.7.0 渲染契约）', () => {
   for (const [component, list] of Object.entries(scenarios)) {
     describe(component, () => {
       for (const scenario of list) {
-        it(scenario.name, () => {
+        it(scenario.name, async () => {
           const wrapper = mount(scenario.component as never, {
             propsData: scenario.props,
             slots: scenario.slots as never,
           })
+          // 等渲染队列与定时器初始化落定后再截取（与 v3 对比端同语义）
+          await new Promise(r => setTimeout(r, 30))
           const html = normalize(wrapper.html())
           const file = join(GOLDEN_DIR, component, `${scenario.name}.html`)
 

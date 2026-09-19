@@ -7,8 +7,8 @@ import {
   useImperativeHandle,
   useRef,
   useState,
+  type CSSProperties,
   type ReactNode,
-
 } from 'react'
 import { warn } from '@mand-mobile/core'
 import { render, Scroller } from '@mand-mobile/core/web'
@@ -55,7 +55,15 @@ const SwiperDimensionContext = createContext<SwiperCtx>({
   isVertical: () => false,
 })
 
-export function MdSwiperItem({ children }: { children?: ReactNode }) {
+export function MdSwiperItem({
+  children,
+  className,
+  style,
+}: {
+  children?: ReactNode
+  className?: string
+  style?: CSSProperties
+}) {
   const ctx = useContext(SwiperDimensionContext) as {
     dimension: (i?: number) => number
     isVertical: () => boolean
@@ -65,8 +73,12 @@ export function MdSwiperItem({ children }: { children?: ReactNode }) {
 
   return (
     <div
-      className="md-swiper-item"
-      style={{ width: vertical ? 'auto' : `${dimension}px`, height: vertical ? `${dimension}px` : 'auto' }}
+      className={`md-swiper-item${className ? ` ${className}` : ''}`}
+      style={{
+        width: vertical ? 'auto' : `${dimension}px`,
+        height: vertical ? `${dimension}px` : 'auto',
+        ...style,
+      }}
     >
       {children}
     </div>
@@ -244,14 +256,15 @@ export const MdSwiper = forwardRef<SwiperExposed, SwiperProps>(function MdSwiper
 
     if (backup) {
       const items = itemNodes
+      // v2 契约：横向拷贝只设 width，纵向只设 height；类名只传增量（基类由 MdSwiperItem 渲染）
       setCopies({
         head: cloneElement(items[count - 1] as never, {
-          className: 'md-swiper-item md-swiper-item-last-copy',
-          style: { width: `${dimension}px`, height: `${dimension}px` },
+          className: 'md-swiper-item-last-copy',
+          style: isVertical ? { height: `${dimension}px` } : { width: `${dimension}px` },
         }),
         tail: cloneElement(items[0] as never, {
-          className: 'md-swiper-item md-swiper-item-first-copy',
-          style: { width: `${dimension}px`, height: `${dimension}px` },
+          className: 'md-swiper-item-first-copy',
+          style: isVertical ? { height: `${dimension}px` } : { width: `${dimension}px` },
         }),
       })
     } else {

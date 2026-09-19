@@ -36,7 +36,8 @@ const props = withDefaults(
 const el = ref<HTMLElement>()
 
 const process = computed(() => {
-  if (!el.value || !props.scrollTop) {
+  // 0 高度（未测量/不可见）与 v2 pre-mount 求值等价：保持原始进度，避免除零产生 Infinity
+  if (!el.value || el.value.clientHeight <= 0 || !props.scrollTop) {
     return +props.scrollTop
   }
   const refreshHeight = el.value.clientHeight

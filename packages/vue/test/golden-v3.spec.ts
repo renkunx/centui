@@ -443,7 +443,7 @@ describe('L3 golden 对比（v3 渲染 vs v2 基线）', () => {
   for (const [component, list] of Object.entries(v3Scenarios)) {
     describe(component, () => {
       for (const scenario of list) {
-        it(scenario.name, () => {
+        it(scenario.name, async () => {
           const wrapper = mount(scenario.component, {
             props: scenario.props,
             slots: scenario.slots,
@@ -451,6 +451,9 @@ describe('L3 golden 对比（v3 渲染 vs v2 基线）', () => {
               components: { MdScrollViewMore, MdScrollViewRefresh, MdSwiperItem },
             },
           })
+          // 与 test/golden 采集端一致：等渲染队列与定时器初始化（scroller/swiper init）
+          // 落定后再截取
+          await new Promise(r => setTimeout(r, 30))
           const actual = normalizeForCompare(wrapper.html())
           const baseline = normalizeForCompare(readGolden(component, scenario.name))
           expect(actual).toBe(baseline)
