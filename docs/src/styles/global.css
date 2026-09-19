@@ -427,3 +427,60 @@
   font-size: 26px;
   color: #2f86f6;
 }
+
+/* M6-6 demo 样式（双框架共享） */
+.chart-demo-box {
+  width: 100%;
+  background: #fff;
+  padding: 20px 10px;
+}
+
+.chart-demo-box .md-chart {
+  width: 100%;
+}
+
+.image-reader-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 40px 0;
+}
+
+.image-reader-demo-box {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #d9dbe1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.image-reader-demo-tip {
+  font-size: 26px;
+  color: #999;
+}
+
+.image-reader-demo-msg {
+  font-size: 24px;
+  color: #2f86f6;
+}
+
+.license-plate-demo,
+.cashier-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 40px 0;
+}
+
+.license-plate-demo-result,
+.cashier-demo-result {
+  font-size: 26px;
+  color: #2f86f6;
+}

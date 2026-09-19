@@ -1,0 +1,103 @@
+{
+  "component": "cashier",
+  "props": [
+    {
+      "name": "modelValue / value",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否显示",
+      "required": false
+    },
+    {
+      "name": "channels",
+      "type": "Array<{text, desc?, img?, icon?, disabled?}>",
+      "default": "[]",
+      "desc": "支付渠道",
+      "required": false
+    },
+    {
+      "name": "channelLimit",
+      "type": "number",
+      "default": "2",
+      "desc": "直展渠道数上限",
+      "required": false
+    },
+    {
+      "name": "defaultIndex",
+      "type": "number",
+      "default": "0",
+      "desc": "默认选中渠道",
+      "required": false
+    },
+    {
+      "name": "paymentTitle / paymentAmount / paymentDescribe",
+      "type": "string",
+      "default": "-",
+      "desc": "支付金额区文案",
+      "required": false
+    },
+    {
+      "name": "payButtonText / payButtonDisabled",
+      "type": "string / boolean",
+      "default": "-",
+      "desc": "支付按钮",
+      "required": false
+    },
+    {
+      "name": "moreButtonText",
+      "type": "string",
+      "default": "'更多支付方式'",
+      "desc": "更多按钮文案",
+      "required": false
+    },
+    {
+      "name": "title / describe",
+      "type": "string",
+      "default": "-",
+      "desc": "标题/描述",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "update:modelValue",
+      "desc": "显隐变化时触发"
+    },
+    {
+      "name": "select",
+      "desc": "选中渠道时触发"
+    },
+    {
+      "name": "pay",
+      "desc": "点击支付按钮时触发"
+    },
+    {
+      "name": "show / hide / cancel",
+      "desc": "显示/隐藏/取消时触发"
+    }
+  ],
+  "slots": [
+    {
+      "name": "header / footer",
+      "desc": "顶部/底部插槽（作用域 scene）"
+    },
+    {
+      "name": "channel",
+      "desc": "渠道区附加内容"
+    },
+    {
+      "name": "payButton",
+      "desc": "自定义支付按钮"
+    },
+    {
+      "name": "scene",
+      "desc": "custom 场景内容"
+    }
+  ],
+  "methods": [
+    {
+      "name": "next(scene, option)",
+      "desc": "切换场景：choose/captcha/loading/success/fail/custom"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "component": "image-reader",
+  "props": [
+    {
+      "name": "name",
+      "type": "string",
+      "default": "随机",
+      "desc": "表单控件名",
+      "required": false
+    },
+    {
+      "name": "size",
+      "type": "string | number",
+      "default": "0",
+      "desc": "单张体积限制（KB）",
+      "required": false
+    },
+    {
+      "name": "mime",
+      "type": "string[]",
+      "default": "[]",
+      "desc": "支持的图片类型",
+      "required": false
+    },
+    {
+      "name": "isCameraOnly",
+      "type": "boolean",
+      "default": "false",
+      "desc": "仅允许拍照",
+      "required": false
+    },
+    {
+      "name": "isMultiple",
+      "type": "boolean",
+      "default": "false",
+      "desc": "是否多选",
+      "required": false
+    },
+    {
+      "name": "amount",
+      "type": "number",
+      "default": "0",
+      "desc": "张数上限",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "select",
+      "desc": "选择文件后触发，参数 (name, {files})"
+    },
+    {
+      "name": "complete",
+      "desc": "读取完成触发，参数 (name, {blob, dataUrl, file})"
+    },
+    {
+      "name": "error",
+      "desc": "出错触发，参数 (name, {code, msg})"
+    }
+  ],
+  "slots": []
+}

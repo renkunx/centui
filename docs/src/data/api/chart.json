@@ -1,0 +1,63 @@
+{
+  "component": "chart",
+  "props": [
+    {
+      "name": "labels",
+      "type": "string[]",
+      "default": "[]",
+      "desc": "横轴标签",
+      "required": false
+    },
+    {
+      "name": "datasets",
+      "type": "Array<{values, color?, width?, theme?}>",
+      "default": "[]",
+      "desc": "数据集，theme 支持 region/heat",
+      "required": false
+    },
+    {
+      "name": "size",
+      "type": "[number|string, number|string]",
+      "default": "[480, 320]",
+      "desc": "画布尺寸（支持 rem）",
+      "required": false
+    },
+    {
+      "name": "max / min",
+      "type": "number",
+      "default": "自动推导",
+      "desc": "纵轴极值",
+      "required": false
+    },
+    {
+      "name": "lines",
+      "type": "number",
+      "default": "5",
+      "desc": "横向网格线数",
+      "required": false
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "default": "自动推导",
+      "desc": "刻度步长",
+      "required": false
+    },
+    {
+      "name": "shift",
+      "type": "number",
+      "default": "0.6",
+      "desc": "左侧留白（单位 em）",
+      "required": false
+    },
+    {
+      "name": "format",
+      "type": "(val) => string",
+      "default": "-",
+      "desc": "纵轴文案格式化",
+      "required": false
+    }
+  ],
+  "events": [],
+  "slots": []
+}

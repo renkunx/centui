@@ -1,0 +1,58 @@
+{
+  "component": "license-plate",
+  "props": [
+    {
+      "name": "shortcuts",
+      "type": "string[]",
+      "default": "省份简写",
+      "desc": "省份简写数据",
+      "required": false
+    },
+    {
+      "name": "modeShow",
+      "type": "string",
+      "default": "'division'",
+      "desc": "展示模式：division / popUp",
+      "required": false
+    },
+    {
+      "name": "showPopUp",
+      "type": "boolean",
+      "default": "false",
+      "desc": "弹窗模式是否展示",
+      "required": false
+    },
+    {
+      "name": "title / subtitle",
+      "type": "string",
+      "default": "-",
+      "desc": "弹窗标题/副标题",
+      "required": false
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "default": "''",
+      "desc": "默认车牌号",
+      "required": false
+    },
+    {
+      "name": "disorderClick",
+      "type": "boolean",
+      "default": "true",
+      "desc": "是否可乱序点击",
+      "required": false
+    }
+  ],
+  "events": [
+    {
+      "name": "confirm",
+      "desc": "确认输入触发，参数为完整车牌号"
+    },
+    {
+      "name": "hide",
+      "desc": "弹窗关闭时触发"
+    }
+  ],
+  "slots": []
+}
