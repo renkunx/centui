@@ -43,6 +43,8 @@ import {
   TabBar,
   TabPane,
   Transition,
+  ResultPage,
+  Landscape,
 } from 'mand-mobile'
 import { defineComponent } from 'vue'
 
@@ -361,6 +363,44 @@ export const scenarios: Record<string, Scenario[]> = {
         ],
         defaultValue: ['B', '2'],
       },
+    },
+  ],
+  'result-page': [
+    { name: 'empty', component: ResultPage },
+    { name: 'network', component: ResultPage, props: { type: 'network' } },
+    {
+      name: 'lost',
+      component: ResultPage,
+      props: { type: 'lost' },
+    },
+    {
+      name: 'custom',
+      component: ResultPage,
+      props: {
+        imgUrl: 'https://example.com/a.png',
+        text: '自定义标题',
+        subtext: '自定义描述',
+        buttons: [{ text: '主要按钮' }, { text: '次要按钮', plain: false }],
+      },
+    },
+  ],
+  landscape: [
+    {
+      name: 'closed',
+      component: Landscape,
+      slots: { default: '<p class="ls-content">横屏内容</p>' },
+    },
+    {
+      name: 'open',
+      component: Landscape,
+      props: { value: true },
+      slots: { default: '<p class="ls-content">横屏内容</p>' },
+    },
+    {
+      name: 'fullscreen',
+      component: Landscape,
+      props: { value: true, fullScreen: true },
+      slots: { default: '<p class="ls-content">横屏内容</p>' },
     },
   ],
   'date-picker': [
