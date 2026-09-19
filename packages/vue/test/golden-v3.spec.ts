@@ -38,6 +38,14 @@ import {
   MdSwiper,
   MdSwiperItem,
   MdToast,
+  MdActionBar,
+  MdDetailItem,
+  MdTextareaItem,
+  MdSteps,
+  MdTabs,
+  MdTabBar,
+  MdTabPane,
+  MdTransition,
 } from '../src'
 
 interface V3Scenario {
@@ -423,6 +431,147 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
     { name: 'single', component: MdSlider, props: { modelValue: 20 } },
     { name: 'range', component: MdSlider, props: { modelValue: [20, 80], range: true } },
     { name: 'disabled', component: MdSlider, props: { modelValue: 40, disabled: true } },
+  ],
+  'action-bar': [
+    { name: 'single', component: MdActionBar, props: { actions: [{ text: '主要按钮' }] } },
+    {
+      name: 'double',
+      component: MdActionBar,
+      props: { actions: [{ text: '次要按钮' }, { text: '主要按钮' }] },
+    },
+    {
+      name: 'disabled',
+      component: MdActionBar,
+      props: { actions: [{ text: '禁用按钮', disabled: true }] },
+    },
+    {
+      name: 'with-text',
+      component: MdActionBar,
+      props: { actions: [{ text: '主要按钮' }] },
+      slots: { default: '<p class="bar-text">合计：¥128.00</p>' },
+    },
+  ],
+  'detail-item': [
+    { name: 'basic', component: MdDetailItem, props: { title: '标题', content: '内容' } },
+    { name: 'bold', component: MdDetailItem, props: { title: '标题', content: '内容', bold: true } },
+    { name: 'slot', component: MdDetailItem, props: { title: '标题' }, slots: { default: '插槽内容' } },
+  ],
+  'textarea-item': [
+    { name: 'basic', component: MdTextareaItem, props: { title: '标题', placeholder: '请输入' } },
+    { name: 'value', component: MdTextareaItem, props: { title: '标题', value: '预置内容' } },
+    {
+      name: 'clearable',
+      component: MdTextareaItem,
+      props: { title: '标题', value: '可清除内容', clearable: true },
+    },
+    {
+      name: 'disabled',
+      component: MdTextareaItem,
+      props: { title: '标题', value: '禁用内容', disabled: true },
+    },
+    { name: 'error', component: MdTextareaItem, props: { title: '标题', value: '出错了', error: '错误提示' } },
+    { name: 'rows', component: MdTextareaItem, props: { title: '标题', rows: 5, placeholder: '五行' } },
+  ],
+  steps: [
+    {
+      name: 'horizontal',
+      component: MdSteps,
+      props: {
+        steps: [{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }],
+        current: 1,
+      },
+    },
+    {
+      name: 'with-desc',
+      component: MdSteps,
+      props: {
+        steps: [
+          { name: '下单', text: '2016-12-12' },
+          { name: '付款', text: '2016-12-13' },
+          { name: '发货', text: '2016-12-14' },
+        ],
+        current: 2,
+      },
+    },
+    {
+      name: 'vertical',
+      component: MdSteps,
+      props: {
+        steps: [{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }],
+        current: 1,
+        direction: 'vertical',
+      },
+    },
+    {
+      name: 'fraction-current',
+      component: MdSteps,
+      props: {
+        steps: [{ name: '第一步' }, { name: '第二步' }],
+        current: 0.5,
+      },
+    },
+  ],
+  'tab-bar': [
+    {
+      name: 'items',
+      component: MdTabBar,
+      props: {
+        items: [
+          { name: 'a', label: '第一项' },
+          { name: 'b', label: '第二项' },
+          { name: 'c', label: '第三项' },
+        ],
+      },
+    },
+  ],
+  tabs: [
+    {
+      name: 'basic',
+      component: {
+        components: { MdTabs, MdTabPane },
+        template: `<md-tabs>
+          <md-tab-pane label="标签一" name="a">内容一</md-tab-pane>
+          <md-tab-pane label="标签二" name="b">内容二</md-tab-pane>
+        </md-tabs>`,
+      },
+    },
+    {
+      name: 'second-active',
+      component: {
+        components: { MdTabs, MdTabPane },
+        template: `<md-tabs model-value="b">
+          <md-tab-pane label="标签一" name="a">内容一</md-tab-pane>
+          <md-tab-pane label="标签二" name="b">内容二</md-tab-pane>
+          <md-tab-pane label="标签三" name="c">内容三</md-tab-pane>
+        </md-tabs>`,
+      },
+    },
+    {
+      name: 'no-ink',
+      component: {
+        components: { MdTabs, MdTabPane },
+        template: `<md-tabs :has-ink="false">
+          <md-tab-pane label="标签一" name="a">内容一</md-tab-pane>
+          <md-tab-pane label="标签二" name="b">内容二</md-tab-pane>
+        </md-tabs>`,
+      },
+    },
+  ],
+  transition: [
+    {
+      name: 'fade',
+      component: {
+        components: { MdTransition },
+        template: `<md-transition name="md-fade"><div class="trans-demo">内容</div></md-transition>`,
+      },
+    },
+    {
+      name: 'bounce',
+      component: {
+        components: { MdTransition },
+        template: `<md-transition name="md-bounce"><div class="trans-demo">内容</div></md-transition>`,
+      },
+    },
   ],
   'date-picker': [
     {

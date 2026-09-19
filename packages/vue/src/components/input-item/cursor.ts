@@ -3,7 +3,7 @@
  */
 
 /** get position of input cursor */
-export function getCursorsPosition(ctrl: HTMLInputElement | undefined | null): number {
+export function getCursorsPosition(ctrl: HTMLInputElement | HTMLTextAreaElement | undefined | null): number {
   if (!ctrl) {
     return 0
   }
@@ -16,7 +16,7 @@ export function getCursorsPosition(ctrl: HTMLInputElement | undefined | null): n
 let timer: ReturnType<typeof setTimeout> | null = null
 
 /** set position of input cursor */
-export function setCursorsPosition(ctrl: HTMLInputElement | undefined | null, pos: number): void {
+export function setCursorsPosition(ctrl: HTMLInputElement | HTMLTextAreaElement | undefined | null, pos: number): void {
   if (!ctrl) {
     return
   }

@@ -50,14 +50,17 @@ export { MdPicker, MdPickerColumn, type PickerColumnItem } from './components/pi
 export { MdDatePicker } from './components/date-picker'
 
 // M6 滚动类
-export {
-  MdScrollView,
-  MdScrollViewRefresh,
-  MdScrollViewMore,
-} from './components/scroll-view'
+export { MdScrollView, MdScrollViewRefresh, MdScrollViewMore } from './components/scroll-view'
 export { MdSwiper, MdSwiperItem } from './components/swiper'
 export { MdSlider } from './components/slider'
 
+// M6-2 展示与排版类
+export { MdActionBar, type ActionBarAction } from './components/action-bar'
+export { MdDetailItem } from './components/detail-item'
+export { MdTextareaItem } from './components/textarea-item'
+export { MdSteps, type StepItem } from './components/steps'
+export { MdTabs, MdTabBar, MdTabPane, type TabBarItem } from './components/tabs'
+export { MdTransition } from './components/transition'
 export type { ToastProps } from './components/toast'
 export type { DialogBtn, DialogConfirmOptions, DialogAlertOptions } from './components/dialog'
 export type { ActionSheetOption, ActionSheetCreateProps } from './components/action-sheet'
