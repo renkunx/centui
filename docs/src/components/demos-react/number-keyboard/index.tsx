@@ -1,26 +1,76 @@
 import { useState } from 'react'
-import { MdNumberKeyboard } from 'mand-mobile-react'
+import { MdNumberKeyboard, MdButton, MdIcon } from 'mand-mobile-react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
-const scenes = ['专业键盘', '简单键盘']
-const code = `<MdNumberKeyboard is-view value type="professional" />`
+const scenes = ['有小数点', '无小数点', '简单类型', '乱序+确认', '插槽', '禁用']
+const code = `<MdNumberKeyboard value={show} onChange={setShow} onEnter={onEnter} onDelete={onDelete} />
+<MdNumberKeyboard value={show} onChange={setShow} hideDot />
+<MdNumberKeyboard value={show} onChange={setShow} type="simple" />
+<MdNumberKeyboard value={show} onChange={setShow} okText="支付" disorder />`
 
 export default function NumberKeyboardDemo() {
-  const [show, setShow] = useState(true)
+  const [show1, setShow1] = useState(false)
+  const [show2, setShow2] = useState(false)
+  const [show3, setShow3] = useState(false)
+  const [show4, setShow4] = useState(false)
+  const [show5, setShow5] = useState(false)
+  const [show6, setShow6] = useState(false)
+  const [number, setNumber] = useState('')
+
+  const onEnter = (v: string | number) => setNumber(prev => prev + String(v))
+  const onDelete = () => setNumber(prev => prev.slice(0, -1))
+
   return (
-    <DemoCanvasReact mode="phone" scenes={scenes} code={code}>
-      {active =>
-        active === 0 ? (
-          <MdNumberKeyboard isView value type="professional" />
-        ) : (
-          <>
-            <div style={{ padding: 16, textAlign: 'center' }}>
-              <button onClick={() => setShow(true)}>弹出简单键盘</button>
+    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+      {active => {
+        if (active === 0)
+          return (
+            <div style={{ width: '100%' }}>
+              <MdButton onClick={() => setShow1(!show1)}>{show1 ? '收起键盘' : '唤起键盘，有小数点'}</MdButton>
+              <MdNumberKeyboard value={show1} onChange={setShow1} onEnter={onEnter} onDelete={onDelete} />
+              {number ? <p style={{ fontSize: 26, padding: 12 }}>{number}</p> : null}
             </div>
-            <MdNumberKeyboard value={show} type="simple" onChange={setShow} />
-          </>
+          )
+        if (active === 1)
+          return (
+            <div style={{ width: '100%' }}>
+              <MdButton onClick={() => setShow2(!show2)}>{show2 ? '收起键盘' : '唤起键盘，无小数点'}</MdButton>
+              <MdNumberKeyboard value={show2} onChange={setShow2} hideDot onEnter={onEnter} onDelete={onDelete} />
+            </div>
+          )
+        if (active === 2)
+          return (
+            <div style={{ width: '100%' }}>
+              <MdButton onClick={() => setShow3(!show3)}>{show3 ? '收起键盘' : '简单类型'}</MdButton>
+              <MdNumberKeyboard value={show3} onChange={setShow3} type="simple" onEnter={onEnter} onDelete={onDelete} />
+              {show3 && number ? <p style={{ fontSize: 26, padding: 12 }}>{number}</p> : null}
+            </div>
+          )
+        if (active === 3)
+          return (
+            <div style={{ width: '100%' }}>
+              <MdButton onClick={() => setShow4(!show4)}>{show4 ? '收起键盘' : '乱序 + 确认支付'}</MdButton>
+              <MdNumberKeyboard value={show4} onChange={setShow4} okText="支付" disorder onEnter={onEnter} onDelete={onDelete} />
+            </div>
+          )
+        if (active === 4)
+          return (
+            <div style={{ width: '100%' }}>
+              <MdButton onClick={() => setShow5(!show5)}>{show5 ? '收起键盘' : '插槽：安全支付'}</MdButton>
+              <MdNumberKeyboard value={show5} onChange={setShow5} okText="支付" disorder>
+                <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 14, fontSize: 22 }}>
+                  <MdIcon name="security" />&nbsp;安全支付
+                </p>
+              </MdNumberKeyboard>
+            </div>
+          )
+        return (
+          <div style={{ width: '100%' }}>
+            <MdButton onClick={() => setShow6(!show6)}>{show6 ? '收起键盘' : '禁用键盘'}</MdButton>
+            <MdNumberKeyboard value={show6} onChange={setShow6} disabled onEnter={onEnter} onDelete={onDelete} />
+          </div>
         )
-      }
+      }}
     </DemoCanvasReact>
   )
 }

@@ -2,53 +2,71 @@ import { useState } from 'react'
 import { MdSelector, MdButton } from 'mand-mobile-react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
-const scenes = ['单选（即时）', '单选（确认）', '多选']
+const scenes = ['无需确认', '确认模式', 'Check 模式', '多选模式', '自定义选项']
 const code = `<MdSelector value={show} onChange={setShow} data={data} onChoose={onChoose} />
-<MdSelector value={show} onChange={setShow} data={data} okText="确定" />
+<MdSelector value={show} onChange={setShow} data={data} okText="确定" onConfirm={onConfirm} />
+<MdSelector value={show} onChange={setShow} data={data} isCheck />
 <MdSelector value={show} onChange={setShow} data={data} multi okText="确定" />`
 const data = [
-  { value: '1', text: '选项一' },
-  { value: '2', text: '选项二' },
-  { value: '3', text: '选项三' },
-]
-const multiData = [
-  { value: 'a', text: '选项 A' },
-  { value: 'b', text: '选项 B' },
+  { value: '1', text: '选项一', brief: '选项一描述' },
+  { value: '2', text: '选项二', brief: '选项二描述' },
+  { value: '3', text: '选项三', brief: '选项三描述' },
 ]
 
 export default function SelectorDemo() {
-  const [show1, setShow1] = useState(false)
-  const [show2, setShow2] = useState(false)
-  const [show3, setShow3] = useState(false)
+  const [showA, setShowA] = useState(false)
+  const [showB, setShowB] = useState(false)
+  const [showC, setShowC] = useState(false)
+  const [showD, setShowD] = useState(false)
+  const [showE, setShowE] = useState(false)
 
   return (
     <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (
-            <div className="selector-demo">
-              <MdButton type="primary" inline round onClick={() => setShow1(true)}>
-                单选（即时）
-              </MdButton>
-              <MdSelector value={show1} onChange={setShow1} data={data} title="选择选项" />
-            </div>
+            <>
+              <MdButton onClick={() => setShowA(true)}>无需确认</MdButton>
+              <MdSelector value={showA} onChange={setShowA} data={data} title="无需确认" />
+            </>
           )
         if (active === 1)
           return (
-            <div className="selector-demo">
-              <MdButton type="primary" inline round onClick={() => setShow2(true)}>
-                单选（确认）
-              </MdButton>
-              <MdSelector value={show2} onChange={setShow2} data={data} title="选择选项" okText="确定" cancelText="取消" />
-            </div>
+            <>
+              <MdButton onClick={() => setShowB(true)}>确认模式</MdButton>
+              <MdSelector value={showB} onChange={setShowB} data={data} title="确认模式" okText="确定" cancelText="取消" />
+            </>
+          )
+        if (active === 2)
+          return (
+            <>
+              <MdButton onClick={() => setShowC(true)}>Check 模式</MdButton>
+              <MdSelector value={showC} onChange={setShowC} data={data} title="Check 模式" isCheck />
+            </>
+          )
+        if (active === 3)
+          return (
+            <>
+              <MdButton onClick={() => setShowD(true)}>多选模式</MdButton>
+              <MdSelector value={showD} onChange={setShowD} data={data} multi title="多选模式" okText="确定" />
+            </>
           )
         return (
-          <div className="selector-demo">
-            <MdButton type="primary" inline round onClick={() => setShow3(true)}>
-              多选
-            </MdButton>
-            <MdSelector value={show3} onChange={setShow3} data={multiData} multi title="多选" okText="确定" />
-          </div>
+          <>
+            <MdButton onClick={() => setShowE(true)}>自定义选项</MdButton>
+            <MdSelector
+              value={showE}
+              onChange={setShowE}
+              data={data}
+              title="自定义选项"
+              children={({ option, selected }: { option: { text?: string }; selected: boolean }) => (
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 8px' }}>
+                  <span>{option.text}</span>
+                  {selected ? <span style={{ color: '#2f86f6' }}>已选</span> : null}
+                </div>
+              )}
+            />
+          </>
         )
       }}
     </DemoCanvasReact>
