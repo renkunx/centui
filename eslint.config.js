@@ -1,5 +1,6 @@
 // @ts-check
 import js from '@eslint/js'
+import reactHooks from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
@@ -33,6 +34,14 @@ export default tseslint.config(
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+    },
+  },
+  {
+    // react 包的 hooks 依赖完整性检查（组件内已有针对性 disable 注释）
+    files: ['packages/react/**/*.{ts,tsx}'],
+    plugins: { 'react-hooks': reactHooks },
+    rules: {
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
 )

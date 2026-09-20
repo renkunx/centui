@@ -23,9 +23,8 @@ function computeMax(datasets: ChartDataset[], explicit?: number) {
   if (explicit !== undefined) {
     return explicit
   }
-  let max = Math.max.apply(
-    Math,
-    datasets.map(d => Math.max.apply(Math, d.values as never)),
+  let max = Math.max(
+    ...datasets.map(d => Math.max(...d.values)),
   )
   let multiple = 1
   while (max > 10) {
@@ -39,9 +38,8 @@ function computeMin(datasets: ChartDataset[], explicit?: number) {
   if (explicit !== undefined) {
     return explicit
   }
-  let min = Math.min.apply(
-    Math,
-    datasets.map(d => Math.min.apply(Math, d.values as never)),
+  let min = Math.min(
+    ...datasets.map(d => Math.min(...d.values)),
   )
   let multiple = 1
   while (min > 10) {

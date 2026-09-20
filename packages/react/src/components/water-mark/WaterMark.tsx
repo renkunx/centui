@@ -90,7 +90,7 @@ export const CuWaterMark = forwardRef<HTMLDivElement, WaterMarkProps>(function C
     ctx.font = `${fontSize}px "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif`
     ctx.fillStyle = COLOR
 
-    let ctxX = 0
+    let ctxX: number
     let ctxY = 0
     for (let y = 0; y < yCount; y++) {
       ctxX = 0

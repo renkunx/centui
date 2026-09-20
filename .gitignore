@@ -2,6 +2,8 @@
 node_modules/
 dist/
 lib/
+# docs/src/lib 是源码目录，不能被上面的 lib/ 规则误伤
+!docs/src/lib/
 output/
 # package-lock.json
 yarn.lock

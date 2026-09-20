@@ -268,8 +268,8 @@ export const CuRuler = forwardRef<HTMLDivElement, RulerProps>(function CuRuler(
 
     const absX = xRef.current >= 0 ? Math.abs(xRef.current - canvasWidth) : Math.abs(xRef.current) + canvasWidth
     let value0 = scopeMin + Math.round(absX / BLANK) * unit
-    value0 > realMax && (value0 = realMax)
-    value0 < realMin && (value0 = realMin)
+    if (value0 > realMax) value0 = realMax
+    if (value0 < realMin) value0 = realMin
     cb?.(value0)
   }
 
