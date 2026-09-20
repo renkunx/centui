@@ -23,6 +23,11 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      # 先构建：react/vue 的 typecheck 与部分测试解析 @centui/core 的
+      # dist 类型产物，无 dist 会在 Typecheck 步骤报 TS2307
+      - name: Build
+        run: pnpm build
+
       - name: Lint
         run: pnpm lint
 
@@ -36,9 +41,6 @@ jobs:
       # 覆盖率硬门禁（per-package）：core 90/85，vue 组件层 80/80
       - name: Coverage gate
         run: pnpm coverage
-
-      - name: Build
-        run: pnpm build
 
       # L4 视觉回归（M3/M4 组件落地后启用实际用例）
       # - name: Visual regression
