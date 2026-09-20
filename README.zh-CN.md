@@ -1,4 +1,4 @@
-<h2 align="center">centui</h2>
+<h2 align="center">CentUI</h2>
 <p align="center">面向金融场景的移动端 UI 组件库，基于 Vue 3 与 React——<a href="https://github.com/didi/mand-mobile">mand-mobile</a> 的延续之作。</p>
 <p align="center">
   <a href="https://github.com/renkunx/centui/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/renkunx/centui/ci.yml?branch=master&style=flat-square" alt="Build Status"></a>
@@ -12,7 +12,7 @@
 
 [English](./README.md) | **中文**
 
-**centui** 是一套面向金融场景的移动端 UI 组件库，源自滴滴开源的 [mand-mobile](https://github.com/didi/mand-mobile)：在其基础上完成 Vue 3 重写与 React 移植，并更名为 centui——同时忠实保留 mand-mobile v2 的视觉与渲染契约。
+**CentUI** 是一套面向金融场景的移动端 UI 组件库，源自滴滴开源的 [mand-mobile](https://github.com/didi/mand-mobile)：在其基础上完成 Vue 3 重写与 React 移植，并更名为 centui——同时忠实保留 mand-mobile v2 的视觉与渲染契约。
 
 > **当前状态**：v3 alpha（`3.0.0-alpha.0`），API 趋于稳定，GA 前仍可能有调整。
 

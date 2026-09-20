@@ -1,4 +1,4 @@
-<h2 align="center">centui</h2>
+<h2 align="center">CentUI</h2>
 <p align="center">A mobile UI toolkit for financial scenarios, built on Vue 3 & React — the successor of <a href="https://github.com/didi/mand-mobile">mand-mobile</a>.</p>
 <p align="center">
   <a href="https://github.com/renkunx/centui/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/renkunx/centui/ci.yml?branch=master&style=flat-square" alt="Build Status"></a>
@@ -12,7 +12,7 @@
 
 **English** | [中文](./README.zh-CN.md)
 
-**centui** is a mobile UI component library for financial scenarios. It is the continuation of [mand-mobile](https://github.com/didi/mand-mobile) (by Didi): the component library has been rewritten on Vue 3, ported to React, and rebranded — while staying faithful to the look, feel, and rendering contract of mand-mobile v2.
+**CentUI** is a mobile UI component library for financial scenarios. It is the continuation of [mand-mobile](https://github.com/didi/mand-mobile) (by Didi): the component library has been rewritten on Vue 3, ported to React, and rebranded — while staying faithful to the look, feel, and rendering contract of mand-mobile v2.
 
 > **Status**: v3 alpha (`3.0.0-alpha.0`). The API is stabilizing but may still change before GA.
 
