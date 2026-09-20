@@ -1,6 +1,6 @@
 <template>
-  <div class="md-cashier-block-btn">
-    <MdButton
+  <div class="cu-cashier-block-btn">
+    <CuButton
       v-for="(action, index) in actions"
       :key="index"
       :type="index === actions.length - 1 ? 'primary' : 'default'"
@@ -8,14 +8,14 @@
       @click="() => action.handler && action.handler()"
     >
       {{ action.buttonText }}
-    </MdButton>
+    </CuButton>
   </div>
 </template>
 
 <script setup lang="ts">
-import MdButton from '../button/Button.vue'
+import CuButton from '../button/Button.vue'
 
-defineOptions({ name: 'md-cashier-channel-button' })
+defineOptions({ name: 'cu-cashier-channel-button' })
 
 withDefaults(
   defineProps<{

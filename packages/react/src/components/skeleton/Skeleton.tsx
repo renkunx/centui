@@ -18,7 +18,7 @@ function isNumber(n: unknown): n is number {
   return typeof n === 'number'
 }
 
-export function MdSkeleton({
+export function CuSkeleton({
   loading = true,
   avatar = false,
   row = 3,
@@ -48,24 +48,24 @@ export function MdSkeleton({
   }
 
   return (
-    <div className="md-skeleton">
+    <div className="cu-skeleton">
       {avatar ? (
         <div
           className={[
-            'md-skeleton-avatar',
-            avatarSize === 'lg' ? 'md-skeleton-avatar-large' : '',
-            avatarSize === 'sm' ? 'md-skeleton-avatar-small' : '',
+            'cu-skeleton-avatar',
+            avatarSize === 'lg' ? 'cu-skeleton-avatar-large' : '',
+            avatarSize === 'sm' ? 'cu-skeleton-avatar-small' : '',
           ]
             .filter(Boolean)
             .join(' ')}
         ></div>
       ) : null}
-      <div className="md-skeleton-content">
-        {title ? <h4 className="md-skeleton-title" style={{ width: titleWidthStyle }} /> : null}
+      <div className="cu-skeleton-content">
+        {title ? <h4 className="cu-skeleton-title" style={{ width: titleWidthStyle }} /> : null}
         {Array.from({ length: row }, (_, i) => i + 1).map(index => (
           <div
             key={index}
-            className="md-skeleton-row"
+            className="cu-skeleton-row"
             style={{
               width: index === row ? '60%' : rowWidthStyle(index - 1),
             }}

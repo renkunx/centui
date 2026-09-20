@@ -1,6 +1,6 @@
 <template>
-  <div class="md-activity-indicator-rolling-success">
-    <MdRoller :size="size" :width="strokeWidth" fill="#FFF6F1" border-color="transparent">
+  <div class="cu-activity-indicator-rolling-success">
+    <CuRoller :size="size" :width="strokeWidth" fill="#FFF6F1" border-color="transparent">
       <template v-if="isSuccess">
         <g name="circle" slot="circle">
           <circle class="success" cx="50" cy="50" fill="#FFF6F1" stroke="none" r="40"></circle>
@@ -32,14 +32,14 @@
           />
         </g>
       </svg>
-    </MdRoller>
+    </CuRoller>
   </div>
 </template>
 
 <script setup lang="ts">
-import MdRoller from './Roller.vue'
+import CuRoller from './Roller.vue'
 
-defineOptions({ name: 'md-activity-indicator-rolling-success' })
+defineOptions({ name: 'cu-activity-indicator-rolling-success' })
 
 withDefaults(
   defineProps<{

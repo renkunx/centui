@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MdPicker, MdButton } from 'mand-mobile'
-import { Toast } from 'mand-mobile'
+import { CuPicker, CuButton } from 'centui'
+import { Toast } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['单列选择', '多列选择', '级联选择', '内联展示']
@@ -86,19 +86,19 @@ function onConfirm3(values: Array<{ text?: string } | undefined>) {
   Toast.success(`已选择：${values.map(v => v?.text).join(' / ')}`)
 }
 
-const code = `<MdPicker v-model="show" title="选择城市" :data="[data1]" @confirm="onConfirm" />
-<MdPicker v-model="show" title="多列" :data="data2" :cols="2" @confirm="onConfirm" />
-<MdPicker v-model="show" title="地区" :data="data3" :cols="2" is-cascade @confirm="onConfirm" />`
+const code = `<CuPicker v-model="show" title="选择城市" :data="[data1]" @confirm="onConfirm" />
+<CuPicker v-model="show" title="多列" :data="data2" :cols="2" @confirm="onConfirm" />
+<CuPicker v-model="show" title="地区" :data="data3" :cols="2" is-cascade @confirm="onConfirm" />`
 </script>
 
 <template>
   <DemoCanvas mode="phone" :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="pk-pad">
-        <MdButton type="primary" round @click="show1 = true">选择城市</MdButton>
+        <CuButton type="primary" round @click="show1 = true">选择城市</CuButton>
         <div class="pk-note">{{ picker1 || '未选择' }}</div>
       </div>
-      <MdPicker
+      <CuPicker
         v-model="show1"
         title="选择城市"
         describe="单选一列数据"
@@ -108,16 +108,16 @@ const code = `<MdPicker v-model="show" title="选择城市" :data="[data1]" @con
     </template>
     <template #scene-1>
       <div class="pk-pad">
-        <MdButton type="warning" round @click="show2 = true">选择月份与档位</MdButton>
+        <CuButton type="warning" round @click="show2 = true">选择月份与档位</CuButton>
         <div class="pk-note">{{ picker2 || '未选择' }}</div>
       </div>
-      <MdPicker v-model="show2" :data="data2" :cols="2" @confirm="onConfirm2" />
+      <CuPicker v-model="show2" :data="data2" :cols="2" @confirm="onConfirm2" />
     </template>
     <template #scene-2>
       <div class="pk-pad">
-        <MdButton type="primary" round @click="show3 = true">选择省市</MdButton>
+        <CuButton type="primary" round @click="show3 = true">选择省市</CuButton>
       </div>
-      <MdPicker
+      <CuPicker
         v-model="show3"
         title="选择地区"
         :data="data3"
@@ -130,7 +130,7 @@ const code = `<MdPicker v-model="show" title="选择城市" :data="[data1]" @con
     <template #scene-3>
       <div class="pk-pad">
         <p style="font-size: 24px; color: #999; margin-bottom: 12px">内联选择器（is-view）</p>
-        <MdPicker :data="[data1]" is-view @confirm="onConfirm1" />
+        <CuPicker :data="[data1]" is-view @confirm="onConfirm1" />
       </div>
     </template>
   </DemoCanvas>

@@ -40,7 +40,7 @@
       "name": "transition",
       "type": "string",
       "default": "-",
-      "desc": "过渡动画（默认按 fullScreen 区分 md-fade / md-punch）",
+      "desc": "过渡动画（默认按 fullScreen 区分 cu-fade / cu-punch）",
       "required": false
     }
   ],

@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-defineOptions({ name: 'md-number-key' })
+defineOptions({ name: 'cu-number-key' })
 
 const props = withDefaults(
   defineProps<{

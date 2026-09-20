@@ -1,15 +1,15 @@
 <template>
-  <MdCheckGroup
+  <CuCheckGroup
     ref="group"
-    class="md-check-list"
+    class="cu-check-list"
     :class="{ 'is-align-center': alignCenter }"
     :model-value="modelValue"
     @update:model-value="onInput"
   >
-    <MdCellItem
+    <CuCellItem
       v-for="(item, index) in options"
       :key="index"
-      class="md-check-item"
+      class="cu-check-item"
       :class="{
         'is-checked': modelValue.indexOf(item.value) !== -1,
       }"
@@ -22,7 +22,7 @@
         <slot :option="item" :index="index" :selected="modelValue.indexOf(item.value) > -1"></slot>
       </template>
       <template v-if="!alignCenter" #[iconSlotName]>
-        <MdCheck
+        <CuCheck
           :name="item.value"
           :disabled="item.disabled"
           :size="iconSize"
@@ -32,17 +32,17 @@
           :icon-svg="iconSvg"
         />
       </template>
-    </MdCellItem>
-  </MdCheckGroup>
+    </CuCellItem>
+  </CuCheckGroup>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, useSlots } from 'vue'
-import MdCheck from './Check.vue'
-import MdCheckGroup from './CheckGroup.vue'
-import MdCellItem from '../cell-item/CellItem.vue'
+import CuCheck from './Check.vue'
+import CuCheckGroup from './CheckGroup.vue'
+import CuCellItem from '../cell-item/CellItem.vue'
 
-defineOptions({ name: 'md-check-list' })
+defineOptions({ name: 'cu-check-list' })
 
 const props = withDefaults(
   defineProps<{
@@ -76,7 +76,7 @@ const emit = defineEmits<{
 }>()
 
 const slots = useSlots()
-const group = ref<InstanceType<typeof MdCheckGroup>>()
+const group = ref<InstanceType<typeof CuCheckGroup>>()
 
 const hasSlot = computed(() =>
   props.isSlotScope !== undefined ? props.isSlotScope : !!slots.default,

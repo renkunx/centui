@@ -1,1 +1,1 @@
-export { MdTag, type TagProps } from './Tag'
+export { CuTag, type TagProps } from './Tag'

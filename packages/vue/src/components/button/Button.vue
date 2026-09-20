@@ -1,7 +1,7 @@
 <template>
   <button
     :type="nativeType"
-    class="md-button"
+    class="cu-button"
     :class="[
       type,
       inactive ? 'inactive' : 'active',
@@ -12,14 +12,14 @@
     ]"
     :disabled="inactive || type === 'disabled'"
   >
-    <div class="md-button-inner">
+    <div class="cu-button-inner">
       <template v-if="loading">
-        <MdActivityIndicatorRolling class="md-button-loading"></MdActivityIndicatorRolling>
+        <CuActivityIndicatorRolling class="cu-button-loading"></CuActivityIndicatorRolling>
       </template>
       <template v-else-if="icon">
-        <MdIcon :name="icon" :svg="iconSvg"></MdIcon>
+        <CuIcon :name="icon" :svg="iconSvg"></CuIcon>
       </template>
-      <div class="md-button-content">
+      <div class="cu-button-content">
         <slot></slot>
       </div>
     </div>
@@ -27,10 +27,10 @@
 </template>
 
 <script setup lang="ts">
-import MdActivityIndicatorRolling from '../activity-indicator/Roller.vue'
-import MdIcon from '../icon/Icon.vue'
+import CuActivityIndicatorRolling from '../activity-indicator/Roller.vue'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-button' })
+defineOptions({ name: 'cu-button' })
 
 withDefaults(
   defineProps<{

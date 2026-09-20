@@ -1,16 +1,16 @@
 <template>
   <label
-    class="md-check"
+    class="cu-check"
     :class="{
       'is-disabled': disabled,
       'is-checked': isChecked,
     }"
     @click="onClick"
   >
-    <div class="md-check-icon">
-      <MdIcon :name="currentIcon" :size="size" :svg="iconSvg" />
+    <div class="cu-check-icon">
+      <CuIcon :name="currentIcon" :size="size" :svg="iconSvg" />
     </div>
-    <div v-if="$slots.default || label" class="md-check-label">
+    <div v-if="$slots.default || label" class="cu-check-label">
       <slot>{{ label }}</slot>
     </div>
   </label>
@@ -18,10 +18,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import MdIcon from '../icon/Icon.vue'
+import CuIcon from '../icon/Icon.vue'
 import { useCheckDelegate } from './shared'
 
-defineOptions({ name: 'md-check' })
+defineOptions({ name: 'cu-check' })
 
 const props = withDefaults(
   defineProps<{

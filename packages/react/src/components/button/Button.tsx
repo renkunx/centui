@@ -1,6 +1,6 @@
 import type { ReactNode, MouseEvent, ButtonHTMLAttributes } from 'react'
-import { MdActivityIndicatorRolling } from '../activity-indicator/Roller'
-import { MdIcon } from '../icon/Icon'
+import { CuActivityIndicatorRolling } from '../activity-indicator/Roller'
+import { CuIcon } from '../icon/Icon'
 
 export type ButtonProps = {
   /** default | primary | warning | disabled | link */
@@ -20,7 +20,7 @@ export type ButtonProps = {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'onClick'>
 
-export function MdButton({
+export function CuButton({
   type = 'default',
   nativeType = 'button',
   icon = '',
@@ -40,7 +40,7 @@ export function MdButton({
     <button
       type={nativeType}
       className={[
-        'md-button',
+        'cu-button',
         type,
         inactive ? 'inactive' : 'active',
         inline ? 'inline' : 'block',
@@ -56,13 +56,13 @@ export function MdButton({
       onClick={onClick}
       {...rest}
     >
-      <div className="md-button-inner">
+      <div className="cu-button-inner">
         {loading ? (
-          <MdActivityIndicatorRolling className="md-button-loading" />
+          <CuActivityIndicatorRolling className="cu-button-loading" />
         ) : icon ? (
-          <MdIcon name={icon} svg={iconSvg} />
+          <CuIcon name={icon} svg={iconSvg} />
         ) : null}
-        <div className="md-button-content">{children}</div>
+        <div className="cu-button-content">{children}</div>
       </div>
     </button>
   )

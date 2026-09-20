@@ -1,9 +1,9 @@
 <template>
-  <div class="md-slider" :class="{ 'is-disabled': disabled }">
+  <div class="cu-slider" :class="{ 'is-disabled': disabled }">
     <template v-if="range">
-      <div class="md-slider-bar" :style="barStyle"></div>
+      <div class="cu-slider-bar" :style="barStyle"></div>
       <div
-        class="md-slider-handle is-lower"
+        class="cu-slider-handle is-lower"
         :data-hint="format(values[0])"
         :class="{ 'is-active': isDragging && !isDragingUpper }"
         :style="{ left: lowerHandlePosition + '%' }"
@@ -11,7 +11,7 @@
         <span @mousedown="startLowerDrag" @touchstart="startLowerDrag"></span>
       </div>
       <div
-        class="md-slider-handle is-higher"
+        class="cu-slider-handle is-higher"
         :data-hint="format(values[1])"
         :class="{ 'is-active': isDragging && isDragingUpper }"
         :style="{ left: upperHandlePosition + '%' }"
@@ -20,9 +20,9 @@
       </div>
     </template>
     <template v-else>
-      <div class="md-slider-bar" :style="barStyle"></div>
+      <div class="cu-slider-bar" :style="barStyle"></div>
       <div
-        class="md-slider-handle"
+        class="cu-slider-handle"
         :data-hint="format(values[0])"
         :class="{ 'is-active': isDragging }"
         :style="{ left: lowerHandlePosition + '%' }"
@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 
-defineOptions({ name: 'md-slider' })
+defineOptions({ name: 'cu-slider' })
 
 const props = withDefaults(
   defineProps<{
@@ -214,7 +214,7 @@ function onDrag(e: Event) {
   const point = ('changedTouches' in e
     ? (e as TouchEvent).changedTouches[0]
     : (e as MouseEvent)) as MouseEvent
-  const el = document.querySelector<HTMLElement>('.md-slider')
+  const el = document.querySelector<HTMLElement>('.cu-slider')
   window.requestAnimationFrame(() => {
     const diff = ((point.pageX - startDragMousePos) / el!.offsetWidth) * (props.max - props.min)
     const nextVal = startVal + diff

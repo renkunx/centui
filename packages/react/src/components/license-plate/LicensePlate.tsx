@@ -1,8 +1,8 @@
 import { forwardRef, useEffect, useRef, useState } from 'react'
-import { MdPopup } from '../popup/Popup'
-import { MdPopupTitleBar } from '../popup/PopupTitleBar'
-import { MdLicensePlateInput } from './LicensePlateInput'
-import { MdLicensePlateKeyboard, type LicenseKeyItem } from './LicensePlateKeyboard'
+import { CuPopup } from '../popup/Popup'
+import { CuPopupTitleBar } from '../popup/PopupTitleBar'
+import { CuLicensePlateInput } from './LicensePlateInput'
+import { CuLicensePlateKeyboard, type LicenseKeyItem } from './LicensePlateKeyboard'
 
 export interface LicensePlateProps {
   shortcuts?: string[]
@@ -32,7 +32,7 @@ const NUMBERS: LicenseKeyItem[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map(value => ({
   disabled: false,
 }))
 
-export const MdLicensePlate = forwardRef<HTMLDivElement, LicensePlateProps>(function MdLicensePlate(
+export const CuLicensePlate = forwardRef<HTMLDivElement, LicensePlateProps>(function CuLicensePlate(
   {
     shortcuts = DEFAULT_SHORTCUTS,
     modeShow = 'division',
@@ -135,15 +135,15 @@ export const MdLicensePlate = forwardRef<HTMLDivElement, LicensePlateProps>(func
   }
 
   return (
-    <div className="md-license-plate" ref={ref}>
+    <div className="cu-license-plate" ref={ref}>
       {modeShow === 'division' ? (
         <div>
-          <div className="md-license-plate-input-container division">
-            <MdLicensePlateInput keyArray={keyArray} selectedIndex={selectedIndex} onKeyMapping={keyMapping} />
+          <div className="cu-license-plate-input-container division">
+            <CuLicensePlateInput keyArray={keyArray} selectedIndex={selectedIndex} onKeyMapping={keyMapping} />
           </div>
           {showDivisionKeyboard ? (
-            <div className="md-license-plate-keyboard-container division">
-              <MdLicensePlateKeyboard
+            <div className="cu-license-plate-keyboard-container division">
+              <CuLicensePlateKeyboard
                 keyboard={dyKeyboard}
                 onEnter={onEnter}
                 onDelete={onDelete}
@@ -155,8 +155,8 @@ export const MdLicensePlate = forwardRef<HTMLDivElement, LicensePlateProps>(func
       ) : null}
       {modeShow === 'popUp' ? (
         <div>
-          <MdPopup value={showPopUp} hasMask position="bottom" maskClosable={false}>
-            <MdPopupTitleBar
+          <CuPopup value={showPopUp} hasMask position="bottom" maskClosable={false}>
+            <CuPopupTitleBar
               onlyClose
               largeRadius
               title={title}
@@ -164,12 +164,12 @@ export const MdLicensePlate = forwardRef<HTMLDivElement, LicensePlateProps>(func
               titleAlign="left"
               onCancel={() => onHide?.()}
             />
-            <div className="md-popup-content">
-              <div className="md-license-plate-input-container popUp">
-                <MdLicensePlateInput keyArray={keyArray} selectedIndex={selectedIndex} onKeyMapping={keyMapping} />
+            <div className="cu-popup-content">
+              <div className="cu-license-plate-input-container popUp">
+                <CuLicensePlateInput keyArray={keyArray} selectedIndex={selectedIndex} onKeyMapping={keyMapping} />
               </div>
-              <div className="md-license-plate-keyboard-container popUp">
-                <MdLicensePlateKeyboard
+              <div className="cu-license-plate-keyboard-container popUp">
+                <CuLicensePlateKeyboard
                   keyboard={dyKeyboard}
                   onEnter={onEnter}
                   onDelete={onDelete}
@@ -177,7 +177,7 @@ export const MdLicensePlate = forwardRef<HTMLDivElement, LicensePlateProps>(func
                 />
               </div>
             </div>
-          </MdPopup>
+          </CuPopup>
         </div>
       ) : null}
     </div>

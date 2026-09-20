@@ -1,3 +1,3 @@
-export { MdLicensePlate, type LicensePlateProps } from './LicensePlate'
-export { MdLicensePlateInput, type LicensePlateInputProps } from './LicensePlateInput'
-export { MdLicensePlateKeyboard, type LicenseKeyItem, type LicensePlateKeyboardProps } from './LicensePlateKeyboard'
+export { CuLicensePlate, type LicensePlateProps } from './LicensePlate'
+export { CuLicensePlateInput, type LicensePlateInputProps } from './LicensePlateInput'
+export { CuLicensePlateKeyboard, type LicenseKeyItem, type LicensePlateKeyboardProps } from './LicensePlateKeyboard'

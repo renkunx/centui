@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef, useState } from 'react'
-import { Scroller } from '@mand-mobile/core/web'
-import { throttle } from '@mand-mobile/core'
+import { Scroller } from '@centui/core/web'
+import { throttle } from '@centui/core'
 
 export interface RulerProps {
   value?: number
@@ -19,7 +19,7 @@ const CLIENT_HEIGHT = 60
 const RATIO = 2
 const BLANK = 30
 
-export const MdRuler = forwardRef<HTMLDivElement, RulerProps>(function MdRuler(
+export const CuRuler = forwardRef<HTMLDivElement, RulerProps>(function CuRuler(
   {
     value = 0,
     scope = [0, 100],
@@ -316,10 +316,10 @@ export const MdRuler = forwardRef<HTMLDivElement, RulerProps>(function MdRuler(
   }
 
   return (
-    <div className="md-ruler" ref={ref} onTouchStart={startDrag}>
-      <canvas ref={canvasRef} className="md-ruler-canvas"></canvas>
-      <div className={`md-ruler-cursor${isStepTextBottom ? ' md-ruler-cursor-bottom' : ''}`}></div>
-      <div className="md-ruler-arrow"></div>
+    <div className="cu-ruler" ref={ref} onTouchStart={startDrag}>
+      <canvas ref={canvasRef} className="cu-ruler-canvas"></canvas>
+      <div className={`cu-ruler-cursor${isStepTextBottom ? ' cu-ruler-cursor-bottom' : ''}`}></div>
+      <div className="cu-ruler-arrow"></div>
     </div>
   )
 })

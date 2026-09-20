@@ -1,19 +1,19 @@
 <template>
-  <fieldset class="md-field" :class="{ 'is-plain': plain, 'is-disabled': disabled }">
-    <header v-if="title || brief || $slots.header || $slots.action" class="md-field-header">
-      <div class="md-field-heading">
-        <legend v-if="title" class="md-field-title" v-text="title"></legend>
-        <p v-if="brief" class="md-field-brief" v-text="brief"></p>
+  <fieldset class="cu-field" :class="{ 'is-plain': plain, 'is-disabled': disabled }">
+    <header v-if="title || brief || $slots.header || $slots.action" class="cu-field-header">
+      <div class="cu-field-heading">
+        <legend v-if="title" class="cu-field-title" v-text="title"></legend>
+        <p v-if="brief" class="cu-field-brief" v-text="brief"></p>
         <slot name="header"></slot>
       </div>
-      <div class="md-field-action">
+      <div class="cu-field-action">
         <slot name="action"></slot>
       </div>
     </header>
-    <div class="md-field-content">
+    <div class="cu-field-content">
       <slot></slot>
     </div>
-    <footer v-if="$slots.footer" class="md-field-footer">
+    <footer v-if="$slots.footer" class="cu-field-footer">
       <slot name="footer"></slot>
     </footer>
   </fieldset>
@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { provide, reactive } from 'vue'
 
-defineOptions({ name: 'md-field' })
+defineOptions({ name: 'cu-field' })
 
 const props = withDefaults(
   defineProps<{

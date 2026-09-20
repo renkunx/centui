@@ -1,1 +1,1 @@
-export { MdAmount, type AmountProps } from './Amount'
+export { CuAmount, type AmountProps } from './Amount'

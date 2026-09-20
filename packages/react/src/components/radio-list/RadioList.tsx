@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type ReactNode } from 'react'
-import { MdRadio } from '../radio/Radio'
-import { MdCellItem } from '../cell-item/CellItem'
-import { MdInputItem } from '../input-item/InputItem'
+import { CuRadio } from '../radio/Radio'
+import { CuCellItem } from '../cell-item/CellItem'
+import { CuInputItem } from '../input-item/InputItem'
 import type { CheckValue } from '../check/Check'
 
 export interface RadioListOption {
@@ -38,7 +38,7 @@ export interface RadioListExposed {
   selectByIndex: (index: number) => void
 }
 
-export const MdRadioList = forwardRef<RadioListExposed, RadioListProps>(function MdRadioList(
+export const CuRadioList = forwardRef<RadioListExposed, RadioListProps>(function CuRadioList(
   {
     className,
     options = [],
@@ -106,7 +106,7 @@ export const MdRadioList = forwardRef<RadioListExposed, RadioListProps>(function
 
   const iconNode = (item: RadioListOption) =>
     !alignCenter && !inputSelected && !withoutIcon ? (
-      <MdRadio
+      <CuRadio
         name={item.value}
         value={selectedValue}
         disabled={item.disabled}
@@ -119,11 +119,11 @@ export const MdRadioList = forwardRef<RadioListExposed, RadioListProps>(function
     ) : null
 
   return (
-    <div className={`md-radio-list${className ? ` ${className}` : ''}${alignCenter ? ' is-align-center' : ''}`}>
+    <div className={`cu-radio-list${className ? ` ${className}` : ''}${alignCenter ? ' is-align-center' : ''}`}>
       {options.map((item, index) => (
-        <MdCellItem
+        <CuCellItem
           key={index}
-          className={`md-radio-item${selectedValue === item.value && !inputSelected ? ' is-selected' : ''}`}
+          className={`cu-radio-item${selectedValue === item.value && !inputSelected ? ' is-selected' : ''}`}
           title={hasSlot ? '' : item.text || item.label || ''}
           brief={hasSlot ? '' : item.brief}
           disabled={item.disabled}
@@ -133,12 +133,12 @@ export const MdRadioList = forwardRef<RadioListExposed, RadioListProps>(function
           onClick={() => select(item, index)}
         >
           {hasSlot ? children?.({ option: item, index, selected: currentValue === item.value }) : null}
-        </MdCellItem>
+        </CuCellItem>
       ))}
       {hasInput ? (
-        <MdInputItem
+        <CuInputItem
           ref={inputItemRef as never}
-          className={`md-radio-item${inputSelected ? ' is-selected' : ''}`}
+          className={`cu-radio-item${inputSelected ? ' is-selected' : ''}`}
           title={inputLabel}
           placeholder={inputPlaceholder}
           value={inputValue}

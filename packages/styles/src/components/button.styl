@@ -1,6 +1,6 @@
 /* Extracted from legacy/components/button — do not edit by hand; re-run scripts/extract.mjs */
 /* --- index.vue --- */
-.md-button
+.cu-button
   position relative
   display block
   height button-height
@@ -19,7 +19,7 @@
   -webkit-tap-highlight-color transparent
   overflow visible
 
-.md-button-inner
+.cu-button-inner
   display flex
   align-items center
   justify-content center
@@ -30,22 +30,22 @@
   word-break break-word
   white-space nowrap
 
-.md-button-loading
-  .md-activity-indicator-svg
+.cu-button-loading
+  .cu-activity-indicator-svg
     width 35px !important
     height 35px !important
     margin-right 10px
 
-.md-button-content
+.cu-button-content
   display flex
   align-items center
   padding 0 6px
-  .md-icon
+  .cu-icon
     padding 0
 
-.md-button
+.cu-button
   position relative
-  .md-icon
+  .cu-icon
     display flex
     align-items center
     justify-content center
@@ -57,7 +57,7 @@
     hairline(all, color-border-element, button-radius, 3px)
     &.active:active
       background button-default-active-fill
-    .md-button-loading .md-activity-indicator-svg .circle circle
+    .cu-button-loading .cu-activity-indicator-svg .circle circle
       stroke button-default-color !important
   &.primary
     background button-primary-fill
@@ -65,7 +65,7 @@
     hairline(all, button-primary-fill, button-radius, 3px)
     &.active:active
       background button-primary-active-fill
-    .md-button-loading .md-activity-indicator-svg .circle circle
+    .cu-button-loading .cu-activity-indicator-svg .circle circle
       stroke button-primary-color !important
   &.warning
     background button-warning-fill
@@ -73,13 +73,13 @@
     hairline(all, button-warning-fill, button-radius, 3px)
     &.active:active
       background button-warning-active-fill
-    .md-button-loading .md-activity-indicator-svg .circle circle
+    .cu-button-loading .cu-activity-indicator-svg .circle circle
       stroke button-warning-color !important
   &.disabled
     background button-disabled-fill
     color button-disabled-color
     hairline(all, button-disabled-fill, button-radius, 3px)
-    .md-button-loading .md-activity-indicator-svg .circle circle
+    .cu-button-loading .cu-activity-indicator-svg .circle circle
       stroke button-disabled-color !important
 
   &.plain
@@ -90,26 +90,26 @@
       hairline(all, color-border-element, button-radius, 3px)
       &.active:active
         background button-default-plain-active-fill
-      .md-button-loading .md-activity-indicator-svg .circle circle
+      .cu-button-loading .cu-activity-indicator-svg .circle circle
         stroke button-default-plain-color !important
     &.primary
       color button-primary-plain-color
       hairline(all, button-primary-fill, button-radius, 3px)
       &.active:active
         background button-primary-plain-active-fill
-      .md-button-loading .md-activity-indicator-svg .circle circle
+      .cu-button-loading .cu-activity-indicator-svg .circle circle
         stroke button-primary-plain-color !important
     &.warning
       color button-warning-plain-color
       hairline(all, button-warning-fill, button-radius, 3px)
       &.active:active
         background button-warning-plain-active-fill
-      .md-button-loading .md-activity-indicator-svg .circle circle
+      .cu-button-loading .cu-activity-indicator-svg .circle circle
         stroke button-warning-plain-color !important
     &.disabled
       color button-disabled-plain-color
       hairline(all, color-border-element, button-radius, 3px)
-      .md-button-loading .md-activity-indicator-svg .circle circle
+      .cu-button-loading .cu-activity-indicator-svg .circle circle
         stroke button-disabled-plain-color !important
 
   &.round

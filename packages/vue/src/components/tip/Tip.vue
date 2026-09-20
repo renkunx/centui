@@ -9,15 +9,15 @@ import {
   render,
   type VNode,
 } from 'vue'
-import { randomId } from '@mand-mobile/core'
-import MdTipContent from './TipContent.vue'
+import { randomId } from '@centui/core'
+import CuTipContent from './TipContent.vue'
 
 /**
  * Tip 包装器：只渲染插槽的第一个节点，并在其上追加点击触发；
  * 气泡内容懒创建为游离 DOM，绝对定位于第一个可滚动祖先内（v2 契约）。
  */
 export default defineComponent({
-  name: 'md-tip',
+  name: 'cu-tip',
 
   props: {
     /** top | left | bottom | right */
@@ -127,7 +127,7 @@ export default defineComponent({
       }
 
       tipContainer = document.createElement('div')
-      const vnode = createVNode(MdTipContent, {
+      const vnode = createVNode(CuTipContent, {
         icon: props.icon,
         iconSvg: props.iconSvg,
         placement: props.placement,

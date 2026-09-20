@@ -1,68 +1,68 @@
 <template>
-  <div class="md-number-keyboard-container" :class="[type, disabled ? 'disabled' : '']">
+  <div class="cu-number-keyboard-container" :class="[type, disabled ? 'disabled' : '']">
     <div class="keyboard-number">
       <ul class="keyboard-number-list">
-        <MdKeyboardKey
+        <CuKeyboardKey
           v-for="n in 9"
           :key="n - 1"
           class="keyboard-number-item"
           :value="keyNumberList[n - 1]"
           @press="onNumberKeyClick"
-        ></MdKeyboardKey>
+        ></CuKeyboardKey>
         <template v-if="type === 'professional'">
-          <MdKeyboardKey
+          <CuKeyboardKey
             v-if="!hideDot"
             class="keyboard-number-item"
             :value="duplicateZero ? zeroValue : dotText"
             @press="onNumberKeyClick"
-          ></MdKeyboardKey>
-          <MdKeyboardKey
+          ></CuKeyboardKey>
+          <CuKeyboardKey
             class="keyboard-number-item"
             :class="{ 'large-item': hideDot }"
             :value="duplicateZero ? duplicateZeroValue : keyNumberList[9]"
             @press="onNumberKeyClick"
-          ></MdKeyboardKey>
-          <MdKeyboardKey
+          ></CuKeyboardKey>
+          <CuKeyboardKey
             v-if="duplicateZero"
             class="keyboard-number-item"
             :value="dotText"
             @press="onNumberKeyClick"
-          ></MdKeyboardKey>
+          ></CuKeyboardKey>
           <template v-if="!duplicateZero">
             <li v-if="isView" class="keyboard-number-item"></li>
-            <MdKeyboardKey
+            <CuKeyboardKey
               v-else
               class="keyboard-number-item slidedown"
               no-touch
               no-prevent
               @press="onSlideDoneClick"
-            ></MdKeyboardKey>
+            ></CuKeyboardKey>
           </template>
         </template>
         <template v-else>
           <li class="keyboard-number-item no-bg"></li>
-          <MdKeyboardKey
+          <CuKeyboardKey
             class="keyboard-number-item"
             :value="keyNumberList[9]"
             @press="onNumberKeyClick"
-          ></MdKeyboardKey>
-          <MdKeyboardKey
+          ></CuKeyboardKey>
+          <CuKeyboardKey
             class="keyboard-number-item no-bg delete"
             @press="onDeleteClick"
-          ></MdKeyboardKey>
+          ></CuKeyboardKey>
         </template>
       </ul>
     </div>
     <div v-if="type === 'professional'" class="keyboard-operate">
       <ul class="keyboard-operate-list">
-        <MdKeyboardKey class="keyboard-operate-item delete" @press="onDeleteClick"></MdKeyboardKey>
-        <MdKeyboardKey
+        <CuKeyboardKey class="keyboard-operate-item delete" @press="onDeleteClick"></CuKeyboardKey>
+        <CuKeyboardKey
           class="keyboard-operate-item confirm"
           :value="okText"
           no-touch
           no-prevent
           @press="onConfirmeClick"
-        ></MdKeyboardKey>
+        ></CuKeyboardKey>
       </ul>
     </div>
   </div>
@@ -70,10 +70,10 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { t } from '@mand-mobile/core'
-import MdKeyboardKey from './KeyboardKey.vue'
+import { t } from '@centui/core'
+import CuKeyboardKey from './KeyboardKey.vue'
 
-defineOptions({ name: 'md-number-keyboard-container' })
+defineOptions({ name: 'cu-number-keyboard-container' })
 
 const props = withDefaults(
   defineProps<{

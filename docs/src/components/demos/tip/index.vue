@@ -1,40 +1,40 @@
 <script setup lang="ts">
-import { MdTip, MdButton } from 'mand-mobile'
+import { CuTip, CuButton } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['上方', '下方', '左侧', '右侧', '其他配置']
-const code = `<MdTip content="不错哟" placement="top">
-  <MdButton>点击我</MdButton>
-</MdTip>
-<MdTip icon="security" content="完善信息，领取5元免息券" fill>...</MdTip>`
+const code = `<CuTip content="不错哟" placement="top">
+  <CuButton>点击我</CuButton>
+</CuTip>
+<CuTip icon="security" content="完善信息，领取5元免息券" fill>...</CuTip>`
 </script>
 
 <template>
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
-      <MdTip content="不错哟" placement="top">
-        <MdButton type="default">点击我</MdButton>
-      </MdTip>
+      <CuTip content="不错哟" placement="top">
+        <CuButton type="default">点击我</CuButton>
+      </CuTip>
     </template>
     <template #scene-1>
-      <MdTip content="不错哟" placement="bottom">
-        <MdButton type="default">点击我</MdButton>
-      </MdTip>
+      <CuTip content="不错哟" placement="bottom">
+        <CuButton type="default">点击我</CuButton>
+      </CuTip>
     </template>
     <template #scene-2>
-      <MdTip content="不错哟" placement="left">
-        <MdButton type="default">点击我</MdButton>
-      </MdTip>
+      <CuTip content="不错哟" placement="left">
+        <CuButton type="default">点击我</CuButton>
+      </CuTip>
     </template>
     <template #scene-3>
-      <MdTip content="不错哟" placement="right">
-        <MdButton type="default">点击我</MdButton>
-      </MdTip>
+      <CuTip content="不错哟" placement="right">
+        <CuButton type="default">点击我</CuButton>
+      </CuTip>
     </template>
     <template #scene-4>
-      <MdTip icon="security" content="完善信息，领取5元免息券" fill>
-        <MdButton type="default">点击我</MdButton>
-      </MdTip>
+      <CuTip icon="security" content="完善信息，领取5元免息券" fill>
+        <CuButton type="default">点击我</CuButton>
+      </CuTip>
     </template>
   </DemoCanvas>
 </template>

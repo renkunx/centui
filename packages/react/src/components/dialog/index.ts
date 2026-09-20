@@ -4,8 +4,8 @@
 import { createElement } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { flushSync } from 'react-dom'
-import { t } from '@mand-mobile/core'
-import { MdDialog, type DialogBtn, type DialogExposed } from './Dialog'
+import { t } from '@centui/core'
+import { CuDialog, type DialogBtn, type DialogExposed } from './Dialog'
 
 export type { DialogBtn, DialogExposed }
 
@@ -52,7 +52,7 @@ function renderDialog(store: DialogStore) {
   const { options } = store
   flushSync(() =>
     store.root.render(
-    createElement(MdDialog, {
+    createElement(CuDialog, {
       value: store.value,
       title: options.title ?? '',
       icon: options.icon ?? '',
@@ -60,7 +60,7 @@ function renderDialog(store: DialogStore) {
       content: options.content ?? '',
       closable: options.closable ?? false,
       btns: options.btns ?? [],
-      transition: options.transition ?? 'md-bounce',
+      transition: options.transition ?? 'cu-bounce',
       preventScroll: true,
       onChange: (val: boolean) => {
         if (!val) {
@@ -102,7 +102,7 @@ function generate({
   iconSvg = true,
   content = '',
   closable = false,
-  transition = 'md-bounce',
+  transition = 'cu-bounce',
   btns = [],
   onShow = noop,
   onHide = noop,
@@ -123,7 +123,7 @@ function generate({
   return { close: () => closeStore(store) }
 }
 
-type DialogStatic = typeof MdDialog & {
+type DialogStatic = typeof CuDialog & {
   confirm: (options: ConfirmOptions) => DialogExposed
   alert: (options: AlertOptions) => DialogExposed
   succeed: (options: ConfirmOptions) => DialogExposed
@@ -131,7 +131,7 @@ type DialogStatic = typeof MdDialog & {
   closeAll: () => void
 }
 
-const Dialog = MdDialog as DialogStatic
+const Dialog = CuDialog as DialogStatic
 
 /**
  * Dynamically create a confirm dialog
@@ -248,5 +248,5 @@ Dialog.closeAll = () => {
   instances.forEach(store => closeStore(store))
 }
 
-export { MdDialog }
+export { CuDialog }
 export default Dialog

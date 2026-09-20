@@ -20,7 +20,7 @@ export interface PopupProps {
   maskClosable?: boolean
   /** center | top | bottom | left | right */
   position?: string
-  /** 覆盖默认过渡名（样式由 @mand-mobile/styles 提供） */
+  /** 覆盖默认过渡名（样式由 @centui/styles 提供） */
   transition?: string
   preventScroll?: boolean
   preventScrollExclude?: string | HTMLElement
@@ -41,19 +41,19 @@ const isTestEnv =
 function defaultTransition(position: string): string {
   switch (position) {
     case 'bottom':
-      return 'md-slide-up'
+      return 'cu-slide-up'
     case 'top':
-      return 'md-slide-down'
+      return 'cu-slide-down'
     case 'left':
-      return 'md-slide-right'
+      return 'cu-slide-right'
     case 'right':
-      return 'md-slide-left'
+      return 'cu-slide-left'
     default:
-      return 'md-fade'
+      return 'cu-fade'
   }
 }
 
-export function MdPopup({
+export function CuPopup({
   value = false,
   hasMask = true,
   maskClosable = true,
@@ -148,8 +148,8 @@ export function MdPopup({
 
   const bindPreventScroll = (isBind: boolean) => {
     const handler = isBind ? 'addEventListener' : 'removeEventListener'
-    const masker = rootRef.current?.querySelector<HTMLElement>('.md-popup-mask')
-    const boxer = rootRef.current?.querySelector<HTMLElement>('.md-popup-box')
+    const masker = rootRef.current?.querySelector<HTMLElement>('.cu-popup-mask')
+    const boxer = rootRef.current?.querySelector<HTMLElement>('.cu-popup-box')
     masker?.[handler]('touchmove', preventDefault, false)
     boxer?.[handler]('touchmove', preventDefault, false)
 
@@ -179,7 +179,7 @@ export function MdPopup({
       <div
         ref={rootRef}
         className={[
-          'md-popup',
+          'cu-popup',
           className,
           hasMask ? 'with-mask' : '',
           largeRadius ? 'large-radius' : '',
@@ -190,12 +190,12 @@ export function MdPopup({
         style={{ display: isPopupShow ? undefined : 'none' }}
       >
         <div
-          className="md-popup-mask"
+          className="cu-popup-mask"
           style={{ display: hasMask && isPopupBoxShow ? undefined : 'none' }}
           onClick={handleMaskClick}
         ></div>
         <div
-          className={`md-popup-box ${transitionName}`}
+          className={`cu-popup-box ${transitionName}`}
           style={{ display: isPopupBoxShow ? undefined : 'none' }}
         >
           {children}

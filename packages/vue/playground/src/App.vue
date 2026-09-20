@@ -1,78 +1,78 @@
 <template>
   <div class="pg">
-    <h1>mand-mobile v3 playground</h1>
-    <p class="pg-tip">首批 12 个组件 · Vue 3 + @mand-mobile/styles（与 v2 同源 CSS）</p>
+    <h1>centui v3 playground</h1>
+    <p class="pg-tip">首批 12 个组件 · Vue 3 + @centui/styles（与 v2 同源 CSS）</p>
 
     <section>
       <h2>Button</h2>
-      <MdButton type="primary">主要按钮</MdButton>
-      <MdButton type="warning" plain>次要按钮</MdButton>
-      <MdButton type="primary" round inline size="small">圆角小按钮</MdButton>
-      <MdButton type="primary" loading>加载中</MdButton>
-      <MdButton type="primary" icon="rmb" inline>图标按钮</MdButton>
+      <CuButton type="primary">主要按钮</CuButton>
+      <CuButton type="warning" plain>次要按钮</CuButton>
+      <CuButton type="primary" round inline size="small">圆角小按钮</CuButton>
+      <CuButton type="primary" loading>加载中</CuButton>
+      <CuButton type="primary" icon="rmb" inline>图标按钮</CuButton>
     </section>
 
     <section>
       <h2>Icon</h2>
       <div class="icons">
-        <MdIcon name="home" size="lg" />
-        <MdIcon name="location" size="lg" />
-        <MdIcon name="arrow" />
-        <MdIcon name="success-color" size="lg" />
-        <MdIcon name="spinner" />
+        <CuIcon name="home" size="lg" />
+        <CuIcon name="location" size="lg" />
+        <CuIcon name="arrow" />
+        <CuIcon name="success-color" size="lg" />
+        <CuIcon name="spinner" />
       </div>
     </section>
 
     <section>
       <h2>Tag</h2>
       <div class="tags">
-        <MdTag size="tiny" type="fill">标签</MdTag>
-        <MdTag size="small" type="ghost">标签</MdTag>
-        <MdTag shape="fillet" type="fill" fill-color="#fc9153">优惠</MdTag>
-        <MdTag shape="quarter" fill-color="#fc9153">首</MdTag>
+        <CuTag size="tiny" type="fill">标签</CuTag>
+        <CuTag size="small" type="ghost">标签</CuTag>
+        <CuTag shape="fillet" type="fill" fill-color="#fc9153">优惠</CuTag>
+        <CuTag shape="quarter" fill-color="#fc9153">首</CuTag>
       </div>
     </section>
 
     <section>
       <h2>Amount</h2>
       <p class="amounts">
-        <MdAmount :value="1234.56" />
-        <MdAmount :value="1234.56" has-separator />
-        <MdAmount :value="1234.56" is-capital />
+        <CuAmount :value="1234.56" />
+        <CuAmount :value="1234.56" has-separator />
+        <CuAmount :value="1234.56" is-capital />
       </p>
     </section>
 
     <section>
       <h2>CellItem</h2>
-      <MdCellItem title="单元格" brief="描述文案" addon="内容" arrow />
-      <MdCellItem title="无边框" no-border>
+      <CuCellItem title="单元格" brief="描述文案" addon="内容" arrow />
+      <CuCellItem title="无边框" no-border>
         <template #right>自定义</template>
-      </MdCellItem>
+      </CuCellItem>
     </section>
 
     <section>
       <h2>NoticeBar</h2>
-      <MdNoticeBar mode="closable">为了确保你的资金安全，请设置支付密码</MdNoticeBar>
+      <CuNoticeBar mode="closable">为了确保你的资金安全，请设置支付密码</CuNoticeBar>
     </section>
 
     <section>
       <h2>ActivityIndicator / Progress</h2>
       <div class="indicators">
-        <MdActivityIndicator type="roller" text="加载中..." />
-        <MdActivityIndicator type="spinner" />
-        <MdActivityIndicator type="carousel" />
-        <MdProgress :value="progress" />
+        <CuActivityIndicator type="roller" text="加载中..." />
+        <CuActivityIndicator type="spinner" />
+        <CuActivityIndicator type="carousel" />
+        <CuProgress :value="progress" />
       </div>
     </section>
 
-    <MdPopup v-model="popupShow" position="bottom">
+    <CuPopup v-model="popupShow" position="bottom">
       <div class="popup-panel">
-        <MdPopupTitleBar title="底部弹层" only-close @cancel="popupShow = false" />
+        <CuPopupTitleBar title="底部弹层" only-close @cancel="popupShow = false" />
         <p style="padding: 40px; text-align: center">弹层内容</p>
       </div>
-    </MdPopup>
+    </CuPopup>
 
-    <MdActionSheet
+    <CuActionSheet
       v-model="sheetShow"
       title="操作弹层"
       :options="[{ text: '选项一' }, { text: '选项二' }, { text: '禁用项' }]"
@@ -80,7 +80,7 @@
       @selected="onSelected"
     />
 
-    <MdDialog
+    <CuDialog
       v-model="dialogVisible"
       title="对话框"
       content="这是一个对话框"
@@ -92,44 +92,44 @@
 
     <section>
       <h2>Skeleton</h2>
-      <MdSkeleton v-if="skeletonLoading" avatar :row="2" title loading />
+      <CuSkeleton v-if="skeletonLoading" avatar :row="2" title loading />
       <div v-else class="loaded" @click="skeletonLoading = true">内容加载完成，点击重新加载</div>
     </section>
 
     <section>
       <h2>Popup / ActionSheet / Dialog / Toast / Tip</h2>
       <div class="popups">
-        <MdButton size="small" inline @click="popupShow = true">底部弹层</MdButton>
-        <MdButton size="small" inline @click="sheetShow = true">ActionSheet</MdButton>
-        <MdButton size="small" inline @click="dialogVisible = true">Dialog</MdButton>
-        <MdButton size="small" inline @click="showToast">Toast</MdButton>
+        <CuButton size="small" inline @click="popupShow = true">底部弹层</CuButton>
+        <CuButton size="small" inline @click="sheetShow = true">ActionSheet</CuButton>
+        <CuButton size="small" inline @click="dialogVisible = true">Dialog</CuButton>
+        <CuButton size="small" inline @click="showToast">Toast</CuButton>
       </div>
-      <MdTip content="点击我试试气泡提示">
-        <MdButton size="small" inline>Tip 触发</MdButton>
-      </MdTip>
+      <CuTip content="点击我试试气泡提示">
+        <CuButton size="small" inline>Tip 触发</CuButton>
+      </CuTip>
     </section>
 
     <section>
       <h2>Check / Radio / Field</h2>
-      <MdField title="结算周期" brief="Field 内的 Check/Radio">
-        <MdCheckGroup v-model="checkValues">
-          <MdCheck name="day">日结算</MdCheck>
-          <MdCheck name="week">周结算</MdCheck>
-          <MdCheck name="month" disabled>月结算</MdCheck>
-        </MdCheckGroup>
-        <MdRadioGroup v-model="radioValue">
-          <MdRadio name="0" inline>按单</MdRadio>
-          <MdRadio name="1" inline>按期</MdRadio>
-        </MdRadioGroup>
-      </MdField>
+      <CuField title="结算周期" brief="Field 内的 Check/Radio">
+        <CuCheckGroup v-model="checkValues">
+          <CuCheck name="day">日结算</CuCheck>
+          <CuCheck name="week">周结算</CuCheck>
+          <CuCheck name="month" disabled>月结算</CuCheck>
+        </CuCheckGroup>
+        <CuRadioGroup v-model="radioValue">
+          <CuRadio name="0" inline>按单</CuRadio>
+          <CuRadio name="1" inline>按期</CuRadio>
+        </CuRadioGroup>
+      </CuField>
     </section>
 
     <section>
       <h2>Switch / Agree / Stepper</h2>
       <div class="forms">
-        <MdSwitch v-model="switchOn" />
-        <MdAgree v-model="agreeOn">我已阅读并同意协议</MdAgree>
-        <MdStepper v-model="stepperNum" :min="0" :max="10" />
+        <CuSwitch v-model="switchOn" />
+        <CuAgree v-model="agreeOn">我已阅读并同意协议</CuAgree>
+        <CuStepper v-model="stepperNum" :min="0" :max="10" />
       </div>
     </section>
   </div>
@@ -138,28 +138,28 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import {
-  MdActionSheet,
-  MdActivityIndicator,
-  MdAgree,
-  MdAmount,
-  MdButton,
-  MdCellItem,
-  MdCheck,
-  MdCheckGroup,
-  MdDialog,
-  MdField,
-  MdIcon,
-  MdNoticeBar,
-  MdPopup,
-  MdPopupTitleBar,
-  MdProgress,
-  MdRadio,
-  MdRadioGroup,
-  MdSkeleton,
-  MdStepper,
-  MdSwitch,
-  MdTag,
-  MdTip,
+  CuActionSheet,
+  CuActivityIndicator,
+  CuAgree,
+  CuAmount,
+  CuButton,
+  CuCellItem,
+  CuCheck,
+  CuCheckGroup,
+  CuDialog,
+  CuField,
+  CuIcon,
+  CuNoticeBar,
+  CuPopup,
+  CuPopupTitleBar,
+  CuProgress,
+  CuRadio,
+  CuRadioGroup,
+  CuSkeleton,
+  CuStepper,
+  CuSwitch,
+  CuTag,
+  CuTip,
   Toast,
 } from '@'
 
@@ -225,7 +225,7 @@ body {
   color: #666;
   margin: 16px 0 12px;
 }
-.pg .md-button {
+.pg .cu-button {
   margin-bottom: 12px;
 }
 .icons > * {

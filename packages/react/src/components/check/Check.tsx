@@ -5,8 +5,8 @@ import {
   useMemo,
   type ReactNode,
 } from 'react'
-import { MdIcon } from '../icon/Icon'
-import { MdTag } from '../tag/Tag'
+import { CuIcon } from '../icon/Icon'
+import { CuTag } from '../tag/Tag'
 
 export type CheckValue = string | number | boolean
 
@@ -107,7 +107,7 @@ export interface CheckBaseBoxProps {
   children?: ReactNode
 }
 
-export function MdCheckBaseBox({
+export function CuCheckBaseBox({
   className,
   label = '',
   disabled = false,
@@ -120,7 +120,7 @@ export function MdCheckBaseBox({
     <div
       onClick={onClick}
       className={[
-        'md-check-base-box',
+        'cu-check-base-box',
         className,
         iconPosition,
         disabled ? 'is-disabled' : '',
@@ -131,9 +131,9 @@ export function MdCheckBaseBox({
     >
       {children ?? label}
       {isChecked ? (
-        <MdTag size="tiny" shape="quarter" type="fill">
-          <MdIcon name="right" size="xs" />
-        </MdTag>
+        <CuTag size="tiny" shape="quarter" type="fill">
+          <CuIcon name="right" size="xs" />
+        </CuTag>
       ) : null}
     </div>
   )
@@ -153,7 +153,7 @@ export interface CheckProps {
   onChange?: (value: CheckValue) => void
 }
 
-export function MdCheck({
+export function CuCheck({
   name = true,
   value = false,
   size = 'md',
@@ -171,13 +171,13 @@ export function MdCheck({
 
   return (
     <label
-      className={`md-check${disabled ? ' is-disabled' : ''}${isChecked ? ' is-checked' : ''}`}
+      className={`cu-check${disabled ? ' is-disabled' : ''}${isChecked ? ' is-checked' : ''}`}
       onClick={onClick}
     >
-      <div className="md-check-icon">
-        <MdIcon name={currentIcon} size={size} svg={iconSvg} />
+      <div className="cu-check-icon">
+        <CuIcon name={currentIcon} size={size} svg={iconSvg} />
       </div>
-      {children || label ? <div className="md-check-label">{children ?? label}</div> : null}
+      {children || label ? <div className="cu-check-label">{children ?? label}</div> : null}
     </label>
   )
 }
@@ -193,7 +193,7 @@ export interface CheckBoxProps {
   onChange?: (value: CheckValue) => void
 }
 
-export function MdCheckBox({
+export function CuCheckBox({
   name = true,
   value = false,
   label = '',
@@ -205,8 +205,8 @@ export function MdCheckBox({
   const { isChecked, onClick } = useCheckDelegate({ name, value, disabled }, onChange!)
 
   return (
-    <MdCheckBaseBox
-      className="md-check-box"
+    <CuCheckBaseBox
+      className="cu-check-box"
       isChecked={isChecked}
       disabled={disabled}
       iconPosition={iconPosition}
@@ -214,7 +214,7 @@ export function MdCheckBox({
       onClick={onClick}
     >
       {children ?? label}
-    </MdCheckBaseBox>
+    </CuCheckBaseBox>
   )
 }
 
@@ -226,7 +226,7 @@ export interface CheckGroupProps {
   onChange?: (value: CheckValue[]) => void
 }
 
-export function MdCheckGroup({
+export function CuCheckGroup({
   value = [],
   max = 0,
   children,
@@ -286,7 +286,7 @@ export function MdCheckGroup({
 
   return (
     <CheckGroupContext.Provider value={group}>
-      <div className={`md-check-group${className ? ` ${className}` : ''}`}>{children}</div>
+      <div className={`cu-check-group${className ? ` ${className}` : ''}`}>{children}</div>
     </CheckGroupContext.Provider>
   )
 }

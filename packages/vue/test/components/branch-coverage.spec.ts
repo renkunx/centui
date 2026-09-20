@@ -7,7 +7,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async (importOriginal) => {
+vi.mock('@centui/core/web', async (importOriginal) => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     _isAnimating = false
@@ -41,9 +41,9 @@ vi.mock('@mand-mobile/core/web', async (importOriginal) => {
   return { ...orig, Scroller: FakeScrollerImpl }
 })
 
-import { MdCodebox, MdDatePicker, MdNumberKeyboard, MdRadioList, MdTip } from '../../src'
-import MdPicker from '../../src/components/picker/Picker.vue'
-import MdPickerColumn from '../../src/components/picker/PickerColumn.vue'
+import { CuCodebox, CuDatePicker, CuNumberKeyboard, CuRadioList, CuTip } from '../../src'
+import CuPicker from '../../src/components/picker/Picker.vue'
+import CuPickerColumn from '../../src/components/picker/PickerColumn.vue'
 
 async function flushAll() {
   await flushPromises()
@@ -57,7 +57,7 @@ describe('PickerColumn 分支补强', () => {
   })
 
   it('keeps active index within bounds when data shrinks', async () => {
-    const wrapper = mount(MdPickerColumn, {
+    const wrapper = mount(CuPickerColumn, {
       props: {
         cols: 1,
         data: [[{ text: 'A' }, { text: 'B' }, { text: 'C' }]],
@@ -78,7 +78,7 @@ describe('PickerColumn 分支补强', () => {
   })
 
   it('handles column scroll end to same index and invalid target', async () => {
-    const wrapper = mount(MdPickerColumn, {
+    const wrapper = mount(CuPickerColumn, {
       props: {
         cols: 1,
         data: [[{ text: 'A' }, { text: 'B' }, { text: 'C' }]],
@@ -109,7 +109,7 @@ describe('PickerColumn 分支补强', () => {
   })
 
   it('getColumnIndexByDefault exposes public api', async () => {
-    const wrapper = mount(MdPickerColumn, {
+    const wrapper = mount(CuPickerColumn, {
       props: { cols: 1, data: [[{ text: 'A' }, { text: 'B', value: 'b' }]] },
       attachTo: document.body,
     })
@@ -139,12 +139,12 @@ describe('PickerColumn 分支补强', () => {
   })
 
   it('renders placeholder columns for empty slots', async () => {
-    const wrapper = mount(MdPickerColumn, {
+    const wrapper = mount(CuPickerColumn, {
       props: { cols: 3, data: [[{ text: 'A' }]] },
       attachTo: document.body,
     })
     await flushAll()
-    expect(wrapper.findAll('.md-picker-column-item').length).toBe(3)
+    expect(wrapper.findAll('.cu-picker-column-item').length).toBe(3)
     wrapper.unmount()
   })
 })
@@ -156,7 +156,7 @@ describe('Picker 分支补强', () => {
   })
 
   it('re-inits cascade columns when data changes', async () => {
-    const wrapper = mount(MdPicker, {
+    const wrapper = mount(CuPicker, {
       props: {
         isView: true,
         isCascade: true,
@@ -171,7 +171,7 @@ describe('Picker 分支补强', () => {
       attachTo: document.body,
     })
     await flushAll()
-    expect(wrapper.findAll('.md-picker-column-item').length).toBeGreaterThanOrEqual(2)
+    expect(wrapper.findAll('.cu-picker-column-item').length).toBeGreaterThanOrEqual(2)
 
     await wrapper.setProps({
       data: [
@@ -187,12 +187,12 @@ describe('Picker 分支补强', () => {
   })
 
   it('closes via mask click and emits events', async () => {
-    const wrapper = mount(MdPicker, {
+    const wrapper = mount(CuPicker, {
       props: { modelValue: true, data: [[{ text: 'A' }]] },
       attachTo: document.body,
     })
     await flushAll()
-    ;(document.body.querySelector('.md-popup-mask') as HTMLElement).click()
+    ;(document.body.querySelector('.cu-popup-mask') as HTMLElement).click()
     await flushAll()
     expect(wrapper.emitted('cancel')).toBeTruthy()
     expect(wrapper.emitted('hide')).toBeTruthy()
@@ -200,7 +200,7 @@ describe('Picker 分支补强', () => {
   })
 
   it('refreshes on second popup open with snapshot indexes', async () => {
-    const wrapper = mount(MdPicker, {
+    const wrapper = mount(CuPicker, {
       props: { modelValue: true, data: [[{ text: 'A' }, { text: 'B' }]], defaultIndex: [1] },
       attachTo: document.body,
     })
@@ -222,7 +222,7 @@ describe('DatePicker 分支补强', () => {
   })
 
   it('supports custom types and unit text', async () => {
-    const wrapper = mount(MdDatePicker, {
+    const wrapper = mount(CuDatePicker, {
       props: {
         isView: true,
         type: 'custom',
@@ -233,7 +233,7 @@ describe('DatePicker 分支补强', () => {
       attachTo: document.body,
     })
     await flushAll()
-    expect(wrapper.findAll('.md-picker-column-item')).toHaveLength(2)
+    expect(wrapper.findAll('.cu-picker-column-item')).toHaveLength(2)
     // defaultDate 年份被选中
     const activeYear = wrapper.find('.column-item.active')
     expect(activeYear.text()).toBe('2024年')
@@ -241,12 +241,12 @@ describe('DatePicker 分支补强', () => {
   })
 
   it('forwards confirm/cancel/show/hide from inner picker', async () => {
-    const wrapper = mount(MdDatePicker, {
+    const wrapper = mount(CuDatePicker, {
       props: { modelValue: true, type: 'date', defaultDate: new Date(2024, 5, 15) },
       attachTo: document.body,
     })
     await flushAll()
-    ;(document.body.querySelector('.md-popup-confirm') as HTMLElement).click()
+    ;(document.body.querySelector('.cu-popup-confirm') as HTMLElement).click()
     await flushAll()
     expect(wrapper.emitted('confirm')).toBeTruthy()
     wrapper.unmount()
@@ -259,8 +259,8 @@ describe('Codebox / RadioList 分支补强', () => {
   })
 
   it('codebox unbounded input accumulates and confirms', async () => {
-    const wrapper = mount(MdCodebox, { props: { maxlength: -1, isView: true } })
-    await wrapper.find('.md-codebox').trigger('click')
+    const wrapper = mount(CuCodebox, { props: { maxlength: -1, isView: true } })
+    await wrapper.find('.cu-codebox').trigger('click')
     const keys = wrapper.findAll('.keyboard-number-item')
     await keys[0].trigger('click')
     await keys[1].trigger('click')
@@ -271,8 +271,8 @@ describe('Codebox / RadioList 分支补强', () => {
   })
 
   it('codebox ignores dot key and maxlength boundary', async () => {
-    const wrapper = mount(MdCodebox, { props: { maxlength: 1, isView: true } })
-    await wrapper.find('.md-codebox').trigger('click')
+    const wrapper = mount(CuCodebox, { props: { maxlength: 1, isView: true } })
+    await wrapper.find('.cu-codebox').trigger('click')
     const keys = wrapper.findAll('.keyboard-number-item')
     // .（professional 面板）不进入 code
     await keys[0].trigger('click')
@@ -281,15 +281,15 @@ describe('Codebox / RadioList 分支补强', () => {
   })
 
   it('codebox autofocuses and blur() exposes', async () => {
-    const wrapper = mount(MdCodebox, { props: { autofocus: true, isView: true } })
-    expect(wrapper.findAll('.md-codebox-box.is-active').length).toBeGreaterThan(0)
+    const wrapper = mount(CuCodebox, { props: { autofocus: true, isView: true } })
+    expect(wrapper.findAll('.cu-codebox-box.is-active').length).toBeGreaterThan(0)
     wrapper.vm.blur()
     await flushPromises()
-    expect(wrapper.findAll('.md-codebox-box.is-active')).toHaveLength(0)
+    expect(wrapper.findAll('.cu-codebox-box.is-active')).toHaveLength(0)
   })
 
   it('radio-list select exposes and input cleared on option select', async () => {
-    const wrapper = mount(MdRadioList, {
+    const wrapper = mount(CuRadioList, {
       props: {
         options: [
           { value: 'a', text: 'A' },
@@ -309,7 +309,7 @@ describe('Codebox / RadioList 分支补强', () => {
   })
 
   it('radio-list renders scoped slot with selected state', () => {
-    const wrapper = mount(MdRadioList, {
+    const wrapper = mount(CuRadioList, {
       props: { modelValue: 'a', options: [{ value: 'a', text: 'A' }] },
       slots: {
         default: `<template #default="{ option, selected }"><i class="row">{{ option.text }}-{{ selected }}</i></template>`,
@@ -325,73 +325,73 @@ describe('剩余分支补强', () => {
   })
 
   it('codebox maxlength<=0 renders holder input with mask', () => {
-    const wrapper = mount(MdCodebox, { props: { maxlength: -1, mask: true, modelValue: '12' } })
-    expect(wrapper.find('input.md-codebox-holder[type="password"]').exists()).toBe(true)
-    const unmasked = mount(MdCodebox, { props: { maxlength: -1, modelValue: '12' } })
-    expect(unmasked.find('input.md-codebox-holder[type="tel"]').exists()).toBe(true)
+    const wrapper = mount(CuCodebox, { props: { maxlength: -1, mask: true, modelValue: '12' } })
+    expect(wrapper.find('input.cu-codebox-holder[type="password"]').exists()).toBe(true)
+    const unmasked = mount(CuCodebox, { props: { maxlength: -1, modelValue: '12' } })
+    expect(unmasked.find('input.cu-codebox-holder[type="tel"]').exists()).toBe(true)
   })
 
   it('codebox keeps focus when clicking inside and not closable ignores outside', async () => {
-    const notClosable = mount(MdCodebox, { props: { closable: false, isView: true } })
-    await notClosable.find('.md-codebox').trigger('click')
+    const notClosable = mount(CuCodebox, { props: { closable: false, isView: true } })
+    await notClosable.find('.cu-codebox').trigger('click')
     document.body.click()
     await flushPromises()
-    expect(notClosable.findAll('.md-codebox-box.is-active').length).toBeGreaterThan(0)
+    expect(notClosable.findAll('.cu-codebox-box.is-active').length).toBeGreaterThan(0)
   })
 
   it('tip fill left/right placements set sizing', async () => {
-    const left = mount(MdTip, {
+    const left = mount(CuTip, {
       props: { content: 'C', fill: true, placement: 'left' },
       slots: { default: '<button>触发</button>' },
       attachTo: document.body,
     })
     await left.find('button').trigger('click')
-    const tipEl = document.body.querySelector('.md-tip') as HTMLElement
+    const tipEl = document.body.querySelector('.cu-tip') as HTMLElement
     expect(tipEl.style.cssText).toContain('height: 0px')
     left.unmount()
   })
 
   it('tip renders nothing interactive without default slot', () => {
-    const wrapper = mount(MdTip, { props: { content: 'C' } })
+    const wrapper = mount(CuTip, { props: { content: 'C' } })
     expect(wrapper.find('button').exists()).toBe(false)
-    expect(document.body.querySelector('.md-tip')).toBeNull()
+    expect(document.body.querySelector('.cu-tip')).toBeNull()
   })
 
   it('radio-list align-center hides icon', () => {
-    const wrapper = mount(MdRadioList, {
+    const wrapper = mount(CuRadioList, {
       props: {
         alignCenter: true,
         options: [{ value: 'a', text: 'A' }],
       },
     })
-    expect(wrapper.find('.md-radio').exists()).toBe(false)
+    expect(wrapper.find('.cu-radio').exists()).toBe(false)
   })
 
   it('radio-list without icon in slot scope', () => {
-    const wrapper = mount(MdRadioList, {
+    const wrapper = mount(CuRadioList, {
       props: { isSlotScope: true, icon: '', options: [{ value: 'a', text: 'A' }] },
       slots: { default: `<template #default="{ option }"><i>{{ option.text }}</i></template>` },
     })
-    expect(wrapper.find('.md-radio').exists()).toBe(false)
+    expect(wrapper.find('.cu-radio').exists()).toBe(false)
   })
 })
 
 describe('NumberKeyboard 分支补强', () => {
   it('professional board with hideDot and duplicateZero variants', () => {
-    const hideDot = mount(MdCodebox, {
+    const hideDot = mount(CuCodebox, {
       props: { maxlength: -1, isView: true },
-    }).findComponent({ name: 'md-number-keyboard' })
-    const board = hideDot.findComponent({ name: 'md-number-keyboard-container' })
+    }).findComponent({ name: 'cu-number-keyboard' })
+    const board = hideDot.findComponent({ name: 'cu-number-keyboard-container' })
     // professional 无 hideDot：含 . 键与 slidedown
     expect(board.findAll('.keyboard-number-item').length).toBeGreaterThanOrEqual(12)
 
-    const view = mount(MdNumberKeyboardView)
-    expect(view.find('.md-number-keyboard.in-view').exists()).toBe(true)
+    const view = mount(CuNumberKeyboardView)
+    expect(view.find('.cu-number-keyboard.in-view').exists()).toBe(true)
   })
 })
 
 // 直接内嵌视图键盘（isView + hideDot + duplicateZero 组合分支）
-const MdNumberKeyboardView = defineComponent({
-  components: { MdNumberKeyboard },
-  template: `<MdNumberKeyboard is-view :model-value="true" hide-dot duplicate-zero />`,
+const CuNumberKeyboardView = defineComponent({
+  components: { CuNumberKeyboard },
+  template: `<CuNumberKeyboard is-view :model-value="true" hide-dot duplicate-zero />`,
 })

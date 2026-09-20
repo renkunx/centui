@@ -1,14 +1,14 @@
 /* Extracted from legacy/components/action-sheet — do not edit by hand; re-run scripts/extract.mjs */
 /* --- action-sheet.vue --- */
-.md-action-sheet
+.cu-action-sheet
   color action-sheet-color
   -webkit-font-smoothing antialiased
-  .md-popup
+  .cu-popup
     z-index action-sheet-zindex
-  .md-popup-box
+  .cu-popup-box
     background-color color-bg-base
 
-.md-action-sheet-content
+.cu-action-sheet-content
   position relative
   width 100%
   font-size action-sheet-font-size
@@ -16,14 +16,14 @@
   text-align center
   overflow auto
 
-.md-action-sheet-header
+.cu-action-sheet-header
   position relative
   vertical-height(action-sheet-height)
   hairline(bottom, color-border-base)
   word-ellipsis()
   overflow visible
 
-.md-action-sheet-item
+.cu-action-sheet-item
   position relative
   vertical-height(action-sheet-height)
   padding 0 action-sheet-padding-h
@@ -33,21 +33,21 @@
   -webkit-user-select none
   &.active
     color action-sheet-color-highlight
-  &.disabled .md-action-sheet-item-section
+  &.disabled .cu-action-sheet-item-section
     opacity action-sheet-disabled-opacity
   &:first-of-type
-    .md-action-sheet-item-wrapper:after
+    .cu-action-sheet-item-wrapper:after
       display none
   &:active
     background-color color-bg-tap
     &.disabled
       background-color transparent
 
-.md-action-sheet-item-wrapper
+.cu-action-sheet-item-wrapper
   position relative
   hairline(top, color-border-base)
 
-.md-action-sheet-cancel
+.cu-action-sheet-cancel
   height 132px
   line-height 120px
   color action-sheet-color-cancel

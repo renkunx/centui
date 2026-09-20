@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/slider
+// 按需入口：@centui/react/es/slider
 export * from './components/slider/Slider'

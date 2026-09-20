@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async importOriginal => {
+vi.mock('@centui/core/web', async importOriginal => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     _isAnimating = false; _isDecelerating = false; _isDragging = false; _isGesturing = false
@@ -23,7 +23,7 @@ vi.mock('@mand-mobile/core/web', async importOriginal => {
   return { ...orig, Scroller: FakeScrollerImpl }
 })
 
-import MdPickerColumn from '../../src/components/picker/PickerColumn.vue'
+import CuPickerColumn from '../../src/components/picker/PickerColumn.vue'
 
 // 组件未导出类型，这里按 defineExpose 实际形状做结构化声明
 interface PickerColumnExposed {
@@ -45,7 +45,7 @@ describe('PickerColumn 分支收尾', () => {
 
   function mountColumn(props: Record<string, unknown> = {}) {
     const ref: { current: PickerColumnExposed | null } = { current: null }
-    const wrapper = mount(MdPickerColumn, {
+    const wrapper = mount(CuPickerColumn, {
       props: {
         cols: 1,
         data: [[{ text: 'A' }, { text: 'B' }, { text: 'C' }]],
@@ -55,7 +55,7 @@ describe('PickerColumn 分支收尾', () => {
       attachTo: document.body,
     })
     const getColumn = () =>
-      wrapper.findComponent({ name: 'md-picker-column' }).vm as unknown as PickerColumnExposed
+      wrapper.findComponent({ name: 'cu-picker-column' }).vm as unknown as PickerColumnExposed
     return { wrapper, getColumn }
   }
 
@@ -63,13 +63,13 @@ describe('PickerColumn 分支收尾', () => {
     const { wrapper, getColumn } = mountColumn()
     getColumn().refresh()
     await flushAll()
-    const hook = wrapper.find('.md-picker-column-hook')
+    const hook = wrapper.find('.cu-picker-column-hook')
     await hook.trigger('touchstart', { touches: [{ pageX: 100, pageY: 100 }] })
     await hook.trigger('touchmove', { touches: [{ pageX: 100, pageY: 55 }] })
     await hook.trigger('touchend', { touches: [] })
     await flushAll()
     // 滚动引擎未真实运动，但触摸链路不抛错
-    expect(wrapper.find('.md-picker-column').exists()).toBe(true)
+    expect(wrapper.find('.cu-picker-column').exists()).toBe(true)
     wrapper.unmount()
   })
 
@@ -77,7 +77,7 @@ describe('PickerColumn 分支收尾', () => {
     const { wrapper, getColumn } = mountColumn()
     getColumn().refresh()
     await flushAll()
-    const hook = wrapper.find('.md-picker-column-hook')
+    const hook = wrapper.find('.cu-picker-column-hook')
     await hook.trigger('mousedown', { pageX: 100, pageY: 100 })
     await hook.trigger('mousemove', { pageX: 55, pageY: 100 })
     await hook.trigger('mouseup', { pageX: 55, pageY: 100 })

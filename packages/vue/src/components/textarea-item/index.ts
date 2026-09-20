@@ -1,1 +1,1 @@
-export { default as MdTextareaItem } from './TextareaItem.vue'
+export { default as CuTextareaItem } from './TextareaItem.vue'

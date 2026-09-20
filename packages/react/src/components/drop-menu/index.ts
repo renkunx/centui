@@ -1,1 +1,1 @@
-export { MdDropMenu, type DropMenuItem, type DropMenuProps, type DropMenuExposed } from './DropMenu'
+export { CuDropMenu, type DropMenuItem, type DropMenuProps, type DropMenuExposed } from './DropMenu'

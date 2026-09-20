@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MdCaptcha } from 'mand-mobile'
+import { CuCaptcha } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['内联验证码']
-const code = `<MdCaptcha is-view title="输入验证码" brief="验证码已发送至 138****1234" />
+const code = `<CuCaptcha is-view title="输入验证码" brief="验证码已发送至 138****1234" />
 `
 const submitted = ref('')
 function onSubmit(code: string) {
@@ -16,7 +16,7 @@ function onSubmit(code: string) {
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="captcha-demo">
-        <MdCaptcha
+        <CuCaptcha
           is-view
           title="输入验证码"
           brief="验证码已发送至 138****1234"
@@ -24,7 +24,7 @@ function onSubmit(code: string) {
           @submit="onSubmit"
         >
           短信验证码已发送
-        </MdCaptcha>
+        </CuCaptcha>
         <p v-if="submitted" class="captcha-demo-result">已提交：{{ submitted }}</p>
       </div>
     </template>

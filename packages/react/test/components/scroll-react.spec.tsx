@@ -4,15 +4,15 @@
  */
 import { act, fireEvent, render } from '@testing-library/react'
 import React from 'react'
-import { Scroller } from '@mand-mobile/core/web'
+import { Scroller } from '@centui/core/web'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import {
-  MdScrollView,
-  MdScrollViewMore,
-  MdScrollViewRefresh,
-  MdSlider,
-  MdSwiper,
-  MdSwiperItem,
+  CuScrollView,
+  CuScrollViewMore,
+  CuScrollViewRefresh,
+  CuSlider,
+  CuSwiper,
+  CuSwiperItem,
 } from '../../src'
 
 async function flush(ms = 30) {
@@ -42,57 +42,57 @@ describe('ScrollView', () => {
 
   it('renders header/footer/refresh/more', () => {
     const { container } = render(
-      <MdScrollView
-        refresh={() => <MdScrollViewRefresh />}
-        more={() => <MdScrollViewMore />}
+      <CuScrollView
+        refresh={() => <CuScrollViewRefresh />}
+        more={() => <CuScrollViewMore />}
         header={<div className="hdr">H</div>}
         footer={<div className="ftr">F</div>}
       >
         <div className="item">A</div>
-      </MdScrollView>,
+      </CuScrollView>,
     )
     expect(container.querySelector('.scroll-view-header')?.textContent).toBe('H')
     expect(container.querySelector('.scroll-view-footer')?.textContent).toBe('F')
-    expect(container.querySelector('.md-scroll-view-refresh')).not.toBeNull()
-    expect(container.querySelector('.md-scroll-view-more')?.textContent).toBe('更多加载中...')
+    expect(container.querySelector('.cu-scroll-view-refresh')).not.toBeNull()
+    expect(container.querySelector('.cu-scroll-view-more')?.textContent).toBe('更多加载中...')
   })
 
   it('manualInit defers scroller init', () => {
-    const { container } = render(<MdScrollView manualInit><div>A</div></MdScrollView>)
-    expect(container.querySelector('.md-scroll-view')).not.toBeNull()
+    const { container } = render(<CuScrollView manualInit><div>A</div></CuScrollView>)
+    expect(container.querySelector('.cu-scroll-view')).not.toBeNull()
   })
 
   it('horizon mode renders container class', () => {
-    const { container } = render(<MdScrollView scrollingY={false}><div>A</div></MdScrollView>)
+    const { container } = render(<CuScrollView scrollingY={false}><div>A</div></CuScrollView>)
     expect(container.querySelector('.scroll-view-container')?.className).toContain('horizon')
   })
 
   it('refresh/more slot props drive text states', () => {
     const { container, rerender } = render(
-      <MdScrollView
-        refresh={({ isRefreshActive }) => <MdScrollViewRefresh isRefreshActive={isRefreshActive} />}
-        more={({ isEndReaching }) => <MdScrollViewMore isFinished={isEndReaching} />}
+      <CuScrollView
+        refresh={({ isRefreshActive }) => <CuScrollViewRefresh isRefreshActive={isRefreshActive} />}
+        more={({ isEndReaching }) => <CuScrollViewMore isFinished={isEndReaching} />}
       >
         <div>A</div>
-      </MdScrollView>,
+      </CuScrollView>,
     )
     expect(container.querySelector('.refresh-tip')?.textContent).toBe('下拉刷新')
     rerender(
-      <MdScrollView
-        refresh={() => <MdScrollViewRefresh isRefreshing />}
-        more={() => <MdScrollViewMore isFinished />}
+      <CuScrollView
+        refresh={() => <CuScrollViewRefresh isRefreshing />}
+        more={() => <CuScrollViewMore isFinished />}
       >
         <div>A</div>
-      </MdScrollView>,
+      </CuScrollView>,
     )
     expect(container.querySelector('.refresh-tip')?.textContent).toBe('刷新中...')
-    expect(container.querySelector('.md-scroll-view-more')?.textContent).toBe('全部已加载')
+    expect(container.querySelector('.cu-scroll-view-more')?.textContent).toBe('全部已加载')
   })
 
   it('exposed scrollTo delegates to scroller', async () => {
     const ref = { current: null as unknown as { init: () => void; scrollTo: (l: number, t: number, a?: boolean) => void } }
     render(
-      <MdScrollView ref={ref as never}><div>A</div></MdScrollView>,
+      <CuScrollView ref={ref as never}><div>A</div></CuScrollView>,
     )
     await flush(120)
     scrollToSpy.mockClear()
@@ -103,9 +103,9 @@ describe('ScrollView', () => {
   it('endReached fires via debounce', async () => {
     const onEndReached = vi.fn()
     render(
-      <MdScrollView more={() => <MdScrollViewMore />} onEndReached={onEndReached} immediateCheckEndReaching>
+      <CuScrollView more={() => <CuScrollViewMore />} onEndReached={onEndReached} immediateCheckEndReaching>
         <div>A</div>
-      </MdScrollView>,
+      </CuScrollView>,
     )
     await flush(120)
     expect(onEndReached).toHaveBeenCalled()
@@ -114,10 +114,10 @@ describe('ScrollView', () => {
   it('touch drag full cycle drives scroller without crash', async () => {
     const onScroll = vi.fn()
     const { container } = render(
-      <MdScrollView onScroll={onScroll}><div className="item">A</div></MdScrollView>,
+      <CuScrollView onScroll={onScroll}><div className="item">A</div></CuScrollView>,
     )
     await flush(120)
-    const root = container.querySelector('.md-scroll-view')!
+    const root = container.querySelector('.cu-scroll-view')!
     fireEvent.touchStart(root, { touches: touch(100, 100), targetTouches: touch(100, 100) })
     fireEvent.touchMove(root, { touches: touch(50, 100), targetTouches: touch(50, 100) })
     fireEvent.touchEnd(root, { touches: [], changedTouches: touch(50, 100) })
@@ -136,9 +136,9 @@ describe('ScrollView', () => {
       finishLoadMore: () => void
     } }
     const { container } = render(
-      <MdScrollView ref={ref as never} manualInit refresh={() => <MdScrollViewRefresh />} onRefreshing={onRefreshing}>
+      <CuScrollView ref={ref as never} manualInit refresh={() => <CuScrollViewRefresh />} onRefreshing={onRefreshing}>
         <div>A</div>
-      </MdScrollView>,
+      </CuScrollView>,
     )
     ref.current.init()
     await flush(80)
@@ -149,21 +149,21 @@ describe('ScrollView', () => {
     ref.current.finishRefresh()
     ref.current.finishLoadMore()
     await flush(60)
-    expect(container.querySelector('.md-scroll-view')).not.toBeNull()
+    expect(container.querySelector('.cu-scroll-view')).not.toBeNull()
   })
 
   it('autoReflow starts interval and stops on unmount', async () => {
-    const { container, unmount } = render(<MdScrollView autoReflow><div>A</div></MdScrollView>)
+    const { container, unmount } = render(<CuScrollView autoReflow><div>A</div></CuScrollView>)
     await flush(260)
-    expect(container.querySelector('.md-scroll-view')).not.toBeNull()
+    expect(container.querySelector('.cu-scroll-view')).not.toBeNull()
     unmount()
     await flush(30)
     expect(true).toBe(true)
   })
 
   it('touch/mouse before init hit null-scroller guards', () => {
-    const { container } = render(<MdScrollView manualInit><div>A</div></MdScrollView>)
-    const root = container.querySelector('.md-scroll-view')!
+    const { container } = render(<CuScrollView manualInit><div>A</div></CuScrollView>)
+    const root = container.querySelector('.cu-scroll-view')!
     fireEvent.touchStart(root, { touches: touch(100, 100), targetTouches: touch(100, 100) })
     fireEvent.touchMove(root, { touches: touch(50, 100), targetTouches: touch(50, 100) })
     fireEvent.touchEnd(root, { touches: [] })
@@ -175,10 +175,10 @@ describe('ScrollView', () => {
 
   it('isPrevent=false lets move pass and angle gate rejects cross-axis drag', async () => {
     const { container } = render(
-      <MdScrollView isPrevent={false} scrollingY={false}><div>A</div></MdScrollView>,
+      <CuScrollView isPrevent={false} scrollingY={false}><div>A</div></CuScrollView>,
     )
     await flush(120)
-    const root = container.querySelector('.md-scroll-view')!
+    const root = container.querySelector('.cu-scroll-view')!
     // 横向滚动（scrollingY=false）：纵向主导位移被角度闸门拒绝
     fireEvent.touchStart(root, { touches: touch(100, 100), targetTouches: touch(100, 100) })
     fireEvent.touchMove(root, { touches: touch(100, 160), targetTouches: touch(100, 160) })
@@ -191,8 +191,8 @@ describe('ScrollView', () => {
   })
 
   it('mouse drag full cycle drives scroller without crash', () => {
-    const { container } = render(<MdScrollView><div>A</div></MdScrollView>)
-    const root = container.querySelector('.md-scroll-view')!
+    const { container } = render(<CuScrollView><div>A</div></CuScrollView>)
+    const root = container.querySelector('.cu-scroll-view')!
     fireEvent.mouseDown(root, { pageX: 100, pageY: 100 })
     fireEvent.mouseMove(root, { pageX: 50, pageY: 100 })
     fireEvent.mouseUp(root, { pageX: 50, pageY: 100 })
@@ -215,21 +215,21 @@ describe('Swiper', () => {
       next: () => void; prev: () => void; goto: (i: number) => void; getIndex: () => number; stop: () => void; play: (d?: number) => void
     } }
     const wrapper = render(
-      <MdSwiper ref={ref as never} {...props}>
-        <MdSwiperItem>1</MdSwiperItem>
-        <MdSwiperItem>2</MdSwiperItem>
-        <MdSwiperItem>3</MdSwiperItem>
-      </MdSwiper>,
+      <CuSwiper ref={ref as never} {...props}>
+        <CuSwiperItem>1</CuSwiperItem>
+        <CuSwiperItem>2</CuSwiperItem>
+        <CuSwiperItem>3</CuSwiperItem>
+      </CuSwiper>,
     )
-    const root = wrapper.container.querySelector('.md-swiper') as HTMLElement
+    const root = wrapper.container.querySelector('.cu-swiper') as HTMLElement
     return { wrapper, ref, root }
   }
 
   it('renders backup copies and indicators after init', async () => {
     const { wrapper } = mountSwiper({ autoplay: 0 })
     await flush(120)
-    expect(wrapper.container.querySelectorAll('.md-swiper-item')).toHaveLength(5)
-    expect(wrapper.container.querySelectorAll('.md-swiper-indicator')).toHaveLength(3)
+    expect(wrapper.container.querySelectorAll('.cu-swiper-item')).toHaveLength(5)
+    expect(wrapper.container.querySelectorAll('.cu-swiper-indicator')).toHaveLength(3)
   })
 
   it('next()/prev()/goto()/getIndex() via expose', async () => {
@@ -282,15 +282,15 @@ describe('Swiper', () => {
   it('slideY renders vertical class and item heights', async () => {
     const { wrapper } = mountSwiper({ autoplay: 0, transition: 'slideY' })
     await flush(120)
-    expect(wrapper.container.querySelector('.md-swiper')?.className).toContain('md-swiper-vertical')
-    expect(wrapper.container.querySelector('.md-swiper-item')?.getAttribute('style')).toContain('height')
+    expect(wrapper.container.querySelector('.cu-swiper')?.className).toContain('cu-swiper-vertical')
+    expect(wrapper.container.querySelector('.cu-swiper-item')?.getAttribute('style')).toContain('height')
   })
 
   it('fade goto drives opacity transition and after-change', async () => {
     const onAfterChange = vi.fn()
     const { wrapper, ref } = mountSwiper({ autoplay: 0, transition: 'fade', onAfterChange })
     await flush(120)
-    expect(wrapper.container.querySelector('.md-swiper')?.className).toContain('md-swiper-fade')
+    expect(wrapper.container.querySelector('.cu-swiper')?.className).toContain('cu-swiper-fade')
     scrollToSpy.mockClear()
     ref.current.goto(1)
     await flush(600)
@@ -355,13 +355,13 @@ describe('Swiper', () => {
   it('single item hides indicators and blocks transition', async () => {
     const ref = { current: null as unknown as { next: () => void; getIndex: () => number } }
     const { container } = render(
-      <MdSwiper ref={ref as never} autoplay={0}>
-        <MdSwiperItem>only</MdSwiperItem>
-      </MdSwiper>,
+      <CuSwiper ref={ref as never} autoplay={0}>
+        <CuSwiperItem>only</CuSwiperItem>
+      </CuSwiper>,
     )
     await flush(120)
-    expect(container.querySelectorAll('.md-swiper-indicator')).toHaveLength(0)
-    expect(container.querySelectorAll('.md-swiper-item')).toHaveLength(1)
+    expect(container.querySelectorAll('.cu-swiper-indicator')).toHaveLength(0)
+    expect(container.querySelectorAll('.cu-swiper-item')).toHaveLength(1)
     ref.current.next()
     await flush(40)
     expect(ref.current.getIndex()).toBe(0)
@@ -402,7 +402,7 @@ describe('Swiper', () => {
   it('isPrevent=false and hasDots=false and useNativeDriver=false render and drag', async () => {
     const { ref, root, wrapper } = mountSwiper({ autoplay: 0, isPrevent: false, hasDots: false, useNativeDriver: false })
     await flush(120)
-    expect(wrapper.container.querySelectorAll('.md-swiper-indicators')).toHaveLength(0)
+    expect(wrapper.container.querySelectorAll('.cu-swiper-indicators')).toHaveLength(0)
     fireEvent.touchStart(root, { touches: touch(100, 100) })
     fireEvent.touchMove(root, { touches: touch(20, 100) })
     fireEvent.touchEnd(root, { touches: [] })
@@ -489,16 +489,16 @@ describe('Swiper', () => {
 
   it('empty swiper and out-of-range defaultIndex are safe', async () => {
     const ref = { current: null as unknown as { next: () => void; getIndex: () => number } }
-    const { container } = render(<MdSwiper ref={ref as never} autoplay={0} />)
+    const { container } = render(<CuSwiper ref={ref as never} autoplay={0} />)
     await flush(120)
-    expect(container.querySelectorAll('.md-swiper-item')).toHaveLength(0)
+    expect(container.querySelectorAll('.cu-swiper-item')).toHaveLength(0)
     ref.current.next()
     expect(ref.current.getIndex()).toBe(0)
     const ref2 = { current: null as unknown as { getIndex: () => number } }
     render(
-      <MdSwiper ref={ref2 as never} autoplay={0} defaultIndex={99}>
-        <MdSwiperItem>1</MdSwiperItem>
-      </MdSwiper>,
+      <CuSwiper ref={ref2 as never} autoplay={0} defaultIndex={99}>
+        <CuSwiperItem>1</CuSwiperItem>
+      </CuSwiper>,
     )
     await flush(120)
     expect(ref2.current.getIndex()).toBe(0)
@@ -523,7 +523,7 @@ describe('Swiper', () => {
     await flush(120)
     window.dispatchEvent(new Event('resize'))
     await flush(400)
-    expect(wrapper.container.querySelectorAll('.md-swiper-item')).toHaveLength(5)
+    expect(wrapper.container.querySelectorAll('.cu-swiper-item')).toHaveLength(5)
   })
 })
 
@@ -531,25 +531,25 @@ describe('Slider', () => {
   beforeEach(() => { document.body.innerHTML = '' })
 
   function sliderRoot(container: HTMLElement) {
-    return container.querySelector('.md-slider') as HTMLElement
+    return container.querySelector('.cu-slider') as HTMLElement
   }
 
   it('format renders custom hint and step rounds value', () => {
-    const { container } = render(<MdSlider value={47.3} format={(v) => `${v}%`} />)
-    expect(container.querySelector('.md-slider-handle')?.getAttribute('data-hint')).toBe('47%')
+    const { container } = render(<CuSlider value={47.3} format={(v) => `${v}%`} />)
+    expect(container.querySelector('.cu-slider-handle')?.getAttribute('data-hint')).toBe('47%')
   })
 
   it('external value is clamped to min/max', () => {
-    const { container, rerender } = render(<MdSlider value={150} />)
-    expect(container.querySelector('.md-slider-handle')?.getAttribute('data-hint')).toBe('100')
-    rerender(<MdSlider value={-5} />)
-    expect(container.querySelector('.md-slider-handle')?.getAttribute('data-hint')).toBe('0')
+    const { container, rerender } = render(<CuSlider value={150} />)
+    expect(container.querySelector('.cu-slider-handle')?.getAttribute('data-hint')).toBe('100')
+    rerender(<CuSlider value={-5} />)
+    expect(container.querySelector('.cu-slider-handle')?.getAttribute('data-hint')).toBe('0')
   })
 
   it('disabled blocks drag', () => {
     const onChange = vi.fn()
-    const { container } = render(<MdSlider value={40} disabled onChange={onChange} />)
-    const handle = container.querySelector('.md-slider-handle span') as HTMLElement
+    const { container } = render(<CuSlider value={40} disabled onChange={onChange} />)
+    const handle = container.querySelector('.cu-slider-handle span') as HTMLElement
     handle.dispatchEvent(dragEvent('mousedown', 50))
     window.dispatchEvent(dragEvent('mousemove', 80))
     window.dispatchEvent(dragEvent('mouseup', 80))
@@ -558,7 +558,7 @@ describe('Slider', () => {
 
   it('mouse drag upper handle emits range onChange', async () => {
     const onChange = vi.fn()
-    const { container, unmount } = render(<MdSlider value={[20, 80]} range onChange={onChange} />)
+    const { container, unmount } = render(<CuSlider value={[20, 80]} range onChange={onChange} />)
     Object.defineProperty(sliderRoot(container), 'offsetWidth', { value: 100, configurable: true })
     const upper = container.querySelector('.is-higher span') as HTMLElement
     upper.dispatchEvent(dragEvent('mousedown', 50))
@@ -571,7 +571,7 @@ describe('Slider', () => {
 
   it('mouse drag lower handle emits range onChange', async () => {
     const onChange = vi.fn()
-    const { container, unmount } = render(<MdSlider value={[20, 80]} range onChange={onChange} />)
+    const { container, unmount } = render(<CuSlider value={[20, 80]} range onChange={onChange} />)
     Object.defineProperty(sliderRoot(container), 'offsetWidth', { value: 100, configurable: true })
     const lower = container.querySelector('.is-lower span') as HTMLElement
     lower.dispatchEvent(dragEvent('mousedown', 50))
@@ -584,9 +584,9 @@ describe('Slider', () => {
 
   it('touch drag single handle emits onChange', async () => {
     const onChange = vi.fn()
-    const { container, unmount } = render(<MdSlider value={80} onChange={onChange} />)
+    const { container, unmount } = render(<CuSlider value={80} onChange={onChange} />)
     Object.defineProperty(sliderRoot(container), 'offsetWidth', { value: 100, configurable: true })
-    const handle = container.querySelector('.md-slider-handle span') as HTMLElement
+    const handle = container.querySelector('.cu-slider-handle span') as HTMLElement
     fireEvent.touchStart(handle, { changedTouches: touch(50, 0) })
     fireEvent.touchMove(window, { changedTouches: touch(10, 0) })
     await flush(40)
@@ -596,36 +596,36 @@ describe('Slider', () => {
   })
 
   it('crossed range value normalizes both directions', () => {
-    const { container, rerender } = render(<MdSlider value={[0, 100]} range />)
-    rerender(<MdSlider value={[80, 20]} range />)
+    const { container, rerender } = render(<CuSlider value={[0, 100]} range />)
+    rerender(<CuSlider value={[80, 20]} range />)
     // 非拖拽态：values[0] 不变 → newValues[1] 被拉低
-    const hints = container.querySelectorAll('.md-slider-handle')
+    const hints = container.querySelectorAll('.cu-slider-handle')
     expect(hints.length).toBe(2)
-    rerender(<MdSlider value={[20, 80]} range />)
-    rerender(<MdSlider value={[20, 20]} range />)
-    expect(container.querySelectorAll('.md-slider-handle')).toHaveLength(2)
+    rerender(<CuSlider value={[20, 80]} range />)
+    rerender(<CuSlider value={[20, 20]} range />)
+    expect(container.querySelectorAll('.cu-slider-handle')).toHaveLength(2)
   })
 
   it('controlled slider skips self-triggered echo', async () => {
     function Controlled() {
       const [v, setV] = React.useState(50)
-      return <MdSlider value={v} onChange={(n) => setV(n as number)} />
+      return <CuSlider value={v} onChange={(n) => setV(n as number)} />
     }
     const { container } = render(<Controlled />)
     Object.defineProperty(sliderRoot(container), 'offsetWidth', { value: 100, configurable: true })
-    const handle = container.querySelector('.md-slider-handle span') as HTMLElement
+    const handle = container.querySelector('.cu-slider-handle span') as HTMLElement
     handle.dispatchEvent(dragEvent('mousedown', 50))
     window.dispatchEvent(dragEvent('mousemove', 60))
     await flush(40)
     window.dispatchEvent(dragEvent('mouseup', 60))
-    expect(container.querySelector('.md-slider-handle')?.getAttribute('data-hint')).toBe('60')
+    expect(container.querySelector('.cu-slider-handle')?.getAttribute('data-hint')).toBe('60')
   })
 
   it('rAF after mouseup drops stale drag', async () => {
     const onChange = vi.fn()
-    const { container, unmount } = render(<MdSlider value={80} onChange={onChange} />)
+    const { container, unmount } = render(<CuSlider value={80} onChange={onChange} />)
     Object.defineProperty(sliderRoot(container), 'offsetWidth', { value: 100, configurable: true })
-    const handle = container.querySelector('.md-slider-handle span') as HTMLElement
+    const handle = container.querySelector('.cu-slider-handle span') as HTMLElement
     handle.dispatchEvent(dragEvent('mousedown', 50))
     window.dispatchEvent(dragEvent('mousemove', 10))
     window.dispatchEvent(dragEvent('mouseup', 10))
@@ -635,9 +635,9 @@ describe('Slider', () => {
   })
 
   it('range renders two handles with bar styles', () => {
-    const { container } = render(<MdSlider value={[20, 80]} range />)
-    expect(container.querySelectorAll('.md-slider-handle')).toHaveLength(2)
-    const bar = container.querySelector('.md-slider-bar') as HTMLElement
+    const { container } = render(<CuSlider value={[20, 80]} range />)
+    expect(container.querySelectorAll('.cu-slider-handle')).toHaveLength(2)
+    const bar = container.querySelector('.cu-slider-bar') as HTMLElement
     expect(bar.style.width).toBe('60%')
     expect(bar.style.left).toBe('20%')
   })

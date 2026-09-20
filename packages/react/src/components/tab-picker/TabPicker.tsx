@@ -1,11 +1,11 @@
 import { forwardRef, useEffect, useRef, useState, useImperativeHandle, type ReactNode } from 'react'
-import { MdPopup } from '../popup/Popup'
-import { MdPopupTitleBar } from '../popup/PopupTitleBar'
-import { MdIcon } from '../icon/Icon'
-import { MdTabs } from '../tabs/Tabs'
-import { MdTabPane } from '../tabs/TabPane'
-import { MdScrollView, type ScrollViewExposed } from '../scroll-view/ScrollView'
-import { MdRadioList } from '../radio-list/RadioList'
+import { CuPopup } from '../popup/Popup'
+import { CuPopupTitleBar } from '../popup/PopupTitleBar'
+import { CuIcon } from '../icon/Icon'
+import { CuTabs } from '../tabs/Tabs'
+import { CuTabPane } from '../tabs/TabPane'
+import { CuScrollView, type ScrollViewExposed } from '../scroll-view/ScrollView'
+import { CuRadioList } from '../radio-list/RadioList'
 import type { RadioListOption } from '../radio-list/RadioList'
 
 export interface TabPickerOption {
@@ -55,7 +55,7 @@ interface Pane {
 
 const CHOOSE_TEXT = '请选择'
 
-export const MdTabPicker = forwardRef<TabPickerExposed, TabPickerProps>(function MdTabPicker(
+export const CuTabPicker = forwardRef<TabPickerExposed, TabPickerProps>(function CuTabPicker(
   {
     value = false,
     data = {},
@@ -198,8 +198,8 @@ export const MdTabPicker = forwardRef<TabPickerExposed, TabPickerProps>(function
   }))
 
   return (
-    <div className="md-tab-picker">
-      <MdPopup
+    <div className="cu-tab-picker">
+      <CuPopup
         value={value}
         position="bottom"
         maskClosable={maskClosable}
@@ -207,20 +207,20 @@ export const MdTabPicker = forwardRef<TabPickerExposed, TabPickerProps>(function
         onHide={onHide}
         onMaskClick={onCancel}
       >
-        <MdPopupTitleBar
+        <CuPopupTitleBar
           title={title}
           describe={describe}
           largeRadius={largeRadius}
           onlyClose
           onCancel={onCancel}
-          cancelSlot={<MdIcon name="close" size="lg" />}
+          cancelSlot={<CuIcon name="close" size="lg" />}
         />
-        <div className="md-tab-picker-content">
-          <MdTabs key={tabsTmpKey} value={currentTab} inkLength={100} ref={tabsRef as never}>
-            <MdScrollView ref={scrollViewRef} scrollingX={false} autoReflow>
+        <div className="cu-tab-picker-content">
+          <CuTabs key={tabsTmpKey} value={currentTab} inkLength={100} ref={tabsRef as never}>
+            <CuScrollView ref={scrollViewRef} scrollingX={false} autoReflow>
               {panes.map((pane, index) => (
-                <MdTabPane key={pane.name} name={pane.name} label={pane.label}>
-                  <MdRadioList
+                <CuTabPane key={pane.name} name={pane.name} label={pane.label}>
+                  <CuRadioList
                     value={pane.value}
                     options={pane.options as never}
                     isSlotScope={hasSlot}
@@ -235,12 +235,12 @@ export const MdTabPicker = forwardRef<TabPickerExposed, TabPickerProps>(function
                         : undefined
                     }
                   />
-                </MdTabPane>
+                </CuTabPane>
               ))}
-            </MdScrollView>
-          </MdTabs>
+            </CuScrollView>
+          </CuTabs>
         </div>
-      </MdPopup>
+      </CuPopup>
     </div>
   )
 })

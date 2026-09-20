@@ -1,9 +1,9 @@
 import { forwardRef, useEffect, useRef, useState, type ReactNode } from 'react'
-import { MdPopup } from '../popup/Popup'
-import { MdPopupTitleBar } from '../popup/PopupTitleBar'
-import { MdScrollView, type ScrollViewExposed } from '../scroll-view/ScrollView'
-import { MdRadioList, type RadioListExposed, type RadioListOption } from '../radio-list/RadioList'
-import { MdCheckList, type CheckListOption } from '../check/CheckList'
+import { CuPopup } from '../popup/Popup'
+import { CuPopupTitleBar } from '../popup/PopupTitleBar'
+import { CuScrollView, type ScrollViewExposed } from '../scroll-view/ScrollView'
+import { CuRadioList, type RadioListExposed, type RadioListOption } from '../radio-list/RadioList'
+import { CuCheckList, type CheckListOption } from '../check/CheckList'
 
 export interface SelectorItem extends RadioListOption {
   text?: string
@@ -45,7 +45,7 @@ export interface SelectorProps {
 
 const CANCEL_TEXT = '取消'
 
-export const MdSelector = forwardRef<HTMLDivElement, SelectorProps>(function MdSelector(
+export const CuSelector = forwardRef<HTMLDivElement, SelectorProps>(function CuSelector(
   {
     value = false,
     data = [],
@@ -164,8 +164,8 @@ export const MdSelector = forwardRef<HTMLDivElement, SelectorProps>(function MdS
   }
 
   return (
-    <div className={`md-selector${!isCheck ? ' is-normal' : ''}${isCheck ? ' is-check' : ''}`} ref={ref}>
-      <MdPopup
+    <div className={`cu-selector${!isCheck ? ' is-normal' : ''}${isCheck ? ' is-check' : ''}`} ref={ref}>
+      <CuPopup
         className="inner-popup"
         value={isSelectorShow}
         position="bottom"
@@ -175,7 +175,7 @@ export const MdSelector = forwardRef<HTMLDivElement, SelectorProps>(function MdS
         onMaskClick={onSelectorCancel}
       >
         {!hideTitleBar || isNeedConfirm ? (
-        <MdPopupTitleBar
+        <CuPopupTitleBar
           title={title}
           describe={describe}
           okText={okText}
@@ -184,10 +184,10 @@ export const MdSelector = forwardRef<HTMLDivElement, SelectorProps>(function MdS
           onlyClose={!isCheck && !isNeedConfirm && !actualCancelText}
           onConfirm={onSelectorConfirm}
           onCancel={onSelectorCancel}
-        ></MdPopupTitleBar>
+        ></CuPopupTitleBar>
         ) : null}
-        <div className="md-selector-container">
-          <MdScrollView
+        <div className="cu-selector-container">
+          <CuScrollView
             ref={scrollRef}
             scrollingX={false}
             style={{
@@ -197,10 +197,10 @@ export const MdSelector = forwardRef<HTMLDivElement, SelectorProps>(function MdS
           >
             {header}
             {!multi ? (
-              <MdRadioList
+              <CuRadioList
                 key={radioKey}
                 ref={radioRef}
-                className="md-selector-list"
+                className="cu-selector-list"
                 value={defaultValue as string | number | boolean}
                 options={data}
                 isSlotScope={hasSlot}
@@ -213,11 +213,11 @@ export const MdSelector = forwardRef<HTMLDivElement, SelectorProps>(function MdS
                 onChange={onSelectorChoose}
               >
                 {children}
-              </MdRadioList>
+              </CuRadioList>
             ) : (
-              <MdCheckList
+              <CuCheckList
                 key={checkKey}
-                className="md-selector-list"
+                className="cu-selector-list"
                 value={multiDefaultValue}
                 options={data as unknown as CheckListOption[]}
                 isSlotScope={hasSlot}
@@ -233,12 +233,12 @@ export const MdSelector = forwardRef<HTMLDivElement, SelectorProps>(function MdS
                   ? (slotProps: { option: CheckListOption; index: number; selected: boolean }) =>
                       children(slotProps)
                   : undefined}
-              </MdCheckList>
+              </CuCheckList>
             )}
             {footer}
-          </MdScrollView>
+          </CuScrollView>
         </div>
-      </MdPopup>
+      </CuPopup>
     </div>
   )
 })

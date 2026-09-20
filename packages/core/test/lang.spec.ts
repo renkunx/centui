@@ -3,7 +3,7 @@ import { debounce, noop, randomId, throttle, transformCamelCase } from '../src/l
 
 describe('transformCamelCase', () => {
   it('converts kebab-case to camelCase', () => {
-    expect(transformCamelCase('md-button')).toBe('mdButton')
+    expect(transformCamelCase('cu-button')).toBe('cuButton')
     expect(transformCamelCase('a-b-c')).toBe('aBC')
   })
 
@@ -25,12 +25,12 @@ describe('randomId', () => {
 
   it('returns empty string in test environment (v2 snapshot-friendly contract)', () => {
     expect(randomId()).toBe('')
-    expect(randomId('md', 8)).toBe('')
+    expect(randomId('cu', 8)).toBe('')
   })
 
   it('returns prefixed numeric id outside test environment', () => {
     vi.stubEnv('NODE_ENV', 'development')
-    expect(randomId('md')).toMatch(/^md-\d+$/)
+    expect(randomId('cu')).toMatch(/^cu-\d+$/)
   })
 })
 

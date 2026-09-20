@@ -1,17 +1,17 @@
 <template>
-  <div class="md-activity-indicator-spinning" :class="{ dark: color === 'dark' }">
-    <MdIcon
-      class="md-activity-indicator-svg"
+  <div class="cu-activity-indicator-spinning" :class="{ dark: color === 'dark' }">
+    <CuIcon
+      class="cu-activity-indicator-svg"
       name="spinner"
       :style="{ width: `${size}px`, height: `${size}px` }"
-    ></MdIcon>
+    ></CuIcon>
   </div>
 </template>
 
 <script setup lang="ts">
-import MdIcon from '../icon/Icon.vue'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-activity-indicator-spinning' })
+defineOptions({ name: 'cu-activity-indicator-spinning' })
 
 withDefaults(
   defineProps<{

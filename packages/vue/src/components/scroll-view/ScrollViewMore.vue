@@ -1,5 +1,5 @@
 <template>
-  <div class="md-scroll-view-more">
+  <div class="cu-scroll-view-more">
     <template v-if="!isFinished">
       {{ loadingText }}
     </template>
@@ -10,9 +10,9 @@
 </template>
 
 <script setup lang="ts">
-import { t } from '@mand-mobile/core'
+import { t } from '@centui/core'
 
-defineOptions({ name: 'md-scroll-view-more' })
+defineOptions({ name: 'cu-scroll-view-more' })
 
 withDefaults(
   defineProps<{

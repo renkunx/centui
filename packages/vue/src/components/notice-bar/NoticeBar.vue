@@ -1,34 +1,34 @@
 <template>
-  <div v-if="isShow" class="md-notice-bar" :class="[round && 'md-notice-bar-round', type]">
-    <div class="md-notice-bar-left" :class="[!customLeft && !icon && 'md-notice-bar-empty']">
+  <div v-if="isShow" class="cu-notice-bar" :class="[round && 'cu-notice-bar-round', type]">
+    <div class="cu-notice-bar-left" :class="[!customLeft && !icon && 'cu-notice-bar-empty']">
       <!-- custom first -->
       <template v-if="customLeft">
         <slot name="left"></slot>
       </template>
       <template v-else-if="icon">
-        <MdIcon class="md-notice-icon" :name="icon" :svg="iconSvg"></MdIcon>
+        <CuIcon class="cu-notice-icon" :name="icon" :svg="iconSvg"></CuIcon>
       </template>
     </div>
     <div
       ref="wrap"
-      class="md-notice-bar-content"
-      :class="[multiRows && 'md-notice-bar-multi-content']"
+      class="cu-notice-bar-content"
+      :class="[multiRows && 'cu-notice-bar-multi-content']"
     >
-      <div ref="content" :class="[overflow && scrollable && 'md-notice-bar-content-animate']">
+      <div ref="content" :class="[overflow && scrollable && 'cu-notice-bar-content-animate']">
         <slot></slot>
       </div>
     </div>
-    <div class="md-notice-bar-right">
+    <div class="cu-notice-bar-right">
       <!-- custom first -->
       <template v-if="customRight">
         <slot name="right"></slot>
       </template>
       <template v-else-if="mode || closable">
-        <MdIcon
-          class="md-notice-icon md-notice-icon-right"
+        <CuIcon
+          class="cu-notice-icon cu-notice-icon-right"
           :name="rightIcon"
           @click.stop="close"
-        ></MdIcon>
+        ></CuIcon>
       </template>
     </div>
   </div>
@@ -36,9 +36,9 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUpdated, ref, useSlots } from 'vue'
-import MdIcon from '../icon/Icon.vue'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-notice-bar' })
+defineOptions({ name: 'cu-notice-bar' })
 
 const props = withDefaults(
   defineProps<{

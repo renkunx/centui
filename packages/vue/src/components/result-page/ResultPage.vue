@@ -1,12 +1,12 @@
 <template>
-  <div class="md-result">
-    <div class="md-result-image">
+  <div class="cu-result">
+    <div class="cu-result-image">
       <img :src="actualImgUrl" :class="!imgUrl && type" />
     </div>
-    <div v-if="actualText" class="md-result-text">{{ actualText }}</div>
-    <div v-if="actualSubText" class="md-result-subtext">{{ actualSubText }}</div>
-    <div v-if="buttons.length" class="md-result-buttons">
-      <MdButton
+    <div v-if="actualText" class="cu-result-text">{{ actualText }}</div>
+    <div v-if="actualSubText" class="cu-result-subtext">{{ actualSubText }}</div>
+    <div v-if="buttons.length" class="cu-result-buttons">
+      <CuButton
         v-for="(button, index) of buttons"
         :key="index"
         :type="button.type"
@@ -21,17 +21,17 @@
         @click="button.handler?.()"
       >
         {{ button.text }}
-      </MdButton>
+      </CuButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { t } from '@mand-mobile/core'
-import MdButton from '../button/Button.vue'
+import { t } from '@centui/core'
+import CuButton from '../button/Button.vue'
 
-defineOptions({ name: 'md-result-page' })
+defineOptions({ name: 'cu-result-page' })
 
 export interface ResultPageButton {
   text?: string

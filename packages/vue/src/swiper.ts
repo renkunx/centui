@@ -1,2 +1,2 @@
-// 按需入口：mand-mobile/es/swiper
+// 按需入口：centui/es/swiper
 export * from './components/swiper'

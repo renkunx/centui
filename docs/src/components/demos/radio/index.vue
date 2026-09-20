@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MdRadio, MdRadioGroup, MdRadioList, MdField } from 'mand-mobile'
+import { CuRadio, CuRadioGroup, CuRadioList, CuField } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['普通单选项', '单选项组', '列表模式', '带输入项', '单选框']
-const code = `<MdRadio name="0" v-model="checked" label="单选项1" />
-<MdRadioGroup v-model="favorites">
-  <MdRadio name="apple" label="苹果" />
-</MdRadioGroup>
-<MdRadioList v-model="myBank" :options="banks" />`
+const code = `<CuRadio name="0" v-model="checked" label="单选项1" />
+<CuRadioGroup v-model="favorites">
+  <CuRadio name="apple" label="苹果" />
+</CuRadioGroup>
+<CuRadioList v-model="myBank" :options="banks" />`
 const checked = ref('0')
 const favorites = ref('apple')
 const myBank = ref('1')
@@ -29,27 +29,27 @@ const reasons = [
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
       <div style="display: flex; flex-direction: column; gap: 16px">
-        <MdRadio name="0" v-model="checked" label="单选项1" />
-        <MdRadio name="1" v-model="checked" label="单选项2" />
+        <CuRadio name="0" v-model="checked" label="单选项1" />
+        <CuRadio name="1" v-model="checked" label="单选项2" />
       </div>
     </template>
     <template #scene-1>
-      <MdRadioGroup v-model="favorites">
-        <MdRadio name="watermelon" label="西瓜" />
-        <MdRadio name="apple" label="苹果" />
-        <MdRadio name="banana" label="香蕉" />
-        <MdRadio name="orange" label="橙子" />
-        <MdRadio name="tomato" label="西红柿" disabled />
-      </MdRadioGroup>
+      <CuRadioGroup v-model="favorites">
+        <CuRadio name="watermelon" label="西瓜" />
+        <CuRadio name="apple" label="苹果" />
+        <CuRadio name="banana" label="香蕉" />
+        <CuRadio name="orange" label="橙子" />
+        <CuRadio name="tomato" label="西红柿" disabled />
+      </CuRadioGroup>
     </template>
     <template #scene-2>
-      <MdField title="简单选择列表">
-        <MdRadioList v-model="myBank" :options="banks" icon-size="lg" />
-      </MdField>
+      <CuField title="简单选择列表">
+        <CuRadioList v-model="myBank" :options="banks" icon-size="lg" />
+      </CuField>
     </template>
     <template #scene-3>
-      <MdField title="输入项">
-        <MdRadioList
+      <CuField title="输入项">
+        <CuRadioList
           v-model="myReason"
           :options="reasons"
           icon="right"
@@ -60,14 +60,14 @@ const reasons = [
           input-label="其他"
           input-placeholder="请输入原因"
         />
-      </MdField>
+      </CuField>
     </template>
     <template #scene-4>
-      <MdRadioGroup v-model="favorites">
-        <MdRadioBox name="watermelon">西瓜</MdRadioBox>
-        <MdRadioBox name="apple">苹果</MdRadioBox>
-        <MdRadioBox name="banana" disabled>香蕉</MdRadioBox>
-      </MdRadioGroup>
+      <CuRadioGroup v-model="favorites">
+        <CuRadioBox name="watermelon">西瓜</CuRadioBox>
+        <CuRadioBox name="apple">苹果</CuRadioBox>
+        <CuRadioBox name="banana" disabled>香蕉</CuRadioBox>
+      </CuRadioGroup>
     </template>
   </DemoCanvas>
 </template>

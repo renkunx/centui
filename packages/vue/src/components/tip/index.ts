@@ -1,2 +1,2 @@
-export { default as MdTip } from './Tip.vue'
-export { default as MdTipContent } from './TipContent.vue'
+export { default as CuTip } from './Tip.vue'
+export { default as CuTipContent } from './TipContent.vue'

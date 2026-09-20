@@ -6,11 +6,11 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { MdPopup } from '../popup/Popup'
-import { MdPopupTitleBar } from '../popup/PopupTitleBar'
-import { MdDialog } from '../dialog/Dialog'
-import { MdCodebox, type CodeboxExposed } from '../codebox/Codebox'
-import { t } from '@mand-mobile/core'
+import { CuPopup } from '../popup/Popup'
+import { CuPopupTitleBar } from '../popup/PopupTitleBar'
+import { CuDialog } from '../dialog/Dialog'
+import { CuCodebox, type CodeboxExposed } from '../codebox/Codebox'
+import { t } from '@centui/core'
 
 export interface CaptchaProps {
   value?: boolean
@@ -42,10 +42,10 @@ export interface CaptchaProps {
 const SEND_TEXT = () => t('md.captcha.sendCaptcha')
 const COUNTDOWN_TEXT = () => t('md.captcha.countdown')
 
-export const MdCaptcha = forwardRef<
+export const CuCaptcha = forwardRef<
   { countdown: () => void; resetcount: () => void; setError: (m: string) => void; close: () => void },
   CaptchaProps
->(function MdCaptcha(
+>(function CuCaptcha(
   {
     value = false,
     title,
@@ -190,10 +190,10 @@ export const MdCaptcha = forwardRef<
   }))
 
   const footer = (
-    <footer className="md-captcha-footer">
-      {errorMsg ? <div className="md-captcha-error">{errorMsg}</div> : <div className="md-captcha-brief">{brief}</div>}
+    <footer className="cu-captcha-footer">
+      {errorMsg ? <div className="cu-captcha-error">{errorMsg}</div> : <div className="cu-captcha-brief">{brief}</div>}
       {count ? (
-        <button className="md-captcha-btn" disabled={isCounting} onClick={handleResend}>
+        <button className="cu-captcha-btn" disabled={isCounting} onClick={handleResend}>
           {countBtnText}
         </button>
       ) : null}
@@ -203,11 +203,11 @@ export const MdCaptcha = forwardRef<
   const inlineBlock =
     isInline ? (
       <>
-        <div className="md-captcha-content">
-          {title ? <h2 className="md-captcha-title">{title}</h2> : null}
-          <div className="md-captcha-message">{children}</div>
+        <div className="cu-captcha-content">
+          {title ? <h2 className="cu-captcha-title">{title}</h2> : null}
+          <div className="cu-captcha-message">{children}</div>
         </div>
-        <MdCodebox
+        <CuCodebox
           ref={codeboxRef}
           value={code}
           maxlength={maxlength}
@@ -222,13 +222,13 @@ export const MdCaptcha = forwardRef<
           onSubmit={onSubmit}
         >
           {footer}
-        </MdCodebox>
+        </CuCodebox>
       </>
     ) : null
 
   const halfScreenBlock =
     type === 'halfScreen' ? (
-      <MdPopup
+      <CuPopup
         value={value}
         hasMask
         position="bottom"
@@ -246,10 +246,10 @@ export const MdCaptcha = forwardRef<
           }
         }}
       >
-        <div className="md-captcha-half-container">
-          <MdPopupTitleBar onlyClose largeRadius title={title} describe={subtitle} titleAlign="left" onCancel={() => onChange?.(false)} />
-          <div className="md-captcha-half-content">{children}</div>
-          <MdCodebox
+        <div className="cu-captcha-half-container">
+          <CuPopupTitleBar onlyClose largeRadius title={title} describe={subtitle} titleAlign="left" onCancel={() => onChange?.(false)} />
+          <div className="cu-captcha-half-content">{children}</div>
+          <CuCodebox
             ref={codeboxRef}
             value={code}
             maxlength={maxlength}
@@ -265,11 +265,11 @@ export const MdCaptcha = forwardRef<
             onChange={setCode}
             onSubmit={onSubmit}
           >
-            <footer className={`md-captcha-footer${isKeyboard ? ' halfStyle' : ''}`}>
-              {errorMsg ? <div className="md-captcha-error">{errorMsg}</div> : <div className="md-captcha-brief">{brief}</div>}
+            <footer className={`cu-captcha-footer${isKeyboard ? ' halfStyle' : ''}`}>
+              {errorMsg ? <div className="cu-captcha-error">{errorMsg}</div> : <div className="cu-captcha-brief">{brief}</div>}
               {count ? (
                 <button
-                  className={`md-captcha-btn${disableSend ? ' is-disabled-send' : ''}`}
+                  className={`cu-captcha-btn${disableSend ? ' is-disabled-send' : ''}`}
                   disabled={isCounting}
                   onClick={handleResend}
                 >
@@ -277,14 +277,14 @@ export const MdCaptcha = forwardRef<
                 </button>
               ) : null}
             </footer>
-          </MdCodebox>
+          </CuCodebox>
         </div>
-      </MdPopup>
+      </CuPopup>
     ) : null
 
   const dialogBlock =
     type === 'dialog' ? (
-      <MdDialog
+      <CuDialog
         value={value}
         closable
         appendTo={false}
@@ -302,11 +302,11 @@ export const MdCaptcha = forwardRef<
           }
         }}
       >
-        <div className="md-captcha-content">
-          {title ? <h2 className="md-captcha-title">{title}</h2> : null}
-          <div className="md-captcha-message">{children}</div>
+        <div className="cu-captcha-content">
+          {title ? <h2 className="cu-captcha-title">{title}</h2> : null}
+          <div className="cu-captcha-message">{children}</div>
         </div>
-        <MdCodebox
+        <CuCodebox
           ref={codeboxRef}
           value={code}
           maxlength={maxlength}
@@ -320,12 +320,12 @@ export const MdCaptcha = forwardRef<
           onSubmit={onSubmit}
         >
           {footer}
-        </MdCodebox>
-      </MdDialog>
+        </CuCodebox>
+      </CuDialog>
     ) : null
 
   return (
-    <div className="md-captcha" style={{ display: isInline || value || visible ? '' : 'none' }}>
+    <div className="cu-captcha" style={{ display: isInline || value || visible ? '' : 'none' }}>
       {inlineBlock}
       {halfScreenBlock}
       {dialogBlock}

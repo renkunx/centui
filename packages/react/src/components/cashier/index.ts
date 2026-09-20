@@ -1,4 +1,4 @@
-export { MdCashier, type CashierProps, type CashierScene, type CashierSceneOption } from './Cashier'
-export { MdCashierChannel, type CashierChannel, type CashierChannelProps } from './CashierChannel'
-export { MdCashierChannelButton, type CashierAction } from './CashierChannelButton'
-export { MdCashierChannelItem, type CashierChannelItemData } from './CashierChannelItem'
+export { CuCashier, type CashierProps, type CashierScene, type CashierSceneOption } from './Cashier'
+export { CuCashierChannel, type CashierChannel, type CashierChannelProps } from './CashierChannel'
+export { CuCashierChannelButton, type CashierAction } from './CashierChannelButton'
+export { CuCashierChannelItem, type CashierChannelItemData } from './CashierChannelItem'

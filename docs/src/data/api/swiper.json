@@ -78,7 +78,7 @@
   "slots": [
     {
       "name": "default",
-      "desc": "轮播内容，子元素为 MdSwiperItem"
+      "desc": "轮播内容，子元素为 CuSwiperItem"
     }
   ],
   "methods": [

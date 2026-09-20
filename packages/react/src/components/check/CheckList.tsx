@@ -1,11 +1,11 @@
 import { useContext, useMemo, type ReactNode } from 'react'
 import {
   CheckGroupContext,
-  MdCheck,
-  MdCheckGroup,
+  CuCheck,
+  CuCheckGroup,
   type CheckValue,
 } from './Check'
-import { MdCellItem } from '../cell-item/CellItem'
+import { CuCellItem } from '../cell-item/CellItem'
 
 export interface CheckListOption {
   value: CheckValue
@@ -32,7 +32,7 @@ export interface CheckListProps {
   onChange?: (value: CheckValue[]) => void
 }
 
-export function MdCheckList({
+export function CuCheckList({
   options = [],
   value = [],
   className,
@@ -62,7 +62,7 @@ export function MdCheckList({
   )
 
   const renderIcon = (item: CheckListOption) => (
-    <MdCheck
+    <CuCheck
       name={item.value}
       value={value.includes(item.value) ? item.value : false}
       disabled={item.disabled}
@@ -75,10 +75,10 @@ export function MdCheckList({
   )
 
   return (
-    <MdCheckGroup
+    <CuCheckGroup
       value={value}
       onChange={onChange}
-      className={`md-check-list${className ? ` ${className}` : ''}${alignCenter ? ' is-align-center' : ''}`}
+      className={`cu-check-list${className ? ` ${className}` : ''}${alignCenter ? ' is-align-center' : ''}`}
     >
       <InnerList
         options={items}
@@ -99,7 +99,7 @@ export function MdCheckList({
           void groupRef
         }}
       />
-    </MdCheckGroup>
+    </CuCheckGroup>
   )
 }
 
@@ -129,9 +129,9 @@ function InnerList({
   return (
     <>
       {options.map(({ item, index, selected }) => (
-        <MdCellItem
+        <CuCellItem
           key={index}
-          className={`md-check-item${selected ? ' is-checked' : ''}`}
+          className={`cu-check-item${selected ? ' is-checked' : ''}`}
           title={hasSlot ? '' : item.text || item.label || ''}
           brief={hasSlot ? '' : item.brief}
           disabled={item.disabled}
@@ -140,7 +140,7 @@ function InnerList({
           onClick={() => groupToggle(item.value)}
         >
           {hasSlot ? slotRender?.({ option: item, index, selected }) : null}
-        </MdCellItem>
+        </CuCellItem>
       ))}
     </>
   )

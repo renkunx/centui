@@ -4,46 +4,46 @@
 import { act, fireEvent, render } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import {
-  MdActivityIndicator,
-  MdAmount,
-  MdButton,
-  MdCellItem,
-  MdIcon,
-  MdNoticeBar,
-  MdProgress,
-  MdSkeleton,
-  MdTag,
+  CuActivityIndicator,
+  CuAmount,
+  CuButton,
+  CuCellItem,
+  CuIcon,
+  CuNoticeBar,
+  CuProgress,
+  CuSkeleton,
+  CuTag,
 } from '../../src'
 import { SPRITE_NODE_ID } from '../../src/components/icon/load-sprite'
 import { Toast } from '../../src'
 
-describe('MdIcon (react)', () => {
+describe('CuIcon (react)', () => {
   it('renders svg sprite and injects sprite once', () => {
     const onClick = vi.fn()
-    const { container } = render(<MdIcon name="home" onClick={onClick} />)
+    const { container } = render(<CuIcon name="home" onClick={onClick} />)
     const svg = container.querySelector('svg')!
-    expect(svg.getAttribute('class')).toContain('md-icon-home')
+    expect(svg.getAttribute('class')).toContain('cu-icon-home')
     expect(svg.querySelector('use')?.getAttribute('xlink:href')).toBe('#home')
     expect(document.querySelectorAll(`#${SPRITE_NODE_ID}`)).toHaveLength(1)
 
-    render(<MdIcon name="arrow" />)
+    render(<CuIcon name="arrow" />)
     expect(document.querySelectorAll(`#${SPRITE_NODE_ID}`)).toHaveLength(1)
   })
 
   it('renders icon font and hides empty names', () => {
-    const { container } = render(<MdIcon name="arrow" svg={false} />)
+    const { container } = render(<CuIcon name="arrow" svg={false} />)
     const i = container.querySelector('i')!
     expect(i.className).toContain('icon-font')
 
-    const empty = render(<MdIcon name="" svg={false} />)
+    const empty = render(<CuIcon name="" svg={false} />)
     expect(empty.container.querySelector('i')).toBeNull()
   })
 })
 
-describe('MdButton (react)', () => {
+describe('CuButton (react)', () => {
   it('renders type classes and native disabled', async () => {
     const onClick = vi.fn()
-    const { container, rerender } = render(<MdButton type="primary" onClick={onClick}>按钮</MdButton>)
+    const { container, rerender } = render(<CuButton type="primary" onClick={onClick}>按钮</CuButton>)
     const button = container.querySelector('button')!
     expect(button.className).toContain('primary')
     expect(button.hasAttribute('disabled')).toBe(false)
@@ -51,151 +51,151 @@ describe('MdButton (react)', () => {
     fireEvent.click(button)
     expect(onClick).toHaveBeenCalledTimes(1)
 
-    rerender(<MdButton type="disabled" onClick={onClick}>按钮</MdButton>)
+    rerender(<CuButton type="disabled" onClick={onClick}>按钮</CuButton>)
     expect(button.hasAttribute('disabled')).toBe(true)
   })
 
   it('renders roller when loading', () => {
-    const { container } = render(<MdButton loading icon="home">按钮</MdButton>)
-    expect(container.querySelector('.md-button-loading')).not.toBeNull()
-    expect(container.querySelector('.md-button-content .md-icon')).toBeNull()
+    const { container } = render(<CuButton loading icon="home">按钮</CuButton>)
+    expect(container.querySelector('.cu-button-loading')).not.toBeNull()
+    expect(container.querySelector('.cu-button-content .cu-icon')).toBeNull()
   })
 })
 
-describe('MdTag (react)', () => {
+describe('CuTag (react)', () => {
   it('renders quarter/coupon shapes and color styles', () => {
-    const quarter = render(<MdTag shape="quarter" fillColor="#fc0">Q</MdTag>)
+    const quarter = render(<CuTag shape="quarter" fillColor="#fc0">Q</CuTag>)
     expect(quarter.container.querySelector('.quarter-bg')).not.toBeNull()
 
     const coupon = render(
-      <MdTag shape="coupon" type="fill" fillColor="#fc0">券</MdTag>,
+      <CuTag shape="coupon" type="fill" fillColor="#fc0">券</CuTag>,
     )
     expect(coupon.container.querySelector('.left-coupon')?.getAttribute('style')).toContain(
       'radial-gradient(circle at left',
     )
 
-    const ghost = render(<MdTag type="ghost" fontColor="#f00">标签</MdTag>)
+    const ghost = render(<CuTag type="ghost" fontColor="#f00">标签</CuTag>)
     const style = ghost.container.querySelector('.type-ghost')!.getAttribute('style') ?? ''
     expect(style).toContain('border-color')
     expect(style).toContain('color')
   })
 })
 
-describe('MdAmount (react)', () => {
+describe('CuAmount (react)', () => {
   it('formats precision/separator/capital', () => {
-    const { container } = render(<MdAmount value={1234.56} />)
-    expect(container.querySelector('.md-amount')!.textContent).toBe('1234.56')
+    const { container } = render(<CuAmount value={1234.56} />)
+    expect(container.querySelector('.cu-amount')!.textContent).toBe('1234.56')
 
-    const sep = render(<MdAmount value={1234567.89} hasSeparator />)
-    expect(sep.container.querySelector('.md-amount')!.textContent).toBe('1,234,567.89')
+    const sep = render(<CuAmount value={1234567.89} hasSeparator />)
+    expect(sep.container.querySelector('.cu-amount')!.textContent).toBe('1,234,567.89')
 
-    const cap = render(<MdAmount value={1234.56} isCapital />)
-    expect(cap.container.querySelector('.md-amount')!.textContent).toBe(
+    const cap = render(<CuAmount value={1234.56} isCapital />)
+    expect(cap.container.querySelector('.cu-amount')!.textContent).toBe(
       ' 壹仟贰佰叁拾肆元伍角陆分 ',
     )
   })
 
   it('updates when value changes', () => {
-    const { container, rerender } = render(<MdAmount value={1} />)
-    rerender(<MdAmount value={2} />)
-    expect(container.querySelector('.md-amount')!.textContent).toBe('2.00')
+    const { container, rerender } = render(<CuAmount value={1} />)
+    rerender(<CuAmount value={2} />)
+    expect(container.querySelector('.cu-amount')!.textContent).toBe('2.00')
   })
 })
 
-describe('MdCellItem (react)', () => {
+describe('CuCellItem (react)', () => {
   it('renders slots and blocks click when disabled', () => {
     const onClick = vi.fn()
     const { container } = render(
-      <MdCellItem title="标题" brief="描述" arrow addon="附加" onClick={onClick} />,
+      <CuCellItem title="标题" brief="描述" arrow addon="附加" onClick={onClick} />,
     )
-    expect(container.querySelector('.md-cell-item-title')!.textContent).toBe('标题')
-    expect(container.querySelector('.md-cell-item-item-right, .md-cell-item-right')).not.toBeNull()
-    expect(container.querySelector('.md-cell-item-right')!.textContent).toContain('附加')
+    expect(container.querySelector('.cu-cell-item-title')!.textContent).toBe('标题')
+    expect(container.querySelector('.cu-cell-item-item-right, .cu-cell-item-right')).not.toBeNull()
+    expect(container.querySelector('.cu-cell-item-right')!.textContent).toContain('附加')
 
-    fireEvent.click(container.querySelector('.md-cell-item')!)
+    fireEvent.click(container.querySelector('.cu-cell-item')!)
     expect(onClick).toHaveBeenCalledTimes(1)
 
-    const disabled = render(<MdCellItem onClick={onClick} disabled />)
-    fireEvent.click(disabled.container.querySelector('.md-cell-item')!)
+    const disabled = render(<CuCellItem onClick={onClick} disabled />)
+    fireEvent.click(disabled.container.querySelector('.cu-cell-item')!)
     expect(onClick).toHaveBeenCalledTimes(1)
-    expect(disabled.container.querySelector('.md-cell-item')!.className).toContain('is-disabled')
+    expect(disabled.container.querySelector('.cu-cell-item')!.className).toContain('is-disabled')
   })
 })
 
-describe('MdSkeleton (react)', () => {
+describe('CuSkeleton (react)', () => {
   it('switches loading and slot', () => {
     const { container } = render(
-      <MdSkeleton loading avatar>
+      <CuSkeleton loading avatar>
         <p>内容</p>
-      </MdSkeleton>,
+      </CuSkeleton>,
     )
-    expect(container.querySelectorAll('.md-skeleton-row')).toHaveLength(3)
+    expect(container.querySelectorAll('.cu-skeleton-row')).toHaveLength(3)
 
     const done = render(
-      <MdSkeleton loading={false}>
+      <CuSkeleton loading={false}>
         <p>内容</p>
-      </MdSkeleton>,
+      </CuSkeleton>,
     )
     expect(done.container.querySelector('p')!.textContent).toBe('内容')
   })
 })
 
-describe('MdNoticeBar (react)', () => {
+describe('CuNoticeBar (react)', () => {
   it('closes via icon and emits close', () => {
     const onClose = vi.fn()
     const { container } = render(
-      <MdNoticeBar mode="closable" onClose={onClose}>
+      <CuNoticeBar mode="closable" onClose={onClose}>
         文案
-      </MdNoticeBar>,
+      </CuNoticeBar>,
     )
-    const icon = container.querySelector('.md-notice-icon-right')!
+    const icon = container.querySelector('.cu-notice-icon-right')!
     expect(icon).not.toBeNull()
     fireEvent.click(icon)
     expect(onClose).toHaveBeenCalledTimes(1)
-    expect(container.querySelector('.md-notice-bar')).toBeNull()
+    expect(container.querySelector('.cu-notice-bar')).toBeNull()
   })
 
   it('auto hides after time', () => {
     vi.useFakeTimers()
-    const { container } = render(<MdNoticeBar time={500}>文案</MdNoticeBar>)
+    const { container } = render(<CuNoticeBar time={500}>文案</CuNoticeBar>)
     act(() => {
       vi.advanceTimersByTime(500)
     })
-    expect(container.querySelector('.md-notice-bar')).toBeNull()
+    expect(container.querySelector('.cu-notice-bar')).toBeNull()
     vi.useRealTimers()
   })
 
   it('renders left/right custom slots', () => {
     const { container } = render(
-      <MdNoticeBar left="左" right="右">文案</MdNoticeBar>,
+      <CuNoticeBar left="左" right="右">文案</CuNoticeBar>,
     )
-    expect(container.querySelector('.md-notice-bar-left')!.textContent).toBe('左')
-    expect(container.querySelector('.md-notice-bar-right')!.textContent).toBe('右')
+    expect(container.querySelector('.cu-notice-bar-left')!.textContent).toBe('左')
+    expect(container.querySelector('.cu-notice-bar-right')!.textContent).toBe('右')
   })
 })
 
-describe('MdActivityIndicator / MdProgress (react)', () => {
+describe('CuActivityIndicator / CuProgress (react)', () => {
   it('renders roller geometry from size', () => {
-    const { container } = render(<MdActivityIndicator type="roller" size={70} />)
+    const { container } = render(<CuActivityIndicator type="roller" size={70} />)
     const svg = container.querySelector('svg.rolling')!
     expect(svg.getAttribute('viewBox')).toBe('0 0 81.66666666666667 81.66666666666667')
     expect(container.querySelector('animate')).not.toBeNull()
   })
 
   it('renders progress state without SMIL when process provided', () => {
-    const { container } = render(<MdProgress value={0.5} />)
+    const { container } = render(<CuProgress value={0.5} />)
     expect(container.querySelector('animate')).toBeNull()
     expect(container.querySelector('circle.stroke')!.getAttribute('stroke-dasharray')).toBe(
       '109.9525 109.9525',
     )
-    expect(container.querySelector('.md-activity-indicator-rolling')!.className).toContain(
-      'md-progress',
+    expect(container.querySelector('.cu-activity-indicator-rolling')!.className).toContain(
+      'cu-progress',
     )
   })
 
   it('spinner defaults to dark color', () => {
-    const { container } = render(<MdActivityIndicator type="spinner" />)
-    expect(container.querySelector('.md-activity-indicator-spinning')!.className).toContain('dark')
+    const { container } = render(<CuActivityIndicator type="spinner" />)
+    expect(container.querySelector('.cu-activity-indicator-spinning')!.className).toContain('dark')
   })
 })
 
@@ -206,7 +206,7 @@ describe('Toast 工厂 (react)', () => {
     await act(async () => {
       exposed = Toast.info('提示') as unknown as { visible: boolean }
     })
-    expect(document.body.querySelector('.md-toast-text')!.textContent).toBe('提示')
+    expect(document.body.querySelector('.cu-toast-text')!.textContent).toBe('提示')
     expect(exposed!.visible).toBe(true)
 
     await act(async () => {
@@ -220,12 +220,12 @@ describe('Toast 工厂 (react)', () => {
     await act(async () => {
       Toast.succeed('成功')
     })
-    expect(document.body.querySelector('.md-icon-success')).not.toBeNull()
+    expect(document.body.querySelector('.cu-icon-success')).not.toBeNull()
 
     await act(async () => {
       Toast.loading('加载')
     })
-    expect(document.body.querySelector('svg.md-icon-spinner')).not.toBeNull()
+    expect(document.body.querySelector('svg.cu-icon-spinner')).not.toBeNull()
     await act(async () => {
       Toast.hide()
     })

@@ -1,48 +1,48 @@
 /* Extracted from legacy/components/radio — do not edit by hand; re-run scripts/extract.mjs */
 /* --- index.vue --- */
-.md-radio
+.cu-radio
   display flex
   align-items center
   line-height 1.5
   margin-top v-gap-sm
   margin-bottom v-gap-sm
-  .md-radio-icon
+  .cu-radio-icon
     color color-text-placeholder
-    .md-icon
+    .cu-icon
       display flex
   &.is-checked
-    .md-radio-icon
+    .cu-radio-icon
       color radio-color
   &.is-disabled
-    .md-radio-icon
-    .md-radio-label
+    .cu-radio-icon
+    .cu-radio-label
       color color-text-disabled
   &.is-inline
     display inline-flex
     &:not(:last-child)
       margin-right 40px
 
-.md-radio-icon
+.cu-radio-icon
   position relative
   flex-shrink 0
 
-.md-radio-label
+.cu-radio-label
   margin-left h-gap-sm
   font-size inherit
   font-weight font-weight-normal
 
 /* --- list.vue --- */
-.md-radio-item
-  .md-radio
+.cu-radio-item
+  .cu-radio
     margin-top 0
     margin-bottom 0
 
-.md-radio-list
-  .md-cell-item-body.multilines .md-cell-item-title
+.cu-radio-list
+  .cu-cell-item-body.multilines .cu-cell-item-title
     font-weight font-weight-medium
   &.is-align-center
-    .md-cell-item-content
+    .cu-cell-item-content
       text-align center
-    .md-cell-left,
-    .md-cell-right
+    .cu-cell-left,
+    .cu-cell-right
       display none

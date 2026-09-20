@@ -1,2 +1,2 @@
-// 按需入口：mand-mobile/es/scroll-view
+// 按需入口：centui/es/scroll-view
 export * from './components/scroll-view'

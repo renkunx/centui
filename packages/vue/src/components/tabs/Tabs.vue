@@ -1,6 +1,6 @@
 <template>
-  <div class="md-tabs">
-    <MdTabBar
+  <div class="cu-tabs">
+    <CuTabBar
       ref="tabBar"
       :items="menus"
       :value="currentName"
@@ -10,7 +10,7 @@
       @change="handleTabClick"
       @input="currentName = $event"
     />
-    <div class="md-tabs-content">
+    <div class="cu-tabs-content">
       <slot></slot>
     </div>
   </div>
@@ -18,10 +18,10 @@
 
 <script setup lang="ts">
 import { computed, onMounted, provide, ref, watch } from 'vue'
-import MdTabBar, { type TabBarItem } from './TabBar.vue'
+import CuTabBar, { type TabBarItem } from './TabBar.vue'
 import type { ComponentInternalInstance } from 'vue'
 
-defineOptions({ name: 'md-tabs' })
+defineOptions({ name: 'cu-tabs' })
 
 const props = withDefaults(
   defineProps<{
@@ -38,7 +38,7 @@ const emit = defineEmits<{
   (e: 'change', tab: TabBarItem): void
 }>()
 
-const tabBar = ref<InstanceType<typeof MdTabBar> | null>(null)
+const tabBar = ref<InstanceType<typeof CuTabBar> | null>(null)
 const currentName = ref<string | number | undefined>(props.modelValue)
 const prevIndex = ref(0)
 const panes = ref<Array<ComponentInternalInstance['proxy']>>([])

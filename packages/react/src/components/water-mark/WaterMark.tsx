@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useRef, type ReactNode } from 'react'
-import { getDpr } from '@mand-mobile/core/web'
+import { getDpr } from '@centui/core/web'
 
 export interface WaterMarkProps {
   content?: string
@@ -19,7 +19,7 @@ export interface WaterMarkProps {
 const FONT_SIZE = 14
 const COLOR = '#858B9C'
 
-export const MdWaterMark = forwardRef<HTMLDivElement, WaterMarkProps>(function MdWaterMark(
+export const CuWaterMark = forwardRef<HTMLDivElement, WaterMarkProps>(function CuWaterMark(
   {
     content = '',
     spacing = '20vw',
@@ -106,7 +106,7 @@ export const MdWaterMark = forwardRef<HTMLDivElement, WaterMarkProps>(function M
   const items = repeatX ? Array.from({ length: repetition }, (_, i) => i + 1) : [1]
 
   return (
-    <div className={`md-water-mark${className ? ` ${className}` : ''}`} ref={ref}>
+    <div className={`cu-water-mark${className ? ` ${className}` : ''}`} ref={ref}>
       <div className="water-mark-container">{children}</div>
       {hasWatermark ? (
         <div className="water-mark-list" ref={markRef}>

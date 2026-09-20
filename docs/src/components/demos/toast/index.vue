@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Toast, MdButton, MdToast, MdActivityIndicator } from 'mand-mobile'
+import { Toast, CuButton, CuToast, CuActivityIndicator } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['纯文字', '成功/失败', '载入', '长文字', '位置', '连续调用', '定制/方形']
@@ -29,34 +29,34 @@ function showContinuous() {
 <template>
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
-      <MdButton @click="Toast.info('一段文字')">纯文字</MdButton>
+      <CuButton @click="Toast.info('一段文字')">纯文字</CuButton>
     </template>
     <template #scene-1>
       <div style="display: flex; gap: 16px">
-        <MdButton @click="Toast.succeed('操作成功')">成功</MdButton>
-        <MdButton @click="Toast.failed('操作失败')">失败</MdButton>
+        <CuButton @click="Toast.succeed('操作成功')">成功</CuButton>
+        <CuButton @click="Toast.failed('操作失败')">失败</CuButton>
       </div>
     </template>
     <template #scene-2>
-      <MdButton @click="showLoading">载入</MdButton>
+      <CuButton @click="showLoading">载入</CuButton>
     </template>
     <template #scene-3>
-      <MdButton @click="showLongText">长文字</MdButton>
+      <CuButton @click="showLongText">长文字</CuButton>
     </template>
     <template #scene-4>
-      <MdButton @click="Toast({ content: '自定义位置', position: 'bottom' })">自定义位置</MdButton>
+      <CuButton @click="Toast({ content: '自定义位置', position: 'bottom' })">自定义位置</CuButton>
     </template>
     <template #scene-5>
-      <MdButton @click="showContinuous">连续调用</MdButton>
+      <CuButton @click="showContinuous">连续调用</CuButton>
     </template>
     <template #scene-6>
       <div style="display: flex; flex-direction: column; gap: 16px; align-items: center">
-        <MdToast ref="customToast" style="position: relative">
-          <MdActivityIndicator :size="20" :text-size="16" color="yellow" text-color="white">loading...</MdActivityIndicator>
-        </MdToast>
-        <MdButton @click="customShow = !customShow">定制 Toast</MdButton>
-        <MdButton @click="squareShow = !squareShow">方形 Toast</MdButton>
-        <MdToast v-if="squareShow" icon="ring" icon-svg content="方形 Toast" square style="position: relative" />
+        <CuToast ref="customToast" style="position: relative">
+          <CuActivityIndicator :size="20" :text-size="16" color="yellow" text-color="white">loading...</CuActivityIndicator>
+        </CuToast>
+        <CuButton @click="customShow = !customShow">定制 Toast</CuButton>
+        <CuButton @click="squareShow = !squareShow">方形 Toast</CuButton>
+        <CuToast v-if="squareShow" icon="ring" icon-svg content="方形 Toast" square style="position: relative" />
       </div>
     </template>
   </DemoCanvas>

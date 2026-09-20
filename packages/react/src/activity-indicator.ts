@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/activity-indicator
+// 按需入口：@centui/react/es/activity-indicator
 export * from './components/activity-indicator'

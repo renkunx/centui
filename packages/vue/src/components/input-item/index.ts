@@ -1,1 +1,1 @@
-export { default as MdInputItem } from './InputItem.vue'
+export { default as CuInputItem } from './InputItem.vue'

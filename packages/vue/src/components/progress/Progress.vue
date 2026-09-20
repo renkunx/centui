@@ -1,6 +1,6 @@
 <template>
-  <MdRolling
-    class="md-progress"
+  <CuRolling
+    class="cu-progress"
     :process="formatValue"
     :size="size"
     :width="width"
@@ -14,15 +14,15 @@
     <template #defs>
       <slot name="defs"></slot>
     </template>
-  </MdRolling>
+  </CuRolling>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { Animate } from '@mand-mobile/core/web'
-import MdRolling from '../activity-indicator/Roller.vue'
+import { Animate } from '@centui/core/web'
+import CuRolling from '../activity-indicator/Roller.vue'
 
-defineOptions({ name: 'md-progress' })
+defineOptions({ name: 'cu-progress' })
 
 const props = withDefaults(
   defineProps<{

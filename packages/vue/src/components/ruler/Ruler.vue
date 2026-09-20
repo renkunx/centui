@@ -1,21 +1,21 @@
 <template>
   <div
-    class="md-ruler"
+    class="cu-ruler"
     @touchstart="startDrag"
     @touchend="stopDrag"
   >
-    <canvas ref="canvas" class="md-ruler-canvas"></canvas>
-    <div class="md-ruler-cursor" :class="[isStepTextBottom && 'md-ruler-cursor-bottom']"></div>
-    <div class="md-ruler-arrow"></div>
+    <canvas ref="canvas" class="cu-ruler-canvas"></canvas>
+    <div class="cu-ruler-cursor" :class="[isStepTextBottom && 'cu-ruler-cursor-bottom']"></div>
+    <div class="cu-ruler-arrow"></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-import { Scroller } from '@mand-mobile/core/web'
-import { throttle } from '@mand-mobile/core'
+import { Scroller } from '@centui/core/web'
+import { throttle } from '@centui/core'
 
-defineOptions({ name: 'md-ruler' })
+defineOptions({ name: 'cu-ruler' })
 
 const props = withDefaults(
   defineProps<{

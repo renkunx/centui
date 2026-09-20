@@ -1,1 +1,1 @@
-export { MdSteps, type StepItem, type StepsProps } from './Steps'
+export { CuSteps, type StepItem, type StepsProps } from './Steps'

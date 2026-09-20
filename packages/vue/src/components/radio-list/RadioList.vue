@@ -1,9 +1,9 @@
 <template>
-  <div class="md-radio-list" :class="{ 'is-align-center': alignCenter }">
-    <MdCellItem
+  <div class="cu-radio-list" :class="{ 'is-align-center': alignCenter }">
+    <CuCellItem
       v-for="(item, index) in options"
       :key="index"
-      class="md-radio-item"
+      class="cu-radio-item"
       :class="{
         'is-selected': selectedValue === item.value && !inputSelected,
       }"
@@ -17,7 +17,7 @@
         <slot :option="item" :index="index" :selected="currentValue === item.value"></slot>
       </template>
       <template v-if="!alignCenter && !inputSelected && !withoutIcon" #[iconSlotName]>
-        <MdRadio
+        <CuRadio
           :name="item.value"
           :model-value="selectedValue"
           :disabled="item.disabled"
@@ -28,11 +28,11 @@
           :icon-svg="iconSvg"
         />
       </template>
-    </MdCellItem>
-    <MdInputItem
+    </CuCellItem>
+    <CuInputItem
       v-if="hasInput"
       ref="inputItem"
-      class="md-radio-item"
+      class="cu-radio-item"
       :class="{
         'is-selected': inputSelected,
       }"
@@ -47,11 +47,11 @@
 
 <script setup lang="ts">
 import { computed, ref, useSlots, watch } from 'vue'
-import MdRadio from '../radio/Radio.vue'
-import MdCellItem from '../cell-item/CellItem.vue'
-import MdInputItem from '../input-item/InputItem.vue'
+import CuRadio from '../radio/Radio.vue'
+import CuCellItem from '../cell-item/CellItem.vue'
+import CuInputItem from '../input-item/InputItem.vue'
 
-defineOptions({ name: 'md-radio-list' })
+defineOptions({ name: 'cu-radio-list' })
 
 const props = withDefaults(
   defineProps<{

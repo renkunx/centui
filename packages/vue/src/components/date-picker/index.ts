@@ -1,1 +1,1 @@
-export { default as MdDatePicker } from './DatePicker.vue'
+export { default as CuDatePicker } from './DatePicker.vue'

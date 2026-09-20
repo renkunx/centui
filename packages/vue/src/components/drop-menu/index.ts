@@ -1,1 +1,1 @@
-export { default as MdDropMenu, type DropMenuItem } from './DropMenu.vue'
+export { default as CuDropMenu, type DropMenuItem } from './DropMenu.vue'

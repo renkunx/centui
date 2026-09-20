@@ -1,13 +1,13 @@
 <template>
   <div
-    class="md-switch"
+    class="cu-switch"
     :class="[disabled ? 'disabled' : '', modelValue ? 'active' : '']"
     @click="onChange($event)"
   ></div>
 </template>
 
 <script setup lang="ts">
-defineOptions({ name: 'md-switch' })
+defineOptions({ name: 'cu-switch' })
 
 const props = withDefaults(
   defineProps<{

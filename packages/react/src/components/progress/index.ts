@@ -1,1 +1,1 @@
-export { MdProgress, type ProgressProps } from './Progress'
+export { CuProgress, type ProgressProps } from './Progress'

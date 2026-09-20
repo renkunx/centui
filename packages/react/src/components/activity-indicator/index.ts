@@ -1,2 +1,2 @@
-export { MdActivityIndicator, type ActivityIndicatorProps } from './ActivityIndicator'
-export { MdRollerSuccess, type RollerSuccessProps } from './RollerSuccess'
+export { CuActivityIndicator, type ActivityIndicatorProps } from './ActivityIndicator'
+export { CuRollerSuccess, type RollerSuccessProps } from './RollerSuccess'

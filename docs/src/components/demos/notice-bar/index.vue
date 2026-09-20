@@ -1,52 +1,52 @@
 <script setup lang="ts">
-import { MdNoticeBar, MdIcon } from 'mand-mobile'
+import { CuNoticeBar, CuIcon } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['基础', '设置图标', '定时隐藏', '圆角', '主题样式', '多行显示', '滚动播放', '自定义插槽']
-const code = `<MdNoticeBar>为了确保您的资金安全，请设置支付密码</MdNoticeBar>
-<MdNoticeBar mode="closable" icon="security">...</MdNoticeBar>
-<MdNoticeBar round>...</MdNoticeBar>
-<MdNoticeBar multi-rows>...</MdNoticeBar>
-<MdNoticeBar scrollable>...</MdNoticeBar>`
+const code = `<CuNoticeBar>为了确保您的资金安全，请设置支付密码</CuNoticeBar>
+<CuNoticeBar mode="closable" icon="security">...</CuNoticeBar>
+<CuNoticeBar round>...</CuNoticeBar>
+<CuNoticeBar multi-rows>...</CuNoticeBar>
+<CuNoticeBar scrollable>...</CuNoticeBar>`
 </script>
 
 <template>
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
-      <MdNoticeBar>为了确保您的资金安全，请设置支付密码</MdNoticeBar>
+      <CuNoticeBar>为了确保您的资金安全，请设置支付密码</CuNoticeBar>
     </template>
     <template #scene-1>
-      <MdNoticeBar mode="closable" icon="security">为了确保您的资金安全，请设置支付密码</MdNoticeBar>
+      <CuNoticeBar mode="closable" icon="security">为了确保您的资金安全，请设置支付密码</CuNoticeBar>
     </template>
     <template #scene-2>
-      <MdNoticeBar :time="5000">为了确保您的资金安全，请设置支付密码（5s 后隐藏）</MdNoticeBar>
+      <CuNoticeBar :time="5000">为了确保您的资金安全，请设置支付密码（5s 后隐藏）</CuNoticeBar>
     </template>
     <template #scene-3>
-      <MdNoticeBar round>为了确保您的资金安全，请设置支付密码</MdNoticeBar>
+      <CuNoticeBar round>为了确保您的资金安全，请设置支付密码</CuNoticeBar>
     </template>
     <template #scene-4>
       <div style="display: flex; flex-direction: column; gap: 10px; width: 100%">
-        <MdNoticeBar icon="warn" mode="closable" type="warning">该银行3:00-12:00系统维护，请更换其他银行卡</MdNoticeBar>
-        <MdNoticeBar icon="coupon" mode="link" type="activity">福利来啦，7日免息券发放中！</MdNoticeBar>
+        <CuNoticeBar icon="warn" mode="closable" type="warning">该银行3:00-12:00系统维护，请更换其他银行卡</CuNoticeBar>
+        <CuNoticeBar icon="coupon" mode="link" type="activity">福利来啦，7日免息券发放中！</CuNoticeBar>
       </div>
     </template>
     <template #scene-5>
-      <MdNoticeBar mode="link" icon="security" multi-rows>
+      <CuNoticeBar mode="link" icon="security" multi-rows>
         为了确保您的资金安全，请设置支付密码。为了确保您的资金安全，请设置支付密码。为了确保您的资金安全，请设置支付密码。
-      </MdNoticeBar>
+      </CuNoticeBar>
     </template>
     <template #scene-6>
-      <MdNoticeBar mode="closable" icon="volumn" scrollable>
+      <CuNoticeBar mode="closable" icon="volumn" scrollable>
         为了确保您的资金安全，请设置支付密码为了确保您的资金安全，请设置支付密码为了确保您的资金安全，请设置支付密码
-      </MdNoticeBar>
+      </CuNoticeBar>
     </template>
     <template #scene-7>
-      <MdNoticeBar>
+      <CuNoticeBar>
         <template #left>
-          <MdIcon name="security" style="margin-right: 8px" />
+          <CuIcon name="security" style="margin-right: 8px" />
         </template>
         为了确保您的资金安全，请设置支付密码
-      </MdNoticeBar>
+      </CuNoticeBar>
     </template>
   </DemoCanvas>
 </template>

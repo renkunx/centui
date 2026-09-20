@@ -9,7 +9,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async importOriginal => {
+vi.mock('@centui/core/web', async importOriginal => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     _isAnimating = false
@@ -62,12 +62,12 @@ vi.mock('@mand-mobile/core/web', async importOriginal => {
 })
 
 import {
-  MdScrollView,
-  MdScrollViewMore,
-  MdScrollViewRefresh,
-  MdSlider,
-  MdSwiper,
-  MdSwiperItem,
+  CuScrollView,
+  CuScrollViewMore,
+  CuScrollViewRefresh,
+  CuSlider,
+  CuSwiper,
+  CuSwiperItem,
 } from '../../src'
 
 async function flush(ms = 30) {
@@ -81,7 +81,7 @@ describe('ScrollView 覆盖 (vue)', () => {
 
   function mountSV(template: string, props: Record<string, unknown> = {}) {
     return mount({
-      components: { MdScrollView, MdScrollViewMore, MdScrollViewRefresh },
+      components: { CuScrollView, CuScrollViewMore, CuScrollViewRefresh },
       props: Object.keys(props),
       template,
       setup() {
@@ -96,12 +96,12 @@ describe('ScrollView 覆盖 (vue)', () => {
     const onRefreshing = vi.fn()
     const wrapper = mountSV(
       `
-      <MdScrollView ref="sv" @refresh-active="onRefreshActive" @refreshing="onRefreshing">
+      <CuScrollView ref="sv" @refresh-active="onRefreshActive" @refreshing="onRefreshing">
         <template #refresh>
-          <MdScrollViewRefresh :scroll-top="-30" />
+          <CuScrollViewRefresh :scroll-top="-30" />
         </template>
         <div class="item">A</div>
-      </MdScrollView>
+      </CuScrollView>
     `,
       { onRefreshActive, onRefreshing },
     )
@@ -119,7 +119,7 @@ describe('ScrollView 覆盖 (vue)', () => {
     expect(wrapper.find('.scroll-view-refresh').classes()).toContain('refreshing')
     expect(onRefreshing).toHaveBeenCalledTimes(1)
 
-    const sv = wrapper.findComponent({ name: 'md-scroll-view' }).vm as unknown as {
+    const sv = wrapper.findComponent({ name: 'cu-scroll-view' }).vm as unknown as {
       finishRefresh: () => void
     }
     sv.finishRefresh()
@@ -135,12 +135,12 @@ describe('ScrollView 覆盖 (vue)', () => {
   it('mouse drag path (down/move/up) touches scroller', async () => {
     vi.useFakeTimers()
     const wrapper = mountSV(`
-      <MdScrollView>
+      <CuScrollView>
         <div class="item">A</div>
-      </MdScrollView>
+      </CuScrollView>
     `)
     await flush(120)
-    const root = wrapper.find('.md-scroll-view')
+    const root = wrapper.find('.cu-scroll-view')
     await root.trigger('mousedown', { pageX: 100, pageY: 100 })
     await root.trigger('mousemove', { pageX: 60, pageY: 100 })
     await root.trigger('mouseup', { pageY: 60, pageX: 60 })
@@ -159,15 +159,15 @@ describe('ScrollView 覆盖 (vue)', () => {
   it('touchAngle gates move when only one axis scrolls', async () => {
     vi.useFakeTimers()
     const wrapper = mountSV(`
-      <MdScrollView :scrolling-y="true" :scrolling-x="false">
+      <CuScrollView :scrolling-y="true" :scrolling-x="false">
         <div class="item">A</div>
-      </MdScrollView>
+      </CuScrollView>
     `)
     await flush(120)
     const scroller = scrollerInstances[0] as unknown as {
       doTouchMove: ReturnType<typeof vi.fn>
     }
-    const root = wrapper.find('.md-scroll-view')
+    const root = wrapper.find('.cu-scroll-view')
     const touches = [{ pageX: 100, pageY: 100 }]
     await root.trigger('touchstart', { touches, targetTouches: touches })
     // 水平移动（角度 < 45）→ 提前 return，不调用 doTouchMove
@@ -180,16 +180,16 @@ describe('ScrollView 覆盖 (vue)', () => {
   it('reflowScroller with force recalculates dimensions', async () => {
     vi.useFakeTimers()
     const wrapper = mountSV(`
-      <MdScrollView ref="sv">
+      <CuScrollView ref="sv">
         <div class="item">A</div>
-      </MdScrollView>
+      </CuScrollView>
     `)
     await flush(120)
     const scroller = scrollerInstances[0] as unknown as {
       setDimensions: ReturnType<typeof vi.fn>
     }
     const count = scroller.setDimensions.mock.calls.length
-    const svComp = wrapper.findComponent({ name: 'md-scroll-view' }).vm as unknown as {
+    const svComp = wrapper.findComponent({ name: 'cu-scroll-view' }).vm as unknown as {
       reflowScroller: (force?: boolean) => void
     }
     svComp.reflowScroller(true)
@@ -206,13 +206,13 @@ describe('Swiper 覆盖 (vue)', () => {
 
   function mountSwiper(props: Record<string, unknown> = {}) {
     return mount({
-      components: { MdSwiper, MdSwiperItem },
+      components: { CuSwiper, CuSwiperItem },
       template: `
-        <MdSwiper v-bind="props">
-          <MdSwiperItem><div>1</div></MdSwiperItem>
-          <MdSwiperItem><div>2</div></MdSwiperItem>
-          <MdSwiperItem><div>3</div></MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper v-bind="props">
+          <CuSwiperItem><div>1</div></CuSwiperItem>
+          <CuSwiperItem><div>2</div></CuSwiperItem>
+          <CuSwiperItem><div>3</div></CuSwiperItem>
+        </CuSwiper>
       `,
       setup() {
         return { props }
@@ -223,7 +223,7 @@ describe('Swiper 覆盖 (vue)', () => {
   it('autoplay advances after duration', async () => {
     vi.useRealTimers()
     const wrapper = mountSwiper({ autoplay: 1000 })
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       getIndex: () => number
       stop: () => void
     }
@@ -238,7 +238,7 @@ describe('Swiper 覆盖 (vue)', () => {
     vi.useFakeTimers()
     const wrapper = mountSwiper({ autoplay: 3000 })
     await vi.advanceTimersByTimeAsync(20)
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       stop: () => void
       getIndex: () => number
     }
@@ -252,7 +252,7 @@ describe('Swiper 覆盖 (vue)', () => {
     vi.useFakeTimers()
     const wrapper = mountSwiper({ autoplay: 0, isPrevent: false })
     await vi.advanceTimersByTimeAsync(20)
-    const root = wrapper.find('.md-swiper')
+    const root = wrapper.find('.cu-swiper')
     const touch = [{ pageX: 100, pageY: 100 }]
     // 不应抛错（preventDefault 在 passive listener 下会抛）
     await root.trigger('touchstart', { touches: touch, targetTouches: touch, changedTouches: touch })
@@ -274,19 +274,19 @@ describe('Swiper 覆盖 (vue)', () => {
   it('single item disables drag', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdSwiper, MdSwiperItem },
+      components: { CuSwiper, CuSwiperItem },
       template: `
-        <MdSwiper :autoplay="0">
-          <MdSwiperItem>only</MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper :autoplay="0">
+          <CuSwiperItem>only</CuSwiperItem>
+        </CuSwiper>
       `,
     })
     await vi.advanceTimersByTimeAsync(20)
     // 单 item：oItemCount 1 → noDrag → 拖拽不动
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       getIndex: () => number
     }
-    wrapper.find('.md-swiper').trigger('touchstart', {
+    wrapper.find('.cu-swiper').trigger('touchstart', {
       touches: [{ pageX: 100, pageY: 0 }],
       targetTouches: [{ pageX: 100, pageY: 0 }],
     })
@@ -300,7 +300,7 @@ describe('Slider 覆盖 (vue)', () => {
     // 默认 fake timers 不含 requestAnimationFrame，显式加入以驱动 Slider 拖拽回调
     vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'requestAnimationFrame'] })
     const onUpdate = vi.fn()
-    const wrapper = mount(MdSlider, {
+    const wrapper = mount(CuSlider, {
       props: { modelValue: 0, min: 0, max: 100, 'onUpdate:modelValue': onUpdate },
     })
     // 挂到 document 才有 offsetWidth
@@ -311,7 +311,7 @@ describe('Slider 覆盖 (vue)', () => {
     const mousedown = new MouseEvent('mousedown', { bubbles: true, cancelable: true })
     Object.defineProperty(mousedown, 'pageX', { value: 0 })
     wrapper.element
-      .querySelector('.md-slider-handle span')!
+      .querySelector('.cu-slider-handle span')!
       .dispatchEvent(mousedown)
     await actFlush()
 

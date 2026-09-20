@@ -1,1 +1,1 @@
-export { default as MdCheckBaseBox } from './CheckBoxBase.vue'
+export { default as CuCheckBaseBox } from './CheckBoxBase.vue'

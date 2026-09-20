@@ -1,1 +1,1 @@
-export { MdImageReader, type ImageReaderProps } from './ImageReader'
+export { CuImageReader, type ImageReaderProps } from './ImageReader'

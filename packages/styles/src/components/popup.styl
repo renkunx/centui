@@ -1,6 +1,6 @@
 /* Extracted from legacy/components/popup — do not edit by hand; re-run scripts/extract.mjs */
 /* --- index.vue --- */
-.md-popup
+.cu-popup
   absolute-pos()
   position fixed
   display flex
@@ -14,39 +14,39 @@
   &.top
     flex-direction column
     justify-content flex-start
-    .md-popup-box
+    .cu-popup-box
       width 100%
 
   &.bottom
     flex-direction column
     justify-content flex-end
-    .md-popup-box
+    .cu-popup-box
       width 100%
 
   &.left
     justify-content flex-start
-    .md-popup-box
+    .cu-popup-box
       height 100%
 
   &.right
     justify-content flex-end
-    .md-popup-box
+    .cu-popup-box
       height 100%
 
-  &.inner-popup .md-popup-box
+  &.inner-popup .cu-popup-box
     background-color color-bg-inverse
     border-radius popup-title-bar-radius popup-title-bar-radius 0 0
-  &.large-radius.inner-popup .md-popup-box
+  &.large-radius.inner-popup .cu-popup-box
     border-radius popup-title-bar-radius-large popup-title-bar-radius-large 0 0
 
-.md-popup-mask
+.cu-popup-mask
   absolute-pos()
   position absolute
   pointer-events auto
   z-index 1
   background-color popup-mask-bg
 
-.md-popup-box
+.cu-popup-box
   position relative
   pointer-events auto
   z-index 2
@@ -54,14 +54,14 @@
   max-height 100%
   overflow auto
 
-.md-mask-fade
+.cu-mask-fade
   &-enter, &-leave-to
     opacity 0.01
   &-enter-active, &-leave-active
     transition opacity 250ms
 
 /* --- title-bar.vue --- */
-.md-popup-title-bar
+.cu-popup-title-bar
   position relative
   width 100%
   height popup-title-bar-height
@@ -127,11 +127,11 @@
     right 0
     padding-right h-gap-sl
     align-items flex-end
-  .md-popup-cancel
+  .cu-popup-cancel
     color popup-title-bar-color-button-left
-  .md-popup-confirm
+  .cu-popup-confirm
     color popup-title-bar-color-button-right
-  .md-popup-close
+  .cu-popup-close
     padding-top h-gap-sl
     color popup-title-bar-color-button-left
     justify-content flex-start

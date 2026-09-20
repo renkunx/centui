@@ -1,5 +1,5 @@
 <template>
-  <div class="md-water-mark">
+  <div class="cu-water-mark">
     <div class="water-mark-container">
       <slot></slot>
     </div>
@@ -38,9 +38,9 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, useSlots, Comment, Fragment } from 'vue'
-import { getDpr } from '@mand-mobile/core/web'
+import { getDpr } from '@centui/core/web'
 
-defineOptions({ name: 'md-water-mark' })
+defineOptions({ name: 'cu-water-mark' })
 
 const props = withDefaults(
   defineProps<{

@@ -1,1 +1,1 @@
-export { MdCaptcha, type CaptchaProps } from './Captcha'
+export { CuCaptcha, type CaptchaProps } from './Captcha'

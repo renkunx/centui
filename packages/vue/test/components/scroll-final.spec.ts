@@ -7,7 +7,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async importOriginal => {
+vi.mock('@centui/core/web', async importOriginal => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     _isAnimating = false
@@ -41,7 +41,7 @@ vi.mock('@mand-mobile/core/web', async importOriginal => {
   return { ...orig, Scroller: FakeScrollerImpl }
 })
 
-import { MdScrollView, MdSwiper, MdSwiperItem } from '../../src'
+import { CuScrollView, CuSwiper, CuSwiperItem } from '../../src'
 
 async function flush(ms = 30) {
   await vi.advanceTimersByTimeAsync(ms)
@@ -55,11 +55,11 @@ describe('ScrollView 收尾分支 (vue)', () => {
   it('mouseleave ends drag when mouse is down', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdScrollView },
-      template: `<MdScrollView><div class="item">A</div></MdScrollView>`,
+      components: { CuScrollView },
+      template: `<CuScrollView><div class="item">A</div></CuScrollView>`,
     })
     await flush(120)
-    const root = wrapper.find('.md-scroll-view')
+    const root = wrapper.find('.cu-scroll-view')
     await root.trigger('mousedown', { pageX: 100, pageY: 100 })
     await root.trigger('mouseleave', { pageX: 0, pageY: 0 })
     const scroller = scrollerInstances[0] as unknown as {
@@ -72,14 +72,14 @@ describe('ScrollView 收尾分支 (vue)', () => {
   it('mousemove without mousedown is ignored', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdScrollView },
-      template: `<MdScrollView><div class="item">A</div></MdScrollView>`,
+      components: { CuScrollView },
+      template: `<CuScrollView><div class="item">A</div></CuScrollView>`,
     })
     await flush(120)
     const scroller = scrollerInstances[0] as unknown as {
       doTouchMove: ReturnType<typeof vi.fn>
     }
-    await wrapper.find('.md-scroll-view').trigger('mousemove', { pageX: 50, pageY: 50 })
+    await wrapper.find('.cu-scroll-view').trigger('mousemove', { pageX: 50, pageY: 50 })
     expect(scroller.doTouchMove).not.toHaveBeenCalled()
     vi.useRealTimers()
   })
@@ -87,11 +87,11 @@ describe('ScrollView 收尾分支 (vue)', () => {
   it('handlers no-op before init (manual-init)', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdScrollView },
-      template: `<MdScrollView manual-init><div class="item">A</div></MdScrollView>`,
+      components: { CuScrollView },
+      template: `<CuScrollView manual-init><div class="item">A</div></CuScrollView>`,
     })
     await flush(10)
-    const root = wrapper.find('.md-scroll-view')
+    const root = wrapper.find('.cu-scroll-view')
     const t1 = [{ pageX: 100, pageY: 100 }]
     await root.trigger('touchstart', { touches: t1, targetTouches: t1 })
     await root.trigger('touchend', { touches: [], targetTouches: [], changedTouches: t1 })
@@ -104,10 +104,10 @@ describe('ScrollView 收尾分支 (vue)', () => {
 
   it('getOffsets returns zeros before init', () => {
     const wrapper = mount({
-      components: { MdScrollView },
-      template: `<MdScrollView manual-init><div class="item">A</div></MdScrollView>`,
+      components: { CuScrollView },
+      template: `<CuScrollView manual-init><div class="item">A</div></CuScrollView>`,
     })
-    const vm = wrapper.findComponent({ name: 'md-scroll-view' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-scroll-view' }).vm as unknown as {
       getOffsets: () => { left: number; top: number }
     }
     expect(vm.getOffsets()).toEqual({ left: 0, top: 0 })
@@ -122,16 +122,16 @@ describe('Swiper 收尾分支 (vue)', () => {
   it('play/stop expose round-trip', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdSwiper, MdSwiperItem },
+      components: { CuSwiper, CuSwiperItem },
       template: `
-        <MdSwiper :autoplay="0">
-          <MdSwiperItem>1</MdSwiperItem>
-          <MdSwiperItem>2</MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper :autoplay="0">
+          <CuSwiperItem>1</CuSwiperItem>
+          <CuSwiperItem>2</CuSwiperItem>
+        </CuSwiper>
       `,
     })
     await flush(120)
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       play: (d?: number) => void
       stop: () => void
       getIndex: () => number
@@ -146,12 +146,12 @@ describe('Swiper 收尾分支 (vue)', () => {
   it('resize debounces multiple events', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdSwiper, MdSwiperItem },
+      components: { CuSwiper, CuSwiperItem },
       template: `
-        <MdSwiper :autoplay="0">
-          <MdSwiperItem>1</MdSwiperItem>
-          <MdSwiperItem>2</MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper :autoplay="0">
+          <CuSwiperItem>1</CuSwiperItem>
+          <CuSwiperItem>2</CuSwiperItem>
+        </CuSwiper>
       `,
     })
     await flush(120)
@@ -159,7 +159,7 @@ describe('Swiper 收尾分支 (vue)', () => {
     window.dispatchEvent(new Event('resize'))
     window.dispatchEvent(new Event('resize'))
     await flush(400)
-    expect(wrapper.findAll('.md-swiper-indicator').length).toBe(2)
+    expect(wrapper.findAll('.cu-swiper-indicator').length).toBe(2)
     vi.useRealTimers()
   })
 })

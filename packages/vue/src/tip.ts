@@ -1,2 +1,2 @@
-// 按需入口：mand-mobile/es/tip
+// 按需入口：centui/es/tip
 export * from './components/tip'

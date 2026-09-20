@@ -5,7 +5,7 @@
       "name": "name",
       "type": "string",
       "default": "-",
-      "desc": "动效名称：md-fade / md-slide-up / md-bounce / md-zoom 等",
+      "desc": "动效名称：cu-fade / cu-slide-up / cu-bounce / cu-zoom 等",
       "required": false
     }
   ],

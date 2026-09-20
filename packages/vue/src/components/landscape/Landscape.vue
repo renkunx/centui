@@ -1,37 +1,37 @@
 <template>
-  <div class="md-landscape" :class="{ 'is-full': fullScreen }">
-    <MdPopup
+  <div class="cu-landscape" :class="{ 'is-full': fullScreen }">
+    <CuPopup
       v-model="isLandscapeShow"
       :mask-closable="maskClosable"
       prevent-scroll
-      prevent-scroll-exclude=".md-landscape-content"
+      prevent-scroll-exclude=".cu-landscape-content"
       :has-mask="!fullScreen && hasMask"
       :transition="actualTransition"
       @update:model-value="onPopupInput"
       @show="$emit('show')"
       @hide="$emit('hide')"
     >
-      <div class="md-landscape-body" :class="{ scroll }">
-        <div class="md-landscape-content">
+      <div class="cu-landscape-body" :class="{ scroll }">
+        <div class="cu-landscape-content">
           <slot></slot>
         </div>
-        <MdIcon
-          class="md-landscape-close"
+        <CuIcon
+          class="cu-landscape-close"
           :class="{ dark: !hasMask || fullScreen }"
           :name="fullScreen ? 'clear' : 'close'"
           @click="close"
         />
       </div>
-    </MdPopup>
+    </CuPopup>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import MdPopup from '../popup/Popup.vue'
-import MdIcon from '../icon/Icon.vue'
+import CuPopup from '../popup/Popup.vue'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-landscape' })
+defineOptions({ name: 'cu-landscape' })
 
 const props = withDefaults(
   defineProps<{
@@ -61,8 +61,8 @@ const emit = defineEmits<{
 
 const isLandscapeShow = ref(props.modelValue)
 
-// v2 契约：默认过渡按 fullScreen 区分（md-fade / md-punch）
-const actualTransition = computed(() => props.transition ?? (props.fullScreen ? 'md-fade' : 'md-punch'))
+// v2 契约：默认过渡按 fullScreen 区分（cu-fade / cu-punch）
+const actualTransition = computed(() => props.transition ?? (props.fullScreen ? 'cu-fade' : 'cu-punch'))
 
 watch(
   () => props.modelValue,

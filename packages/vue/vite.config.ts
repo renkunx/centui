@@ -8,8 +8,8 @@ import dts from 'vite-plugin-dts'
 const pkgRoot = dirname(fileURLToPath(import.meta.url))
 
 /**
- * lib 构建：主入口 + per-component 按需入口（mand-mobile/es/<name>），esm + cjs 双格式。
- * 样式不打入组件，统一由 @mand-mobile/styles 提供（Vue/React 共享同一份 CSS）。
+ * lib 构建：主入口 + per-component 按需入口（centui/es/<name>），esm + cjs 双格式。
+ * 样式不打入组件，统一由 @centui/styles 提供（Vue/React 共享同一份 CSS）。
  */
 export default defineConfig({
   plugins: [
@@ -26,7 +26,7 @@ export default defineConfig({
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
-      external: ['vue', '@mand-mobile/core', '@mand-mobile/core/web'],
+      external: ['vue', '@centui/core', '@centui/core/web'],
     },
   },
 })

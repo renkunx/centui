@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { MdCaptcha } from 'mand-mobile-react'
+import { CuCaptcha } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['内联验证码']
-const code = `<MdCaptcha isView title="输入验证码" brief="验证码已发送至 138****1234" />`
+const code = `<CuCaptcha isView title="输入验证码" brief="验证码已发送至 138****1234" />`
 
 export default function CaptchaDemo() {
   const [submitted, setSubmitted] = useState('')
@@ -12,7 +12,7 @@ export default function CaptchaDemo() {
     <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
       {() => (
         <div className="captcha-demo">
-          <MdCaptcha
+          <CuCaptcha
             isView
             title="输入验证码"
             brief="验证码已发送至 138****1234"
@@ -20,7 +20,7 @@ export default function CaptchaDemo() {
             onSubmit={code => setSubmitted(code)}
           >
             短信验证码已发送
-          </MdCaptcha>
+          </CuCaptcha>
           {submitted ? <p className="captcha-demo-result">已提交：{submitted}</p> : null}
         </div>
       )}

@@ -1,5 +1,5 @@
 import { type MouseEvent, type ReactNode } from 'react'
-import { MdIcon } from '../icon/Icon'
+import { CuIcon } from '../icon/Icon'
 import { useFieldDisabled } from '../field/Field'
 
 export interface FieldItemProps {
@@ -21,7 +21,7 @@ export interface FieldItemProps {
 
 
 
-export function MdFieldItem({
+export function CuFieldItem({
   className,
   title = '',
   placeholder = '',
@@ -42,7 +42,7 @@ export function MdFieldItem({
   return (
     <div
       className={[
-        'md-field-item',
+        'cu-field-item',
         className,
         solid ? 'is-solid' : '',
         currentDisabled ? 'is-disabled' : '',
@@ -57,27 +57,27 @@ export function MdFieldItem({
         }
       }}
     >
-      <div className="md-field-item-content">
-        {title ? <label className="md-field-item-title">{title}</label> : null}
-        {left ? <div className="md-field-item-left">{left}</div> : null}
-        <div className="md-field-item-control">
+      <div className="cu-field-item-content">
+        {title ? <label className="cu-field-item-title">{title}</label> : null}
+        {left ? <div className="cu-field-item-left">{left}</div> : null}
+        <div className="cu-field-item-control">
           {children ?? (
             <>
               {content ? content : null}
               {!content && placeholder ? (
-                <div className="md-field-item-placeholder">{placeholder}</div>
+                <div className="cu-field-item-placeholder">{placeholder}</div>
               ) : null}
             </>
           )}
         </div>
         {arrow || addon || right ? (
-          <div className="md-field-item-right">
+          <div className="cu-field-item-right">
             {right ?? addon}
-            {arrow ? <MdIcon name={arrow === true ? 'arrow' : String(arrow)} size="md" /> : null}
+            {arrow ? <CuIcon name={arrow === true ? 'arrow' : String(arrow)} size="md" /> : null}
           </div>
         ) : null}
       </div>
-      {childrenSlot ? <div className="md-field-item-children">{childrenSlot}</div> : null}
+      {childrenSlot ? <div className="cu-field-item-children">{childrenSlot}</div> : null}
     </div>
   )
 }

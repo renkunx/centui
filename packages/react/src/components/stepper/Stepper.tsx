@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { warn } from '@mand-mobile/core'
+import { warn } from '@centui/core'
 
 export interface StepperProps {
   defaultValue?: number | string
@@ -40,7 +40,7 @@ function subtr(num1: number | string, num2: number | string): number {
   return +((n1 * m - n2 * m) / m).toFixed(n)
 }
 
-export function MdStepper({
+export function CuStepper({
   defaultValue = 0,
   value = 0,
   step = 1,
@@ -73,7 +73,7 @@ export function MdStepper({
   }
   const checkMinMax = () => {
     if (Number(min) > Number(max)) {
-      warn('[md-react-stepper] minNum is larger than maxNum')
+      warn('[cu-react-stepper] minNum is larger than maxNum')
     }
     return Number(max) > Number(min)
   }
@@ -177,12 +177,12 @@ export function MdStepper({
   const contentLength = Math.max(String(value ?? '').length, 2)
 
   return (
-    <div className={`md-stepper${disabled ? ' disabled' : ''}`}>
+    <div className={`cu-stepper${disabled ? ' disabled' : ''}`}>
       <div
-        className={`md-stepper-button md-stepper-button-reduce${isMin ? ' disabled' : ''}`}
+        className={`cu-stepper-button cu-stepper-button-reduce${isMin ? ' disabled' : ''}`}
         onClick={reduce}
       ></div>
-      <div className="md-stepper-number">
+      <div className="cu-stepper-number">
         <input
           type={isInteger ? 'tel' : 'number'}
           size={contentLength}
@@ -194,7 +194,7 @@ export function MdStepper({
         />
       </div>
       <div
-        className={`md-stepper-button md-stepper-button-add${isMax ? ' disabled' : ''}`}
+        className={`cu-stepper-button cu-stepper-button-add${isMax ? ' disabled' : ''}`}
         onClick={add}
       ></div>
     </div>

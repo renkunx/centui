@@ -1,2 +1,2 @@
-// 按需入口：mand-mobile/es/slider
+// 按需入口：centui/es/slider
 export * from './components/slider'

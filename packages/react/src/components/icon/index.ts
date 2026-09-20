@@ -1,1 +1,1 @@
-export { MdIcon, type IconProps } from './Icon'
+export { CuIcon, type IconProps } from './Icon'

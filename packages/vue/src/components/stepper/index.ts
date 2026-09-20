@@ -1,1 +1,1 @@
-export { default as MdStepper } from './Stepper.vue'
+export { default as CuStepper } from './Stepper.vue'

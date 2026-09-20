@@ -6,10 +6,10 @@ export interface SwitchProps {
   onChange?: (value: boolean, event: MouseEvent<HTMLDivElement>) => void
 }
 
-export function MdSwitch({ value = false, disabled = false, onChange }: SwitchProps) {
+export function CuSwitch({ value = false, disabled = false, onChange }: SwitchProps) {
   return (
     <div
-      className={`md-switch${disabled ? ' disabled' : ''}${value ? ' active' : ''}`}
+      className={`cu-switch${disabled ? ' disabled' : ''}${value ? ' active' : ''}`}
       onClick={event => {
         if (disabled) {
           return

@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { MdRadio, MdRadioGroup, MdRadioBox, MdRadioList, MdField } from 'mand-mobile-react'
+import { CuRadio, CuRadioGroup, CuRadioBox, CuRadioList, CuField } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['普通单选项', '单选项组', '列表模式', '带输入项', '单选框']
-const code = `<MdRadio name="0" value={checked} onChange={setChecked} label="单选项1" />
-<MdRadioGroup value={favorites} onChange={setFavorites}>
-  <MdRadio name="apple" label="苹果" />
-</MdRadioGroup>
-<MdRadioList value={myBank} onChange={setMyBank} options={banks} />`
+const code = `<CuRadio name="0" value={checked} onChange={setChecked} label="单选项1" />
+<CuRadioGroup value={favorites} onChange={setFavorites}>
+  <CuRadio name="apple" label="苹果" />
+</CuRadioGroup>
+<CuRadioList value={myBank} onChange={setMyBank} options={banks} />`
 const banks = [
   { value: '0', text: '中国农业银行' },
   { value: '1', text: '招商银行' },
@@ -31,30 +31,30 @@ export default function RadioDemo() {
         if (active === 0)
           return (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <MdRadio name="0" value={checked} onChange={setChecked} label="单选项1" />
-              <MdRadio name="1" value={checked} onChange={setChecked} label="单选项2" />
+              <CuRadio name="0" value={checked} onChange={setChecked} label="单选项1" />
+              <CuRadio name="1" value={checked} onChange={setChecked} label="单选项2" />
             </div>
           )
         if (active === 1)
           return (
-            <MdRadioGroup value={favorites} onChange={setFavorites}>
-              <MdRadio name="watermelon" label="西瓜" />
-              <MdRadio name="apple" label="苹果" />
-              <MdRadio name="banana" label="香蕉" />
-              <MdRadio name="orange" label="橙子" />
-              <MdRadio name="tomato" label="西红柿" disabled />
-            </MdRadioGroup>
+            <CuRadioGroup value={favorites} onChange={setFavorites}>
+              <CuRadio name="watermelon" label="西瓜" />
+              <CuRadio name="apple" label="苹果" />
+              <CuRadio name="banana" label="香蕉" />
+              <CuRadio name="orange" label="橙子" />
+              <CuRadio name="tomato" label="西红柿" disabled />
+            </CuRadioGroup>
           )
         if (active === 2)
           return (
-            <MdField title="简单选择列表">
-              <MdRadioList value={myBank} onChange={setMyBank} options={banks} iconSize="lg" />
-            </MdField>
+            <CuField title="简单选择列表">
+              <CuRadioList value={myBank} onChange={setMyBank} options={banks} iconSize="lg" />
+            </CuField>
           )
         if (active === 3)
           return (
-            <MdField title="输入项">
-              <MdRadioList
+            <CuField title="输入项">
+              <CuRadioList
                 value={myReason}
                 onChange={setMyReason}
                 options={reasons}
@@ -66,14 +66,14 @@ export default function RadioDemo() {
                 inputLabel="其他"
                 inputPlaceholder="请输入原因"
               />
-            </MdField>
+            </CuField>
           )
         return (
-          <MdRadioGroup value={favorites} onChange={setFavorites}>
-            <MdRadioBox name="watermelon">西瓜</MdRadioBox>
-            <MdRadioBox name="apple">苹果</MdRadioBox>
-            <MdRadioBox name="banana" disabled>香蕉</MdRadioBox>
-          </MdRadioGroup>
+          <CuRadioGroup value={favorites} onChange={setFavorites}>
+            <CuRadioBox name="watermelon">西瓜</CuRadioBox>
+            <CuRadioBox name="apple">苹果</CuRadioBox>
+            <CuRadioBox name="banana" disabled>香蕉</CuRadioBox>
+          </CuRadioGroup>
         )
       }}
     </DemoCanvasReact>

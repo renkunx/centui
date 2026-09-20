@@ -1,11 +1,11 @@
 <template>
-  <div class="md-activity-indicator-rolling">
+  <div class="cu-activity-indicator-rolling">
     <div class="rolling-container">
       <svg
         :viewBox="`0 0 ${viewBoxSize} ${viewBoxSize}`"
         :style="{ width: `${size}px`, height: `${size}px`, transform: `rotateZ(${rotate}deg)` }"
         preserveAspectRatio="xMidYMid"
-        class="md-activity-indicator-svg rolling"
+        class="cu-activity-indicator-svg rolling"
       >
         <circle
           fill="none"
@@ -66,7 +66,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-defineOptions({ name: 'md-activity-indicator-rolling' })
+defineOptions({ name: 'cu-activity-indicator-rolling' })
 
 const props = withDefaults(
   defineProps<{

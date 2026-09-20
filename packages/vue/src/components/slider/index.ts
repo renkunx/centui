@@ -1,1 +1,1 @@
-export { default as MdSlider } from './Slider.vue'
+export { default as CuSlider } from './Slider.vue'

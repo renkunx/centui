@@ -1,1 +1,1 @@
-export { default as MdAmount } from './Amount.vue'
+export { default as CuAmount } from './Amount.vue'

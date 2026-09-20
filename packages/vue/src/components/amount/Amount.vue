@@ -1,5 +1,5 @@
 <template>
-  <span class="md-amount" :class="{ numerical: !isCapital }">
+  <span class="cu-amount" :class="{ numerical: !isCapital }">
     <template v-if="!isCapital">{{ nonCapital }}</template>
     <template v-else>{{ capital }}</template>
   </span>
@@ -11,10 +11,10 @@ import {
   formatNumberWithSeparator,
   numberToChineseCapital,
   toFixedPrecision,
-} from '@mand-mobile/core'
-import { Animate } from '@mand-mobile/core/web'
+} from '@centui/core'
+import { Animate } from '@centui/core/web'
 
-defineOptions({ name: 'md-amount' })
+defineOptions({ name: 'cu-amount' })
 
 const props = withDefaults(
   defineProps<{

@@ -1,1 +1,1 @@
-export { MdNoticeBar, type NoticeBarProps } from './NoticeBar'
+export { CuNoticeBar, type NoticeBarProps } from './NoticeBar'

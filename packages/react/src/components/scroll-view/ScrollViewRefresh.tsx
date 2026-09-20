@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { MdActivityIndicatorRolling } from '../activity-indicator/Roller'
+import { CuActivityIndicatorRolling } from '../activity-indicator/Roller'
 
 export interface ScrollViewRefreshProps {
   scrollTop?: number
@@ -11,7 +11,7 @@ export interface ScrollViewRefreshProps {
   rollerColor?: string
 }
 
-export function MdScrollViewRefresh({
+export function CuScrollViewRefresh({
   scrollTop = 0,
   isRefreshing = false,
   isRefreshActive = false,
@@ -50,8 +50,8 @@ export function MdScrollViewRefresh({
       : refreshText
 
   return (
-    <div ref={elRef} className="md-scroll-view-refresh">
-      <MdActivityIndicatorRolling
+    <div ref={elRef} className="cu-scroll-view-refresh">
+      <CuActivityIndicatorRolling
         process={process}
         width={10}
         color={rollerColor}
@@ -67,10 +67,10 @@ export interface ScrollViewMoreProps {
   isFinished?: boolean
 }
 
-export function MdScrollViewMore({
+export function CuScrollViewMore({
   loadingText = '更多加载中...',
   finishedText = '全部已加载',
   isFinished = false,
 }: ScrollViewMoreProps) {
-  return <div className="md-scroll-view-more">{isFinished ? finishedText : loadingText}</div>
+  return <div className="cu-scroll-view-more">{isFinished ? finishedText : loadingText}</div>
 }

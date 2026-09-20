@@ -1,11 +1,11 @@
-import { MdIcon } from 'mand-mobile-react'
+import { CuIcon } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['字体图标', 'SVG 图标', '大小', '颜色']
-const code = `<MdIcon name={icon} size="lg" />
-<MdIcon name={icon} size="lg" svg />
-<MdIcon name="location" size="xs|sm|md|lg" />
-<MdIcon name="security" color="orange" />`
+const code = `<CuIcon name={icon} size="lg" />
+<CuIcon name={icon} size="lg" svg />
+<CuIcon name="location" size="xs|sm|md|lg" />
+<CuIcon name="security" color="orange" />`
 const iconList = [
   'square-checked', 'square-check', 'rectangle', 'right', 'wrong', 'arrow',
   'arrow-left', 'arrow-right', 'arrow-up', 'arrow-down', 'invisible', 'visible',
@@ -25,7 +25,7 @@ export default function IconDemo() {
             <div className="icon-demo-grid">
               {iconList.map(icon => (
                 <div key={icon} className="icon-demo-item">
-                  <MdIcon name={icon.split('/')[0]} size="lg" />
+                  <CuIcon name={icon.split('/')[0]} size="lg" />
                   <p>{icon}</p>
                 </div>
               ))}
@@ -36,7 +36,7 @@ export default function IconDemo() {
             <div className="icon-demo-grid">
               {['spinner', 'warn-color', 'success-color', 'checked'].map(icon => (
                 <div key={icon} className="icon-demo-item">
-                  <MdIcon name={icon} size="lg" svg />
+                  <CuIcon name={icon} size="lg" svg />
                   <p>{icon}</p>
                 </div>
               ))}
@@ -47,7 +47,7 @@ export default function IconDemo() {
             <div className="icon-demo-grid">
               {sizes.map(s => (
                 <div key={s} className="icon-demo-item">
-                  <MdIcon name="location" size={s} />
+                  <CuIcon name="location" size={s} />
                   <p>{s}</p>
                 </div>
               ))}
@@ -57,7 +57,7 @@ export default function IconDemo() {
           <div className="icon-demo-grid">
             {colors.map(c => (
               <div key={c} className="icon-demo-item">
-                <MdIcon name="security" color={c} />
+                <CuIcon name="security" color={c} />
                 <p>{c}</p>
               </div>
             ))}

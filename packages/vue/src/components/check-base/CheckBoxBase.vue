@@ -1,6 +1,6 @@
 <template>
   <div
-    class="md-check-base-box"
+    class="cu-check-base-box"
     :class="[
       iconPosition,
       {
@@ -10,17 +10,17 @@
     ]"
   >
     <slot></slot>
-    <MdTag v-if="isChecked" size="tiny" shape="quarter" type="fill">
-      <MdIcon name="right" size="xs"></MdIcon>
-    </MdTag>
+    <CuTag v-if="isChecked" size="tiny" shape="quarter" type="fill">
+      <CuIcon name="right" size="xs"></CuIcon>
+    </CuTag>
   </div>
 </template>
 
 <script setup lang="ts">
-import MdTag from '../tag/Tag.vue'
-import MdIcon from '../icon/Icon.vue'
+import CuTag from '../tag/Tag.vue'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-check-base-box' })
+defineOptions({ name: 'cu-check-base-box' })
 
 withDefaults(
   defineProps<{

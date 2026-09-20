@@ -1,2 +1,2 @@
-// 按需入口：mand-mobile/es/picker
+// 按需入口：centui/es/picker
 export * from './components/picker'

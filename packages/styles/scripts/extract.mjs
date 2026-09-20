@@ -17,6 +17,15 @@ function rewriteAssetUrl(block) {
   return block.replace(/\.\.\/+(?:components\/)?_style\/images\//g, '../images/')
 }
 
+/** 品牌 rebrand：v2 源码的 md- 类名前缀 → centui 的 cu-（与 scripts/rebrand-codemod.mjs 同规则） */
+function rebrandPrefix(block) {
+  return block.replace(/\bmd-/g, 'cu-')
+}
+
+function transformBlock(block) {
+  return rebrandPrefix(rewriteAssetUrl(block))
+}
+
 function extractStyleBlocks(vueFile) {
   const content = readFileSync(vueFile, 'utf8')
   const blocks = []
@@ -49,7 +58,7 @@ for (const name of components) {
 
   const chunks = []
   for (const file of vueFiles) {
-    const blocks = extractStyleBlocks(join(dir, file)).map(rewriteAssetUrl)
+    const blocks = extractStyleBlocks(join(dir, file)).map(transformBlock)
     if (blocks.length === 0) continue
     chunks.push(`/* --- ${file} --- */\n${blocks.join('\n\n')}`)
   }
@@ -70,7 +79,7 @@ for (const name of components) {
       .map(e => e.name)
       .sort()
     for (const file of subFiles) {
-      const blocks = extractStyleBlocks(join(dir, sub, file)).map(rewriteAssetUrl)
+      const blocks = extractStyleBlocks(join(dir, sub, file)).map(transformBlock)
       if (blocks.length === 0) continue
       chunks.push(`/* --- ${sub}/${file} --- */\n${blocks.join('\n\n')}`)
     }

@@ -1,1 +1,1 @@
-export { default as MdRuler } from './Ruler.vue'
+export { default as CuRuler } from './Ruler.vue'

@@ -1,46 +1,46 @@
 <template>
-  <div class="md-license-plate">
+  <div class="cu-license-plate">
     <!-- 分离模式 -->
     <div v-if="modeShow === 'division'">
-      <div class="md-license-plate-input-container division">
-        <MdLicensePlateInput :key-array="keyArray" :selected-index="selectedIndex" @key-mapping="keyMapping" />
+      <div class="cu-license-plate-input-container division">
+        <CuLicensePlateInput :key-array="keyArray" :selected-index="selectedIndex" @key-mapping="keyMapping" />
       </div>
-      <div v-if="showDivisionKeyboard" class="md-license-plate-keyboard-container division">
-        <MdLicensePlateKeyboard :keyboard="dyKeyboard" @enter="onEnter" @delete="onDelete" @confirm="onConfirm" />
+      <div v-if="showDivisionKeyboard" class="cu-license-plate-keyboard-container division">
+        <CuLicensePlateKeyboard :keyboard="dyKeyboard" @enter="onEnter" @delete="onDelete" @confirm="onConfirm" />
       </div>
     </div>
     <!-- 弹窗模式 -->
     <div v-if="modeShow === 'popUp'">
-      <MdPopup :model-value="showPopUp" :has-mask="true" position="bottom" :mask-closable="false">
-        <MdPopupTitleBar
+      <CuPopup :model-value="showPopUp" :has-mask="true" position="bottom" :mask-closable="false">
+        <CuPopupTitleBar
           only-close
           large-radius
           :title="title"
           :describe="subtitle"
           title-align="left"
           @cancel="$emit('hide')"
-        ></MdPopupTitleBar>
-        <div class="md-popup-content">
-          <div class="md-license-plate-input-container popUp">
-            <MdLicensePlateInput :key-array="keyArray" :selected-index="selectedIndex" @key-mapping="keyMapping" />
+        ></CuPopupTitleBar>
+        <div class="cu-popup-content">
+          <div class="cu-license-plate-input-container popUp">
+            <CuLicensePlateInput :key-array="keyArray" :selected-index="selectedIndex" @key-mapping="keyMapping" />
           </div>
-          <div class="md-license-plate-keyboard-container popUp">
-            <MdLicensePlateKeyboard :keyboard="dyKeyboard" @enter="onEnter" @delete="onDelete" @confirm="onConfirm" />
+          <div class="cu-license-plate-keyboard-container popUp">
+            <CuLicensePlateKeyboard :keyboard="dyKeyboard" @enter="onEnter" @delete="onDelete" @confirm="onConfirm" />
           </div>
         </div>
-      </MdPopup>
+      </CuPopup>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import MdPopup from '../popup/Popup.vue'
-import MdPopupTitleBar from '../popup/PopupTitleBar.vue'
-import MdLicensePlateInput from './LicensePlateInput.vue'
-import MdLicensePlateKeyboard, { type LicenseKeyItem } from './LicensePlateKeyboard.vue'
+import CuPopup from '../popup/Popup.vue'
+import CuPopupTitleBar from '../popup/PopupTitleBar.vue'
+import CuLicensePlateInput from './LicensePlateInput.vue'
+import CuLicensePlateKeyboard, { type LicenseKeyItem } from './LicensePlateKeyboard.vue'
 
-defineOptions({ name: 'md-license-plate' })
+defineOptions({ name: 'cu-license-plate' })
 
 const props = withDefaults(
   defineProps<{

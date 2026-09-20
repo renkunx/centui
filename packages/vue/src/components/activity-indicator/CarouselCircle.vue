@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-defineOptions({ name: 'md-activity-indicator-carousel-circle' })
+defineOptions({ name: 'cu-activity-indicator-carousel-circle' })
 
 const props = withDefaults(
   defineProps<{

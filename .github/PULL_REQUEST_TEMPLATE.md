@@ -1,16 +1,14 @@
 ## 提交PR前
 
-* 请认真阅读[开发指南](https://didi.github.io/mand-mobile/#/zh-CN/docs/development)
-* fork **dev分支**
+* 从 `master` 拉出分支，PR 目标分支为 `master`
 * 按照规范命名分支
-* 需通过测试
-* 提交PR至**dev分支**
+* 需通过本地测试（`pnpm test`）
 
 
 
 ## 创建PR
 
-* 标题规则：type(scope):description，参考[规范](https://didi.github.io/mand-mobile/#/zh-CN/docs/development?anchor=Commit%E8%A7%84%E8%8C%83)
+* 标题规则：type(scope):description（conventional commits）
 * 内容描述，参考"PR 内容区"
 
 ## 请把以上内容删除，并填写以下内容！！！

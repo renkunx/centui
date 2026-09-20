@@ -4,7 +4,7 @@
 import { createElement } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { flushSync } from 'react-dom'
-import { MdToast, type ToastExposed, type ToastProps } from './Toast'
+import { CuToast, type ToastExposed, type ToastProps } from './Toast'
 
 export type { ToastProps, ToastExposed }
 
@@ -26,7 +26,7 @@ function renderSingleton(props: ToastProps) {
   // flushSync 保证 ref 回调同步完成（工厂随后即可 show()）
   flushSync(() =>
     active.root.render(
-      createElement(MdToast, {
+      createElement(CuToast, {
         ...props,
         ref: (exposed: ToastExposed | null) => {
           active.exposed = exposed
@@ -65,7 +65,7 @@ const Toast = (props: ToastProps = {}): ToastExposed => {
   })
   // 首帧 ref 回调同步于 render；并发下可能延后，兼容之
   if (!store.exposed) {
-    throw new Error('[@mand-mobile/react] toast instance is not ready')
+    throw new Error('[@centui/react] toast instance is not ready')
   }
   store.exposed.show()
   return store.exposed
@@ -108,5 +108,5 @@ Toast.failed = preset('fail', false, 3000, false)
  */
 Toast.loading = preset('spinner', true, 0, true)
 
-export { MdToast }
+export { CuToast }
 export default Toast

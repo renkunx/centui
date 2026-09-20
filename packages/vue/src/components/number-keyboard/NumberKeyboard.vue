@@ -1,10 +1,10 @@
 <template>
-  <div ref="root" class="md-number-keyboard" :class="{ 'in-view': isView }">
+  <div ref="root" class="cu-number-keyboard" :class="{ 'in-view': isView }">
     <template v-if="isView">
-      <div v-if="$slots.default" class="md-number-keyboard-slot">
+      <div v-if="$slots.default" class="cu-number-keyboard-slot">
         <slot></slot>
       </div>
-      <MdKeyboardBoard
+      <CuKeyboardBoard
         ref="keyboard"
         :type="type"
         :disorder="disorder"
@@ -18,10 +18,10 @@
         @delete="onDelete"
         @confirm="onConfirm"
         @hide="isKeyboardShow = false"
-      ></MdKeyboardBoard>
+      ></CuKeyboardBoard>
     </template>
     <template v-else>
-      <MdPopup
+      <CuPopup
         :model-value="isKeyboardShow"
         position="bottom"
         :has-mask="false"
@@ -29,10 +29,10 @@
         @show="emit('show')"
         @hide="emit('hide')"
       >
-        <div v-if="$slots.default" class="md-number-keyboard-slot">
+        <div v-if="$slots.default" class="cu-number-keyboard-slot">
           <slot></slot>
         </div>
-        <MdKeyboardBoard
+        <CuKeyboardBoard
           ref="keyboard"
           :type="type"
           :disorder="disorder"
@@ -47,18 +47,18 @@
           @confirm="onConfirm"
           @hide="isKeyboardShow = false"
           @touchmove.prevent
-        ></MdKeyboardBoard>
-      </MdPopup>
+        ></CuKeyboardBoard>
+      </CuPopup>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import MdPopup from '../popup/Popup.vue'
-import MdKeyboardBoard from './KeyboardBoard.vue'
+import CuPopup from '../popup/Popup.vue'
+import CuKeyboardBoard from './KeyboardBoard.vue'
 
-defineOptions({ name: 'md-number-keyboard' })
+defineOptions({ name: 'cu-number-keyboard' })
 
 const props = withDefaults(
   defineProps<{

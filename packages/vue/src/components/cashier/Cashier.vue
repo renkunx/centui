@@ -1,6 +1,6 @@
 <template>
-  <div class="md-cashier">
-    <MdPopup
+  <div class="cu-cashier">
+    <CuPopup
       class="inner-popup"
       v-model="isCashierShow"
       position="bottom"
@@ -10,19 +10,19 @@
       @show="$emit('show')"
       @hide="onPopupHide"
     >
-      <MdPopupTitleBar
+      <CuPopupTitleBar
         :title="title"
         :describe="describe"
         :large-radius="largeRadius"
         only-close
         @cancel="onPopupCancel"
-      ></MdPopupTitleBar>
-      <div class="md-cashier-container">
+      ></CuPopupTitleBar>
+      <div class="cu-cashier-container">
         <slot name="header" :scene="scene"></slot>
 
         <!-- 选择支付渠道 -->
-        <div v-if="scene === 'choose'" :key="sceneKey" class="md-cashier-block md-cashier-choose">
-          <MdCashierChannel
+        <div v-if="scene === 'choose'" :key="sceneKey" class="cu-cashier-block cu-cashier-choose">
+          <CuCashierChannel
             :payment-title="paymentTitle"
             :payment-amount="paymentAmount"
             :payment-describe="paymentDescribe"
@@ -39,12 +39,12 @@
             <template #button>
               <slot name="payButton"></slot>
             </template>
-          </MdCashierChannel>
+          </CuCashierChannel>
         </div>
 
         <!-- 验证码 -->
-        <div v-else-if="scene === 'captcha'" :key="sceneKey" class="md-cashier-block md-cashier-captcha">
-          <MdCaptcha
+        <div v-else-if="scene === 'captcha'" :key="sceneKey" class="cu-cashier-block cu-cashier-captcha">
+          <CuCaptcha
             :maxlength="sceneOption.captcha.maxlength"
             :count="sceneOption.captcha.count"
             :count-normal-text="sceneOption.captcha.countNormalText"
@@ -56,26 +56,26 @@
             @submit="sceneOption.captcha.onSubmit"
           >
             <div v-text="sceneOption.captcha.text"></div>
-          </MdCaptcha>
+          </CuCaptcha>
         </div>
 
         <!-- 加载中 / 成功 -->
         <div
           v-else-if="scene === 'loading' || scene === 'success'"
           :key="sceneKey"
-          class="md-cashier-block"
+          class="cu-cashier-block"
           :class="{
-            'md-cashier-loading': scene === 'loading',
-            'md-cashier-success': scene === 'success',
+            'cu-cashier-loading': scene === 'loading',
+            'cu-cashier-success': scene === 'success',
           }"
         >
-          <div class="md-cashier-block-icon">
-            <MdRollerSuccess ref="rolling" :is-success="scene === 'success'"></MdRollerSuccess>
+          <div class="cu-cashier-block-icon">
+            <CuRollerSuccess ref="rolling" :is-success="scene === 'success'"></CuRollerSuccess>
           </div>
-          <div class="md-cashier-block-text">
+          <div class="cu-cashier-block-text">
             {{ scene === 'success' ? sceneOption.success.text : sceneOption.loading.text }}
           </div>
-          <MdCashierChannelButton
+          <CuCashierChannelButton
             v-if="scene === 'success'"
             :actions="
               sceneOption.success.actions || [
@@ -89,12 +89,12 @@
         </div>
 
         <!-- 失败 -->
-        <div v-else-if="scene === 'fail'" :key="sceneKey" class="md-cashier-block md-cashier-fail">
-          <div class="md-cashier-block-icon">
-            <MdIcon name="warn-color"></MdIcon>
+        <div v-else-if="scene === 'fail'" :key="sceneKey" class="cu-cashier-block cu-cashier-fail">
+          <div class="cu-cashier-block-icon">
+            <CuIcon name="warn-color"></CuIcon>
           </div>
-          <div class="md-cashier-block-text" v-text="sceneOption.fail.text"></div>
-          <MdCashierChannelButton
+          <div class="cu-cashier-block-text" v-text="sceneOption.fail.text"></div>
+          <CuCashierChannelButton
             :actions="
               sceneOption.fail.actions || [
                 {
@@ -107,28 +107,28 @@
         </div>
 
         <!-- 自定义 -->
-        <div v-else-if="scene === 'custom'" :key="sceneKey" class="md-cashier-block md-cashier-custom">
+        <div v-else-if="scene === 'custom'" :key="sceneKey" class="cu-cashier-block cu-cashier-custom">
           <slot name="scene"></slot>
         </div>
 
         <slot name="footer" :scene="scene"></slot>
       </div>
-    </MdPopup>
+    </CuPopup>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { t } from '@mand-mobile/core'
-import MdPopup from '../popup/Popup.vue'
-import MdPopupTitleBar from '../popup/PopupTitleBar.vue'
-import MdCaptcha from '../captcha/Captcha.vue'
-import MdIcon from '../icon/Icon.vue'
-import MdRollerSuccess from '../activity-indicator/RollerSuccess.vue'
-import MdCashierChannel, { type CashierChannel } from './CashierChannel.vue'
-import MdCashierChannelButton from './CashierChannelButton.vue'
+import { t } from '@centui/core'
+import CuPopup from '../popup/Popup.vue'
+import CuPopupTitleBar from '../popup/PopupTitleBar.vue'
+import CuCaptcha from '../captcha/Captcha.vue'
+import CuIcon from '../icon/Icon.vue'
+import CuRollerSuccess from '../activity-indicator/RollerSuccess.vue'
+import CuCashierChannel, { type CashierChannel } from './CashierChannel.vue'
+import CuCashierChannelButton from './CashierChannelButton.vue'
 
-defineOptions({ name: 'md-cashier' })
+defineOptions({ name: 'cu-cashier' })
 
 export type CashierScene = 'choose' | 'captcha' | 'loading' | 'success' | 'fail' | 'custom'
 

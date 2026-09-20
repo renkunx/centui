@@ -6,8 +6,8 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { inArray, traverse, warn, type TraverseNode } from '@mand-mobile/core'
-import { getDpr, render, Scroller, type Scroller as ScrollerType } from '@mand-mobile/core/web'
+import { inArray, traverse, warn, type TraverseNode } from '@centui/core'
+import { getDpr, render, Scroller, type Scroller as ScrollerType } from '@centui/core/web'
 
 export interface PickerColumnItem {
   text?: string
@@ -45,8 +45,8 @@ export interface PickerColumnExposed {
   setColumnValues: (index: number, values: PickerColumnItem[], callback?: () => void) => void
 }
 
-export const MdPickerColumn = forwardRef<PickerColumnExposed, PickerColumnProps>(
-  function MdPickerColumn(
+export const CuPickerColumn = forwardRef<PickerColumnExposed, PickerColumnProps>(
+  function CuPickerColumn(
     {
       data = [],
       cols = 1,
@@ -90,7 +90,7 @@ export const MdPickerColumn = forwardRef<PickerColumnExposed, PickerColumnProps>
       if (!rootRef.current) {
         return []
       }
-      return Array.from(rootRef.current.querySelectorAll<HTMLElement>('.md-picker-column-hook'))
+      return Array.from(rootRef.current.querySelectorAll<HTMLElement>('.cu-picker-column-hook'))
     }
 
     // v2 契约：data 变化浅拷贝重建列
@@ -369,7 +369,7 @@ export const MdPickerColumn = forwardRef<PickerColumnExposed, PickerColumnProps>
     }))
 
     const renderColumn = (column: PickerColumnItem[], i: number): ReactNode => (
-      <div className="md-picker-column-item" key={i}>
+      <div className="cu-picker-column-item" key={i}>
         <ul className="column-list" style={{ paddingTop: `${style.maskerHeight}px` }}>
           {column.map((item, j) => (
             <li
@@ -389,28 +389,28 @@ export const MdPickerColumn = forwardRef<PickerColumnExposed, PickerColumnProps>
     return (
       <div
         ref={rootRef}
-        className="md-picker-column"
+        className="cu-picker-column"
         style={{ height: `${style.indicatorHeight + 2 * style.maskerHeight}px` }}
       >
-        <div className="md-picker-column-container">
-          <div className="md-picker-column-masker top" style={{ height: `${style.maskerHeight}px` }}></div>
-          <div className="md-picker-column-masker bottom" style={{ height: `${style.maskerHeight}px` }}></div>
-          <div className="md-picker-column-list">
+        <div className="cu-picker-column-container">
+          <div className="cu-picker-column-masker top" style={{ height: `${style.maskerHeight}px` }}></div>
+          <div className="cu-picker-column-masker bottom" style={{ height: `${style.maskerHeight}px` }}></div>
+          <div className="cu-picker-column-list">
             {columnValuesRef.current.map((column, i) => renderColumn(column, i))}
             {cols
               ? Array.from({ length: Math.max(0, cols - columnValuesRef.current.length) }, (_, n) => (
-                  <div className="md-picker-column-item" key={n + columnValuesRef.current.length}>
+                  <div className="cu-picker-column-item" key={n + columnValuesRef.current.length}>
                     <ul className="column-list" style={{ paddingTop: `${style.maskerHeight}px` }}></ul>
                   </div>
                 ))
               : null}
           </div>
-          <div className="md-picker-column-hooks">
+          <div className="cu-picker-column-hooks">
             {cols
               ? Array.from({ length: cols }, (_, n) => (
                   <div
                     key={n}
-                    className="md-picker-column-hook"
+                    className="cu-picker-column-hook"
                     onTouchStart={event => onColumnTouchStart(event, n)}
                     onMouseDown={event => onColumnTouchStart(event, n, true)}
                     onTouchMove={event => onColumnTouchMove(event, n)}

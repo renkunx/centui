@@ -1,1 +1,1 @@
-export { MdSelector, type SelectorItem, type SelectorProps } from './Selector'
+export { CuSelector, type SelectorItem, type SelectorProps } from './Selector'

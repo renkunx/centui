@@ -1,19 +1,19 @@
 <template>
-  <div v-if="loading" class="md-skeleton">
+  <div v-if="loading" class="cu-skeleton">
     <div
       v-if="avatar"
       :class="{
-        'md-skeleton-avatar': true,
-        'md-skeleton-avatar-large': avatarSize === 'lg',
-        'md-skeleton-avatar-small': avatarSize === 'sm',
+        'cu-skeleton-avatar': true,
+        'cu-skeleton-avatar-large': avatarSize === 'lg',
+        'cu-skeleton-avatar-small': avatarSize === 'sm',
       }"
     ></div>
-    <div class="md-skeleton-content">
-      <h4 v-if="title" class="md-skeleton-title" :style="{ width: titleWidthStyle }" />
+    <div class="cu-skeleton-content">
+      <h4 v-if="title" class="cu-skeleton-title" :style="{ width: titleWidthStyle }" />
       <div
         v-for="index in row"
         :key="index"
-        class="md-skeleton-row"
+        class="cu-skeleton-row"
         :style="{ width: index === row ? '60%' : rowWidthStyle(index - 1) }"
       ></div>
     </div>

@@ -1,52 +1,52 @@
-import { MdNoticeBar, MdIcon } from 'mand-mobile-react'
+import { CuNoticeBar, CuIcon } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['基础', '设置图标', '定时隐藏', '圆角', '主题样式', '多行显示', '滚动播放', '自定义插槽']
-const code = `<MdNoticeBar>为了确保您的资金安全，请设置支付密码</MdNoticeBar>
-<MdNoticeBar mode="closable" icon="security">...</MdNoticeBar>
-<MdNoticeBar round>...</MdNoticeBar>
-<MdNoticeBar multiRows>...</MdNoticeBar>
-<MdNoticeBar scrollable>...</MdNoticeBar>`
+const code = `<CuNoticeBar>为了确保您的资金安全，请设置支付密码</CuNoticeBar>
+<CuNoticeBar mode="closable" icon="security">...</CuNoticeBar>
+<CuNoticeBar round>...</CuNoticeBar>
+<CuNoticeBar multiRows>...</CuNoticeBar>
+<CuNoticeBar scrollable>...</CuNoticeBar>`
 
 export default function NoticeBarDemo() {
   return (
     <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
       {active => {
         if (active === 0)
-          return <MdNoticeBar>为了确保您的资金安全，请设置支付密码</MdNoticeBar>
+          return <CuNoticeBar>为了确保您的资金安全，请设置支付密码</CuNoticeBar>
         if (active === 1)
-          return <MdNoticeBar mode="closable" icon="security">为了确保您的资金安全，请设置支付密码</MdNoticeBar>
+          return <CuNoticeBar mode="closable" icon="security">为了确保您的资金安全，请设置支付密码</CuNoticeBar>
         if (active === 2)
-          return <MdNoticeBar time={5000}>为了确保您的资金安全，请设置支付密码（5s 后隐藏）</MdNoticeBar>
+          return <CuNoticeBar time={5000}>为了确保您的资金安全，请设置支付密码（5s 后隐藏）</CuNoticeBar>
         if (active === 3)
-          return <MdNoticeBar round>为了确保您的资金安全，请设置支付密码</MdNoticeBar>
+          return <CuNoticeBar round>为了确保您的资金安全，请设置支付密码</CuNoticeBar>
         if (active === 4)
           return (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%' }}>
-              <MdNoticeBar icon="warn" mode="closable" type="warning">
+              <CuNoticeBar icon="warn" mode="closable" type="warning">
                 该银行3:00-12:00系统维护，请更换其他银行卡
-              </MdNoticeBar>
-              <MdNoticeBar icon="coupon" mode="link" type="activity">
+              </CuNoticeBar>
+              <CuNoticeBar icon="coupon" mode="link" type="activity">
                 福利来啦，7日免息券发放中！
-              </MdNoticeBar>
+              </CuNoticeBar>
             </div>
           )
         if (active === 5)
           return (
-            <MdNoticeBar mode="link" icon="security" multiRows>
+            <CuNoticeBar mode="link" icon="security" multiRows>
               为了确保您的资金安全，请设置支付密码。为了确保您的资金安全，请设置支付密码。为了确保您的资金安全，请设置支付密码。
-            </MdNoticeBar>
+            </CuNoticeBar>
           )
         if (active === 6)
           return (
-            <MdNoticeBar mode="closable" icon="volumn" scrollable>
+            <CuNoticeBar mode="closable" icon="volumn" scrollable>
               为了确保您的资金安全，请设置支付密码为了确保您的资金安全，请设置支付密码为了确保您的资金安全，请设置支付密码
-            </MdNoticeBar>
+            </CuNoticeBar>
           )
         return (
-          <MdNoticeBar left={<MdIcon name="security" style={{ marginRight: 8 }} />}>
+          <CuNoticeBar left={<CuIcon name="security" style={{ marginRight: 8 }} />}>
             为了确保您的资金安全，请设置支付密码
-          </MdNoticeBar>
+          </CuNoticeBar>
         )
       }}
     </DemoCanvasReact>

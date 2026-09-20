@@ -1,18 +1,18 @@
 import { useRef, useState } from 'react'
-import { MdScrollView, MdScrollViewRefresh, MdScrollViewMore } from 'mand-mobile-react'
+import { CuScrollView, CuScrollViewRefresh, CuScrollViewMore } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['下拉刷新 + 加载更多', '横向滚动']
-const code = `<MdScrollView
+const code = `<CuScrollView
   ref={scrollView}
   autoReflow
   onEndReached={loadMore}
   onRefreshing={refresh}
-  refresh={({ scrollTop }) => <MdScrollViewRefresh scrollTop={scrollTop} />}
-  more={({ isEndReaching }) => <MdScrollViewMore isFinished={isEndReaching} />}
+  refresh={({ scrollTop }) => <CuScrollViewRefresh scrollTop={scrollTop} />}
+  more={({ isEndReaching }) => <CuScrollViewMore isFinished={isEndReaching} />}
 >
   {items.map(i => <div key={i} className="scroll-demo-item">{i}</div>)}
-</MdScrollView>`
+</CuScrollView>`
 
 export default function ScrollViewDemo() {
   const scrollView = useRef<{ finishRefresh: () => void; finishLoadMore: () => void }>(null)
@@ -50,29 +50,29 @@ export default function ScrollViewDemo() {
         if (active === 0)
           return (
             <div className="scroll-demo-box">
-            <MdScrollView
+            <CuScrollView
               ref={scrollView as never}
               autoReflow
               onEndReached={loadMore}
               onRefreshing={refresh}
-              refresh={({ scrollTop }) => <MdScrollViewRefresh scrollTop={scrollTop} />}
-              more={({ isEndReaching }) => <MdScrollViewMore isFinished={isEndReaching} />}
+              refresh={({ scrollTop }) => <CuScrollViewRefresh scrollTop={scrollTop} />}
+              more={({ isEndReaching }) => <CuScrollViewMore isFinished={isEndReaching} />}
             >
               {items.map(i => (
                 <div key={i} className="scroll-demo-item">{i}</div>
               ))}
-            </MdScrollView>
+            </CuScrollView>
             </div>
           )
         return (
           <div className="scroll-demo-box--short">
-          <MdScrollView scrollingY={false} autoReflow>
+          <CuScrollView scrollingY={false} autoReflow>
             <div className="scroll-demo-horizon">
               {Array.from({ length: 10 }, (_, i) => (
                 <div key={i} className="scroll-demo-card">{i + 1}</div>
               ))}
             </div>
-          </MdScrollView>
+          </CuScrollView>
           </div>
         )
       }}

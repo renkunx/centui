@@ -1,6 +1,6 @@
 <template>
   <label
-    class="md-radio"
+    class="cu-radio"
     :class="{
       'is-disabled': disabled,
       'is-checked': isChecked,
@@ -8,10 +8,10 @@
     }"
     @click="onClick"
   >
-    <div class="md-radio-icon">
-      <MdIcon :name="currentIcon" :size="size" :svg="iconSvg" />
+    <div class="cu-radio-icon">
+      <CuIcon :name="currentIcon" :size="size" :svg="iconSvg" />
     </div>
-    <div v-if="$slots.default || label" class="md-radio-label">
+    <div v-if="$slots.default || label" class="cu-radio-label">
       <slot>{{ label }}</slot>
     </div>
   </label>
@@ -19,10 +19,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import MdIcon from '../icon/Icon.vue'
+import CuIcon from '../icon/Icon.vue'
 import { useRadioDelegate } from '../check/shared'
 
-defineOptions({ name: 'md-radio' })
+defineOptions({ name: 'cu-radio' })
 
 const props = withDefaults(
   defineProps<{

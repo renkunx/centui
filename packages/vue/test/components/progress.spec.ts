@@ -1,5 +1,5 @@
 /**
- * MdProgress 行为清单（自 v2 components/progress spec/源码提取）：
+ * CuProgress 行为清单（自 v2 components/progress spec/源码提取）：
  * 1. value（0-1）映射为 stroke-dasharray（进度弧长）
  * 2. 默认非过渡：值变化立即生效
  * 3. transition=true 时值变化经 rAF 过渡收敛到目标
@@ -8,11 +8,11 @@
  */
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
-import { MdProgress } from '../../src'
+import { CuProgress } from '../../src'
 
-describe('MdProgress', () => {
+describe('CuProgress', () => {
   it('maps value to stroke dasharray', async () => {
-    const wrapper = mount(MdProgress, { props: { value: 0.44 } })
+    const wrapper = mount(CuProgress, { props: { value: 0.44 } })
     const stroke = wrapper.find('circle.stroke')
     expect(stroke.attributes('stroke-dasharray')).toBe('96.7582 123.14680000000001')
 
@@ -21,7 +21,7 @@ describe('MdProgress', () => {
   })
 
   it('passes drawing props to roller', () => {
-    const wrapper = mount(MdProgress, {
+    const wrapper = mount(CuProgress, {
       props: { value: 0.5, size: 100, width: 8, color: '#0f0', linecap: 'butt' },
     })
     const svg = wrapper.find('svg.rolling')
@@ -32,7 +32,7 @@ describe('MdProgress', () => {
   })
 
   it('transitions value when transition enabled', async () => {
-    const wrapper = mount(MdProgress, {
+    const wrapper = mount(CuProgress, {
       props: { value: 0.2, transition: true, duration: 100 },
     })
     const dasharray = () =>
@@ -46,7 +46,7 @@ describe('MdProgress', () => {
   })
 
   it('renders default slot in content', () => {
-    const wrapper = mount(MdProgress, { props: { value: 0.5 }, slots: { default: '50%' } })
+    const wrapper = mount(CuProgress, { props: { value: 0.5 }, slots: { default: '50%' } })
     expect(wrapper.find('.rolling-container .content').text()).toBe('50%')
   })
 })

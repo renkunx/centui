@@ -1,29 +1,29 @@
 <template>
-  <div class="md-toast" :class="[position]">
-    <MdPopup
+  <div class="cu-toast" :class="[position]">
+    <CuPopup
       :model-value="visible"
       :has-mask="hasMask"
       :mask-closable="false"
       @show="onShow"
       @hide="onHide"
     >
-      <div v-if="$slots.default" class="md-toast-content" :class="{ square }">
+      <div v-if="$slots.default" class="cu-toast-content" :class="{ square }">
         <slot></slot>
       </div>
-      <div v-else class="md-toast-content" :class="{ square }">
-        <MdIcon v-if="icon" :name="icon" size="lg" :svg="iconSvg" />
-        <div v-if="content" class="md-toast-text" v-text="content"></div>
+      <div v-else class="cu-toast-content" :class="{ square }">
+        <CuIcon v-if="icon" :name="icon" size="lg" :svg="iconSvg" />
+        <div v-if="content" class="cu-toast-text" v-text="content"></div>
       </div>
-    </MdPopup>
+    </CuPopup>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue'
-import MdPopup from '../popup/Popup.vue'
-import MdIcon from '../icon/Icon.vue'
+import CuPopup from '../popup/Popup.vue'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-toast' })
+defineOptions({ name: 'cu-toast' })
 
 const props = withDefaults(
   defineProps<{

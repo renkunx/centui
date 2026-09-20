@@ -5,19 +5,19 @@
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import {
-  MdActionSheet,
-  MdInputItem,
-  MdNumberKeyboard,
+  CuActionSheet,
+  CuInputItem,
+  CuNumberKeyboard,
 } from '../../src'
 
-describe('MdInputItem 虚拟键盘联动 (react)', () => {
+describe('CuInputItem 虚拟键盘联动 (react)', () => {
   it('builtin keyboard drives fake input value', async () => {
     const onChange = vi.fn()
     const onConfirm = vi.fn()
 
     function Host() {
       return (
-        <MdInputItem
+        <CuInputItem
           isVirtualKeyboard
           title="金额"
           onChange={onChange}
@@ -27,8 +27,8 @@ describe('MdInputItem 虚拟键盘联动 (react)', () => {
     }
     const { container } = render(<Host />)
     // fake input 点击 → focus；内置键盘 enter/delete/confirm
-    fireEvent.click(container.querySelector('.md-input-item-fake')!)
-    const keyboard = container.querySelector('.md-number-keyboard')
+    fireEvent.click(container.querySelector('.cu-input-item-fake')!)
+    const keyboard = container.querySelector('.cu-number-keyboard')
     expect(keyboard).not.toBeNull()
 
     const keys = keyboard!.querySelectorAll('.keyboard-number-item')
@@ -40,22 +40,22 @@ describe('MdInputItem 虚拟键盘联动 (react)', () => {
   })
 
   it('preview mode stops on keyboard input', () => {
-    const { container } = render(<MdInputItem isVirtualKeyboard previewType="money" value="88" />)
-    expect(container.querySelector('.md-input-item-fake')!.textContent).toContain('88')
+    const { container } = render(<CuInputItem isVirtualKeyboard previewType="money" value="88" />)
+    expect(container.querySelector('.cu-input-item-fake')!.textContent).toContain('88')
   })
 })
 
-describe('MdNumberKeyboard 弹层模式 (react)', () => {
+describe('CuNumberKeyboard 弹层模式 (react)', () => {
   it('value opens popup keyboard and confirm hides', async () => {
     const onChange = vi.fn()
-    const { container } = render(<MdNumberKeyboard value onChange={onChange} />)
+    const { container } = render(<CuNumberKeyboard value onChange={onChange} />)
     // MAND_ENV=test：过渡同步，键盘立即可见
-    expect(container.querySelector('.md-popup-box')!.getAttribute('style')).not.toContain(
+    expect(container.querySelector('.cu-popup-box')!.getAttribute('style')).not.toContain(
       'display: none',
     )
     fireEvent.click(container.querySelector('.keyboard-operate-item.confirm')!)
     expect(onChange).toHaveBeenLastCalledWith(false)
-    expect(container.querySelector('.md-popup-box')!.getAttribute('style')).toContain(
+    expect(container.querySelector('.cu-popup-box')!.getAttribute('style')).toContain(
       'display: none',
     )
   })
@@ -64,7 +64,7 @@ describe('MdNumberKeyboard 弹层模式 (react)', () => {
     const onChange = vi.fn()
     const onConfirm = vi.fn()
     const { container } = render(
-      <MdNumberKeyboard value isHideConfirm={false} onChange={onChange} onConfirm={onConfirm} />,
+      <CuNumberKeyboard value isHideConfirm={false} onChange={onChange} onConfirm={onConfirm} />,
     )
     fireEvent.click(container.querySelector('.keyboard-operate-item.confirm')!)
     expect(onConfirm).toHaveBeenCalledTimes(1)
@@ -73,19 +73,19 @@ describe('MdNumberKeyboard 弹层模式 (react)', () => {
   })
 })
 
-describe('MdActionSheet 分支 (react)', () => {
+describe('CuActionSheet 分支 (react)', () => {
   it('label fallback and array invalidIndex', () => {
     const onSelected = vi.fn()
     const { container } = render(
-      <MdActionSheet
+      <CuActionSheet
         value
         options={[{ label: '仅标签' }, { text: 'B' }]}
         invalidIndex={[0]}
         onSelected={onSelected}
       />,
     )
-    const items = container.querySelectorAll('.md-action-sheet-item')
-    expect(items[0].querySelector('.md-action-sheet-item-section')!.textContent).toBe('仅标签')
+    const items = container.querySelectorAll('.cu-action-sheet-item')
+    expect(items[0].querySelector('.cu-action-sheet-item-section')!.textContent).toBe('仅标签')
     expect(items[0].className).toContain('disabled')
 
     fireEvent.click(items[0])
@@ -96,8 +96,8 @@ describe('MdActionSheet 分支 (react)', () => {
 
   it('custom cancelText', () => {
     const { container } = render(
-      <MdActionSheet value options={[]} cancelText="不选了" />,
+      <CuActionSheet value options={[]} cancelText="不选了" />,
     )
-    expect(container.querySelector('.md-action-sheet-cancel')!.textContent).toBe('不选了')
+    expect(container.querySelector('.cu-action-sheet-cancel')!.textContent).toBe('不选了')
   })
 })

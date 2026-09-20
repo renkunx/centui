@@ -1,6 +1,6 @@
 <template>
-  <div class="md-action-sheet">
-    <MdPopup
+  <div class="cu-action-sheet">
+    <CuPopup
       class="inner-popup large-radius"
       :model-value="isActionSheetShow"
       position="bottom"
@@ -9,27 +9,27 @@
       @show="onShow"
       @hide="onHide"
     >
-      <div class="md-action-sheet-content">
-        <header v-if="title" class="md-action-sheet-header">{{ title }}</header>
-        <ul class="md-action-sheet-list">
+      <div class="cu-action-sheet-content">
+        <header v-if="title" class="cu-action-sheet-header">{{ title }}</header>
+        <ul class="cu-action-sheet-list">
           <template v-for="(item, index) in options" :key="index">
             <li
               :class="{
                 active: index === clickIndex,
                 disabled: index === invalidIndex,
-                'md-action-sheet-item': true,
+                'cu-action-sheet-item': true,
               }"
               @click="onSelect(item, index)"
             >
-              <div class="md-action-sheet-item-wrapper">
-                <div class="md-action-sheet-item-section" v-html="item.text || item.label"></div>
+              <div class="cu-action-sheet-item-wrapper">
+                <div class="cu-action-sheet-item-section" v-html="item.text || item.label"></div>
               </div>
             </li>
           </template>
-          <li class="md-action-sheet-cancel" @click="onCancel">{{ cancelText }}</li>
+          <li class="cu-action-sheet-cancel" @click="onCancel">{{ cancelText }}</li>
         </ul>
       </div>
-    </MdPopup>
+    </CuPopup>
   </div>
 </template>
 
@@ -43,10 +43,10 @@ export interface ActionSheetOption {
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { inArray, t } from '@mand-mobile/core'
-import MdPopup from '../popup/Popup.vue'
+import { inArray, t } from '@centui/core'
+import CuPopup from '../popup/Popup.vue'
 
-defineOptions({ name: 'md-action-sheet' })
+defineOptions({ name: 'cu-action-sheet' })
 
 const props = withDefaults(
   defineProps<{

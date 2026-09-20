@@ -1,18 +1,18 @@
 ---
 title: 快速上手
-description: 安装、引入与本地预览 mand-mobile 3.0 组件库
+description: 安装、引入与本地预览 centui 3.0 组件库
 ---
 
-mand-mobile 3.0 采用 monorepo 结构：`mand-mobile`（Vue 3 组件包）、`@mand-mobile/core`（跨框架逻辑核心）、`@mand-mobile/styles`（样式包）。本页带你完成从安装到本地预览的全部步骤。
+centui 3.0 采用 monorepo 结构：`centui`（Vue 3 组件包）、`@centui/core`（跨框架逻辑核心）、`@centui/styles`（样式包）。本页带你完成从安装到本地预览的全部步骤。
 
 ## 安装
 
 ```bash
 # 在 pnpm monorepo 内直接安装（推荐，可与文档站共享同一份源码）
-pnpm add mand-mobile @mand-mobile/styles
+pnpm add centui @centui/styles
 
 # 或普通项目
-npm install mand-mobile @mand-mobile/styles
+npm install centui @centui/styles
 ```
 
 需要 Node.js ≥ 20 与 pnpm ≥ 9。
@@ -27,8 +27,8 @@ npm install mand-mobile @mand-mobile/styles
 // main.ts
 import { createApp } from 'vue'
 import App from './App.vue'
-import 'mand-mobile'
-import '@mand-mobile/styles/global.css'
+import 'centui'
+import '@centui/styles/global.css'
 
 createApp(App).mount('#app')
 ```
@@ -37,17 +37,17 @@ createApp(App).mount('#app')
 
 ```vue
 <script setup lang="ts">
-import { MdButton } from 'mand-mobile'
-import '@mand-mobile/styles/es/button.css'
+import { CuButton } from 'centui'
+import '@centui/styles/es/button.css'
 </script>
 
 <template>
-  <MdButton type="primary" round>主要按钮</MdButton>
+  <CuButton type="primary" round>主要按钮</CuButton>
 </template>
 ```
 
 :::tip[注意]
-组件样式不内嵌，使用组件前请务必引入对应样式（全量 `@mand-mobile/styles/global.css` 或按需 `@mand-mobile/styles/es/<kebab-name>.css`）。
+组件样式不内嵌，使用组件前请务必引入对应样式（全量 `@centui/styles/global.css` 或按需 `@centui/styles/es/<kebab-name>.css`）。
 :::
 
 ## 命令式 API
@@ -55,7 +55,7 @@ import '@mand-mobile/styles/es/button.css'
 Toast、Dialog、ActionSheet 除组件形式外还提供命令式调用，无需维护弹层状态：
 
 ```ts
-import { Toast, Dialog, ActionSheet } from 'mand-mobile'
+import { Toast, Dialog, ActionSheet } from 'centui'
 
 Toast.info('操作成功')
 Dialog.confirm({ content: '确认删除该条记录？' })
@@ -69,7 +69,7 @@ ActionSheet.create({ title: '请选择', options: [{ text: '拍照' }, { text: '
 ```bash
 # 在仓库根目录
 pnpm install
-pnpm --filter @mand-mobile/docs dev
+pnpm --filter @centui/docs dev
 ```
 
 启动后访问 `http://localhost:4321`，即可浏览全部组件页并与其交互。修改 `packages/vue/src` 下的组件源码，页面会热更新——改完直接看效果。
@@ -77,11 +77,11 @@ pnpm --filter @mand-mobile/docs dev
 如需重新生成组件 API 表（组件增减、props 变化）：
 
 ```bash
-pnpm --filter @mand-mobile/docs gen   # 仅重新生成
-pnpm --filter @mand-mobile/docs build # 生成 + 静态构建
+pnpm --filter @centui/docs gen   # 仅重新生成
+pnpm --filter @centui/docs build # 生成 + 静态构建
 ```
 
 ## 下一步
 
 - [浏览全部组件](/components/)：每个组件页都带可交互的场景预览和完整 props / events / slots 表
-- 在 [GitHub](https://github.com/didi/mand-mobile) 提交 issue 或 PR
+- 在 [GitHub](https://github.com/renkunx/centui) 提交 issue 或 PR

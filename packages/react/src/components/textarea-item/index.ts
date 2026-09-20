@@ -1,1 +1,1 @@
-export { MdTextareaItem, type TextareaItemProps, type TextareaItemExposed } from './TextareaItem'
+export { CuTextareaItem, type TextareaItemProps, type TextareaItemExposed } from './TextareaItem'

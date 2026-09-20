@@ -3,58 +3,58 @@ import { createRoot, type Root } from 'react-dom/client'
 import { flushSync } from 'react-dom'
 import { normalizeForCompare, readGolden } from './helpers/golden'
 import {
-  MdActionSheet,
-  MdActivityIndicator,
-  MdAgree,
-  MdAmount,
-  MdButton,
-  MdCellItem,
-  MdCheckBox,
-  MdCheck,
-  MdCodebox,
-  MdDatePicker,
-  MdDialog,
-  MdField,
-  MdFieldItem,
-  MdIcon,
-  MdInputItem,
-  MdNoticeBar,
-  MdNumberKeyboard,
-  MdPicker,
-  MdPopup,
-  MdPopupTitleBar,
-  MdProgress,
-  MdRadioBox,
-  MdRadioList,
-  MdRadio,
-  MdSkeleton,
-  MdStepper,
-  MdSwitch,
-  MdTag,
-  MdScrollView,
-  MdScrollViewMore,
-  MdScrollViewRefresh,
-  MdSlider,
-  MdSwiper,
-  MdSwiperItem,
-  MdToast,
-  MdActionBar,
-  MdDetailItem,
-  MdTextareaItem,
-  MdSteps,
-  MdTabs,
-  MdTabBar,
-  MdTabPane,
-  MdTransition,
-  MdResultPage,
-  MdLandscape,
-  MdSelector,
-  MdDropMenu,
-  MdCaptcha,
-  MdChart,
-  MdImageReader,
-  MdLicensePlate,
-  MdCashier,
+  CuActionSheet,
+  CuActivityIndicator,
+  CuAgree,
+  CuAmount,
+  CuButton,
+  CuCellItem,
+  CuCheckBox,
+  CuCheck,
+  CuCodebox,
+  CuDatePicker,
+  CuDialog,
+  CuField,
+  CuFieldItem,
+  CuIcon,
+  CuInputItem,
+  CuNoticeBar,
+  CuNumberKeyboard,
+  CuPicker,
+  CuPopup,
+  CuPopupTitleBar,
+  CuProgress,
+  CuRadioBox,
+  CuRadioList,
+  CuRadio,
+  CuSkeleton,
+  CuStepper,
+  CuSwitch,
+  CuTag,
+  CuScrollView,
+  CuScrollViewMore,
+  CuScrollViewRefresh,
+  CuSlider,
+  CuSwiper,
+  CuSwiperItem,
+  CuToast,
+  CuActionBar,
+  CuDetailItem,
+  CuTextareaItem,
+  CuSteps,
+  CuTabs,
+  CuTabBar,
+  CuTabPane,
+  CuTransition,
+  CuResultPage,
+  CuLandscape,
+  CuSelector,
+  CuDropMenu,
+  CuCaptcha,
+  CuChart,
+  CuImageReader,
+  CuLicensePlate,
+  CuCashier,
 } from '../src'
 
 /**
@@ -91,94 +91,94 @@ interface Scenario {
 
 const scenarios: Record<string, Scenario[]> = {
   button: [
-    { name: 'default', element: <MdButton>主要按钮</MdButton> },
-    { name: 'primary', element: <MdButton type="primary">主要按钮</MdButton> },
-    { name: 'disabled', element: <MdButton type="primary" disabled>主要按钮</MdButton> },
-    { name: 'round', element: <MdButton type="primary" round>主要按钮</MdButton> },
-    { name: 'plain-warn', element: <MdButton type="warning" plain>次要按钮</MdButton> },
+    { name: 'default', element: <CuButton>主要按钮</CuButton> },
+    { name: 'primary', element: <CuButton type="primary">主要按钮</CuButton> },
+    { name: 'disabled', element: <CuButton type="primary" disabled>主要按钮</CuButton> },
+    { name: 'round', element: <CuButton type="primary" round>主要按钮</CuButton> },
+    { name: 'plain-warn', element: <CuButton type="warning" plain>次要按钮</CuButton> },
   ],
   icon: [
-    { name: 'home', element: <MdIcon name="home" /> },
-    { name: 'success-lg', element: <MdIcon name="success-color" size="lg" /> },
-    { name: 'spinner-svg', element: <MdIcon name="spinner" svg /> },
+    { name: 'home', element: <CuIcon name="home" /> },
+    { name: 'success-lg', element: <CuIcon name="success-color" size="lg" /> },
+    { name: 'spinner-svg', element: <CuIcon name="spinner" svg /> },
   ],
   tag: [
-    { name: 'fill', element: <MdTag size="tiny" type="fill">标签</MdTag> },
-    { name: 'ghost', element: <MdTag size="small" type="ghost">标签</MdTag> },
+    { name: 'fill', element: <CuTag size="tiny" type="fill">标签</CuTag> },
+    { name: 'ghost', element: <CuTag size="small" type="ghost">标签</CuTag> },
   ],
   amount: [
-    { name: 'default', element: <MdAmount value={1234.56} /> },
-    { name: 'uppercase', element: <MdAmount value={1234.56} isCapital /> },
+    { name: 'default', element: <CuAmount value={1234.56} /> },
+    { name: 'uppercase', element: <CuAmount value={1234.56} isCapital /> },
   ],
   'cell-item': [
-    { name: 'basic', element: <MdCellItem right="内容" /> },
-    { name: 'no-border', element: <MdCellItem noBorder /> },
+    { name: 'basic', element: <CuCellItem right="内容" /> },
+    { name: 'no-border', element: <CuCellItem noBorder /> },
   ],
-  skeleton: [{ name: 'avatar', element: <MdSkeleton avatar loading /> }],
+  skeleton: [{ name: 'avatar', element: <CuSkeleton avatar loading /> }],
   'notice-bar': [
     {
       name: 'basic',
-      element: <MdNoticeBar>为了确保你的资金安全，请设置支付密码</MdNoticeBar>,
+      element: <CuNoticeBar>为了确保你的资金安全，请设置支付密码</CuNoticeBar>,
     },
     {
       name: 'closable',
-      element: <MdNoticeBar mode="closable">为了确保你的资金安全，请设置支付密码</MdNoticeBar>,
+      element: <CuNoticeBar mode="closable">为了确保你的资金安全，请设置支付密码</CuNoticeBar>,
     },
   ],
   'activity-indicator': [
-    { name: 'roller', element: <MdActivityIndicator type="roller" text="加载中..." /> },
-    { name: 'spinner', element: <MdActivityIndicator type="spinner" text="加载中..." /> },
+    { name: 'roller', element: <CuActivityIndicator type="roller" text="加载中..." /> },
+    { name: 'spinner', element: <CuActivityIndicator type="spinner" text="加载中..." /> },
   ],
-  progress: [{ name: 'bar', element: <MdProgress value={0.44} /> }],
+  progress: [{ name: 'bar', element: <CuProgress value={0.44} /> }],
   switch: [
-    { name: 'on', element: <MdSwitch value /> },
-    { name: 'off', element: <MdSwitch value={false} /> },
-    { name: 'disabled', element: <MdSwitch value disabled /> },
+    { name: 'on', element: <CuSwitch value /> },
+    { name: 'off', element: <CuSwitch value={false} /> },
+    { name: 'disabled', element: <CuSwitch value disabled /> },
   ],
   agree: [
-    { name: 'checked', element: <MdAgree checked>我已阅读并同意协议</MdAgree> },
-    { name: 'unchecked', element: <MdAgree>我已阅读并同意协议</MdAgree> },
+    { name: 'checked', element: <CuAgree checked>我已阅读并同意协议</CuAgree> },
+    { name: 'unchecked', element: <CuAgree>我已阅读并同意协议</CuAgree> },
   ],
   stepper: [
-    { name: 'basic', element: <MdStepper value={3} min={0} max={10} /> },
-    { name: 'disabled', element: <MdStepper value={3} disabled /> },
+    { name: 'basic', element: <CuStepper value={3} min={0} max={10} /> },
+    { name: 'disabled', element: <CuStepper value={3} disabled /> },
   ],
   popup: [
-    { name: 'center-open', element: <MdPopup value><p>弹层内容</p></MdPopup> },
-    { name: 'bottom-open', element: <MdPopup value position="bottom"><p>底部面板</p></MdPopup> },
-    { name: 'no-mask-open', element: <MdPopup value hasMask={false}><p>无遮罩</p></MdPopup> },
+    { name: 'center-open', element: <CuPopup value><p>弹层内容</p></CuPopup> },
+    { name: 'bottom-open', element: <CuPopup value position="bottom"><p>底部面板</p></CuPopup> },
+    { name: 'no-mask-open', element: <CuPopup value hasMask={false}><p>无遮罩</p></CuPopup> },
   ],
   'popup-title-bar': [
     {
       name: 'ok-cancel',
-      element: <MdPopupTitleBar title="标题" okText="确定" cancelText="取消" />,
+      element: <CuPopupTitleBar title="标题" okText="确定" cancelText="取消" />,
     },
     {
       name: 'describe-only-close',
-      element: <MdPopupTitleBar title="标题" describe="描述文案" onlyClose />,
+      element: <CuPopupTitleBar title="标题" describe="描述文案" onlyClose />,
     },
   ],
   toast: [
-    { name: 'closed', element: <MdToast icon="success" content="操作成功" /> },
-    { name: 'slot-closed', element: <MdToast><span>自定义</span></MdToast> },
+    { name: 'closed', element: <CuToast icon="success" content="操作成功" /> },
+    { name: 'slot-closed', element: <CuToast><span>自定义</span></CuToast> },
   ],
   dialog: [
     {
       name: 'basic-open',
       element: (
-        <MdDialog value appendTo={null} title="对话框标题" content="对话框内容" btns={[{ text: '取消' }, { text: '确定' }]} />
+        <CuDialog value appendTo={null} title="对话框标题" content="对话框内容" btns={[{ text: '取消' }, { text: '确定' }]} />
       ),
     },
     {
       name: 'warning-open',
-      element: <MdDialog value appendTo={null} title="警告" btns={[{ text: '确定', warning: true }]} />,
+      element: <CuDialog value appendTo={null} title="警告" btns={[{ text: '确定', warning: true }]} />,
     },
   ],
   'action-sheet': [
     {
       name: 'open',
       element: (
-        <MdActionSheet
+        <CuActionSheet
           value
           title="操作弹层"
           options={[{ text: '选项1' }, { text: '选项2' }, { text: '禁用项', disabled: true }]}
@@ -188,81 +188,81 @@ const scenarios: Record<string, Scenario[]> = {
     },
   ],
   check: [
-    { name: 'checked', element: <MdCheck name="day" value="day">日结算</MdCheck> },
-    { name: 'unchecked', element: <MdCheck name="month">月结算</MdCheck> },
+    { name: 'checked', element: <CuCheck name="day" value="day">日结算</CuCheck> },
+    { name: 'unchecked', element: <CuCheck name="month">月结算</CuCheck> },
     {
       name: 'disabled',
       element: (
-        <MdCheck name="day" value="day" disabled>
+        <CuCheck name="day" value="day" disabled>
           日结算
-        </MdCheck>
+        </CuCheck>
       ),
     },
   ],
   'check-box': [
-    { name: 'checked', element: <MdCheckBox {...( { name: 'a', value: ['a'], label: '选项一' } as Record<string, unknown>)} /> },
-    { name: 'disabled', element: <MdCheckBox name="b" disabled label="选项二" /> },
+    { name: 'checked', element: <CuCheckBox {...( { name: 'a', value: ['a'], label: '选项一' } as Record<string, unknown>)} /> },
+    { name: 'disabled', element: <CuCheckBox name="b" disabled label="选项二" /> },
   ],
   radio: [
-    { name: 'checked', element: <MdRadio name="day" value="day">日结算</MdRadio> },
-    { name: 'unchecked-inline', element: <MdRadio name="month" inline>月结算</MdRadio> },
+    { name: 'checked', element: <CuRadio name="day" value="day">日结算</CuRadio> },
+    { name: 'unchecked-inline', element: <CuRadio name="month" inline>月结算</CuRadio> },
   ],
   'radio-box': [
-    { name: 'checked', element: <MdRadioBox name="a" value="a" label="选项一" /> },
+    { name: 'checked', element: <CuRadioBox name="a" value="a" label="选项一" /> },
   ],
   field: [
     {
       name: 'basic',
       element: (
-        <MdField title="标题" brief="描述" action={<a>操作</a>}>
+        <CuField title="标题" brief="描述" action={<a>操作</a>}>
           <div>内容</div>
-        </MdField>
+        </CuField>
       ),
     },
     {
       name: 'plain',
       element: (
-        <MdField plain>
+        <CuField plain>
           <p>内容</p>
-        </MdField>
+        </CuField>
       ),
     },
   ],
   'field-item': [
     {
       name: 'basic',
-      element: <MdFieldItem title="标题" addon="附加" arrow>内容</MdFieldItem>,
+      element: <CuFieldItem title="标题" addon="附加" arrow>内容</CuFieldItem>,
     },
     {
       name: 'placeholder',
-      element: <MdFieldItem title="标题" placeholder="占位" solid />,
+      element: <CuFieldItem title="标题" placeholder="占位" solid />,
     },
   ],
   'number-keyboard': [
-    { name: 'professional-view', element: <MdNumberKeyboard isView value /> },
-    { name: 'simple-view', element: <MdNumberKeyboard isView value type="simple" /> },
+    { name: 'professional-view', element: <CuNumberKeyboard isView value /> },
+    { name: 'simple-view', element: <CuNumberKeyboard isView value type="simple" /> },
   ],
   codebox: [
-    { name: 'basic', element: <MdCodebox value="12" /> },
-    { name: 'mask', element: <MdCodebox value="1234" mask /> },
-    { name: 'disabled', element: <MdCodebox value="1" disabled maxlength={4} /> },
+    { name: 'basic', element: <CuCodebox value="12" /> },
+    { name: 'mask', element: <CuCodebox value="1234" mask /> },
+    { name: 'disabled', element: <CuCodebox value="1" disabled maxlength={4} /> },
   ],
   'input-item': [
-    { name: 'basic', element: <MdInputItem title="姓名" placeholder="请输入" /> },
+    { name: 'basic', element: <CuInputItem title="姓名" placeholder="请输入" /> },
     {
       name: 'phone',
-      element: <MdInputItem title="手机号" type="phone" value="13812345678" />,
+      element: <CuInputItem title="手机号" type="phone" value="13812345678" />,
     },
     {
       name: 'bankcard',
-      element: <MdInputItem title="银行卡" type="bankCard" value="6222021234561234" />,
+      element: <CuInputItem title="银行卡" type="bankCard" value="6222021234561234" />,
     },
   ],
   'radio-list': [
     {
       name: 'basic',
       element: (
-        <MdRadioList
+        <CuRadioList
           value="a"
           options={[{ value: 'a', text: '选项一' }, { value: 'b', text: '选项二' }]}
         />
@@ -273,7 +273,7 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'view',
       element: (
-        <MdPicker
+        <CuPicker
           isView
           cols={2}
           data={[
@@ -289,7 +289,7 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'view',
       element: (
-        <MdDatePicker
+        <CuDatePicker
           isView
           type="date"
           defaultDate={new Date(2024, 5, 15)}
@@ -303,20 +303,20 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'basic',
       element: (
-        <MdScrollView>
+        <CuScrollView>
           <div className="scroll-item">内容一</div>
           <div className="scroll-item">内容二</div>
-          <MdScrollViewMore isFinished={false} />
-        </MdScrollView>
+          <CuScrollViewMore isFinished={false} />
+        </CuScrollView>
       ),
     },
     {
       name: 'refresh',
       element: (
-        <MdScrollView>
-          <MdScrollViewRefresh scrollTop={-30} />
+        <CuScrollView>
+          <CuScrollViewRefresh scrollTop={-30} />
           <div className="scroll-item">内容</div>
-        </MdScrollView>
+        </CuScrollView>
       ),
     },
   ],
@@ -324,60 +324,60 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'three-items',
       element: (
-        <MdSwiper>
-          <MdSwiperItem><div className="sw-item">第 1 页</div></MdSwiperItem>
-          <MdSwiperItem><div className="sw-item">第 2 页</div></MdSwiperItem>
-          <MdSwiperItem><div className="sw-item">第 3 页</div></MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper>
+          <CuSwiperItem><div className="sw-item">第 1 页</div></CuSwiperItem>
+          <CuSwiperItem><div className="sw-item">第 2 页</div></CuSwiperItem>
+          <CuSwiperItem><div className="sw-item">第 3 页</div></CuSwiperItem>
+        </CuSwiper>
       ),
     },
   ],
   slider: [
-    { name: 'single', element: <MdSlider value={20} /> },
-    { name: 'range', element: <MdSlider value={[20, 80]} range /> },
-    { name: 'disabled', element: <MdSlider value={40} disabled /> },
+    { name: 'single', element: <CuSlider value={20} /> },
+    { name: 'range', element: <CuSlider value={[20, 80]} range /> },
+    { name: 'disabled', element: <CuSlider value={40} disabled /> },
   ],
   'action-bar': [
-    { name: 'single', element: <MdActionBar actions={[{ text: '主要按钮' }]} /> },
+    { name: 'single', element: <CuActionBar actions={[{ text: '主要按钮' }]} /> },
     {
       name: 'double',
-      element: <MdActionBar actions={[{ text: '次要按钮' }, { text: '主要按钮' }]} />,
+      element: <CuActionBar actions={[{ text: '次要按钮' }, { text: '主要按钮' }]} />,
     },
     {
       name: 'disabled',
-      element: <MdActionBar actions={[{ text: '禁用按钮', disabled: true }]} />,
+      element: <CuActionBar actions={[{ text: '禁用按钮', disabled: true }]} />,
     },
     {
       name: 'with-text',
       element: (
-        <MdActionBar actions={[{ text: '主要按钮' }]}>
+        <CuActionBar actions={[{ text: '主要按钮' }]}>
           <p className="bar-text">合计：¥128.00</p>
-        </MdActionBar>
+        </CuActionBar>
       ),
     },
   ],
   'detail-item': [
-    { name: 'basic', element: <MdDetailItem title="标题" content="内容" /> },
-    { name: 'bold', element: <MdDetailItem title="标题" content="内容" bold /> },
-    { name: 'slot', element: <MdDetailItem title="标题">插槽内容</MdDetailItem> },
+    { name: 'basic', element: <CuDetailItem title="标题" content="内容" /> },
+    { name: 'bold', element: <CuDetailItem title="标题" content="内容" bold /> },
+    { name: 'slot', element: <CuDetailItem title="标题">插槽内容</CuDetailItem> },
   ],
   'textarea-item': [
-    { name: 'basic', element: <MdTextareaItem title="标题" placeholder="请输入" /> },
-    { name: 'value', element: <MdTextareaItem title="标题" value="预置内容" /> },
-    { name: 'clearable', element: <MdTextareaItem title="标题" value="可清除内容" clearable /> },
-    { name: 'disabled', element: <MdTextareaItem title="标题" value="禁用内容" disabled /> },
-    { name: 'error', element: <MdTextareaItem title="标题" value="出错了" error="错误提示" /> },
-    { name: 'rows', element: <MdTextareaItem title="标题" rows={5} placeholder="五行" /> },
+    { name: 'basic', element: <CuTextareaItem title="标题" placeholder="请输入" /> },
+    { name: 'value', element: <CuTextareaItem title="标题" value="预置内容" /> },
+    { name: 'clearable', element: <CuTextareaItem title="标题" value="可清除内容" clearable /> },
+    { name: 'disabled', element: <CuTextareaItem title="标题" value="禁用内容" disabled /> },
+    { name: 'error', element: <CuTextareaItem title="标题" value="出错了" error="错误提示" /> },
+    { name: 'rows', element: <CuTextareaItem title="标题" rows={5} placeholder="五行" /> },
   ],
   steps: [
     {
       name: 'horizontal',
-      element: <MdSteps steps={[{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }]} current={1} />,
+      element: <CuSteps steps={[{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }]} current={1} />,
     },
     {
       name: 'with-desc',
       element: (
-        <MdSteps
+        <CuSteps
           steps={[
             { name: '下单', text: '2016-12-12' },
             { name: '付款', text: '2016-12-13' },
@@ -390,19 +390,19 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'vertical',
       element: (
-        <MdSteps steps={[{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }]} current={1} direction="vertical" />
+        <CuSteps steps={[{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }]} current={1} direction="vertical" />
       ),
     },
     {
       name: 'fraction-current',
-      element: <MdSteps steps={[{ name: '第一步' }, { name: '第二步' }]} current={0.5} />,
+      element: <CuSteps steps={[{ name: '第一步' }, { name: '第二步' }]} current={0.5} />,
     },
   ],
   'tab-bar': [
     {
       name: 'items',
       element: (
-        <MdTabBar
+        <CuTabBar
           items={[
             { name: 'a', label: '第一项' },
             { name: 'b', label: '第二项' },
@@ -416,29 +416,29 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'basic',
       element: (
-        <MdTabs>
-          <MdTabPane label="标签一" name="a">内容一</MdTabPane>
-          <MdTabPane label="标签二" name="b">内容二</MdTabPane>
-        </MdTabs>
+        <CuTabs>
+          <CuTabPane label="标签一" name="a">内容一</CuTabPane>
+          <CuTabPane label="标签二" name="b">内容二</CuTabPane>
+        </CuTabs>
       ),
     },
     {
       name: 'second-active',
       element: (
-        <MdTabs value="b">
-          <MdTabPane label="标签一" name="a">内容一</MdTabPane>
-          <MdTabPane label="标签二" name="b">内容二</MdTabPane>
-          <MdTabPane label="标签三" name="c">内容三</MdTabPane>
-        </MdTabs>
+        <CuTabs value="b">
+          <CuTabPane label="标签一" name="a">内容一</CuTabPane>
+          <CuTabPane label="标签二" name="b">内容二</CuTabPane>
+          <CuTabPane label="标签三" name="c">内容三</CuTabPane>
+        </CuTabs>
       ),
     },
     {
       name: 'no-ink',
       element: (
-        <MdTabs hasInk={false}>
-          <MdTabPane label="标签一" name="a">内容一</MdTabPane>
-          <MdTabPane label="标签二" name="b">内容二</MdTabPane>
-        </MdTabs>
+        <CuTabs hasInk={false}>
+          <CuTabPane label="标签一" name="a">内容一</CuTabPane>
+          <CuTabPane label="标签二" name="b">内容二</CuTabPane>
+        </CuTabs>
       ),
     },
   ],
@@ -446,28 +446,28 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'fade',
       element: (
-        <MdTransition name="md-fade">
+        <CuTransition name="cu-fade">
           <div className="trans-demo">内容</div>
-        </MdTransition>
+        </CuTransition>
       ),
     },
     {
       name: 'bounce',
       element: (
-        <MdTransition name="md-bounce">
+        <CuTransition name="cu-bounce">
           <div className="trans-demo">内容</div>
-        </MdTransition>
+        </CuTransition>
       ),
     },
   ],
   'result-page': [
-    { name: 'empty', element: <MdResultPage /> },
-    { name: 'network', element: <MdResultPage type="network" /> },
-    { name: 'lost', element: <MdResultPage type="lost" /> },
+    { name: 'empty', element: <CuResultPage /> },
+    { name: 'network', element: <CuResultPage type="network" /> },
+    { name: 'lost', element: <CuResultPage type="lost" /> },
     {
       name: 'custom',
       element: (
-        <MdResultPage
+        <CuResultPage
           imgUrl="https://example.com/a.png"
           text="自定义标题"
           subtext="自定义描述"
@@ -480,34 +480,34 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'closed',
       element: (
-        <MdLandscape>
+        <CuLandscape>
           <p className="ls-content">横屏内容</p>
-        </MdLandscape>
+        </CuLandscape>
       ),
     },
     {
       name: 'open',
       element: (
-        <MdLandscape value>
+        <CuLandscape value>
           <p className="ls-content">横屏内容</p>
-        </MdLandscape>
+        </CuLandscape>
       ),
     },
     {
       name: 'fullscreen',
       element: (
-        <MdLandscape value fullScreen>
+        <CuLandscape value fullScreen>
           <p className="ls-content">横屏内容</p>
-        </MdLandscape>
+        </CuLandscape>
       ),
     },
   ],
   selector: [
-    { name: 'closed', element: <MdSelector data={[]} /> },
+    { name: 'closed', element: <CuSelector data={[]} /> },
     {
       name: 'open',
       element: (
-        <MdSelector
+        <CuSelector
           value
           title="选择地区"
           data={[
@@ -522,7 +522,7 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'multi-check',
       element: (
-        <MdSelector
+        <CuSelector
           value
           multi
           title="多选"
@@ -540,7 +540,7 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'bar',
       element: (
-        <MdDropMenu
+        <CuDropMenu
           data={[
             { text: '类别', options: [{ value: '1', text: '全部' }, { value: '2', text: '数码' }] },
             { text: '排序', options: [{ value: '3', text: '默认' }, { value: '4', text: '价格' }] },
@@ -555,14 +555,14 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'inline',
       element: (
-        <MdCaptcha
+        <CuCaptcha
           isView
           title="输入验证码"
           brief="验证码已发送至 138****1234"
           maxlength={4}
         >
           短信验证码已发送
-        </MdCaptcha>
+        </CuCaptcha>
       ),
     },
   ],
@@ -570,7 +570,7 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'basic',
       element: (
-        <MdChart
+        <CuChart
           labels={['周一', '周二', '周三', '周四', '周五', '周六', '周日']}
           datasets={[{ color: '#5b8ff9', width: 1, values: [120, 350, 420, 260, 180, 300, 450] }]}
           size={[480, 270]}
@@ -584,7 +584,7 @@ const scenarios: Record<string, Scenario[]> = {
     {
       name: 'region',
       element: (
-        <MdChart
+        <CuChart
           labels={['1', '2', '3', '4']}
           datasets={[{ color: '#fa8919', theme: 'region', width: 1, values: [100, 200, 150, 300] }]}
           size={[480, 270]}
@@ -597,16 +597,16 @@ const scenarios: Record<string, Scenario[]> = {
     },
   ],
   'image-reader': [
-    { name: 'default', element: <MdImageReader /> },
+    { name: 'default', element: <CuImageReader /> },
   ],
   'license-plate': [
-    { name: 'division', element: <MdLicensePlate defaultValue="浙AD12345" /> },
+    { name: 'division', element: <CuLicensePlate defaultValue="浙AD12345" /> },
   ],
   cashier: [
     {
       name: 'choose',
       element: (
-        <MdCashier
+        <CuCashier
           value
           title="支付"
           paymentAmount="1000.00"

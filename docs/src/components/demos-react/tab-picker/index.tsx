@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { MdTabPicker, MdButton } from 'mand-mobile-react'
+import { CuTabPicker, CuButton } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['省市级联']
-const code = `<MdTabPicker value={show} onInput={setShow} data={data} onChange={onChange} />`
+const code = `<CuTabPicker value={show} onInput={setShow} data={data} onChange={onChange} />`
 const data = {
   name: 'level1',
   label: '省份',
@@ -29,11 +29,11 @@ export default function TabPickerDemo() {
     <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
       {() => (
         <div className="tab-picker-demo">
-          <MdButton type="primary" inline round onClick={() => setShow(true)}>
+          <CuButton type="primary" inline round onClick={() => setShow(true)}>
             打开联动选择
-          </MdButton>
+          </CuButton>
           {result ? <p className="tab-picker-demo-result">{result}</p> : null}
-          <MdTabPicker
+          <CuTabPicker
             value={show}
             onInput={setShow}
             data={data}

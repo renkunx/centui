@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { MdNumberKeyboard, MdButton, MdIcon } from 'mand-mobile-react'
+import { CuNumberKeyboard, CuButton, CuIcon } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['有小数点', '无小数点', '简单类型', '乱序+确认', '插槽', '禁用']
-const code = `<MdNumberKeyboard value={show} onChange={setShow} onEnter={onEnter} onDelete={onDelete} />
-<MdNumberKeyboard value={show} onChange={setShow} hideDot />
-<MdNumberKeyboard value={show} onChange={setShow} type="simple" />
-<MdNumberKeyboard value={show} onChange={setShow} okText="支付" disorder />`
+const code = `<CuNumberKeyboard value={show} onChange={setShow} onEnter={onEnter} onDelete={onDelete} />
+<CuNumberKeyboard value={show} onChange={setShow} hideDot />
+<CuNumberKeyboard value={show} onChange={setShow} type="simple" />
+<CuNumberKeyboard value={show} onChange={setShow} okText="支付" disorder />`
 
 export default function NumberKeyboardDemo() {
   const [show1, setShow1] = useState(false)
@@ -26,48 +26,48 @@ export default function NumberKeyboardDemo() {
         if (active === 0)
           return (
             <div style={{ width: '100%' }}>
-              <MdButton onClick={() => setShow1(!show1)}>{show1 ? '收起键盘' : '唤起键盘，有小数点'}</MdButton>
-              <MdNumberKeyboard value={show1} onChange={setShow1} onEnter={onEnter} onDelete={onDelete} />
+              <CuButton onClick={() => setShow1(!show1)}>{show1 ? '收起键盘' : '唤起键盘，有小数点'}</CuButton>
+              <CuNumberKeyboard value={show1} onChange={setShow1} onEnter={onEnter} onDelete={onDelete} />
               {number ? <p style={{ fontSize: 26, padding: 12 }}>{number}</p> : null}
             </div>
           )
         if (active === 1)
           return (
             <div style={{ width: '100%' }}>
-              <MdButton onClick={() => setShow2(!show2)}>{show2 ? '收起键盘' : '唤起键盘，无小数点'}</MdButton>
-              <MdNumberKeyboard value={show2} onChange={setShow2} hideDot onEnter={onEnter} onDelete={onDelete} />
+              <CuButton onClick={() => setShow2(!show2)}>{show2 ? '收起键盘' : '唤起键盘，无小数点'}</CuButton>
+              <CuNumberKeyboard value={show2} onChange={setShow2} hideDot onEnter={onEnter} onDelete={onDelete} />
             </div>
           )
         if (active === 2)
           return (
             <div style={{ width: '100%' }}>
-              <MdButton onClick={() => setShow3(!show3)}>{show3 ? '收起键盘' : '简单类型'}</MdButton>
-              <MdNumberKeyboard value={show3} onChange={setShow3} type="simple" onEnter={onEnter} onDelete={onDelete} />
+              <CuButton onClick={() => setShow3(!show3)}>{show3 ? '收起键盘' : '简单类型'}</CuButton>
+              <CuNumberKeyboard value={show3} onChange={setShow3} type="simple" onEnter={onEnter} onDelete={onDelete} />
               {show3 && number ? <p style={{ fontSize: 26, padding: 12 }}>{number}</p> : null}
             </div>
           )
         if (active === 3)
           return (
             <div style={{ width: '100%' }}>
-              <MdButton onClick={() => setShow4(!show4)}>{show4 ? '收起键盘' : '乱序 + 确认支付'}</MdButton>
-              <MdNumberKeyboard value={show4} onChange={setShow4} okText="支付" disorder onEnter={onEnter} onDelete={onDelete} />
+              <CuButton onClick={() => setShow4(!show4)}>{show4 ? '收起键盘' : '乱序 + 确认支付'}</CuButton>
+              <CuNumberKeyboard value={show4} onChange={setShow4} okText="支付" disorder onEnter={onEnter} onDelete={onDelete} />
             </div>
           )
         if (active === 4)
           return (
             <div style={{ width: '100%' }}>
-              <MdButton onClick={() => setShow5(!show5)}>{show5 ? '收起键盘' : '插槽：安全支付'}</MdButton>
-              <MdNumberKeyboard value={show5} onChange={setShow5} okText="支付" disorder>
+              <CuButton onClick={() => setShow5(!show5)}>{show5 ? '收起键盘' : '插槽：安全支付'}</CuButton>
+              <CuNumberKeyboard value={show5} onChange={setShow5} okText="支付" disorder>
                 <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 14, fontSize: 22 }}>
-                  <MdIcon name="security" />&nbsp;安全支付
+                  <CuIcon name="security" />&nbsp;安全支付
                 </p>
-              </MdNumberKeyboard>
+              </CuNumberKeyboard>
             </div>
           )
         return (
           <div style={{ width: '100%' }}>
-            <MdButton onClick={() => setShow6(!show6)}>{show6 ? '收起键盘' : '禁用键盘'}</MdButton>
-            <MdNumberKeyboard value={show6} onChange={setShow6} disabled onEnter={onEnter} onDelete={onDelete} />
+            <CuButton onClick={() => setShow6(!show6)}>{show6 ? '收起键盘' : '禁用键盘'}</CuButton>
+            <CuNumberKeyboard value={show6} onChange={setShow6} disabled onEnter={onEnter} onDelete={onDelete} />
           </div>
         )
       }}

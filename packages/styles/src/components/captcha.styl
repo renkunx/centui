@@ -1,31 +1,31 @@
 /* Extracted from legacy/components/captcha — do not edit by hand; re-run scripts/extract.mjs */
 /* --- index.vue --- */
-.md-captcha
-  .md-dialog
-    .md-popup
+.cu-captcha
+  .cu-dialog
+    .cu-popup
       z-index captcha-zindex
-    .md-dialog-body
+    .cu-dialog-body
       padding 60px 60px 30px 60px
-    .md-dialog-content
+    .cu-dialog-content
       margin-bottom number-keyboard-height
-  .md-codebox
+  .cu-codebox
     margin-bottom 28px
 
-.md-captcha-content
+.cu-captcha-content
   font-size captcha-font-size
   color captcha-color
   text-align center
   line-height 1.2
   margin-bottom 50px
 
-.md-captcha-title
+.cu-captcha-title
   color captcha-title-color
   font-size captcha-title-font-size
   font-weight normal
   line-height 1.15
   margin 0 0 16px 0
 
-.md-captcha-footer
+.cu-captcha-footer
   margin 28px 0
   display flex
   font-size captcha-footer-font-size
@@ -33,14 +33,14 @@
   align-items center
   overflow hidden
 
-.md-captcha-error, .md-captcha-brief
+.cu-captcha-error, .cu-captcha-brief
   flex 1 1 0%
-.md-captcha-error
+.cu-captcha-error
   color captcha-error-color
-.md-captcha-brief
+.cu-captcha-brief
   color captcha-brief-color
 
-.md-captcha-btn
+.cu-captcha-btn
   display inline-block
   color captcha-btn-color
   font-size captcha-footer-font-size
@@ -52,10 +52,10 @@
   &:disabled
     color color-text-disabled
 // 半屏样式
-.md-captcha-half-container
+.cu-captcha-half-container
   background-color #fff
   border-radius 40px 40px 0 0
-  .md-popup-title-bar
+  .cu-popup-title-bar
     height auto !important
     margin-bottom 24px
     .title-bar-title
@@ -67,18 +67,18 @@
         color #91989F !important
         line-height 33px !important
         margin-top: 4px !important
-  .md-captcha-half-content
+  .cu-captcha-half-content
     padding 0px 40px
-  .md-codebox-wrapper
-    .md-codebox
+  .cu-codebox-wrapper
+    .cu-codebox
       padding 75px 40px 0px
       margin 0px
-    .md-captcha-footer
+    .cu-captcha-footer
       padding 32px 40px 745px
       margin 0px
       &.halfStyle
         padding-bottom 40px
-      .md-captcha-btn
+      .cu-captcha-btn
         padding 5px 16px
         background-color color-primary
         border-radius radius-medium

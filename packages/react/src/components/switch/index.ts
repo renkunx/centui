@@ -1,1 +1,1 @@
-export { MdSwitch, type SwitchProps } from './Switch'
+export { CuSwitch, type SwitchProps } from './Switch'

@@ -16,7 +16,7 @@ export interface RollerProps {
   className?: string
 }
 
-export function MdRoller({
+export function CuRoller({
   size = 70,
   width,
   color = '#2F86F6',
@@ -41,13 +41,13 @@ export function MdRoller({
     : `${process * circlePerimeter} ${(1 - process) * circlePerimeter}`
 
   return (
-    <div className={`md-activity-indicator-rolling${className ? ` ${className}` : ''}`}>
+    <div className={`cu-activity-indicator-rolling${className ? ` ${className}` : ''}`}>
       <div className="rolling-container">
         <svg
           viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
           style={{ width: `${size}px`, height: `${size}px`, transform: `rotateZ(${rotate}deg)` }}
           preserveAspectRatio="xMidYMid"
-          className="md-activity-indicator-svg rolling"
+          className="cu-activity-indicator-svg rolling"
         >
           <circle fill="none" stroke={borderColor} strokeWidth={strokeWidth} cx={viewBoxSize / 2} cy={viewBoxSize / 2} r={radius} />
           {circleSlot ?? (
@@ -102,4 +102,4 @@ export function MdRoller({
     </div>
   )
 }
-export { MdRoller as MdActivityIndicatorRolling }
+export { CuRoller as CuActivityIndicatorRolling }

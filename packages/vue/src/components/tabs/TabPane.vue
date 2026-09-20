@@ -1,6 +1,6 @@
 <template>
   <Transition :name="transitionName">
-    <div v-show="active" class="md-tab-pane" role="tabpanel" :tab="name">
+    <div v-show="active" class="cu-tab-pane" role="tabpanel" :tab="name">
       <slot></slot>
     </div>
   </Transition>
@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, inject, onBeforeUnmount, watch, type ComponentInternalInstance } from 'vue'
 
-defineOptions({ name: 'md-tab-pane' })
+defineOptions({ name: 'cu-tab-pane' })
 
 export interface RootTabsLike {
   currentName: unknown
@@ -35,7 +35,7 @@ const rootTabs = inject<RootTabsLike | null>('rootTabs', null)
 
 const active = computed(() => rootTabs?.currentName === props.name)
 const transitionName = computed(() =>
-  rootTabs && rootTabs.prevIndex > rootTabs.currentIndex ? 'md-tab-slide-right' : 'md-tab-slide-left',
+  rootTabs && rootTabs.prevIndex > rootTabs.currentIndex ? 'cu-tab-slide-right' : 'cu-tab-slide-left',
 )
 
 watch(

@@ -1,5 +1,5 @@
 import { useContext, useEffect, type ReactNode } from 'react'
-import { MdIcon } from '../icon/Icon'
+import { CuIcon } from '../icon/Icon'
 import { PopupContext } from './Popup'
 
 export interface PopupTitleBarProps {
@@ -18,7 +18,7 @@ export interface PopupTitleBarProps {
   titleSlot?: ReactNode
 }
 
-export function MdPopupTitleBar({
+export function CuPopupTitleBar({
   title = '',
   describe = '',
   okText = '',
@@ -42,7 +42,7 @@ export function MdPopupTitleBar({
 
   return (
     <div
-      className={`md-popup-title-bar title-align-${titleAlign}${describe ? ' large' : ''}${
+      className={`cu-popup-title-bar title-align-${titleAlign}${describe ? ' large' : ''}${
         largeRadius ? ' large-radius' : ''
       }`}
       onTouchMove={preventTouch}
@@ -51,12 +51,12 @@ export function MdPopupTitleBar({
         <>
           {cancelText ? (
             <div
-              className="title-bar-left md-popup-cancel"
+              className="title-bar-left cu-popup-cancel"
               dangerouslySetInnerHTML={{ __html: cancelText }}
               onClick={() => onCancel?.()}
             ></div>
           ) : cancelSlot ? (
-            <div className="title-bar-left md-popup-cancel" onClick={() => onCancel?.()}>
+            <div className="title-bar-left cu-popup-cancel" onClick={() => onCancel?.()}>
               {cancelSlot}
             </div>
           ) : null}
@@ -78,20 +78,20 @@ export function MdPopupTitleBar({
         <>
           {okText ? (
             <div
-              className="title-bar-right md-popup-confirm"
+              className="title-bar-right cu-popup-confirm"
               dangerouslySetInnerHTML={{ __html: okText }}
               onClick={() => onConfirm?.()}
             ></div>
           ) : confirmSlot ? (
-            <div className="title-bar-right md-popup-confirm" onClick={() => onConfirm?.()}>
+            <div className="title-bar-right cu-popup-confirm" onClick={() => onConfirm?.()}>
               {confirmSlot}
             </div>
           ) : null}
         </>
       ) : null}
       {onlyClose ? (
-        <div className="title-bar-right md-popup-close" onClick={() => onCancel?.()}>
-          <MdIcon name="close" size="lg" />
+        <div className="title-bar-right cu-popup-close" onClick={() => onCancel?.()}>
+          <CuIcon name="close" size="lg" />
         </div>
       ) : null}
     </div>

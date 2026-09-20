@@ -1,8 +1,8 @@
 <template>
-  <div class="md-image-reader">
+  <div class="cu-image-reader">
     <input
       :key="inputTmpKey"
-      class="md-image-reader-file"
+      class="cu-image-reader-file"
       type="file"
       :name="name"
       :accept="mimeType"
@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-defineOptions({ name: 'md-image-reader' })
+defineOptions({ name: 'cu-image-reader' })
 
 const ERROR: Record<string, string> = {
   '100': 'browser does not support',

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MdDropMenu } from 'mand-mobile'
+import { CuDropMenu } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['基础联动', '初始选中', '禁用项', '自定义菜单项']
-const code = `<MdDropMenu :data="data" :default-value="defaultValue" @change="onChange" />`
+const code = `<CuDropMenu :data="data" :default-value="defaultValue" @change="onChange" />`
 const result = ref('')
 const data0 = [
   { text: '类别', options: [{ value: '1', text: '全部' }, { value: '2', text: '数码' }, { value: '3', text: '服饰' }] },
@@ -30,16 +30,16 @@ function onChange(barItem: { text?: string }, listItem: { text?: string }) {
 <template>
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
-      <MdDropMenu :data="data0" :default-value="['2']" @change="onChange" />
+      <CuDropMenu :data="data0" :default-value="['2']" @change="onChange" />
     </template>
     <template #scene-1>
-      <MdDropMenu :data="data1" :default-value="['2', '4']" @change="onChange" />
+      <CuDropMenu :data="data1" :default-value="['2', '4']" @change="onChange" />
     </template>
     <template #scene-2>
-      <MdDropMenu :data="data2" @change="onChange" />
+      <CuDropMenu :data="data2" @change="onChange" />
     </template>
     <template #scene-3>
-      <MdDropMenu :data="data3" @change="onChange" />
+      <CuDropMenu :data="data3" @change="onChange" />
     </template>
   </DemoCanvas>
 </template>

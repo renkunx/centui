@@ -7,7 +7,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async importOriginal => {
+vi.mock('@centui/core/web', async importOriginal => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     _isAnimating = false
@@ -42,17 +42,17 @@ vi.mock('@mand-mobile/core/web', async importOriginal => {
 })
 
 import {
-  MdActivityIndicator,
-  MdCarouselCircle,
-  MdCheckBox,
-  MdCheck,
-  MdCheckGroup,
-  MdCodebox,
-  MdDatePicker,
-  MdInputItem,
-  MdNumberKeyboard,
-  MdStepper,
-  MdTag,
+  CuActivityIndicator,
+  CuCarouselCircle,
+  CuCheckBox,
+  CuCheck,
+  CuCheckGroup,
+  CuCodebox,
+  CuDatePicker,
+  CuInputItem,
+  CuNumberKeyboard,
+  CuStepper,
+  CuTag,
 } from '../../src'
 
 async function flushAll() {
@@ -70,7 +70,7 @@ describe('DatePicker 列联动 (react)', () => {
   it('change on year column rebuilds month/day columns', async () => {
     const onChange = vi.fn()
     const { container } = render(
-      <MdDatePicker
+      <CuDatePicker
         isView
         type="date"
         defaultDate={new Date(2024, 5, 15)}
@@ -91,8 +91,8 @@ describe('DatePicker 列联动 (react)', () => {
     await flushAll()
 
     expect(onChange).toHaveBeenCalled()
-    const monthTexts = [...container.querySelectorAll('.md-picker-column-item')][1]
-      ? [...container.querySelectorAll('.md-picker-column-item')[0].querySelectorAll('.column-item')].map(
+    const monthTexts = [...container.querySelectorAll('.cu-picker-column-item')][1]
+      ? [...container.querySelectorAll('.cu-picker-column-item')[0].querySelectorAll('.column-item')].map(
           li => li.textContent,
         )
       : []
@@ -101,25 +101,25 @@ describe('DatePicker 列联动 (react)', () => {
 
   it('prop-driven rebuild on defaultDate change', async () => {
     const { container, rerender } = render(
-      <MdDatePicker isView type="date" defaultDate={new Date(2024, 5, 15)} />,
+      <CuDatePicker isView type="date" defaultDate={new Date(2024, 5, 15)} />,
     )
     await flushAll()
-    rerender(<MdDatePicker isView type="time" defaultDate={new Date(2024, 5, 15, 8, 30)} />)
+    rerender(<CuDatePicker isView type="time" defaultDate={new Date(2024, 5, 15, 8, 30)} />)
     await flushAll()
-    expect(container.querySelectorAll('.md-picker-column-item')).toHaveLength(2)
+    expect(container.querySelectorAll('.cu-picker-column-item')).toHaveLength(2)
   })
 })
 
 describe('Spinning / Carousel 默认分支 (react)', () => {
   it('spinning light color', () => {
-    const { container } = render(<MdActivityIndicator type="spinner" color="light" />)
-    expect(container.querySelector('.md-activity-indicator-spinning')!.className).not.toContain('dark')
+    const { container } = render(<CuActivityIndicator type="spinner" color="light" />)
+    expect(container.querySelector('.cu-activity-indicator-spinning')!.className).not.toContain('dark')
   })
 
   it('carousel circle defaults', () => {
     const { container } = render(
       <svg>
-        <MdCarouselCircle />
+        <CuCarouselCircle />
       </svg>,
     )
     const circle = container.querySelector('circle')!
@@ -133,20 +133,20 @@ describe('Stepper 分支 (react)', () => {
   it('reduce blocked at min and readOnly input', async () => {
     const onChange = vi.fn()
     const { container } = render(
-      <MdStepper value={0} min={0} readOnly onChange={onChange} />,
+      <CuStepper value={0} min={0} readOnly onChange={onChange} />,
     )
     await act(async () => {
       await new Promise(resolve => setTimeout(resolve, 0))
     })
-    expect(container.querySelector('.md-stepper-button-reduce')!.className).toContain('disabled')
-    fireEvent.click(container.querySelector('.md-stepper-button-reduce')!)
+    expect(container.querySelector('.cu-stepper-button-reduce')!.className).toContain('disabled')
+    fireEvent.click(container.querySelector('.cu-stepper-button-reduce')!)
     expect(onChange).not.toHaveBeenCalled()
     expect(container.querySelector('input')!.hasAttribute('readonly')).toBe(true)
   })
 
   it('isInteger floors on blur with decimal input', async () => {
     const onChange = vi.fn()
-    const { container } = render(<MdStepper value={1} isInteger onChange={onChange} />)
+    const { container } = render(<CuStepper value={1} isInteger onChange={onChange} />)
     await act(async () => {
       await new Promise(resolve => setTimeout(resolve, 0))
     })
@@ -160,18 +160,18 @@ describe('Stepper 分支 (react)', () => {
 
   it('decrease emits with diff', async () => {
     const onDecrease = vi.fn()
-    const { container } = render(<MdStepper value={3} onDecrease={onDecrease} />)
+    const { container } = render(<CuStepper value={3} onDecrease={onDecrease} />)
     await act(async () => {
       await new Promise(resolve => setTimeout(resolve, 0))
     })
-    fireEvent.click(container.querySelector('.md-stepper-button-reduce')!)
+    fireEvent.click(container.querySelector('.cu-stepper-button-reduce')!)
     expect(onDecrease).toHaveBeenCalledWith(1)
   })
 })
 
 describe('Tag 分支 (react)', () => {
   it('sharp corner only applies to circle shape', async () => {
-    const { container } = render(<MdTag shape="circle" sharp="bottom-right" />)
+    const { container } = render(<CuTag shape="circle" sharp="bottom-right" />)
     await act(async () => {
       await new Promise(resolve => setTimeout(resolve, 0))
     })
@@ -180,7 +180,7 @@ describe('Tag 分支 (react)', () => {
   })
 
   it('fill without fillColor has no background style', () => {
-    const { container } = render(<MdTag type="fill" />)
+    const { container } = render(<CuTag type="fill" />)
     const style = container.querySelector('.type-fill')!.getAttribute('style') ?? ''
     expect(style).not.toContain('background')
   })
@@ -190,28 +190,28 @@ describe('Check 家族分支 (react)', () => {
   it('check-group toggleAll true forces all selectable checked', () => {
     const onChange = vi.fn()
     const { container } = render(
-      <MdCheckGroup value={[]} onChange={onChange}>
-        <MdCheck name="a" />
-        <MdCheck name="b" />
-      </MdCheckGroup>,
+      <CuCheckGroup value={[]} onChange={onChange}>
+        <CuCheck name="a" />
+        <CuCheck name="b" />
+      </CuCheckGroup>,
     )
-    const group = container.querySelector('.md-check-group')!
+    const group = container.querySelector('.cu-check-group')!
     void group
     // toggleAll 经 ref 暴露在 Vue 版；React 版经组内 Provider 驱动，此处验证组点击增删
-    fireEvent.click(container.querySelectorAll('.md-check')[0])
+    fireEvent.click(container.querySelectorAll('.cu-check')[0])
     expect(onChange).toHaveBeenCalledWith(['a'])
   })
 
   it('checkbox disabled retains group registration', () => {
     const onChange = vi.fn()
     const { container } = render(
-      <MdCheckGroup value={['a']} onChange={onChange}>
-        <MdCheckBox name="a" value="a" disabled />
-      </MdCheckGroup>,
+      <CuCheckGroup value={['a']} onChange={onChange}>
+        <CuCheckBox name="a" value="a" disabled />
+      </CuCheckGroup>,
     )
-    expect(container.querySelector('.md-check-base-box')!.className).toContain('is-checked')
-    expect(container.querySelector('.md-check-base-box')!.className).toContain('is-disabled')
-    fireEvent.click(container.querySelector('.md-check-base-box')!)
+    expect(container.querySelector('.cu-check-base-box')!.className).toContain('is-checked')
+    expect(container.querySelector('.cu-check-base-box')!.className).toContain('is-disabled')
+    fireEvent.click(container.querySelector('.cu-check-base-box')!)
     expect(onChange).not.toHaveBeenCalled()
   })
 })
@@ -219,14 +219,14 @@ describe('Check 家族分支 (react)', () => {
 describe('InputItem / Codebox 分支 (react)', () => {
   it('digit type filters non-digits', () => {
     const onChange = vi.fn()
-    const { container } = render(<MdInputItem type="digit" onChange={onChange} />)
+    const { container } = render(<CuInputItem type="digit" onChange={onChange} />)
     fireEvent.input(container.querySelector('input')!, { target: { value: '12a3' } })
     expect(onChange).toHaveBeenLastCalledWith('123', 'input-item')
   })
 
   it('custom formation overrides default', () => {
     const { container } = render(
-      <MdInputItem isFormative formation={() => ({ value: '[X]', range: 3 })} />,
+      <CuInputItem isFormative formation={() => ({ value: '[X]', range: 3 })} />,
     )
     fireEvent.input(container.querySelector('input')!, { target: { value: 'anything' } })
     expect((container.querySelector('input') as HTMLInputElement).value).toBe('[X]')
@@ -234,15 +234,15 @@ describe('InputItem / Codebox 分支 (react)', () => {
 
   it('title-latent hides placeholder while active', () => {
     const { container } = render(
-      <MdInputItem isTitleLatent title="姓名" placeholder="请输入" value="张" />,
+      <CuInputItem isTitleLatent title="姓名" placeholder="请输入" value="张" />,
     )
     expect((container.querySelector('input') as HTMLInputElement).placeholder).toBe('')
   })
 
   it('codebox professional keyboard okText submits', async () => {
     const onSubmit = vi.fn()
-    const { container } = render(<MdCodebox maxlength={-1} isView onSubmit={onSubmit} okText="完成" />)
-    fireEvent.click(container.querySelector('.md-codebox')!)
+    const { container } = render(<CuCodebox maxlength={-1} isView onSubmit={onSubmit} okText="完成" />)
+    fireEvent.click(container.querySelector('.cu-codebox')!)
     expect(container.querySelector('.keyboard-operate-item.confirm')!.textContent).toBe('完成')
     fireEvent.click(container.querySelectorAll('.keyboard-number-item')[0])
     fireEvent.click(container.querySelector('.keyboard-operate-item.confirm')!)
@@ -253,7 +253,7 @@ describe('InputItem / Codebox 分支 (react)', () => {
 describe('NumberKeyboard 分支 (react)', () => {
   it('duplicateZero adds 00 key and hideDot enlarges zero', () => {
     const { container } = render(
-      <MdNumberKeyboard isView value hideDot duplicateZero />,
+      <CuNumberKeyboard isView value hideDot duplicateZero />,
     )
     const keys = container.querySelectorAll('.keyboard-number-item')
     // hideDot+duplicateZero：9 数字 + 00 + 0 + . （无 slidedown）
@@ -265,7 +265,7 @@ describe('NumberKeyboard 分支 (react)', () => {
 
   it('textRender customizes key labels', () => {
     const { container } = render(
-      <MdNumberKeyboard isView value textRender={val => (val === 1 ? '壹' : undefined)} />,
+      <CuNumberKeyboard isView value textRender={val => (val === 1 ? '壹' : undefined)} />,
     )
     const texts = [...container.querySelectorAll('.keyboard-number-item')].map(k => k.textContent)
     expect(texts).toContain('壹')

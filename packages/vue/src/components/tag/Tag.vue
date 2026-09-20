@@ -1,5 +1,5 @@
 <template>
-  <div class="md-tag">
+  <div class="cu-tag">
     <template v-if="shape === 'quarter'">
       <div :class="computedClass">
         <div class="quarter-content">
@@ -43,9 +43,9 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, reactive, ref } from 'vue'
-import { transformCamelCase } from '@mand-mobile/core'
+import { transformCamelCase } from '@centui/core'
 
-defineOptions({ name: 'md-tag' })
+defineOptions({ name: 'cu-tag' })
 
 const props = withDefaults(
   defineProps<{

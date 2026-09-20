@@ -1,1 +1,1 @@
-export { MdLandscape, type LandscapeProps } from './Landscape'
+export { CuLandscape, type LandscapeProps } from './Landscape'

@@ -1,20 +1,20 @@
 /* Extracted from legacy/components/stepper — do not edit by hand; re-run scripts/extract.mjs */
 /* --- index.vue --- */
-.md-stepper
+.cu-stepper
   color stepper-color
   -webkit-font-smoothing antialiased
   font-size stepper-font-size
   height stepper-height
   display flex
   &.disabled
-    .md-stepper-button
+    .cu-stepper-button
       &:before,
       &:after
         opacity stepper-disabled-opacity
     input
       opacity stepper-disabled-opacity
 
-.md-stepper-button
+.cu-stepper-button
   position relative
   width stepper-width-button
   height stepper-height
@@ -29,7 +29,7 @@
     left 50%
     background stepper-color
     transform translate(-50%, -50%)
-  &.md-stepper-button-add
+  &.cu-stepper-button-add
     &:before
       content ""
       position absolute
@@ -44,7 +44,7 @@
     &:after
       opacity stepper-disabled-opacity
 
-.md-stepper-number
+.cu-stepper-number
   margin 0 4px
   width stepper-width-input
   height stepper-height

@@ -1,28 +1,28 @@
 <template>
-  <div class="md-activity-indicator-carousel">
+  <div class="cu-activity-indicator-carousel">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       :viewBox="viewBox"
       :fill="color"
       :style="{ width: `${viewWidth}px`, height: `${size}px` }"
-      class="md-activity-indicator-svg carouseling"
+      class="cu-activity-indicator-svg carouseling"
     >
-      <MdCarouselCircle
+      <CuCarouselCircle
         v-for="(value, index) in circleAnimateValues"
         :key="`carousel-circle-${index}`"
         :size="size"
         :index="index"
         :animate-values="value"
-      ></MdCarouselCircle>
+      ></CuCarouselCircle>
     </svg>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import MdCarouselCircle from './CarouselCircle.vue'
+import CuCarouselCircle from './CarouselCircle.vue'
 
-defineOptions({ name: 'md-activity-indicator-carousel' })
+defineOptions({ name: 'cu-activity-indicator-carousel' })
 
 const props = withDefaults(
   defineProps<{

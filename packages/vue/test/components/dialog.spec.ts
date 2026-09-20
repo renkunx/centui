@@ -1,5 +1,5 @@
 /**
- * MdDialog 行为清单（自 v2 components/dialog spec/源码提取，v-model → modelValue）：
+ * CuDialog 行为清单（自 v2 components/dialog spec/源码提取，v-model → modelValue）：
  * 组件：
  * 1. modelValue 控制显隐；closable 关闭图标 → update:modelValue(false)
  * 2. btns：handler 被调用；无 handler 时关闭；disabled/loading 阻断；warning 修饰类；loading 渲染滚动指示器；icon 渲染
@@ -12,20 +12,20 @@
 import { mount, flushPromises } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
-import { Dialog, MdDialog } from '../../src'
+import { Dialog, CuDialog } from '../../src'
 
-describe('MdDialog', () => {
+describe('CuDialog', () => {
   beforeEach(() => {
     document.body.innerHTML = ''
   })
 
   it('controls visibility with modelValue', async () => {
-    const wrapper = mount(MdDialog, {
+    const wrapper = mount(CuDialog, {
       props: { modelValue: true, title: 'T', content: 'C' },
     })
     await nextTick()
-    expect(wrapper.find('.md-popup').attributes('style')).not.toContain('display: none')
-    expect(wrapper.find('.md-dialog-title').text()).toBe('T')
+    expect(wrapper.find('.cu-popup').attributes('style')).not.toContain('display: none')
+    expect(wrapper.find('.cu-dialog-title').text()).toBe('T')
 
     await wrapper.setProps({ modelValue: false })
     // v2 链路：popup 隐藏时回派 input，dialog 原样透传
@@ -34,14 +34,14 @@ describe('MdDialog', () => {
   })
 
   it('closes via close icon when closable', async () => {
-    const wrapper = mount(MdDialog, { props: { modelValue: true, closable: true } })
-    await wrapper.find('.md-dialog-close').trigger('click')
+    const wrapper = mount(CuDialog, { props: { modelValue: true, closable: true } })
+    await wrapper.find('.cu-dialog-close').trigger('click')
     expect(wrapper.emitted('update:modelValue')).toEqual([[false]])
   })
 
   it('handles button clicks with handler/disabled/loading/warning', async () => {
     const handler = vi.fn()
-    const wrapper = mount(MdDialog, {
+    const wrapper = mount(CuDialog, {
       props: {
         modelValue: true,
         btns: [
@@ -54,7 +54,7 @@ describe('MdDialog', () => {
         ],
       },
     })
-    const btns = wrapper.findAll('.md-dialog-btn')
+    const btns = wrapper.findAll('.cu-dialog-btn')
 
     await btns[0].trigger('click')
     expect(handler).toHaveBeenCalledTimes(1)
@@ -67,23 +67,23 @@ describe('MdDialog', () => {
     await btns[3].trigger('click')
     expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
 
-    expect(btns[3].find('.md-dialog-btn-loading').exists()).toBe(true)
+    expect(btns[3].find('.cu-dialog-btn-loading').exists()).toBe(true)
     expect(btns[4].classes()).toContain('warning')
-    expect(btns[5].find('.md-dialog-btn-icon').exists()).toBe(true)
+    expect(btns[5].find('.cu-dialog-btn-icon').exists()).toBe(true)
   })
 
   it('supports column layout and default slot over content', () => {
-    const column = mount(MdDialog, {
+    const column = mount(CuDialog, {
       props: { modelValue: true, layout: 'column', btns: [{ text: 'A' }, { text: 'B' }] },
     })
-    expect(column.find('.md-dialog-actions').classes()).toContain('is-column')
+    expect(column.find('.cu-dialog-actions').classes()).toContain('is-column')
 
-    const slotted = mount(MdDialog, {
+    const slotted = mount(CuDialog, {
       props: { modelValue: true, content: '默认' },
       slots: { default: '<p class="custom">插槽</p>' },
     })
     expect(slotted.find('.custom').exists()).toBe(true)
-    expect(slotted.find('.md-dialog-text').exists()).toBe(false)
+    expect(slotted.find('.cu-dialog-text').exists()).toBe(false)
   })
 
   it('confirm factory creates dialog with locale defaults and auto closes', async () => {
@@ -92,9 +92,9 @@ describe('MdDialog', () => {
     const vm = Dialog.confirm({ title: '确认', content: '内容', onConfirm, onHide })
 
     await flushPromises()
-    const dialog = document.body.querySelector('.md-dialog')
+    const dialog = document.body.querySelector('.cu-dialog')
     expect(dialog).not.toBeNull()
-    const btns = document.body.querySelectorAll('.md-dialog-btn')
+    const btns = document.body.querySelectorAll('.cu-dialog-btn')
     expect(btns[0].textContent?.trim()).toBe('取消')
     expect(btns[1].textContent?.trim()).toBe('确定')
 
@@ -102,36 +102,36 @@ describe('MdDialog', () => {
     await flushPromises()
     expect(onConfirm).toHaveBeenCalledTimes(1)
     expect(onHide).toHaveBeenCalledTimes(1)
-    expect(document.body.querySelector('.md-dialog')).toBeNull()
+    expect(document.body.querySelector('.cu-dialog')).toBeNull()
     expect(vm).toBeDefined()
   })
 
   it('confirm factory keeps dialog open when onCancel returns false', async () => {
     Dialog.confirm({ title: 'T', onCancel: () => false })
     await flushPromises()
-    ;(document.body.querySelectorAll('.md-dialog-btn')[0] as HTMLElement).click()
+    ;(document.body.querySelectorAll('.cu-dialog-btn')[0] as HTMLElement).click()
     await flushPromises()
-    expect(document.body.querySelector('.md-dialog')).not.toBeNull()
+    expect(document.body.querySelector('.cu-dialog')).not.toBeNull()
     Dialog.closeAll()
     await flushPromises()
-    expect(document.body.querySelector('.md-dialog')).toBeNull()
+    expect(document.body.querySelector('.cu-dialog')).toBeNull()
   })
 
   it('alert factory renders single button; succeed/failed inject icons', async () => {
     const onConfirm = vi.fn()
     Dialog.alert({ title: '提示', content: '内容', onConfirm })
     await flushPromises()
-    expect(document.body.querySelectorAll('.md-dialog-btn')).toHaveLength(1)
+    expect(document.body.querySelectorAll('.cu-dialog-btn')).toHaveLength(1)
 
     Dialog.succeed({ title: '成功' })
     await flushPromises()
-    expect(document.body.querySelector('.md-icon-success-color')).not.toBeNull()
+    expect(document.body.querySelector('.cu-icon-success-color')).not.toBeNull()
     Dialog.closeAll()
     await flushPromises()
 
     Dialog.failed({ title: '失败' })
     await flushPromises()
-    expect(document.body.querySelector('.md-icon-warn-color')).not.toBeNull()
+    expect(document.body.querySelector('.cu-icon-warn-color')).not.toBeNull()
     Dialog.closeAll()
     await flushPromises()
   })

@@ -1,9 +1,9 @@
 {
-  "name": "@mand-mobile/docs",
+  "name": "@centui/docs",
   "version": "3.0.0-alpha.0",
   "private": true,
   "type": "module",
-  "description": "mand-mobile v3 文档站（Astro + Starlight，含组件实时预览）",
+  "description": "centui v3 文档站（Astro + Starlight，含组件实时预览）",
   "license": "Apache-2.0",
   "scripts": {
     "gen": "node scripts/gen.mjs",
@@ -26,6 +26,6 @@
     "vue": "^3.5.42"
   },
   "dependencies": {
-    "@mand-mobile/styles": "workspace:*"
+    "@centui/styles": "workspace:*"
   }
 }

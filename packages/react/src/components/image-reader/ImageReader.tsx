@@ -21,7 +21,7 @@ const ERROR: Record<string, string> = {
   '103': 'the number of pictures exceeds the limit',
 }
 
-export const MdImageReader = forwardRef<HTMLDivElement, ImageReaderProps>(function MdImageReader(
+export const CuImageReader = forwardRef<HTMLDivElement, ImageReaderProps>(function CuImageReader(
   {
     name = `image-reader-${Math.floor(Math.random() * 10000)}`,
     size = 0,
@@ -132,10 +132,10 @@ export const MdImageReader = forwardRef<HTMLDivElement, ImageReaderProps>(functi
   }
 
   return (
-    <div className="md-image-reader" ref={ref}>
+    <div className="cu-image-reader" ref={ref}>
       <input
         key={inputTmpKey}
-        className="md-image-reader-file"
+        className="cu-image-reader-file"
         type="file"
         name={name}
         accept={mimeType}

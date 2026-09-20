@@ -1,1 +1,1 @@
-export { MdCellItem, type CellItemProps } from './CellItem'
+export { CuCellItem, type CellItemProps } from './CellItem'

@@ -8,7 +8,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async importOriginal => {
+vi.mock('@centui/core/web', async importOriginal => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     _isAnimating = false
@@ -42,7 +42,7 @@ vi.mock('@mand-mobile/core/web', async importOriginal => {
   return { ...orig, Scroller: FakeScrollerImpl }
 })
 
-import { MdDatePicker } from '../../src'
+import { CuDatePicker } from '../../src'
 
 const onChangeSpy = vi.fn()
 
@@ -50,7 +50,7 @@ async function realFlush(ms = 80) {
   await new Promise(r => setTimeout(r, ms))
 }
 
-describe('MdDatePicker change 联动 (vue)', () => {
+describe('CuDatePicker change 联动 (vue)', () => {
   beforeEach(() => {
     ;(scrollerInstances as unknown[]).length = 0
     document.body.innerHTML = ''
@@ -59,9 +59,9 @@ describe('MdDatePicker change 联动 (vue)', () => {
 
   it('change on year column rebuilds following columns', async () => {
         const wrapper = mount({
-      components: { MdDatePicker },
+      components: { CuDatePicker },
       template: `
-        <MdDatePicker
+        <CuDatePicker
           ref="dp"
           is-view
           type="date"
@@ -76,7 +76,7 @@ describe('MdDatePicker change 联动 (vue)', () => {
       },
     })
     await realFlush(60)
-    expect(wrapper.findAll('.md-picker-column-item')).toHaveLength(3)
+    expect(wrapper.findAll('.cu-picker-column-item')).toHaveLength(3)
     onChangeSpy.mockClear()
 
     // 年列滚到 2030（第 10 项）：index 10 × 45
@@ -92,7 +92,7 @@ describe('MdDatePicker change 联动 (vue)', () => {
     const [columnIndex] = onChangeSpy.mock.calls[0]
     expect(columnIndex).toBe(0)
     // 月/日列按 2030 年重建 → 各 12/31 项
-    const columns = wrapper.findAll('.md-picker-column-item')
+    const columns = wrapper.findAll('.cu-picker-column-item')
     const monthCount = columns[1].element.querySelectorAll('.column-item').length
     expect(monthCount).toBe(12)
   })

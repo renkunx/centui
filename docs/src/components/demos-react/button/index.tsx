@@ -1,26 +1,26 @@
-import { MdButton } from 'mand-mobile-react'
+import { CuButton } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['默认', '主要', '禁用', '圆角', '朴素警告', '加载']
-const code = `<MdButton type="primary" round>主要按钮</MdButton>
-<MdButton type="warning" plain disabled>次要按钮</MdButton>`
+const code = `<CuButton type="primary" round>主要按钮</CuButton>
+<CuButton type="warning" plain disabled>次要按钮</CuButton>`
 
 export default function ButtonDemo() {
   return (
     <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
       {active => {
-        if (active === 0) return <MdButton>默认按钮</MdButton>
-        if (active === 1) return <MdButton type="primary">主要按钮</MdButton>
+        if (active === 0) return <CuButton>默认按钮</CuButton>
+        if (active === 1) return <CuButton type="primary">主要按钮</CuButton>
         if (active === 2)
           return (
             <>
-              <MdButton type="primary" disabled>主要按钮</MdButton>
-              <MdButton disabled>默认按钮</MdButton>
+              <CuButton type="primary" disabled>主要按钮</CuButton>
+              <CuButton disabled>默认按钮</CuButton>
             </>
           )
-        if (active === 3) return <MdButton type="primary" round>主要按钮</MdButton>
-        if (active === 4) return <MdButton type="warning" plain>次要按钮</MdButton>
-        return <MdButton type="primary" loading>加载中</MdButton>
+        if (active === 3) return <CuButton type="primary" round>主要按钮</CuButton>
+        if (active === 4) return <CuButton type="warning" plain>次要按钮</CuButton>
+        return <CuButton type="primary" loading>加载中</CuButton>
       }}
     </DemoCanvasReact>
   )

@@ -6,8 +6,8 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { MdPopup } from '../popup/Popup'
-import { MdIcon } from '../icon/Icon'
+import { CuPopup } from '../popup/Popup'
+import { CuIcon } from '../icon/Icon'
 
 export interface ToastProps {
   icon?: string
@@ -29,7 +29,7 @@ export interface ToastExposed {
   hide: () => void
 }
 
-export const MdToast = forwardRef<ToastExposed, ToastProps>(function MdToast(
+export const CuToast = forwardRef<ToastExposed, ToastProps>(function CuToast(
   {
     icon = '',
     iconSvg = false,
@@ -96,17 +96,17 @@ export const MdToast = forwardRef<ToastExposed, ToastProps>(function MdToast(
   }, [visible])
 
   return (
-    <div className={`md-toast ${position}`}>
-      <MdPopup value={visible} hasMask={hasMask} maskClosable={false} onShow={onShow} onHide={onHide}>
+    <div className={`cu-toast ${position}`}>
+      <CuPopup value={visible} hasMask={hasMask} maskClosable={false} onShow={onShow} onHide={onHide}>
         {children ? (
-          <div className={`md-toast-content${square ? ' square' : ''}`}>{children}</div>
+          <div className={`cu-toast-content${square ? ' square' : ''}`}>{children}</div>
         ) : (
-          <div className={`md-toast-content${square ? ' square' : ''}`}>
-            {icon ? <MdIcon name={icon} size="lg" svg={iconSvg} /> : null}
-            {content !== '' ? <div className="md-toast-text">{content}</div> : null}
+          <div className={`cu-toast-content${square ? ' square' : ''}`}>
+            {icon ? <CuIcon name={icon} size="lg" svg={iconSvg} /> : null}
+            {content !== '' ? <div className="cu-toast-text">{content}</div> : null}
           </div>
         )}
-      </MdPopup>
+      </CuPopup>
     </div>
   )
 })

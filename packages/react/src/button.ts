@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/button
+// 按需入口：@centui/react/es/button
 export * from './components/button'

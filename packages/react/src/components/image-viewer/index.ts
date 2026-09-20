@@ -1,1 +1,1 @@
-export { MdImageViewer, type ImageViewerItem, type ImageViewerProps } from './ImageViewer'
+export { CuImageViewer, type ImageViewerItem, type ImageViewerProps } from './ImageViewer'

@@ -7,9 +7,9 @@ import {
   type ReactNode,
 } from 'react'
 import { createPortal } from 'react-dom'
-import { MdPopup } from '../popup/Popup'
-import { MdIcon } from '../icon/Icon'
-import { MdActivityIndicatorRolling } from '../activity-indicator/Roller'
+import { CuPopup } from '../popup/Popup'
+import { CuIcon } from '../icon/Icon'
+import { CuActivityIndicatorRolling } from '../activity-indicator/Roller'
 
 export interface DialogBtn {
   text?: string
@@ -50,7 +50,7 @@ export interface DialogExposed {
   close: () => void
 }
 
-export const MdDialog = forwardRef<DialogExposed, DialogProps>(function MdDialog(
+export const CuDialog = forwardRef<DialogExposed, DialogProps>(function CuDialog(
   {
     value = false,
     title = '',
@@ -64,7 +64,7 @@ export const MdDialog = forwardRef<DialogExposed, DialogProps>(function MdDialog
     appendTo,
     hasMask = true,
     maskClosable = false,
-    transition = 'md-fade',
+    transition = 'cu-fade',
     preventScroll = false,
     preventScrollExclude = '',
     headerSlot,
@@ -99,8 +99,8 @@ export const MdDialog = forwardRef<DialogExposed, DialogProps>(function MdDialog
   }
 
   const dialogTree = (
-    <div ref={rootRef} className="md-dialog" {...(position ? ({ position } as object) : {})}>
-      <MdPopup
+    <div ref={rootRef} className="cu-dialog" {...(position ? ({ position } as object) : {})}>
+      <CuPopup
         value={value}
         hasMask={hasMask}
         maskClosable={maskClosable}
@@ -112,43 +112,43 @@ export const MdDialog = forwardRef<DialogExposed, DialogProps>(function MdDialog
         onShow={onShow}
         onHide={onHide}
       >
-        <div className="md-dialog-content">
+        <div className="cu-dialog-content">
           {headerSlot}
-          <div className="md-dialog-body">
+          <div className="cu-dialog-body">
             {closable ? (
-              <a role="button" className="md-dialog-close" onClick={close}>
-                <MdIcon name="close" />
+              <a role="button" className="cu-dialog-close" onClick={close}>
+                <CuIcon name="close" />
               </a>
             ) : null}
             {icon ? (
-              <div className="md-dialog-icon">
-                <MdIcon name={icon} svg={iconSvg} />
+              <div className="cu-dialog-icon">
+                <CuIcon name={icon} svg={iconSvg} />
               </div>
             ) : null}
-            {title ? <h2 className="md-dialog-title">{title}</h2> : null}
-            {children ?? <div className="md-dialog-text" dangerouslySetInnerHTML={{ __html: content }} />}
+            {title ? <h2 className="cu-dialog-title">{title}</h2> : null}
+            {children ?? <div className="cu-dialog-text" dangerouslySetInnerHTML={{ __html: content }} />}
           </div>
-          <footer className={`md-dialog-actions${layout === 'column' ? ' is-column' : ''}`}>
+          <footer className={`cu-dialog-actions${layout === 'column' ? ' is-column' : ''}`}>
             {btns.map((btn, index) => (
               <a
                 role="button"
                 key={index}
-                className={`md-dialog-btn${btn.disabled ? ' disabled' : ''}${
+                className={`cu-dialog-btn${btn.disabled ? ' disabled' : ''}${
                   !btn.disabled && btn.warning ? ' warning' : ''
                 }`}
                 onClick={() => onClickBtn(btn)}
                 onTouchMove={event => event.preventDefault()}
               >
-                {btn.loading ? <MdActivityIndicatorRolling /> : null}
+                {btn.loading ? <CuActivityIndicatorRolling /> : null}
                 {!btn.loading && btn.icon ? (
-                  <MdIcon name={btn.icon} svg={btn.iconSvg} size="md" />
+                  <CuIcon name={btn.icon} svg={btn.iconSvg} size="md" />
                 ) : null}
                 {` ${btn.text ?? ''} `}
               </a>
             ))}
           </footer>
         </div>
-      </MdPopup>
+      </CuPopup>
     </div>
   )
 

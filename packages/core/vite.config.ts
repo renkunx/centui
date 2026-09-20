@@ -3,7 +3,7 @@ import dts from 'vite-plugin-dts'
 
 /**
  * lib 构建：主入口（DOM-free）+ /web 子入口，esm + cjs 双格式。
- * React/Vue Web 端按需引 @mand-mobile/core/web；RN/小程序只引主入口。
+ * React/Vue Web 端按需引 @centui/core/web；RN/小程序只引主入口。
  */
 export default defineConfig({
   plugins: [

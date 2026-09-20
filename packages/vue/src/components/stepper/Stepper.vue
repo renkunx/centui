@@ -1,11 +1,11 @@
 <template>
-  <div class="md-stepper" :class="{ disabled }">
+  <div class="cu-stepper" :class="{ disabled }">
     <div
-      class="md-stepper-button md-stepper-button-reduce"
+      class="cu-stepper-button cu-stepper-button-reduce"
       :class="{ disabled: isMin }"
       @click="reduce"
     ></div>
-    <div class="md-stepper-number">
+    <div class="cu-stepper-number">
       <input
         :type="!isInteger ? 'number' : 'tel'"
         :size="contentLength"
@@ -17,7 +17,7 @@
       />
     </div>
     <div
-      class="md-stepper-button md-stepper-button-add"
+      class="cu-stepper-button cu-stepper-button-add"
       :class="{ disabled: isMax }"
       @click="add"
     ></div>
@@ -26,9 +26,9 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-import { warn } from '@mand-mobile/core'
+import { warn } from '@centui/core'
 
-defineOptions({ name: 'md-stepper' })
+defineOptions({ name: 'cu-stepper' })
 
 const props = withDefaults(
   defineProps<{
@@ -196,7 +196,7 @@ function checkStatus() {
 
 function checkMinMax() {
   if (Number(props.min) > Number(props.max)) {
-    warn('[md-vue-stepper] minNum is larger than maxNum')
+    warn('[cu-vue-stepper] minNum is larger than maxNum')
   }
   return Number(props.max) > Number(props.min)
 }

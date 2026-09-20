@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { MdButton, MdDialog, Dialog } from 'mand-mobile-react'
+import { CuButton, CuDialog, Dialog } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['确认对话框', '警告对话框', '成功/失败', '单例模式']
 const code = `Dialog.confirm({ title: '确认', onConfirm })
 Dialog.succeed({ title: '成功', content: '操作成功' })
-MdDialog 组件式用法见右图`
+CuDialog 组件式用法见右图`
 
 export default function DialogDemo() {
   const [show, setShow] = useState(false)
@@ -17,8 +17,8 @@ export default function DialogDemo() {
         <div style={{ padding: 16, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           {active === 0 ? (
             <>
-              <MdButton size="small" inline onClick={() => setShow(true)}>组件式对话框</MdButton>
-              <MdButton
+              <CuButton size="small" inline onClick={() => setShow(true)}>组件式对话框</CuButton>
+              <CuButton
                 size="small"
                 inline
                 onClick={() =>
@@ -26,8 +26,8 @@ export default function DialogDemo() {
                 }
               >
                 命令式 confirm
-              </MdButton>
-              <MdDialog
+              </CuButton>
+              <CuDialog
                 value={show}
                 title="对话框"
                 content="这是一个 React 对话框"
@@ -39,7 +39,7 @@ export default function DialogDemo() {
               />
             </>
           ) : active === 1 ? (
-            <MdButton
+            <CuButton
               size="small"
               inline
               onClick={() =>
@@ -47,11 +47,11 @@ export default function DialogDemo() {
               }
             >
               警告弹窗
-            </MdButton>
+            </CuButton>
           ) : active === 2 ? (
             <>
-              <MdButton size="small" inline onClick={() => setIconShow(true)}>成功弹窗</MdButton>
-              <MdDialog
+              <CuButton size="small" inline onClick={() => setIconShow(true)}>成功弹窗</CuButton>
+              <CuDialog
                 value={iconShow}
                 icon="success-color"
                 iconSvg
@@ -63,12 +63,12 @@ export default function DialogDemo() {
             </>
           ) : (
             <>
-              <MdButton size="small" inline onClick={() => Dialog.succeed({ title: '成功', content: '操作成功' })}>
+              <CuButton size="small" inline onClick={() => Dialog.succeed({ title: '成功', content: '操作成功' })}>
                 成功弹窗
-              </MdButton>
-              <MdButton size="small" inline onClick={() => Dialog.failed({ title: '失败', content: '操作失败' })}>
+              </CuButton>
+              <CuButton size="small" inline onClick={() => Dialog.failed({ title: '失败', content: '操作失败' })}>
                 失败弹窗
-              </MdButton>
+              </CuButton>
             </>
           )}
         </div>

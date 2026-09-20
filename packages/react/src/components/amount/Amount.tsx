@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { formatNumberWithSeparator, numberToChineseCapital, toFixedPrecision } from '@mand-mobile/core'
-import { Animate } from '@mand-mobile/core/web'
+import { formatNumberWithSeparator, numberToChineseCapital, toFixedPrecision } from '@centui/core'
+import { Animate } from '@centui/core/web'
 
 export interface AmountProps {
   value?: number
@@ -17,7 +17,7 @@ export interface AmountProps {
 
 const inBrowser = typeof window !== 'undefined'
 
-export function MdAmount({
+export function CuAmount({
   value = 0,
   precision = 2,
   isRoundUp = true,
@@ -71,7 +71,7 @@ export function MdAmount({
       : formatted
 
   return (
-    <span className={`md-amount${isCapital ? '' : ' numerical'}`}>
+    <span className={`cu-amount${isCapital ? '' : ' numerical'}`}>
       {isCapital ? ` ${text} ` : text}
     </span>
   )

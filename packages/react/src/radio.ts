@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/radio
+// 按需入口：@centui/react/es/radio
 export * from './components/radio'

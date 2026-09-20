@@ -1,1 +1,1 @@
-export { default as MdIcon } from './Icon.vue'
+export { default as CuIcon } from './Icon.vue'

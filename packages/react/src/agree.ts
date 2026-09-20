@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/agree
+// 按需入口：@centui/react/es/agree
 export * from './components/agree'

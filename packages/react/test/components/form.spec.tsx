@@ -4,97 +4,97 @@
 import { fireEvent, render } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import {
-  MdCheck,
-  MdCheckBox,
-  MdCheckGroup,
-  MdCheckList,
-  MdField,
-  MdFieldItem,
-  MdRadio,
-  MdRadioBox,
-  MdRadioGroup,
-  MdStepper,
-  MdSwitch,
-  MdAgree,
+  CuCheck,
+  CuCheckBox,
+  CuCheckGroup,
+  CuCheckList,
+  CuField,
+  CuFieldItem,
+  CuRadio,
+  CuRadioBox,
+  CuRadioGroup,
+  CuStepper,
+  CuSwitch,
+  CuAgree,
 } from '../../src'
 
-describe('MdSwitch (react)', () => {
+describe('CuSwitch (react)', () => {
   it('toggles via onChange callback', () => {
     const onChange = vi.fn()
-    const { container } = render(<MdSwitch value={false} onChange={onChange} />)
-    expect(container.querySelector('.md-switch')!.className).not.toContain('active')
+    const { container } = render(<CuSwitch value={false} onChange={onChange} />)
+    expect(container.querySelector('.cu-switch')!.className).not.toContain('active')
 
-    fireEvent.click(container.querySelector('.md-switch')!)
+    fireEvent.click(container.querySelector('.cu-switch')!)
     expect(onChange).toHaveBeenCalledWith(true, expect.anything())
   })
 
   it('blocks when disabled', () => {
     const onChange = vi.fn()
-    const { container } = render(<MdSwitch value disabled onChange={onChange} />)
-    fireEvent.click(container.querySelector('.md-switch')!)
+    const { container } = render(<CuSwitch value disabled onChange={onChange} />)
+    fireEvent.click(container.querySelector('.cu-switch')!)
     expect(onChange).not.toHaveBeenCalled()
-    expect(container.querySelector('.md-switch')!.className).toContain('disabled')
+    expect(container.querySelector('.cu-switch')!.className).toContain('disabled')
   })
 })
 
-describe('MdAgree (react)', () => {
+describe('CuAgree (react)', () => {
   it('toggles checked state and blocks disabled', () => {
     const onChange = vi.fn()
     const { container } = render(
-      <MdAgree value={false} onChange={onChange}>我已阅读并同意协议</MdAgree>,
+      <CuAgree value={false} onChange={onChange}>我已阅读并同意协议</CuAgree>,
     )
-    expect(container.querySelector('.md-agree-content')!.textContent).toBe('我已阅读并同意协议')
+    expect(container.querySelector('.cu-agree-content')!.textContent).toBe('我已阅读并同意协议')
 
-    fireEvent.click(container.querySelector('.md-agree-icon')!)
+    fireEvent.click(container.querySelector('.cu-agree-icon')!)
     expect(onChange).toHaveBeenCalledWith(true, expect.anything())
 
-    const disabled = render(<MdAgree disabled onChange={onChange} />)
-    fireEvent.click(disabled.container.querySelector('.md-agree-icon')!)
+    const disabled = render(<CuAgree disabled onChange={onChange} />)
+    fireEvent.click(disabled.container.querySelector('.cu-agree-icon')!)
     expect(onChange).toHaveBeenCalledTimes(1)
   })
 
   it('supports custom icon slot with checked scope', () => {
     const { container } = render(
-      <MdAgree value iconSlot={checked => <span className="custom">{String(checked)}</span>} />,
+      <CuAgree value iconSlot={checked => <span className="custom">{String(checked)}</span>} />,
     )
     expect(container.querySelector('.custom')!.textContent).toBe('true')
-    expect(container.querySelector('.md-icon-checked')).toBeNull()
+    expect(container.querySelector('.cu-icon-checked')).toBeNull()
   })
 })
 
-describe('MdStepper (react)', () => {
+describe('CuStepper (react)', () => {
   it('steps with min/max clamp and callbacks', async () => {
     const onChange = vi.fn()
     const onIncrease = vi.fn()
     const { container, rerender } = render(
-      <MdStepper value={1} min={0} max={2} onChange={onChange} onIncrease={onIncrease} />,
+      <CuStepper value={1} min={0} max={2} onChange={onChange} onIncrease={onIncrease} />,
     )
     await Promise.resolve()
 
-    const add = container.querySelector('.md-stepper-button-add')!
+    const add = container.querySelector('.cu-stepper-button-add')!
     fireEvent.click(add)
     expect(onChange).toHaveBeenLastCalledWith(2)
     expect(onIncrease).toHaveBeenCalledWith(1)
 
     // 边界：到达 max 后 add 不再触发
-    rerender(<MdStepper value={2} min={0} max={2} onChange={onChange} onIncrease={onIncrease} />)
+    rerender(<CuStepper value={2} min={0} max={2} onChange={onChange} onIncrease={onIncrease} />)
     await Promise.resolve()
-    expect(container.querySelector('.md-stepper-button-add')!.className).toContain('disabled')
-    fireEvent.click(container.querySelector('.md-stepper-button-add')!)
+    expect(container.querySelector('.cu-stepper-button-add')!.className).toContain('disabled')
+    fireEvent.click(container.querySelector('.cu-stepper-button-add')!)
     expect(onChange).toHaveBeenCalledTimes(1)
   })
 
   it('disables all operations when disabled', () => {
     const onChange = vi.fn()
-    const { container } = render(<MdStepper value={1} disabled onChange={onChange} />)
-    fireEvent.click(container.querySelector('.md-stepper-button-add')!)
-    fireEvent.click(container.querySelector('.md-stepper-button-reduce')!)
+    const { container } = render(<CuStepper value={1} disabled onChange={onChange} />)
+    fireEvent.click(container.querySelector('.cu-stepper-button-add')!)
+    fireEvent.click(container.querySelector('.cu-stepper-button-reduce')!)
     expect(onChange).not.toHaveBeenCalled()
   })
 
   it('input formats junk and clamps on blur', async () => {
     const onChange = vi.fn()
-    const { container } = render(<MdStepper value={1} isInteger min={0} onChange={onChange} />)
+    const { container } = render(<CuStepper value={1} isInteger min={0} onChange={onChange} />)
     await Promise.resolve()
     const input = container.querySelector('input')!
     fireEvent.focus(input)
@@ -106,25 +106,25 @@ describe('MdStepper (react)', () => {
 
   it('warns when min > max', () => {
     const warn = vi.spyOn(console, 'error').mockImplementation(() => {})
-    render(<MdStepper min={5} max={3} />)
+    render(<CuStepper min={5} max={3} />)
     expect(warn).toHaveBeenCalledWith(expect.stringContaining('minNum is larger than maxNum'))
     warn.mockRestore()
   })
 })
 
-describe('MdField / MdFieldItem (react)', () => {
+describe('CuField / CuFieldItem (react)', () => {
   it('renders slots and modifiers', () => {
     const { container } = render(
-      <MdField title="标题" brief="描述" action={<a>操作</a>} footer={<span>尾</span>}>
+      <CuField title="标题" brief="描述" action={<a>操作</a>} footer={<span>尾</span>}>
         <div className="content">内容</div>
-      </MdField>,
+      </CuField>,
     )
-    expect(container.querySelector('.md-field-title')!.textContent).toBe('标题')
-    expect(container.querySelector('.md-field-action')!.textContent).toBe('操作')
-    expect(container.querySelector('.md-field-footer')!.textContent).toBe('尾')
+    expect(container.querySelector('.cu-field-title')!.textContent).toBe('标题')
+    expect(container.querySelector('.cu-field-action')!.textContent).toBe('操作')
+    expect(container.querySelector('.cu-field-footer')!.textContent).toBe('尾')
     expect(container.querySelector('fieldset')!.className).not.toContain('is-plain')
 
-    const plain = render(<MdField plain disabled />)
+    const plain = render(<CuField plain disabled />)
     expect(plain.container.querySelector('fieldset')!.className).toContain('is-plain')
     expect(plain.container.querySelector('fieldset')!.className).toContain('is-disabled')
   })
@@ -132,67 +132,67 @@ describe('MdField / MdFieldItem (react)', () => {
   it('field-item inherits field disabled and blocks click', () => {
     const onClick = vi.fn()
     const { container } = render(
-      <MdField disabled>
-        <MdFieldItem title="T" onClick={onClick} />
-      </MdField>,
+      <CuField disabled>
+        <CuFieldItem title="T" onClick={onClick} />
+      </CuField>,
     )
-    expect(container.querySelector('.md-field-item')!.className).toContain('is-disabled')
-    fireEvent.click(container.querySelector('.md-field-item')!)
+    expect(container.querySelector('.cu-field-item')!.className).toContain('is-disabled')
+    fireEvent.click(container.querySelector('.cu-field-item')!)
     expect(onClick).not.toHaveBeenCalled()
   })
 
   it('field-item renders placeholder and arrow', () => {
-    const { container } = render(<MdFieldItem title="T" placeholder="占位" arrow />)
-    expect(container.querySelector('.md-field-item-placeholder')!.textContent).toBe('占位')
-    expect(container.querySelector('.md-icon-arrow')).not.toBeNull()
+    const { container } = render(<CuFieldItem title="T" placeholder="占位" arrow />)
+    expect(container.querySelector('.cu-field-item-placeholder')!.textContent).toBe('占位')
+    expect(container.querySelector('.cu-icon-arrow')).not.toBeNull()
   })
 })
 
 describe('Check 家族 (react)', () => {
   it('checkbox toggles with boolean-name inversion', () => {
     const onChange = vi.fn()
-    const { container } = render(<MdCheck name onChange={onChange} />)
-    fireEvent.click(container.querySelector('.md-check')!)
+    const { container } = render(<CuCheck name onChange={onChange} />)
+    fireEvent.click(container.querySelector('.cu-check')!)
     expect(onChange).toHaveBeenCalledWith(true)
   })
 
   it('check-box renders base box with tag when checked', () => {
     const onChange = vi.fn()
-    const { container } = render(<MdCheckBox name="a" value="a" label="选项" onChange={onChange} />)
-    expect(container.querySelector('.md-check-base-box')!.className).toContain('is-checked')
-    expect(container.querySelector('.md-tag .md-icon-right')).not.toBeNull()
+    const { container } = render(<CuCheckBox name="a" value="a" label="选项" onChange={onChange} />)
+    expect(container.querySelector('.cu-check-base-box')!.className).toContain('is-checked')
+    expect(container.querySelector('.cu-tag .cu-icon-right')).not.toBeNull()
 
-    fireEvent.click(container.querySelector('.md-check-base-box')!)
+    fireEvent.click(container.querySelector('.cu-check-base-box')!)
     expect(onChange).toHaveBeenCalledWith('')
   })
 
   it('group manages values with max and toggleAll', () => {
     const onChange = vi.fn()
     const { container } = render(
-      <MdCheckGroup value={['a']} max={1} onChange={onChange}>
-        <MdCheck name="a" />
-        <MdCheck name="b" />
-      </MdCheckGroup>,
+      <CuCheckGroup value={['a']} max={1} onChange={onChange}>
+        <CuCheck name="a" />
+        <CuCheck name="b" />
+      </CuCheckGroup>,
     )
-    fireEvent.click(container.querySelectorAll('.md-check')[1])
+    fireEvent.click(container.querySelectorAll('.cu-check')[1])
     // max=1 已满 → 不派发
     expect(onChange).not.toHaveBeenCalled()
 
     const group2 = render(
-      <MdCheckGroup value={['a', 'b']} onChange={onChange}>
-        <MdCheck name="a" />
-        <MdCheck name="b" />
-        <MdCheck name="c" disabled />
-      </MdCheckGroup>,
+      <CuCheckGroup value={['a', 'b']} onChange={onChange}>
+        <CuCheck name="a" />
+        <CuCheck name="b" />
+        <CuCheck name="c" disabled />
+      </CuCheckGroup>,
     )
-    const group = group2.container.querySelector('.md-check-group')!
+    const group = group2.container.querySelector('.cu-check-group')!
     expect(group).not.toBeNull()
   })
 
   it('check-list renders options and toggles', () => {
     const onChange = vi.fn()
     const { container } = render(
-      <MdCheckList
+      <CuCheckList
         value={['a']}
         options={[
           { value: 'a', label: '选项一' },
@@ -201,9 +201,9 @@ describe('Check 家族 (react)', () => {
         onChange={onChange}
       />,
     )
-    const items = container.querySelectorAll('.md-check-item')
+    const items = container.querySelectorAll('.cu-check-item')
     expect(items[0].className).toContain('is-checked')
-    expect(items[1].querySelector('.md-cell-item-brief')!.textContent).toBe('描述')
+    expect(items[1].querySelector('.cu-cell-item-brief')!.textContent).toBe('描述')
 
     fireEvent.click(items[1])
     expect(onChange).toHaveBeenCalledWith(['a', 'b'])
@@ -213,30 +213,30 @@ describe('Check 家族 (react)', () => {
 describe('Radio 家族 (react)', () => {
   it('radio selects without deselect', () => {
     const onChange = vi.fn()
-    const { container } = render(<MdRadio name="day" value="day" onChange={onChange} />)
-    expect(container.querySelector('.md-radio')!.className).toContain('is-checked')
+    const { container } = render(<CuRadio name="day" value="day" onChange={onChange} />)
+    expect(container.querySelector('.cu-radio')!.className).toContain('is-checked')
 
-    fireEvent.click(container.querySelector('.md-radio')!)
+    fireEvent.click(container.querySelector('.cu-radio')!)
     expect(onChange).toHaveBeenCalledWith('day')
   })
 
   it('radio-group emits selected name', () => {
     const onChange = vi.fn()
     const { container } = render(
-      <MdRadioGroup value="a" onChange={onChange}>
-        <MdRadio name="a" />
-        <MdRadio name="b" />
-      </MdRadioGroup>,
+      <CuRadioGroup value="a" onChange={onChange}>
+        <CuRadio name="a" />
+        <CuRadio name="b" />
+      </CuRadioGroup>,
     )
-    fireEvent.click(container.querySelectorAll('.md-radio')[1])
+    fireEvent.click(container.querySelectorAll('.cu-radio')[1])
     expect(onChange).toHaveBeenCalledWith('b')
   })
 
   it('radio-box renders and emits', () => {
     const onChange = vi.fn()
-    const { container } = render(<MdRadioBox name="b" value="a" onChange={onChange} />)
-    expect(container.querySelector('.md-radio-box, [class*="md-radio-box"]')).not.toBeNull()
-    fireEvent.click(container.querySelector('.md-check-base-box')!)
+    const { container } = render(<CuRadioBox name="b" value="a" onChange={onChange} />)
+    expect(container.querySelector('.cu-radio-box, [class*="cu-radio-box"]')).not.toBeNull()
+    fireEvent.click(container.querySelector('.cu-check-base-box')!)
     expect(onChange).toHaveBeenCalledWith('b')
   })
 })

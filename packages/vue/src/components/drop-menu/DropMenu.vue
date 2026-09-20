@@ -1,6 +1,6 @@
 <template>
-  <div class="md-drop-menu">
-    <div class="md-drop-menu-bar">
+  <div class="cu-drop-menu">
+    <div class="cu-drop-menu-bar">
       <div
         v-for="(item, index) in data"
         :key="index"
@@ -15,7 +15,7 @@
         <span v-text="getBarItemText(item, index)"></span>
       </div>
     </div>
-    <MdPopup
+    <CuPopup
       v-model="isPopupShow"
       position="top"
       prevent-scroll
@@ -24,8 +24,8 @@
       @hide="$emit('hide')"
       @before-hide="activeMenuBarIndex = -1"
     >
-      <div class="md-drop-menu-list">
-        <MdRadioList
+      <div class="cu-drop-menu-list">
+        <CuRadioList
           :model-value="selectedMenuListValue[activeMenuBarIndex]"
           :options="activeMenuListData"
           :is-slot-scope="hasSlot"
@@ -35,19 +35,19 @@
           <template v-if="hasSlot" #default="{ option }">
             <slot :option="option"></slot>
           </template>
-        </MdRadioList>
+        </CuRadioList>
       </div>
-    </MdPopup>
+    </CuPopup>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref, useSlots, watch } from 'vue'
-import MdPopup from '../popup/Popup.vue'
-import MdRadioList from '../radio-list/RadioList.vue'
+import CuPopup from '../popup/Popup.vue'
+import CuRadioList from '../radio-list/RadioList.vue'
 import type { RadioListOption } from '../radio-list/RadioList.vue'
 
-defineOptions({ name: 'md-drop-menu' })
+defineOptions({ name: 'cu-drop-menu' })
 
 export interface DropMenuItem {
   text?: string

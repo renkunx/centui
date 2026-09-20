@@ -1,7 +1,7 @@
 <template>
-  <div ref="root" class="md-codebox-wrapper">
+  <div ref="root" class="cu-codebox-wrapper">
     <div
-      class="md-codebox"
+      class="cu-codebox"
       :class="{
         'is-disabled': disabled,
         'is-justify': justify,
@@ -13,18 +13,18 @@
           v-for="i in num"
           :key="i"
           :class="[
-            'md-codebox-box',
+            'cu-codebox-box',
             i === code.length + 1 && focused && 'is-active',
             code.charAt(i - 1) !== '' && 'is-filled',
             isErrorStyle && 'is-error',
           ]"
         >
           <template v-if="code.charAt(i - 1)">
-            <template v-if="mask"><i class="md-codebox-dot"></i></template>
+            <template v-if="mask"><i class="cu-codebox-dot"></i></template>
             <template v-else>{{ code.charAt(i - 1) }}</template>
           </template>
           <template v-if="i === code.length + 1 && focused">
-            <i class="md-codebox-blink"></i>
+            <i class="cu-codebox-blink"></i>
           </template>
         </span>
       </template>
@@ -36,7 +36,7 @@
           :value="code"
           readonly
           disabled
-          :class="['md-codebox-holder', focused && 'is-active']"
+          :class="['cu-codebox-holder', focused && 'is-active']"
         />
         <input
           v-else
@@ -45,7 +45,7 @@
           :value="code"
           readonly
           disabled
-          :class="['md-codebox-holder', focused && 'is-active']"
+          :class="['cu-codebox-holder', focused && 'is-active']"
         />
       </template>
     </div>
@@ -56,16 +56,16 @@
         :value="code"
         :type="inputType"
         :maxlength="maxlength"
-        class="md-codebox-input"
+        class="cu-codebox-input"
         @input="onInputChange"
         @focus="nativeFocus"
         @blur="nativeBlur"
       />
     </form>
-    <MdNumberKeyboard
+    <CuNumberKeyboard
       v-show="!system"
       ref="keyboard"
-      class="md-codebox-keyboard"
+      class="cu-codebox-keyboard"
       :type="Number(maxlength) > 0 ? 'simple' : 'professional'"
       :ok-text="okText"
       :disorder="disorder"
@@ -75,15 +75,15 @@
       @delete="onDelete"
       @enter="onEnter"
       @confirm="onConfirm"
-    ></MdNumberKeyboard>
+    ></CuNumberKeyboard>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch, nextTick } from 'vue'
-import MdNumberKeyboard from '../number-keyboard/NumberKeyboard.vue'
+import CuNumberKeyboard from '../number-keyboard/NumberKeyboard.vue'
 
-defineOptions({ name: 'md-codebox' })
+defineOptions({ name: 'cu-codebox' })
 
 const props = withDefaults(
   defineProps<{
@@ -128,7 +128,7 @@ const emit = defineEmits<{
 
 const root = ref<HTMLElement>()
 const input = ref<HTMLInputElement>()
-const keyboard = ref<InstanceType<typeof MdNumberKeyboard>>()
+const keyboard = ref<InstanceType<typeof CuNumberKeyboard>>()
 
 const code = ref('')
 const focused = ref(props.autofocus)

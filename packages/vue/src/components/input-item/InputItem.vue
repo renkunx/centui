@@ -1,7 +1,7 @@
 <template>
-  <MdFieldItem
+  <CuFieldItem
     ref="root"
-    class="md-input-item"
+    class="cu-input-item"
     :class="[
       isHighlight ? 'is-highlight' : '',
       isTitleLatent ? 'is-title-latent' : '',
@@ -24,7 +24,7 @@
     <!-- Native Input -->
     <template v-if="!isVirtualKeyboard">
       <input
-        class="md-input-item-input"
+        class="cu-input-item-input"
         :type="inputType"
         :name="String(name)"
         :value="inputBindValue"
@@ -43,7 +43,7 @@
     <!-- Fake Input -->
     <template v-else>
       <div
-        class="md-input-item-fake"
+        class="cu-input-item-fake"
         :class="{
           'is-focus': isInputFocus,
           'is-waiting': !isInputEditing,
@@ -55,7 +55,7 @@
         <span v-text="inputValue"></span>
         <span
           v-if="inputValue === '' && inputPlaceholder !== ''"
-          class="md-input-item-fake-placeholder"
+          class="cu-input-item-fake-placeholder"
           v-text="inputPlaceholder"
         ></span>
       </div>
@@ -65,53 +65,53 @@
       <div
         v-if="clearable && !isDisabled && !readonly"
         v-show="!isInputEmpty && isInputFocus"
-        class="md-input-item-clear"
+        class="cu-input-item-clear"
         @click="clearInput"
       >
-        <MdIcon name="clear"></MdIcon>
+        <CuIcon name="clear"></CuIcon>
       </div>
       <slot name="right"></slot>
     </template>
 
     <template #children>
-      <div v-if="hasInputError" class="md-input-item-msg">
+      <div v-if="hasInputError" class="cu-input-item-msg">
         <p v-if="error !== ''" v-text="error"></p>
         <slot v-else name="error"></slot>
       </div>
-      <div v-if="hasInputBrief && !hasInputError" class="md-input-item-brief">
+      <div v-if="hasInputBrief && !hasInputError" class="cu-input-item-brief">
         <p v-if="brief !== ''" v-text="brief"></p>
         <slot v-else name="brief"></slot>
       </div>
-      <MdNumberKeyboard
+      <CuNumberKeyboard
         v-if="isVirtualKeyboard && !virtualKeyboardVm"
         ref="numberKeyboard"
         :id="`${name}-number-keyboard`"
-        class="md-input-item-number-keyboard"
+        class="cu-input-item-number-keyboard"
         :ok-text="virtualKeyboardOkText"
         :disorder="virtualKeyboardDisorder"
         @enter="onNumberKeyBoardEnter"
         @delete="onNumberKeyBoardDelete"
         @confirm="onNumberKeyBoardConfirm"
-      ></MdNumberKeyboard>
+      ></CuNumberKeyboard>
     </template>
-  </MdFieldItem>
+  </CuFieldItem>
 </template>
 
 <script setup lang="ts">
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, useSlots, watch } from 'vue'
-import { randomId } from '@mand-mobile/core'
+import { randomId } from '@centui/core'
 import {
   formatValueByGapRule,
   formatValueByGapStep,
   trimValue,
   type FormattedValue,
-} from '@mand-mobile/core'
-import MdFieldItem from '../field-item/FieldItem.vue'
-import MdIcon from '../icon/Icon.vue'
-import MdNumberKeyboard from '../number-keyboard/NumberKeyboard.vue'
+} from '@centui/core'
+import CuFieldItem from '../field-item/FieldItem.vue'
+import CuIcon from '../icon/Icon.vue'
+import CuNumberKeyboard from '../number-keyboard/NumberKeyboard.vue'
 import { getCursorsPosition, setCursorsPosition } from './cursor'
 
-defineOptions({ name: 'md-input-item' })
+defineOptions({ name: 'cu-input-item' })
 
 const props = withDefaults(
   defineProps<{
@@ -187,14 +187,14 @@ const emit = defineEmits<{
 
 const rootField = inject<{ disabled?: boolean } | null>('rootField', null)
 const root = ref<{ $el: HTMLElement }>()
-const numberKeyboard = ref<InstanceType<typeof MdNumberKeyboard>>()
+const numberKeyboard = ref<InstanceType<typeof CuNumberKeyboard>>()
 
 const name = props.name ?? randomId('input-item')
 
 const inputValue = ref('')
 const inputBindValue = ref('')
 const inputNumberKeyboard = ref<
-  InstanceType<typeof MdNumberKeyboard> | { $el?: HTMLElement } | null
+  InstanceType<typeof CuNumberKeyboard> | { $el?: HTMLElement } | null
 >(null)
 const isInputFocus = ref(false)
 const isInputEditing = ref(false)
@@ -512,7 +512,7 @@ function focus() {
   if (props.isVirtualKeyboard) {
     onFakeInputClick()
   } else {
-    root.value?.$el.querySelector<HTMLInputElement>('.md-input-item-input')?.focus()
+    root.value?.$el.querySelector<HTMLInputElement>('.cu-input-item-input')?.focus()
     setTimeout(() => {
       isInputFocus.value = true
     }, 200)
@@ -523,7 +523,7 @@ function blur() {
   if (props.isVirtualKeyboard) {
     blurFakeInput()
   } else {
-    root.value?.$el.querySelector<HTMLInputElement>('.md-input-item-input')?.blur()
+    root.value?.$el.querySelector<HTMLInputElement>('.cu-input-item-input')?.blur()
   }
 }
 

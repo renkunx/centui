@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MdTabPicker, MdButton } from 'mand-mobile'
+import { CuTabPicker, CuButton } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['省市级联']
-const code = `<MdTabPicker v-model="show" :data="data" @change="onChange" />`
+const code = `<CuTabPicker v-model="show" :data="data" @change="onChange" />`
 const show = ref(false)
 const result = ref('')
 const data = {
@@ -33,9 +33,9 @@ function onChange(payload: { values: Array<string | number> }) {
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="tab-picker-demo">
-        <MdButton type="primary" inline round @click="show = true">打开联动选择</MdButton>
+        <CuButton type="primary" inline round @click="show = true">打开联动选择</CuButton>
         <p v-if="result" class="tab-picker-demo-result">{{ result }}</p>
-        <MdTabPicker v-model="show" :data="data" title="请选择地区" @change="onChange" />
+        <CuTabPicker v-model="show" :data="data" title="请选择地区" @change="onChange" />
       </div>
     </template>
   </DemoCanvas>

@@ -1,9 +1,9 @@
-import { MdActionBar, type ActionBarAction } from 'mand-mobile-react'
+import { CuActionBar, type ActionBarAction } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['单个按钮', '双按钮', '含文本', '禁用']
-const code = `<MdActionBar actions={actions} />
-<MdActionBar actions={actions}>文本区域</MdActionBar>`
+const code = `<CuActionBar actions={actions} />
+<CuActionBar actions={actions}>文本区域</CuActionBar>`
 const single: ActionBarAction[] = [{ text: '主要按钮' }]
 const double: ActionBarAction[] = [{ text: '次要按钮' }, { text: '主要按钮' }]
 const disabled: ActionBarAction[] = [{ text: '禁用按钮', disabled: true }]
@@ -13,17 +13,17 @@ export default function ActionBarDemo() {
   return (
     <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
       {active => {
-        if (active === 0) return <MdActionBar actions={single} style={relative} />
-        if (active === 1) return <MdActionBar actions={double} style={relative} />
+        if (active === 0) return <CuActionBar actions={single} style={relative} />
+        if (active === 1) return <CuActionBar actions={double} style={relative} />
         if (active === 2)
           return (
-            <MdActionBar actions={double} style={relative}>
+            <CuActionBar actions={double} style={relative}>
               <p style={{ fontSize: 24, color: '#999' }}>
                 合计：<b style={{ color: '#111' }}>¥128.00</b>
               </p>
-            </MdActionBar>
+            </CuActionBar>
           )
-        return <MdActionBar actions={disabled} style={relative} />
+        return <CuActionBar actions={disabled} style={relative} />
       }}
     </DemoCanvasReact>
   )

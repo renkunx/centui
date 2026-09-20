@@ -6,7 +6,7 @@ import {
   useImperativeHandle,
   type ReactNode,
 } from 'react'
-import { MdTabBar, type TabBarItem, type TabBarExposed } from './TabBar'
+import { CuTabBar, type TabBarItem, type TabBarExposed } from './TabBar'
 import type { TabPaneRegistration } from './TabPane'
 import { TabsContext, type TabsContextValue } from './context'
 
@@ -23,7 +23,7 @@ export interface TabsExposed {
   reflowTabBar: () => void
 }
 
-export const MdTabs = forwardRef<TabsExposed, TabsProps>(function MdTabs(
+export const CuTabs = forwardRef<TabsExposed, TabsProps>(function CuTabs(
   { value, hasInk = true, inkLength = 25, immediate = false, children, onChange },
   ref,
 ) {
@@ -86,8 +86,8 @@ export const MdTabs = forwardRef<TabsExposed, TabsProps>(function MdTabs(
 
   return (
     <TabsContext.Provider value={ctx}>
-      <div className="md-tabs">
-        <MdTabBar
+      <div className="cu-tabs">
+        <CuTabBar
           ref={tabBarRef}
           items={menus}
           value={currentName}
@@ -100,7 +100,7 @@ export const MdTabs = forwardRef<TabsExposed, TabsProps>(function MdTabs(
             onChange?.(tab)
           }}
         />
-        <div className="md-tabs-content">{children}</div>
+        <div className="cu-tabs-content">{children}</div>
       </div>
     </TabsContext.Provider>
   )

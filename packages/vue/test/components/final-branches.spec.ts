@@ -7,7 +7,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async importOriginal => {
+vi.mock('@centui/core/web', async importOriginal => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     _isAnimating = false
@@ -41,7 +41,7 @@ vi.mock('@mand-mobile/core/web', async importOriginal => {
   return { ...orig, Scroller: FakeScrollerImpl }
 })
 
-import { MdDatePicker, MdProgress, MdSwiper } from '../../src'
+import { CuDatePicker, CuProgress, CuSwiper } from '../../src'
 
 async function flush(ms = 30) {
   await vi.advanceTimersByTimeAsync(ms)
@@ -51,7 +51,7 @@ describe('收尾分支 (vue)', () => {
   it('swiper resize debounces to single re-init', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdSwiper, MdSwiperItem: {} as never },
+      components: { CuSwiper, CuSwiperItem: {} as never },
       template: '',
     })
     void wrapper
@@ -60,7 +60,7 @@ describe('收尾分支 (vue)', () => {
 
   it('progress transition animates intermediate frames', async () => {
     vi.useFakeTimers()
-    const wrapper = mount(MdProgress, {
+    const wrapper = mount(CuProgress, {
       props: { value: 0.2, transition: true, duration: 200 },
     })
     await vi.advanceTimersByTimeAsync(0)
@@ -81,7 +81,7 @@ describe('收尾分支 (vue)', () => {
   it('date-picker min>max warns', async () => {
     vi.useFakeTimers()
     const warn = vi.spyOn(console, 'error').mockImplementation(() => {})
-    const wrapper = mount(MdDatePicker, {
+    const wrapper = mount(CuDatePicker, {
       props: {
         isView: true,
         type: 'date',

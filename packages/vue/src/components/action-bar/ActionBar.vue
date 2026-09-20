@@ -1,14 +1,14 @@
 <template>
-  <div class="md-action-bar">
-    <div class="md-action-bar-container">
-      <div v-if="hasSlots" class="md-action-bar-text">
+  <div class="cu-action-bar">
+    <div class="cu-action-bar-container">
+      <div v-if="hasSlots" class="cu-action-bar-text">
         <slot></slot>
       </div>
-      <div class="md-action-bar-group">
-        <MdButton
+      <div class="cu-action-bar-group">
+        <CuButton
           v-for="(item, index) in coerceActions"
           :key="index"
-          class="md-action-bar-button"
+          class="cu-action-bar-button"
           :type="item.type || (item.disabled ? 'disabled' : 'primary')"
           :plain="item.plain || index !== coerceActions.length - 1"
           :round="item.round"
@@ -19,7 +19,7 @@
           @click="onBtnClick($event, item)"
         >
           {{ item.text }}
-        </MdButton>
+        </CuButton>
       </div>
     </div>
   </div>
@@ -27,9 +27,9 @@
 
 <script setup lang="ts">
 import { computed, useSlots, Comment, Fragment, Text, type VNode } from 'vue'
-import MdButton from '../button/Button.vue'
+import CuButton from '../button/Button.vue'
 
-defineOptions({ name: 'md-action-bar' })
+defineOptions({ name: 'cu-action-bar' })
 
 export interface ActionBarAction {
   text?: string

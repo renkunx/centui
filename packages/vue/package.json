@@ -1,5 +1,5 @@
 {
-  "name": "mand-mobile",
+  "name": "centui",
   "version": "3.0.0-alpha.0",
   "description": "A Vue 3 based mobile UI toolkit, the successor of mand-mobile v2",
   "license": "Apache-2.0",
@@ -181,13 +181,13 @@
     "playground": "vite playground"
   },
   "dependencies": {
-    "@mand-mobile/core": "workspace:*"
+    "@centui/core": "workspace:*"
   },
   "peerDependencies": {
     "vue": "^3.4.0"
   },
   "devDependencies": {
-    "@mand-mobile/styles": "workspace:*",
+    "@centui/styles": "workspace:*",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vitest/coverage-istanbul": "^5.0.0",
     "@vue/test-utils": "^2.4.6",

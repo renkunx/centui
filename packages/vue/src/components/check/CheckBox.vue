@@ -1,6 +1,6 @@
 <template>
-  <MdCheckBaseBox
-    class="md-check-box"
+  <CuCheckBaseBox
+    class="cu-check-box"
     :label="label"
     :is-checked="isChecked"
     :disabled="disabled"
@@ -8,14 +8,14 @@
     @click="onClick"
   >
     <slot>{{ label }}</slot>
-  </MdCheckBaseBox>
+  </CuCheckBaseBox>
 </template>
 
 <script setup lang="ts">
-import MdCheckBaseBox from '../check-base/CheckBoxBase.vue'
+import CuCheckBaseBox from '../check-base/CheckBoxBase.vue'
 import { useCheckDelegate } from './shared'
 
-defineOptions({ name: 'md-check-box' })
+defineOptions({ name: 'cu-check-box' })
 
 const props = withDefaults(
   defineProps<{

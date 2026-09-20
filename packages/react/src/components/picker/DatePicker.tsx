@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type ReactNode } from 'react'
-import { warn } from '@mand-mobile/core'
+import { warn } from '@centui/core'
 import {
   buildDateColumns,
   formatDate,
@@ -7,8 +7,8 @@ import {
   type DateColumnItem,
   type DatePickerColumnOptions,
   type PrevColumnRef,
-} from '@mand-mobile/core'
-import { MdPicker, type PickerColumnItem } from './Picker'
+} from '@centui/core'
+import { CuPicker, type PickerColumnItem } from './Picker'
 
 export interface DatePickerProps {
   value?: boolean
@@ -41,8 +41,8 @@ export interface DatePickerProps {
   onChangeValue?: (value: boolean) => void
 }
 
-export const MdDatePicker = forwardRef<{ getFormatDate: (format?: string) => string }, DatePickerProps>(
-  function MdDatePicker({
+export const CuDatePicker = forwardRef<{ getFormatDate: (format?: string) => string }, DatePickerProps>(
+  function CuDatePicker({
   type = 'date',
   customTypes,
   minDate,
@@ -140,8 +140,8 @@ export const MdDatePicker = forwardRef<{ getFormatDate: (format?: string) => str
   useImperativeHandle(ref, () => ({ getFormatDate }), [pickerRef])
 
   return (
-    <div className={`md-date-picker ${type}`}>
-      <MdPicker
+    <div className={`cu-date-picker ${type}`}>
+      <CuPicker
         {...pickerProps}
         ref={pickerRef as never}
         data={columnData as unknown as PickerColumnItem[][]}
@@ -157,10 +157,10 @@ export const MdDatePicker = forwardRef<{ getFormatDate: (format?: string) => str
         }}
         onHide={onHide}
         onChangeValue={onChangeValue}
-      ></MdPicker>
+      ></CuPicker>
     </div>
   )
 })
 
-export { MdPicker }
+export { CuPicker }
 export type { PickerColumnItem }

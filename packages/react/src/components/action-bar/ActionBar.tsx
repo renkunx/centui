@@ -1,5 +1,5 @@
 import { forwardRef, type MouseEvent, type ReactNode } from 'react'
-import { MdButton } from '../button/Button'
+import { CuButton } from '../button/Button'
 
 export interface ActionBarAction {
   text?: string
@@ -20,7 +20,7 @@ export interface ActionBarProps {
   onClick?: (event: MouseEvent<HTMLButtonElement>, action: ActionBarAction) => void
 }
 
-export const MdActionBar = forwardRef<HTMLDivElement, ActionBarProps>(function MdActionBar(
+export const CuActionBar = forwardRef<HTMLDivElement, ActionBarProps>(function CuActionBar(
   { actions = [], children, onClick },
   ref,
 ) {
@@ -29,14 +29,14 @@ export const MdActionBar = forwardRef<HTMLDivElement, ActionBarProps>(function M
   const hasSlots = !!(children && (!Array.isArray(children) || children.length))
 
   return (
-    <div className="md-action-bar" ref={ref}>
-      <div className="md-action-bar-container">
-        {hasSlots ? <div className="md-action-bar-text">{children}</div> : null}
-        <div className="md-action-bar-group">
+    <div className="cu-action-bar" ref={ref}>
+      <div className="cu-action-bar-container">
+        {hasSlots ? <div className="cu-action-bar-text">{children}</div> : null}
+        <div className="cu-action-bar-group">
           {coerceActions.map((item, index) => (
-            <MdButton
+            <CuButton
               key={index}
-              className="md-action-bar-button"
+              className="cu-action-bar-button"
               type={item.type || (item.disabled ? 'disabled' : 'primary')}
               plain={item.plain || index !== coerceActions.length - 1}
               round={item.round}
@@ -50,7 +50,7 @@ export const MdActionBar = forwardRef<HTMLDivElement, ActionBarProps>(function M
               }}
             >
               {item.text}
-            </MdButton>
+            </CuButton>
           ))}
         </div>
       </div>

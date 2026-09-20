@@ -1,1 +1,1 @@
-export { MdActionBar, type ActionBarAction, type ActionBarProps } from './ActionBar'
+export { CuActionBar, type ActionBarAction, type ActionBarProps } from './ActionBar'

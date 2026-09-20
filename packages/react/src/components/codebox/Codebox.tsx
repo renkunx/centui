@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { MdNumberKeyboard, type NumberKeyboardExposed } from '../number-keyboard/NumberKeyboard'
+import { CuNumberKeyboard, type NumberKeyboardExposed } from '../number-keyboard/NumberKeyboard'
 
 export interface CodeboxProps {
   value?: string
@@ -35,7 +35,7 @@ export interface CodeboxExposed {
   blur: () => void
 }
 
-export const MdCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function MdCodebox(
+export const CuCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function CuCodebox(
   {
     value = '',
     maxlength = 4,
@@ -172,7 +172,7 @@ export const MdCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function MdCod
       <span
         key={i}
         className={[
-          'md-codebox-box',
+          'cu-codebox-box',
           isActive ? 'is-active' : '',
           isFilled ? 'is-filled' : '',
           isErrorStyle ? 'is-error' : '',
@@ -181,17 +181,17 @@ export const MdCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function MdCod
           .join(' ')}
       >
         {code.charAt(i - 1) ? (
-          mask ? <i className="md-codebox-dot" /> : code.charAt(i - 1)
+          mask ? <i className="cu-codebox-dot" /> : code.charAt(i - 1)
         ) : null}
-        {i === code.length + 1 && focused ? <i className="md-codebox-blink" /> : null}
+        {i === code.length + 1 && focused ? <i className="cu-codebox-blink" /> : null}
       </span>,
     )
   }
 
   return (
-    <div ref={rootRef} className="md-codebox-wrapper">
+    <div ref={rootRef} className="cu-codebox-wrapper">
       <div
-        className={`md-codebox${disabled ? ' is-disabled' : ''}${justify ? ' is-justify' : ''}`}
+        className={`cu-codebox${disabled ? ' is-disabled' : ''}${justify ? ' is-justify' : ''}`}
         onClick={() => {
           if (!disabled) {
             setFocused(true)
@@ -211,7 +211,7 @@ export const MdCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function MdCod
             value={code}
             readOnly
             disabled
-            className={`md-codebox-holder${focused ? ' is-active' : ''}`}
+            className={`cu-codebox-holder${focused ? ' is-active' : ''}`}
           />
         )}
       </div>
@@ -229,7 +229,7 @@ export const MdCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function MdCod
           defaultValue={code}
           type={inputType}
           maxLength={maxLengthNum}
-          className="md-codebox-input"
+          className="cu-codebox-input"
           onInput={onNativeInput}
           onChange={onNativeInput as never}
           onFocus={() => onFocus?.()}
@@ -239,10 +239,10 @@ export const MdCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function MdCod
           }}
         />
       </form>
-      <MdNumberKeyboard
+      <CuNumberKeyboard
         ref={keyboardRef}
         style={{ display: !system ? undefined : 'none' }}
-        className="md-codebox-keyboard"
+        className="cu-codebox-keyboard"
         type={maxLengthNum > 0 ? 'simple' : 'professional'}
         okText={okText}
         disorder={disorder}

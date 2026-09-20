@@ -7,14 +7,14 @@ export interface DetailItemProps {
   children?: ReactNode
 }
 
-export const MdDetailItem = forwardRef<HTMLDivElement, DetailItemProps>(function MdDetailItem(
+export const CuDetailItem = forwardRef<HTMLDivElement, DetailItemProps>(function CuDetailItem(
   { title = '', content = '', bold = false, children },
   ref,
 ) {
   return (
-    <div className={`md-detail-item${bold ? ' is-bold' : ''}`} ref={ref}>
-      <div className="md-detail-title">{title}</div>
-      <div className="md-detail-content">{children ?? content}</div>
+    <div className={`cu-detail-item${bold ? ' is-bold' : ''}`} ref={ref}>
+      <div className="cu-detail-title">{title}</div>
+      <div className="cu-detail-content">{children ?? content}</div>
     </div>
   )
 })

@@ -1,8 +1,8 @@
 <template>
   <svg
     v-if="svg"
-    class="md-icon icon-svg"
-    :class="[`md-icon-${name}`, size]"
+    class="cu-icon icon-svg"
+    :class="[`cu-icon-${name}`, size]"
     :style="{ fill: color }"
     @click="$emit('click', $event)"
   >
@@ -10,8 +10,8 @@
   </svg>
   <i
     v-else-if="name"
-    class="md-icon icon-font"
-    :class="[`md-icon-${name}`, name, size]"
+    class="cu-icon icon-font"
+    :class="[`cu-icon-${name}`, name, size]"
     :style="{ color }"
     @click="$emit('click', $event)"
   ></i>
@@ -21,7 +21,7 @@
 import { onMounted } from 'vue'
 import { loadSprite } from './load-sprite'
 
-defineOptions({ name: 'md-icon' })
+defineOptions({ name: 'cu-icon' })
 
 withDefaults(
   defineProps<{

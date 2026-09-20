@@ -1,10 +1,10 @@
 <template>
   <div
     ref="root"
-    class="md-steps"
+    class="cu-steps"
     :class="{
-      'md-steps-vertical': direction === 'vertical',
-      'md-steps-horizontal': direction === 'horizontal',
+      'cu-steps-vertical': direction === 'vertical',
+      'cu-steps-horizontal': direction === 'horizontal',
       'vertical-adaptive': direction === 'vertical' && verticalAdaptive,
       'no-current': currentLength % 1 !== 0,
     }"
@@ -34,7 +34,7 @@
               name="current"
               :index="index"
             ></slot>
-            <MdIcon v-else name="success"></MdIcon>
+            <CuIcon v-else name="success"></CuIcon>
           </template>
           <template v-else>
             <slot
@@ -77,9 +77,9 @@
 
 <script setup lang="ts">
 import { nextTick, onMounted, onUpdated, ref, watch } from 'vue'
-import MdIcon from '../icon/Icon.vue'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-steps' })
+defineOptions({ name: 'cu-steps' })
 
 export interface StepItem {
   name?: string

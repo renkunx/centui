@@ -1,1 +1,1 @@
-export { default as MdResultPage, type ResultPageButton } from './ResultPage.vue'
+export { default as CuResultPage, type ResultPageButton } from './ResultPage.vue'

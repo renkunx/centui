@@ -43,7 +43,7 @@
   "slots": [
     {
       "name": "default",
-      "desc": "MdTabPane 子组件列表"
+      "desc": "CuTabPane 子组件列表"
     }
   ],
   "methods": [

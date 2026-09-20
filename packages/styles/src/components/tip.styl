@@ -1,12 +1,12 @@
 /* Extracted from legacy/components/tip — do not edit by hand; re-run scripts/extract.mjs */
 /* --- tip.vue --- */
-.md-tip
+.cu-tip
   position relative
   display inline-block
   // max-width 400px
   z-index tip-zindex
 
-.md-tip-content
+.cu-tip-content
   clearfix()
   position relative
   padding tip-padding
@@ -22,7 +22,7 @@
     margin-top 2px
 
 
-.md-tip-bg
+.cu-tip-bg
   position absolute
   absolute-pos()
   border-radius tip-radius
@@ -41,18 +41,18 @@
     border-width 10px 11px 0 11px
     border-color tip-fill transparent transparent transparent
 
-.md-tip
+.cu-tip
   &.has-close
-    .md-tip-content
+    .cu-tip-content
       padding-right 60px
   &.is-bottom
-    .md-tip-bg::after
+    .cu-tip-bg::after
       bottom auto
       top -10px
       border-width 0 11px 10px 11px
       border-color transparent transparent tip-fill transparent
   &.is-left
-    .md-tip-bg::after
+    .cu-tip-bg::after
       top 50%
       right -6px
       left auto
@@ -60,14 +60,14 @@
       border-width 11px 0 11px 10px
       border-color transparent transparent transparent tip-fill
   &.is-right
-    .md-tip-bg::after
+    .cu-tip-bg::after
       top 50%
       left 4px
       margin-top -11px
       border-width 11px 10px 11px 0
       border-color transparent tip-fill transparent transparent
 
-  .md-icon.md-icon-close
+  .cu-icon.cu-icon-close
     position absolute
     right 16px
     top 50%

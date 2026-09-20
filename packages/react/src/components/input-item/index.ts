@@ -1,1 +1,1 @@
-export { MdInputItem, type InputItemProps, type InputItemExposed } from './InputItem'
+export { CuInputItem, type InputItemProps, type InputItemExposed } from './InputItem'

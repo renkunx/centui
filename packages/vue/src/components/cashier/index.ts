@@ -1,4 +1,4 @@
-export { default as MdCashier, type CashierScene, type CashierSceneOption } from './Cashier.vue'
-export { default as MdCashierChannel, type CashierChannel } from './CashierChannel.vue'
-export { default as MdCashierChannelButton } from './CashierChannelButton.vue'
-export { default as MdCashierChannelItem } from './CashierChannelItem.vue'
+export { default as CuCashier, type CashierScene, type CashierSceneOption } from './Cashier.vue'
+export { default as CuCashierChannel, type CashierChannel } from './CashierChannel.vue'
+export { default as CuCashierChannelButton } from './CashierChannelButton.vue'
+export { default as CuCashierChannelItem } from './CashierChannelItem.vue'

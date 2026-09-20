@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { MdSlider } from 'mand-mobile-react'
+import { CuSlider } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['基础', '范围选择', '格式化', '禁用']
-const code = `<MdSlider value={value} onChange={setValue} />
-<MdSlider value={range} range onChange={setRange} />
-<MdSlider value={value} format={(v) => v + '%'} onChange={setValue} />`
+const code = `<CuSlider value={value} onChange={setValue} />
+<CuSlider value={range} range onChange={setRange} />
+<CuSlider value={value} format={(v) => v + '%'} onChange={setValue} />`
 
 export default function SliderDemo() {
   const [basic, setBasic] = useState(50)
@@ -19,27 +19,27 @@ export default function SliderDemo() {
         if (active === 0)
           return (
             <div className="slider-demo-block">
-              <MdSlider value={basic} onChange={v => setBasic(v as number)} />
+              <CuSlider value={basic} onChange={v => setBasic(v as number)} />
               <p className="slider-demo-value">当前值：{basic}</p>
             </div>
           )
         if (active === 1)
           return (
             <div className="slider-demo-block">
-              <MdSlider value={range} range onChange={v => setRange(v as [number, number])} />
+              <CuSlider value={range} range onChange={v => setRange(v as [number, number])} />
               <p className="slider-demo-value">区间：{range[0]} - {range[1]}</p>
             </div>
           )
         if (active === 2)
           return (
             <div className="slider-demo-block">
-              <MdSlider value={format} format={v => `${v}%`} onChange={v => setFormat(v as number)} />
+              <CuSlider value={format} format={v => `${v}%`} onChange={v => setFormat(v as number)} />
               <p className="slider-demo-value">拖动手柄查看提示</p>
             </div>
           )
         return (
           <div className="slider-demo-block">
-            <MdSlider value={disabled} disabled />
+            <CuSlider value={disabled} disabled />
             <p className="slider-demo-value">禁用状态</p>
           </div>
         )

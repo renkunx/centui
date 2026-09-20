@@ -1,7 +1,7 @@
 <template>
   <div
     ref="root"
-    class="md-scroll-view"
+    class="cu-scroll-view"
     @touchstart="onScrollerTouchStart"
     @touchmove="onScrollerTouchMove"
     @touchend="onScrollerTouchEnd"
@@ -45,10 +45,10 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, useSlots, watch } from 'vue'
-import { debounce } from '@mand-mobile/core'
-import { render, Scroller, type Scroller as ScrollerType } from '@mand-mobile/core/web'
+import { debounce } from '@centui/core'
+import { render, Scroller, type Scroller as ScrollerType } from '@centui/core/web'
 
-defineOptions({ name: 'md-scroll-view' })
+defineOptions({ name: 'cu-scroll-view' })
 
 const props = withDefaults(
   defineProps<{

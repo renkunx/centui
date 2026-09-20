@@ -2,7 +2,7 @@
  * ActionSheet 命令式工厂（自 v2 components/action-sheet/index.js 迁移）。
  */
 import { createVNode, render } from 'vue'
-import MdActionSheetComponent, { type ActionSheetOption } from './ActionSheet.vue'
+import CuActionSheetComponent, { type ActionSheetOption } from './ActionSheet.vue'
 
 export type { ActionSheetOption }
 
@@ -27,7 +27,7 @@ interface ActionSheetInstance {
   close: () => void
 }
 
-type ActionSheetStatic = typeof MdActionSheetComponent & {
+type ActionSheetStatic = typeof CuActionSheetComponent & {
   create: (props: ActionSheetCreateProps) => ActionSheetInstance
 }
 
@@ -56,7 +56,7 @@ function create({
   const instance = { value: false, close: () => {} } as ActionSheetInstance
 
   const mount = () => {
-    const vnode = createVNode(MdActionSheetComponent, {
+    const vnode = createVNode(CuActionSheetComponent, {
       modelValue: instance.value,
       title,
       options,
@@ -104,8 +104,8 @@ function create({
   return instance
 }
 
-const ActionSheet = MdActionSheetComponent as ActionSheetStatic
+const ActionSheet = CuActionSheetComponent as ActionSheetStatic
 ActionSheet.create = create
 
-export { MdActionSheetComponent as MdActionSheet }
+export { CuActionSheetComponent as CuActionSheet }
 export default ActionSheet

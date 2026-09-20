@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
-import { MdPopup } from '../popup/Popup'
-import { inArray, t } from '@mand-mobile/core'
+import { CuPopup } from '../popup/Popup'
+import { inArray, t } from '@centui/core'
 
 export interface ActionSheetOption {
   text?: string
@@ -24,7 +24,7 @@ export interface ActionSheetProps {
   children?: ReactNode
 }
 
-export function MdActionSheet({
+export function CuActionSheet({
   value = false,
   title = '',
   options = [],
@@ -59,8 +59,8 @@ export function MdActionSheet({
   }
 
   return (
-    <div className="md-action-sheet">
-      <MdPopup
+    <div className="cu-action-sheet">
+      <CuPopup
         className="inner-popup large-radius"
         value={value}
         position="bottom"
@@ -74,14 +74,14 @@ export function MdActionSheet({
         onHide={onHide}
         onMaskClick={onCancelClick}
       >
-        <div className="md-action-sheet-content">
-          {title ? <header className="md-action-sheet-header">{title}</header> : null}
-          <ul className="md-action-sheet-list">
+        <div className="cu-action-sheet-content">
+          {title ? <header className="cu-action-sheet-header">{title}</header> : null}
+          <ul className="cu-action-sheet-list">
             {options.map((item, index) => (
               <li
                 key={index}
                 className={[
-                  'md-action-sheet-item',
+                  'cu-action-sheet-item',
                   index === defaultIndex ? 'active' : '',
                   index === invalidIndex || inArray(invalidIndex, index) ? 'disabled' : '',
                 ]
@@ -89,20 +89,20 @@ export function MdActionSheet({
                   .join(' ')}
                 onClick={() => onSelect(item, index)}
               >
-                <div className="md-action-sheet-item-wrapper">
+                <div className="cu-action-sheet-item-wrapper">
                   <div
-                    className="md-action-sheet-item-section"
+                    className="cu-action-sheet-item-section"
                     dangerouslySetInnerHTML={{ __html: item.text || item.label || '' }}
                   ></div>
                 </div>
               </li>
             ))}
-            <li className="md-action-sheet-cancel" onClick={onCancelClick}>
+            <li className="cu-action-sheet-cancel" onClick={onCancelClick}>
               {resolvedCancelText}
             </li>
           </ul>
         </div>
-      </MdPopup>
+      </CuPopup>
     </div>
   )
 }

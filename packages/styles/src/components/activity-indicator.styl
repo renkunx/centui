@@ -1,6 +1,6 @@
 /* Extracted from legacy/components/activity-indicator — do not edit by hand; re-run scripts/extract.mjs */
 /* --- index.vue --- */
-.md-activity-indicator
+.cu-activity-indicator
   .indicator-container
     display flex
     flex-direction row
@@ -15,14 +15,14 @@
         margin 15px 0 0 0
 
 /* --- carousel.vue --- */
-.md-activity-indicator-carousel
+.cu-activity-indicator-carousel
   clearfix()
   .carouseling
     float left
     overflow visible
 
 /* --- roller-success.vue --- */
-.md-activity-indicator-rolling-success
+.cu-activity-indicator-rolling-success
   position relative
   .right
     position absolute
@@ -31,17 +31,17 @@
     line
       will-change auto
       &:first-child
-        animation md-activity-indicator-rolling-line0 .2s cubic-bezier(1.0, 0.5, 0.8, 1.0) forwards
+        animation cu-activity-indicator-rolling-line0 .2s cubic-bezier(1.0, 0.5, 0.8, 1.0) forwards
       &:last-child
         opacity 0
-        animation md-activity-indicator-rolling-line1 .2s cubic-bezier(1.0, 0.5, 0.8, 1.0) .2s forwards
+        animation cu-activity-indicator-rolling-line1 .2s cubic-bezier(1.0, 0.5, 0.8, 1.0) .2s forwards
 
-@keyframes md-activity-indicator-rolling-line0
+@keyframes cu-activity-indicator-rolling-line0
   from
     stroke-dashoffset 20
   to
     stroke-dashoffset 0
-@keyframes md-activity-indicator-rolling-line1
+@keyframes cu-activity-indicator-rolling-line1
   from
     opacity 1
     stroke-dashoffset 35
@@ -50,7 +50,7 @@
     stroke-dashoffset 0
 
 /* --- roller.vue --- */
-.md-activity-indicator-rolling
+.cu-activity-indicator-rolling
   clearfix()
   .rolling-container
     position relative
@@ -67,10 +67,10 @@
     align-items center
 
 /* --- spinner.vue --- */
-.md-activity-indicator-spinning
+.cu-activity-indicator-spinning
   clearfix()
-  .md-icon
+  .cu-icon
     float left
   &.dark
-    .md-icon
+    .cu-icon
       filter invert(1)

@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/skeleton
+// 按需入口：@centui/react/es/skeleton
 export * from './components/skeleton'

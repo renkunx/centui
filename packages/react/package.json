@@ -1,7 +1,7 @@
 {
-  "name": "@mand-mobile/react",
+  "name": "@centui/react",
   "version": "0.1.0",
-  "description": "mand-mobile React implementation — shares @mand-mobile/core logic and @mand-mobile/styles CSS with the Vue package",
+  "description": "centui React implementation — shares @centui/core logic and @centui/styles CSS with the Vue package",
   "license": "Apache-2.0",
   "type": "module",
   "sideEffects": false,
@@ -161,14 +161,14 @@
     "playground": "vite playground"
   },
   "dependencies": {
-    "@mand-mobile/core": "workspace:*"
+    "@centui/core": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
-    "@mand-mobile/styles": "workspace:*",
+    "@centui/styles": "workspace:*",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.3",

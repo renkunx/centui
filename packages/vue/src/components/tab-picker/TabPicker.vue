@@ -1,6 +1,6 @@
 <template>
-  <div class="md-tab-picker">
-    <MdPopup
+  <div class="cu-tab-picker">
+    <CuPopup
       :model-value="modelValue"
       position="bottom"
       :mask-closable="maskClosable"
@@ -9,7 +9,7 @@
       @hide="$emit('hide')"
       @mask-click="onCancel"
     >
-      <MdPopupTitleBar
+      <CuPopupTitleBar
         :title="title"
         :describe="describe"
         :large-radius="largeRadius"
@@ -17,14 +17,14 @@
         @cancel="onCancel"
       >
         <template #cancel>
-          <MdIcon name="close" size="lg" />
+          <CuIcon name="close" size="lg" />
         </template>
-      </MdPopupTitleBar>
-      <div class="md-tab-picker-content">
-        <MdTabs ref="tabs" :model-value="currentTab" :key="tabsTmpKey" :ink-length="100">
-          <MdScrollView ref="scrollView" :scrolling-x="false" auto-reflow>
-            <MdTabPane v-for="(pane, index) in panes" :key="pane.name" :name="pane.name" :label="pane.label">
-              <MdRadioList
+      </CuPopupTitleBar>
+      <div class="cu-tab-picker-content">
+        <CuTabs ref="tabs" :model-value="currentTab" :key="tabsTmpKey" :ink-length="100">
+          <CuScrollView ref="scrollView" :scrolling-x="false" auto-reflow>
+            <CuTabPane v-for="(pane, index) in panes" :key="pane.name" :name="pane.name" :label="pane.label">
+              <CuRadioList
                 :model-value="pane.value"
                 :options="pane.options"
                 :is-slot-scope="hasSlot"
@@ -36,28 +36,28 @@
                 <template v-if="hasSlot" #default="{ option }">
                   <slot :option="option"></slot>
                 </template>
-              </MdRadioList>
-            </MdTabPane>
-          </MdScrollView>
-        </MdTabs>
+              </CuRadioList>
+            </CuTabPane>
+          </CuScrollView>
+        </CuTabs>
       </div>
-    </MdPopup>
+    </CuPopup>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, useSlots } from 'vue'
-import { t } from '@mand-mobile/core'
-import MdPopup from '../popup/Popup.vue'
-import MdPopupTitleBar from '../popup/PopupTitleBar.vue'
-import MdIcon from '../icon/Icon.vue'
-import MdTabs from '../tabs/Tabs.vue'
-import MdTabPane from '../tabs/TabPane.vue'
-import MdScrollView from '../scroll-view/ScrollView.vue'
-import MdRadioList from '../radio-list/RadioList.vue'
+import { t } from '@centui/core'
+import CuPopup from '../popup/Popup.vue'
+import CuPopupTitleBar from '../popup/PopupTitleBar.vue'
+import CuIcon from '../icon/Icon.vue'
+import CuTabs from '../tabs/Tabs.vue'
+import CuTabPane from '../tabs/TabPane.vue'
+import CuScrollView from '../scroll-view/ScrollView.vue'
+import CuRadioList from '../radio-list/RadioList.vue'
 import type { RadioListOption } from '../radio-list/RadioList.vue'
 
-defineOptions({ name: 'md-tab-picker' })
+defineOptions({ name: 'cu-tab-picker' })
 
 export interface TabPickerOption {
   value?: string | number
@@ -105,8 +105,8 @@ const emit = defineEmits<{
 }>()
 
 const slots = useSlots()
-const tabs = ref<InstanceType<typeof MdTabs> | null>(null)
-const scrollView = ref<InstanceType<typeof MdScrollView> | null>(null)
+const tabs = ref<InstanceType<typeof CuTabs> | null>(null)
+const scrollView = ref<InstanceType<typeof CuScrollView> | null>(null)
 
 const selected = ref<Array<string | number>>(props.defaultValue.slice())
 const oldSelected = ref<Array<string | number>>([])

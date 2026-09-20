@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { Animate } from '@mand-mobile/core/web'
-import { MdRoller } from '../activity-indicator/Roller'
+import { Animate } from '@centui/core/web'
+import { CuRoller } from '../activity-indicator/Roller'
 
 export interface ProgressProps {
   size?: number
@@ -21,7 +21,7 @@ export interface ProgressProps {
 
 const inBrowser = typeof window !== 'undefined'
 
-export function MdProgress({
+export function CuProgress({
   size = 70,
   width,
   color = '#2F86F6',
@@ -67,7 +67,7 @@ export function MdProgress({
   }, [])
 
   return (
-    <MdRoller
+    <CuRoller
       size={size}
       width={width}
       color={color}
@@ -77,9 +77,9 @@ export function MdProgress({
       rotate={rotate}
       process={formatValue}
       defsSlot={defsSlot}
-      className={`md-progress${className ? ` ${className}` : ''}`}
+      className={`cu-progress${className ? ` ${className}` : ''}`}
     >
       {children}
-    </MdRoller>
+    </CuRoller>
   )
 }

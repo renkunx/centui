@@ -1,7 +1,7 @@
 {
-  "name": "@mand-mobile/core",
+  "name": "@centui/core",
   "version": "0.1.0",
-  "description": "mand-mobile framework-agnostic core: scroller engine, i18n, utils (DOM-free entry + /web subentry)",
+  "description": "centui framework-agnostic core: scroller engine, i18n, utils (DOM-free entry + /web subentry)",
   "license": "Apache-2.0",
   "type": "module",
   "sideEffects": false,

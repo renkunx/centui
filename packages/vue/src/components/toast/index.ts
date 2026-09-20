@@ -3,7 +3,7 @@
  * 单例：同一时刻只有一个 toast 实例。
  */
 import { createVNode, render, type VNode, type Ref } from 'vue'
-import MdToast from './Toast.vue'
+import CuToast from './Toast.vue'
 
 export interface ToastProps {
   content?: string | number
@@ -42,10 +42,10 @@ function getVm(props: ToastProps): ToastVm {
   if (!singleton || singleton.container.parentNode !== parentNode) {
     const container = document.createElement('div')
     parentNode.appendChild(container)
-    singleton = { container, vnode: createVNode(MdToast, {}), vm: null as never }
+    singleton = { container, vnode: createVNode(CuToast, {}), vm: null as never }
   }
 
-  singleton.vnode = createVNode(MdToast, {
+  singleton.vnode = createVNode(CuToast, {
     content: props.content ?? '',
     icon: props.icon ?? '',
     iconSvg: props.iconSvg ?? false,
@@ -168,7 +168,7 @@ Toast.loading = (
   })
 }
 
-Toast.component = MdToast
+Toast.component = CuToast
 
-export { MdToast }
+export { CuToast }
 export default Toast

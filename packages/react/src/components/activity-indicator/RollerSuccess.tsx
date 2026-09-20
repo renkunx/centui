@@ -1,4 +1,4 @@
-import { MdActivityIndicatorRolling } from './Roller'
+import { CuActivityIndicatorRolling } from './Roller'
 
 export interface RollerSuccessProps {
   isSuccess?: boolean
@@ -7,10 +7,10 @@ export interface RollerSuccessProps {
   strokeWidth?: number
 }
 
-export function MdRollerSuccess({ isSuccess = true, size = 70, color = '#28AA8F', strokeWidth = 8 }: RollerSuccessProps) {
+export function CuRollerSuccess({ isSuccess = true, size = 70, color = '#28AA8F', strokeWidth = 8 }: RollerSuccessProps) {
   return (
-    <div className="md-activity-indicator-rolling-success">
-      <MdActivityIndicatorRolling size={size} width={strokeWidth} fill="#FFF6F1" borderColor="transparent" circleSlot={
+    <div className="cu-activity-indicator-rolling-success">
+      <CuActivityIndicatorRolling size={size} width={strokeWidth} fill="#FFF6F1" borderColor="transparent" circleSlot={
         isSuccess ? (
           <g name="circle">
             <circle className="success" cx="50" cy="50" fill="#FFF6F1" stroke="none" r="40"></circle>
@@ -30,7 +30,7 @@ export function MdRollerSuccess({ isSuccess = true, size = 70, color = '#28AA8F'
             </g>
           </svg>
         ) : null}
-      </MdActivityIndicatorRolling>
+      </CuActivityIndicatorRolling>
     </div>
   )
 }

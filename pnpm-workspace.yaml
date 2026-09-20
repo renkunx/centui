@@ -7,7 +7,7 @@ packages:
 # vue 排除隐藏提升：避免 .pnpm/node_modules/vue 命中 3.x，
 # 干扰 test/golden 锁定的 vue@2.7（mand-mobile@2.7.0 的幽灵依赖）
 allowBuilds:
-  esbuild: set this to true or false
+  esbuild: true
 
 hoistPattern:
   - "*"

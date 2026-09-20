@@ -1,5 +1,5 @@
 <template>
-  <svg class="md-chart" :viewBox="`0 0 ${width} ${height}`">
+  <svg class="cu-chart" :viewBox="`0 0 ${width} ${height}`">
     <defs>
       <linearGradient
         v-for="color in colors"
@@ -15,25 +15,25 @@
         <stop :style="`stop-color: ${color}`" offset="100%" stop-opacity="0.1"></stop>
       </linearGradient>
     </defs>
-    <g class="md-chart-graph" :transform="`translate(${offset.left}, ${offset.top})`">
-      <g class="md-chart-axis-y">
+    <g class="cu-chart-graph" :transform="`translate(${offset.left}, ${offset.top})`">
+      <g class="cu-chart-axis-y">
         <g v-for="(item, index) in yaxis" :key="index" :transform="`translate(0, ${item.offset})`">
           <line x1="0" :x2="innerWidth" y1="0" y2="0"></line>
           <text v-text="item.label" x="0" y="0" dx="-0.5em" dy="0.32em"></text>
         </g>
       </g>
-      <g class="md-chart-axis-x" :transform="`translate(0, ${innerHeight})`">
+      <g class="cu-chart-axis-x" :transform="`translate(0, ${innerHeight})`">
         <g v-for="(item, index) in xaxis" :key="index" :transform="`translate(${item.offset}, 0)`">
           <line x1="0" x2="0" y1="0" y2="6"></line>
           <text v-text="item.label" x="0" y="0" dy="2em"></text>
         </g>
       </g>
-      <g class="md-chart-paths">
+      <g class="cu-chart-paths">
         <template v-for="(path, index) in paths" :key="`path-${index}`">
-          <path class="md-chart-path" :style="path.style" :d="path.value"></path>
+          <path class="cu-chart-path" :style="path.style" :d="path.value"></path>
           <path
             v-if="path.area"
-            class="md-chart-path-area"
+            class="cu-chart-path-area"
             :style="path.area.style"
             :d="path.area.value"
           ></path>
@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
-defineOptions({ name: 'md-chart' })
+defineOptions({ name: 'cu-chart' })
 
 export interface ChartDataset {
   color?: string

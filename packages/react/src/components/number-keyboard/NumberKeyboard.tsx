@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { MdPopup } from '../popup/Popup'
+import { CuPopup } from '../popup/Popup'
 
 export interface KeyboardKeyProps {
   value?: string | number
@@ -16,7 +16,7 @@ export interface KeyboardKeyProps {
   onPress?: (value: string | number) => void
 }
 
-export function MdNumberKey({
+export function CuNumberKey({
   value = '',
   noTouch = false,
   noPrevent = false,
@@ -81,7 +81,7 @@ export interface KeyboardBoardProps {
   onHide?: () => void
 }
 
-export function MdKeyboardBoard({
+export function CuKeyboardBoard({
   type = 'professional',
   disorder = false,
   hideDot = false,
@@ -113,11 +113,11 @@ export function MdKeyboardBoard({
   const zeroValue = textRender?.('0') || '0'
 
   return (
-    <div className={`md-number-keyboard-container ${type}${disabled ? ' disabled' : ''}`}>
+    <div className={`cu-number-keyboard-container ${type}${disabled ? ' disabled' : ''}`}>
       <div className="keyboard-number">
         <ul className="keyboard-number-list">
           {Array.from({ length: 9 }, (_, i) => i).map(i => (
-            <MdNumberKey
+            <CuNumberKey
               key={i}
               className="keyboard-number-item"
               value={keyNumberList[i]}
@@ -127,19 +127,19 @@ export function MdKeyboardBoard({
           {type === 'professional' ? (
             <>
               {!hideDot ? (
-                <MdNumberKey
+                <CuNumberKey
                   className="keyboard-number-item"
                   value={duplicateZero ? zeroValue : dotText}
                   onPress={val => !disabled && onEnter?.(val)}
                 />
               ) : null}
-              <MdNumberKey
+              <CuNumberKey
                 className={`keyboard-number-item${hideDot ? ' large-item' : ''}`}
                 value={duplicateZero ? duplicateZeroValue : keyNumberList[9]}
                 onPress={val => !disabled && onEnter?.(val)}
               />
               {duplicateZero ? (
-                <MdNumberKey
+                <CuNumberKey
                   className="keyboard-number-item"
                   value={dotText}
                   onPress={val => !disabled && onEnter?.(val)}
@@ -149,7 +149,7 @@ export function MdKeyboardBoard({
                 isView ? (
                   <li className="keyboard-number-item"></li>
                 ) : (
-                  <MdNumberKey
+                  <CuNumberKey
                     className="keyboard-number-item slidedown"
                     noTouch
                     noPrevent
@@ -161,12 +161,12 @@ export function MdKeyboardBoard({
           ) : (
             <>
               <li className="keyboard-number-item no-bg"></li>
-              <MdNumberKey
+              <CuNumberKey
                 className="keyboard-number-item"
                 value={keyNumberList[9]}
                 onPress={val => !disabled && onEnter?.(val)}
               />
-              <MdNumberKey
+              <CuNumberKey
                 className="keyboard-number-item no-bg delete"
                 onPress={() => !disabled && onDelete?.()}
               />
@@ -177,11 +177,11 @@ export function MdKeyboardBoard({
       {type === 'professional' ? (
         <div className="keyboard-operate">
           <ul className="keyboard-operate-list">
-            <MdNumberKey
+            <CuNumberKey
               className="keyboard-operate-item delete"
               onPress={() => !disabled && onDelete?.()}
             />
-            <MdNumberKey
+            <CuNumberKey
               className="keyboard-operate-item confirm"
               value={resolvedOkText}
               noTouch
@@ -224,8 +224,8 @@ export interface NumberKeyboardExposed {
   $el?: HTMLElement
 }
 
-export const MdNumberKeyboard = forwardRef<NumberKeyboardExposed, NumberKeyboardProps>(
-  function MdNumberKeyboard(
+export const CuNumberKeyboard = forwardRef<NumberKeyboardExposed, NumberKeyboardProps>(
+  function CuNumberKeyboard(
     {
       value = false,
       type,
@@ -275,7 +275,7 @@ export const MdNumberKeyboard = forwardRef<NumberKeyboardExposed, NumberKeyboard
     )
 
     const board = (isView: boolean) => (
-      <MdKeyboardBoard
+      <CuKeyboardBoard
         type={type}
         disorder={disorder}
         okText={okText}
@@ -298,7 +298,7 @@ export const MdNumberKeyboard = forwardRef<NumberKeyboardExposed, NumberKeyboard
 
     if (isView) {
       return (
-        <div ref={rootRef} className={`md-number-keyboard in-view${className ? ` ${className}` : ''}`} style={style}>
+        <div ref={rootRef} className={`cu-number-keyboard in-view${className ? ` ${className}` : ''}`} style={style}>
           {children}
           {board(true)}
         </div>
@@ -306,8 +306,8 @@ export const MdNumberKeyboard = forwardRef<NumberKeyboardExposed, NumberKeyboard
     }
 
     return (
-      <div ref={rootRef} className={`md-number-keyboard${className ? ` ${className}` : ''}`} style={style}>
-        <MdPopup
+      <div ref={rootRef} className={`cu-number-keyboard${className ? ` ${className}` : ''}`} style={style}>
+        <CuPopup
           value={isKeyboardShow}
           position="bottom"
           hasMask={false}
@@ -317,7 +317,7 @@ export const MdNumberKeyboard = forwardRef<NumberKeyboardExposed, NumberKeyboard
         >
           {children}
           <div onTouchMove={event => event.preventDefault()}>{board(false)}</div>
-        </MdPopup>
+        </CuPopup>
       </div>
     )
   },

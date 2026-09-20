@@ -1,6 +1,6 @@
 /**
- * MdAgree 行为清单（自 v2 components/agree spec/源码提取，v-model → modelValue）：
- * 1. modelValue 切换 .md-agree-icon 的 checked 类
+ * CuAgree 行为清单（自 v2 components/agree spec/源码提取，v-model → modelValue）：
+ * 1. modelValue 切换 .cu-agree-icon 的 checked 类
  * 2. 默认渲染 checked/check 双图标（circle），iconType=square 渲染方形双图标
  * 3. icon 插槽可自定义，且接收 checked 作用域参数
  * 4. 点击派发 update:modelValue（取反）与 change；disabled 阻断
@@ -8,50 +8,50 @@
  */
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { MdAgree } from '../../src'
+import { CuAgree } from '../../src'
 
-describe('MdAgree', () => {
+describe('CuAgree', () => {
   it('toggles checked class with modelValue', async () => {
-    const wrapper = mount(MdAgree, { props: { modelValue: true } })
-    expect(wrapper.find('.md-agree-icon').classes()).toContain('checked')
+    const wrapper = mount(CuAgree, { props: { modelValue: true } })
+    expect(wrapper.find('.cu-agree-icon').classes()).toContain('checked')
 
     await wrapper.setProps({ modelValue: false })
-    expect(wrapper.find('.md-agree-icon').classes()).not.toContain('checked')
+    expect(wrapper.find('.cu-agree-icon').classes()).not.toContain('checked')
   })
 
   it('renders circle icons by default and square icons when iconType is square', () => {
-    const circle = mount(MdAgree)
-    expect(circle.find('.md-icon-checked').exists()).toBe(true)
-    expect(circle.find('.md-icon-check').exists()).toBe(true)
-    expect(circle.find('.md-icon-square-checked').exists()).toBe(false)
+    const circle = mount(CuAgree)
+    expect(circle.find('.cu-icon-checked').exists()).toBe(true)
+    expect(circle.find('.cu-icon-check').exists()).toBe(true)
+    expect(circle.find('.cu-icon-square-checked').exists()).toBe(false)
 
-    const square = mount(MdAgree, { props: { iconType: 'square' } })
-    expect(square.find('.md-icon-square-checked').exists()).toBe(true)
-    expect(square.find('.md-icon-square-check').exists()).toBe(true)
-    expect(square.find('.md-icon-checked').exists()).toBe(false)
+    const square = mount(CuAgree, { props: { iconType: 'square' } })
+    expect(square.find('.cu-icon-square-checked').exists()).toBe(true)
+    expect(square.find('.cu-icon-square-check').exists()).toBe(true)
+    expect(square.find('.cu-icon-checked').exists()).toBe(false)
   })
 
   it('supports custom icon slot with checked scope', () => {
-    const wrapper = mount(MdAgree, {
+    const wrapper = mount(CuAgree, {
       props: { modelValue: true },
       slots: {
         icon: `<template #icon="{ checked }"><span class="custom-icon">{{ checked }}</span></template>`,
       },
     })
     expect(wrapper.find('.custom-icon').text()).toBe('true')
-    expect(wrapper.find('.md-icon-checked').exists()).toBe(false)
+    expect(wrapper.find('.cu-icon-checked').exists()).toBe(false)
   })
 
   it('emits update:modelValue and change on click unless disabled', async () => {
-    const wrapper = mount(MdAgree, { slots: { default: '我已阅读并同意协议' } })
-    expect(wrapper.find('.md-agree-content').text()).toBe('我已阅读并同意协议')
+    const wrapper = mount(CuAgree, { slots: { default: '我已阅读并同意协议' } })
+    expect(wrapper.find('.cu-agree-content').text()).toBe('我已阅读并同意协议')
 
-    await wrapper.find('.md-agree-icon').trigger('click')
+    await wrapper.find('.cu-agree-icon').trigger('click')
     expect(wrapper.emitted('update:modelValue')).toEqual([[true]])
     expect(wrapper.emitted('change')).toHaveLength(1)
 
-    const disabled = mount(MdAgree, { props: { disabled: true } })
-    await disabled.find('.md-agree-icon').trigger('click')
+    const disabled = mount(CuAgree, { props: { disabled: true } })
+    await disabled.find('.cu-agree-icon').trigger('click')
     expect(disabled.emitted('update:modelValue')).toBeUndefined()
     expect(disabled.classes()).toContain('disabled')
   })

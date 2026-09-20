@@ -1,1 +1,1 @@
-export { default as MdBill } from './Bill.vue'
+export { default as CuBill } from './Bill.vue'

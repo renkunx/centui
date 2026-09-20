@@ -1,1 +1,1 @@
-export { MdButton, type ButtonProps } from './Button'
+export { CuButton, type ButtonProps } from './Button'

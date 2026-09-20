@@ -1,1 +1,1 @@
-export { default as MdImageViewer, type ImageViewerItem } from './ImageViewer.vue'
+export { default as CuImageViewer, type ImageViewerItem } from './ImageViewer.vue'

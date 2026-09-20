@@ -8,7 +8,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async importOriginal => {
+vi.mock('@centui/core/web', async importOriginal => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     _isAnimating = false
@@ -42,8 +42,8 @@ vi.mock('@mand-mobile/core/web', async importOriginal => {
   return { ...orig, Scroller: FakeScrollerImpl }
 })
 
-import { MdDatePicker, MdPicker } from '../../src'
-import { MdPickerColumn, type PickerColumnExposed } from '../../src/components/picker/PickerColumn'
+import { CuDatePicker, CuPicker } from '../../src'
+import { CuPickerColumn, type PickerColumnExposed } from '../../src/components/picker/PickerColumn'
 
 async function flushAll() {
   await act(async () => {
@@ -56,7 +56,7 @@ const DATA = [
   [{ text: '1' }, { text: '2' }],
 ]
 
-describe('MdPickerColumn 覆盖 (react)', () => {
+describe('CuPickerColumn 覆盖 (react)', () => {
   let ref: { current: PickerColumnExposed | null }
 
   beforeEach(() => {
@@ -66,7 +66,7 @@ describe('MdPickerColumn 覆盖 (react)', () => {
 
   function mount(props: Record<string, unknown> = {}) {
     return render(
-      <MdPickerColumn
+      <CuPickerColumn
         ref={r => { ref.current = r }}
         cols={2}
         data={DATA as never}
@@ -95,7 +95,7 @@ describe('MdPickerColumn 覆盖 (react)', () => {
       ref.current!.refresh()
     })
     await flushAll()
-    const hooks = wrapper.container.querySelectorAll('.md-picker-column-hook')
+    const hooks = wrapper.container.querySelectorAll('.cu-picker-column-hook')
     expect(hooks.length).toBe(2)
 
     // 触摸模型：mousedown → mousemove → mouseup → scrollingComplete
@@ -160,13 +160,13 @@ describe('MdPickerColumn 覆盖 (react)', () => {
       ref.current!.refresh()
     })
     await new Promise(resolve => setTimeout(resolve, 10))
-    expect(wrapper.container.querySelectorAll('.md-picker-column-item').length).toBe(3)
+    expect(wrapper.container.querySelectorAll('.cu-picker-column-item').length).toBe(3)
     expect(onInitialed).toHaveBeenCalledTimes(1)
     wrapper.unmount()
   })
 })
 
-describe('MdPicker 覆盖 (react)', () => {
+describe('CuPicker 覆盖 (react)', () => {
   beforeEach(() => {
     ;(scrollerInstances as unknown[]).length = 0
     document.body.innerHTML = ''
@@ -180,19 +180,19 @@ describe('MdPicker 覆盖 (react)', () => {
       ],
     ] as never
     const { container } = render(
-      <MdPicker isView isCascade cols={2} data={cascadeData} />,
+      <CuPicker isView isCascade cols={2} data={cascadeData} />,
     )
     await flushAll()
-    expect(container.querySelectorAll('.md-picker-column-item').length).toBeGreaterThanOrEqual(2)
+    expect(container.querySelectorAll('.cu-picker-column-item').length).toBeGreaterThanOrEqual(2)
   })
 
   it('cancel resets columns via snapshot', async () => {
     const onCancel = vi.fn()
     const { container } = render(
-      <MdPicker value data={DATA as never} cols={2} onCancel={onCancel} />,
+      <CuPicker value data={DATA as never} cols={2} onCancel={onCancel} />,
     )
     await flushAll()
-    fireEvent.click(container.querySelector('.md-popup-cancel')!)
+    fireEvent.click(container.querySelector('.cu-popup-cancel')!)
     await flushAll()
     expect(onCancel).toHaveBeenCalledTimes(1)
   })
@@ -200,17 +200,17 @@ describe('MdPicker 覆盖 (react)', () => {
   it('mask click cancels', async () => {
     const onCancel = vi.fn()
     const { container } = render(
-      <MdPicker value data={DATA as never} cols={2} onCancel={onCancel} />,
+      <CuPicker value data={DATA as never} cols={2} onCancel={onCancel} />,
     )
     await flushAll()
-    fireEvent.click(container.querySelector('.md-popup-mask')!)
+    fireEvent.click(container.querySelector('.cu-popup-mask')!)
     await flushAll()
     expect(onCancel).toHaveBeenCalledTimes(1)
-    expect(container.querySelector('.md-popup')!.getAttribute('style')).toContain('display: none')
+    expect(container.querySelector('.cu-popup')!.getAttribute('style')).toContain('display: none')
   })
 })
 
-describe('MdDatePicker 覆盖 (react)', () => {
+describe('CuDatePicker 覆盖 (react)', () => {
   beforeEach(() => {
     ;(scrollerInstances as unknown[]).length = 0
     document.body.innerHTML = ''
@@ -218,7 +218,7 @@ describe('MdDatePicker 覆盖 (react)', () => {
 
   it('custom types and unitText', async () => {
     const { container } = render(
-      <MdDatePicker
+      <CuDatePicker
         isView
         type="custom"
         customTypes={['yyyy', 'MM']}
@@ -227,14 +227,14 @@ describe('MdDatePicker 覆盖 (react)', () => {
       />,
     )
     await flushAll()
-    expect(container.querySelectorAll('.md-picker-column-item')).toHaveLength(2)
+    expect(container.querySelectorAll('.cu-picker-column-item')).toHaveLength(2)
     const active = container.querySelector('.column-item.active')
     expect(active?.textContent).toBe('2024年')
   })
 
   it('textRender customizes display', async () => {
     const { container } = render(
-      <MdDatePicker
+      <CuDatePicker
         isView
         type="date"
         defaultDate={new Date(2024, 5, 15)}
@@ -251,7 +251,7 @@ describe('MdDatePicker 覆盖 (react)', () => {
   it('todayText replaces current day label', async () => {
     const now = new Date()
     const { container } = render(
-      <MdDatePicker
+      <CuDatePicker
         isView
         type="date"
         todayText="今天&"
@@ -272,7 +272,7 @@ describe('MdDatePicker 覆盖 (react)', () => {
     const onHide = vi.fn()
     const onChange = vi.fn()
     const { container } = render(
-      <MdDatePicker
+      <CuDatePicker
         value
         type="date"
         defaultDate={new Date(2024, 5, 15)}
@@ -285,11 +285,11 @@ describe('MdDatePicker 覆盖 (react)', () => {
     )
     await flushAll()
 
-    fireEvent.click(container.querySelector('.md-popup-confirm')!)
+    fireEvent.click(container.querySelector('.cu-popup-confirm')!)
     expect(onConfirm).toHaveBeenCalledTimes(1)
     expect(onShow).toHaveBeenCalledTimes(1)
 
-    fireEvent.click(container.querySelector('.md-popup-cancel')!)
+    fireEvent.click(container.querySelector('.cu-popup-cancel')!)
     await flushAll()
     expect(onCancel).toHaveBeenCalledTimes(1)
     expect(onHide).toHaveBeenCalledTimes(1)

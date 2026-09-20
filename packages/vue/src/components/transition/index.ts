@@ -1,1 +1,1 @@
-export { default as MdTransition } from './Transition.vue'
+export { default as CuTransition } from './Transition.vue'

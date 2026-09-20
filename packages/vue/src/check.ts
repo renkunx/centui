@@ -1,2 +1,2 @@
-// 按需入口：mand-mobile/es/check
+// 按需入口：centui/es/check
 export * from './components/check'

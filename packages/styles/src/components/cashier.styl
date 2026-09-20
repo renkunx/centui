@@ -1,14 +1,14 @@
 /* Extracted from legacy/components/cashier — do not edit by hand; re-run scripts/extract.mjs */
 /* --- index.vue --- */
-.md-cashier
-  .md-popup-title-bar .md-popup-cancel
-    .md-icon
+.cu-cashier
+  .cu-popup-title-bar .cu-popup-cancel
+    .cu-icon
       align-self flex-start
       margin-left h-gap-lg
-  .md-popup-box
+  .cu-popup-box
     background-color color-bg-inverse
     border-radius popup-title-bar-radius popup-title-bar-radius 0 0
-  .md-cashier-container
+  .cu-cashier-container
     block()
     position relative
     background cashier-bg
@@ -16,9 +16,9 @@
     -webkit-user-select none
     transition all .3s
     overflow hidden
-    .md-cashier-block
+    .cu-cashier-block
       clearfix()
-      .md-cashier-block-icon
+      .cu-cashier-block-icon
         position relative
         left 50%
         float left
@@ -26,46 +26,46 @@
         height 100px
         margin-top 75px
         transform translateX(-50%)
-        .md-activity-indicator-svg
+        .cu-activity-indicator-svg
           width 100px !important
           height 100px !important
-      .md-cashier-block-text
+      .cu-cashier-block-text
         block()
         margin-top 20px
         margin-bottom 180px
         font-size font-minor-large
         color color-text-minor
         text-align center
-      .md-cashier-block-btn
+      .cu-cashier-block-btn
         block()
         padding 0 40px 40px
         box-sizing border-box
-      // &.md-cashier-choose
+      // &.cu-cashier-choose
 
-      &.md-cashier-captcha
-        .md-captcha
+      &.cu-cashier-captcha
+        .cu-captcha
           block()
-        .md-captcha-content
+        .cu-captcha-content
           margin-top 44px
           margin-bottom 20px
           color color-text-caption
-        .md-codebox
+        .cu-codebox
           margin-bottom 26px
-        .md-captcha-content,
-        .md-captcha-message,
-        .md-codebox,
-        .md-captcha-footer
+        .cu-captcha-content,
+        .cu-captcha-message,
+        .cu-codebox,
+        .cu-captcha-footer
           margin-left 40px
           margin-right 40px
-        .md-captcha-footer
+        .cu-captcha-footer
           margin-bottom 44px
 
-      &.md-cashier-fail
-        .md-cashier-block-icon
+      &.cu-cashier-fail
+        .cu-cashier-block-icon
           position relative
           text-align center
           line-height 100px
-          .md-icon-warn-color
+          .cu-icon-warn-color
             position relative
             z-index 2
             color #FFF6F1
@@ -73,16 +73,16 @@
             height 100px
 
 /* --- channel-button.vue --- */
-.md-cashier-block-btn
+.cu-cashier-block-btn
   display flex
-  .md-button
+  .cu-button
     flex 1
     margin-right h-gap-md
     &:last-of-type
       margin 0
 
 /* --- channel-item.vue --- */
-.md-cashier-channel-item
+.cu-cashier-channel-item
   block()
   position relative
   padding 20px 40px 20px 0
@@ -116,14 +116,14 @@
     top 50%
     right 0
     transform translateY(-50%)
-    .md-icon
+    .cu-icon
       display flex
       color color-text-placeholder
-      &.md-icon-checked
+      &.cu-icon-checked
         color cashier-choose-channel-icon-color
 
 /* --- channel.vue --- */
-.md-cashier-channel
+.cu-cashier-channel
   .choose-text
     clearfix()
     position relative

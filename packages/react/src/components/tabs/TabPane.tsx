@@ -14,7 +14,7 @@ export interface TabPaneRegistration {
   disabled?: boolean
 }
 
-export function MdTabPane({ label, name, disabled, children }: TabPaneProps) {
+export function CuTabPane({ label, name, disabled, children }: TabPaneProps) {
   const ctx = useTabsContext()
   const reg = useRef<TabPaneRegistration>({ label, name, disabled })
   reg.current = { label, name, disabled }
@@ -31,7 +31,7 @@ export function MdTabPane({ label, name, disabled, children }: TabPaneProps) {
 
   return (
     <div
-      className="md-tab-pane"
+      className="cu-tab-pane"
       role="tabpanel"
       {...({ tab: name } as object)}
       style={{ display: active ? '' : 'none' }}

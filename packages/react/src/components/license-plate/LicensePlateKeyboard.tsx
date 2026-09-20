@@ -16,17 +16,17 @@ export interface LicensePlateKeyboardProps {
   onConfirm?: () => void
 }
 
-export function MdLicensePlateKeyboard({ keyboard = {}, onEnter, onDelete, onConfirm }: LicensePlateKeyboardProps) {
+export function CuLicensePlateKeyboard({ keyboard = {}, onEnter, onDelete, onConfirm }: LicensePlateKeyboardProps) {
   const shortcuts = keyboard.shortcuts || []
   const keyboardType = keyboard.keyboardType || 1
   const mixedKeyboard = keyboard.mixedKeyboard || []
 
   if (keyboardType === 1) {
     return (
-      <div className="md-license-plate-keyboard">
-        <div className="md-shortcut-row">
+      <div className="cu-license-plate-keyboard">
+        <div className="cu-shortcut-row">
           {shortcuts.map((item, index) => (
-            <div key={index} className="md-shortcut-row-item" onClick={() => onEnter?.(item)}>
+            <div key={index} className="cu-shortcut-row-item" onClick={() => onEnter?.(item)}>
               {item}
             </div>
           ))}
@@ -36,10 +36,10 @@ export function MdLicensePlateKeyboard({ keyboard = {}, onEnter, onDelete, onCon
   }
 
   return (
-    <div className="md-license-plate-keyboard">
-      <div className="md-mixed-key-board">
+    <div className="cu-license-plate-keyboard">
+      <div className="cu-mixed-key-board">
         {mixedKeyboard.map((item, index) => (
-          <div key={index} className={`md-mixed-key-board-item${item.disabled ? ' disabled' : ''}`}>
+          <div key={index} className={`cu-mixed-key-board-item${item.disabled ? ' disabled' : ''}`}>
             {item.type ? (
               <div
                 className={item.type}

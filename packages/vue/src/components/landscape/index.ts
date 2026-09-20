@@ -1,1 +1,1 @@
-export { default as MdLandscape } from './Landscape.vue'
+export { default as CuLandscape } from './Landscape.vue'

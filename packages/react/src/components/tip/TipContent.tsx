@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { MdIcon } from '../icon/Icon'
+import { CuIcon } from '../icon/Icon'
 
 export interface TipContentProps {
   /** top | left | bottom | right */
@@ -13,7 +13,7 @@ export interface TipContentProps {
   onClose?: () => void
 }
 
-export function MdTipContent({
+export function CuTipContent({
   placement = 'top',
   closable = true,
   icon,
@@ -24,7 +24,7 @@ export function MdTipContent({
   onClose,
 }: TipContentProps) {
   const wrapperCls = [
-    'md-tip',
+    'cu-tip',
     closable ? 'has-close' : '',
     ['left', 'bottom', 'right'].includes(placement ?? '') ? `is-${placement}` : '',
     name ? String(name) : '',
@@ -34,16 +34,16 @@ export function MdTipContent({
 
   return (
     <div className={wrapperCls}>
-      <div className="md-tip-content">
+      <div className="cu-tip-content">
         {children ?? (
           <>
-            {icon ? <MdIcon className="content-icon" name={icon} svg={iconSvg} /> : null}
+            {icon ? <CuIcon className="content-icon" name={icon} svg={iconSvg} /> : null}
             <div className="content-text">{content}</div>
           </>
         )}
-        {closable ? <MdIcon name="close" size="md" onClick={() => onClose?.()} /> : null}
+        {closable ? <CuIcon name="close" size="md" onClick={() => onClose?.()} /> : null}
       </div>
-      <div className="md-tip-bg"></div>
+      <div className="cu-tip-bg"></div>
     </div>
   )
 }

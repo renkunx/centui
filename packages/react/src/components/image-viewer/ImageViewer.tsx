@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useRef, useState } from 'react'
-import { MdSwiper, MdSwiperItem, type SwiperExposed } from '../swiper/Swiper'
+import { CuSwiper, CuSwiperItem, type SwiperExposed } from '../swiper/Swiper'
 
 export interface ImageViewerItem {
   url?: string
@@ -15,7 +15,7 @@ export interface ImageViewerProps {
   onChange?: (fromIndex: number, toIndex: number) => void
 }
 
-export const MdImageViewer = forwardRef<HTMLDivElement, ImageViewerProps>(function MdImageViewer(
+export const CuImageViewer = forwardRef<HTMLDivElement, ImageViewerProps>(function CuImageViewer(
   { value = false, list = [], initialIndex = 0, hasDots = true, onChange },
   ref,
 ) {
@@ -42,7 +42,7 @@ export const MdImageViewer = forwardRef<HTMLDivElement, ImageViewerProps>(functi
 
   return (
     <div
-      className="md-image-viewer"
+      className="cu-image-viewer"
       ref={ref}
       style={{ display: isViewerShow ? '' : 'none' }}
       onClick={() => {
@@ -51,7 +51,7 @@ export const MdImageViewer = forwardRef<HTMLDivElement, ImageViewerProps>(functi
     >
       <div className="viewer-container">
         {isViewerShow ? (
-          <MdSwiper
+          <CuSwiper
             autoplay={0}
             defaultIndex={currentImgIndex}
             hasDots={false}
@@ -62,11 +62,11 @@ export const MdImageViewer = forwardRef<HTMLDivElement, ImageViewerProps>(functi
             }}
           >
             {imgs.map((item, index) => (
-              <MdSwiperItem key={index} className={`viewer-item-wrap${item.cls ? ` ${item.cls}` : ''}`}>
+              <CuSwiperItem key={index} className={`viewer-item-wrap${item.cls ? ` ${item.cls}` : ''}`}>
                 <div className="item">{item.url ? <img src={item.url} alt={item.alt} /> : null}</div>
-              </MdSwiperItem>
+              </CuSwiperItem>
             ))}
-          </MdSwiper>
+          </CuSwiper>
         ) : null}
         {hasDots ? (
           <div className="viewer-index">

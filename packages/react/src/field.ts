@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/field
+// 按需入口：@centui/react/es/field
 export * from './components/field'

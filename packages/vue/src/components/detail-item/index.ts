@@ -1,1 +1,1 @@
-export { default as MdDetailItem } from './DetailItem.vue'
+export { default as CuDetailItem } from './DetailItem.vue'

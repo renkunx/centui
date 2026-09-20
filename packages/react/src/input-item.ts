@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/input-item
+// 按需入口：@centui/react/es/input-item
 export * from './components/input-item'

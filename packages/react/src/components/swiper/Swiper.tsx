@@ -10,8 +10,8 @@ import {
   type CSSProperties,
   type ReactNode,
 } from 'react'
-import { warn } from '@mand-mobile/core'
-import { render, Scroller } from '@mand-mobile/core/web'
+import { warn } from '@centui/core'
+import { render, Scroller } from '@centui/core/web'
 
 // scale of sliding distance & touch duration that triggers page turning
 const PAGING_SCALE = 0.5
@@ -55,7 +55,7 @@ const SwiperDimensionContext = createContext<SwiperCtx>({
   isVertical: () => false,
 })
 
-export function MdSwiperItem({
+export function CuSwiperItem({
   children,
   className,
   style,
@@ -73,7 +73,7 @@ export function MdSwiperItem({
 
   return (
     <div
-      className={`md-swiper-item${className ? ` ${className}` : ''}`}
+      className={`cu-swiper-item${className ? ` ${className}` : ''}`}
       style={{
         width: vertical ? 'auto' : `${dimension}px`,
         height: vertical ? `${dimension}px` : 'auto',
@@ -85,7 +85,7 @@ export function MdSwiperItem({
   )
 }
 
-export const MdSwiper = forwardRef<SwiperExposed, SwiperProps>(function MdSwiper(
+export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper(
   {
     autoplay = 3000,
     transition = 'slide',
@@ -203,7 +203,7 @@ export const MdSwiper = forwardRef<SwiperExposed, SwiperProps>(function MdSwiper
   function translate(offset: number, animate = true) {
     const el = swiperRef.current
     if (!el) {
-      warn('[md-swiper] no element for translate')
+      warn('[cu-swiper] no element for translate')
       return
     }
     const x = isVertical ? 0 : -offset
@@ -256,14 +256,14 @@ export const MdSwiper = forwardRef<SwiperExposed, SwiperProps>(function MdSwiper
 
     if (backup) {
       const items = itemNodes
-      // v2 契约：横向拷贝只设 width，纵向只设 height；类名只传增量（基类由 MdSwiperItem 渲染）
+      // v2 契约：横向拷贝只设 width，纵向只设 height；类名只传增量（基类由 CuSwiperItem 渲染）
       setCopies({
         head: cloneElement(items[count - 1] as never, {
-          className: 'md-swiper-item-last-copy',
+          className: 'cu-swiper-item-last-copy',
           style: isVertical ? { height: `${dimension}px` } : { width: `${dimension}px` },
         }),
         tail: cloneElement(items[0] as never, {
-          className: 'md-swiper-item-first-copy',
+          className: 'cu-swiper-item-first-copy',
           style: isVertical ? { height: `${dimension}px` } : { width: `${dimension}px` },
         }),
       })
@@ -657,7 +657,7 @@ export const MdSwiper = forwardRef<SwiperExposed, SwiperProps>(function MdSwiper
     <SwiperDimensionContext.Provider value={{ dimension: () => dimension, isVertical: () => isVertical }}>
       <div
         ref={rootRef}
-        className={`md-swiper${isVertical ? ' md-swiper-vertical' : ''}${!isSlide ? ' md-swiper-fade' : ''}${!isInitial ? ' disabled' : ''}`}
+        className={`cu-swiper${isVertical ? ' cu-swiper-vertical' : ''}${!isSlide ? ' cu-swiper-fade' : ''}${!isInitial ? ' disabled' : ''}`}
         onMouseDown={onDragStart}
         onMouseMove={onDragMove}
         onMouseUp={onDragEnd}
@@ -667,19 +667,19 @@ export const MdSwiper = forwardRef<SwiperExposed, SwiperProps>(function MdSwiper
         onTouchEnd={onDragEnd}
         onTouchCancel={onDragEnd}
       >
-        <div className="md-swiper-box" ref={swiperBoxRef}>
-          <div className="md-swiper-container" ref={swiperRef}>
+        <div className="cu-swiper-box" ref={swiperBoxRef}>
+          <div className="cu-swiper-container" ref={swiperRef}>
           {copies?.head}
           {itemNodes}
           {copies?.tail}
         </div>
         </div>
         {oItemCount > 1 && hasDots ? (
-          <div className="md-swiper-indicators">
+          <div className="cu-swiper-indicators">
             {Array.from({ length: oItemCount }, (_, i) => (
               <div
                 key={i}
-                className={`md-swiper-indicator${i === realIndex ? ' md-swiper-indicator-active' : ''}`}
+                className={`cu-swiper-indicator${i === realIndex ? ' cu-swiper-indicator-active' : ''}`}
               ></div>
             ))}
           </div>

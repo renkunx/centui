@@ -2,11 +2,11 @@
   <div
     v-show="isPopupShow"
     ref="root"
-    class="md-popup"
+    class="cu-popup"
     :class="[hasMask ? 'with-mask' : '', largeRadius ? 'large-radius' : '', position]"
   >
-    <transition name="md-mask-fade">
-      <div v-show="hasMask && isPopupBoxShow" class="md-popup-mask" @click="onPopupMaskClick"></div>
+    <transition name="cu-mask-fade">
+      <div v-show="hasMask && isPopupBoxShow" class="cu-popup-mask" @click="onPopupMaskClick"></div>
     </transition>
     <transition
       :name="transitionName"
@@ -15,7 +15,7 @@
       @after-enter="onPopupTransitionEnd"
       @after-leave="onPopupTransitionEnd"
     >
-      <div v-show="isPopupBoxShow" class="md-popup-box" :class="[transitionName]">
+      <div v-show="isPopupBoxShow" class="cu-popup-box" :class="[transitionName]">
         <slot></slot>
       </div>
     </transition>
@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { computed, onMounted, provide, ref, watch, type Ref } from 'vue'
 
-defineOptions({ name: 'md-popup' })
+defineOptions({ name: 'cu-popup' })
 
 const props = withDefaults(
   defineProps<{
@@ -34,7 +34,7 @@ const props = withDefaults(
     maskClosable?: boolean
     /** center | top | bottom | left | right */
     position?: string
-    /** 覆盖默认过渡名（md-fade / md-slide-up / ...，样式由 @mand-mobile/styles 提供） */
+    /** 覆盖默认过渡名（cu-fade / cu-slide-up / ...，样式由 @centui/styles 提供） */
     transition?: string
     preventScroll?: boolean
     preventScrollExclude?: string | HTMLElement
@@ -80,15 +80,15 @@ const transitionName = computed(() => props.transition ?? defaultTransition(prop
 function defaultTransition(position: string): string {
   switch (position) {
     case 'bottom':
-      return 'md-slide-up'
+      return 'cu-slide-up'
     case 'top':
-      return 'md-slide-down'
+      return 'cu-slide-down'
     case 'left':
-      return 'md-slide-right'
+      return 'cu-slide-right'
     case 'right':
-      return 'md-slide-left'
+      return 'cu-slide-left'
     default:
-      return 'md-fade'
+      return 'cu-fade'
   }
 }
 
@@ -148,8 +148,8 @@ function hidePopupBox() {
 
 function preventScroll(isBind: boolean) {
   const handler = isBind ? 'addEventListener' : 'removeEventListener'
-  const masker = root.value?.querySelector<HTMLElement>('.md-popup-mask')
-  const boxer = root.value?.querySelector<HTMLElement>('.md-popup-box')
+  const masker = root.value?.querySelector<HTMLElement>('.cu-popup-mask')
+  const boxer = root.value?.querySelector<HTMLElement>('.cu-popup-box')
 
   masker && masker[handler]('touchmove', preventDefault, false)
   boxer && boxer[handler]('touchmove', preventDefault, false)

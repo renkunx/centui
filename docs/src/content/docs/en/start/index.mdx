@@ -1,18 +1,18 @@
 ---
 title: Getting Started
-description: Install, import and preview mand-mobile 3.0 components locally
+description: Install, import and preview centui 3.0 components locally
 ---
 
-mand-mobile 3.0 is a monorepo: `mand-mobile` (Vue 3 components), `@mand-mobile/core` (framework-agnostic logic core) and `@mand-mobile/styles` (styles). This page covers installation, import and local preview.
+centui 3.0 is a monorepo: `centui` (Vue 3 components), `@centui/core` (framework-agnostic logic core) and `@centui/styles` (styles). This page covers installation, import and local preview.
 
 ## Install
 
 ```bash
 # Inside a pnpm monorepo — shares the same sources as this docs site
-pnpm add mand-mobile @mand-mobile/styles
+pnpm add centui @centui/styles
 
 # Or a regular project
-npm install mand-mobile @mand-mobile/styles
+npm install centui @centui/styles
 ```
 
 Requires Node.js ≥ 20 and pnpm ≥ 9.
@@ -27,8 +27,8 @@ All components are exported with the unified `Md*` prefix, either all-at-once or
 // main.ts
 import { createApp } from 'vue'
 import App from './App.vue'
-import 'mand-mobile'
-import '@mand-mobile/styles/global.css'
+import 'centui'
+import '@centui/styles/global.css'
 
 createApp(App).mount('#app')
 ```
@@ -37,17 +37,17 @@ createApp(App).mount('#app')
 
 ```vue
 <script setup lang="ts">
-import { MdButton } from 'mand-mobile'
-import '@mand-mobile/styles/es/button.css'
+import { CuButton } from 'centui'
+import '@centui/styles/es/button.css'
 </script>
 
 <template>
-  <MdButton type="primary" round>Primary</MdButton>
+  <CuButton type="primary" round>Primary</CuButton>
 </template>
 ```
 
 :::note
-Component styles are never inlined. Always import styles alongside components — either global `@mand-mobile/styles/global.css` or per-component `@mand-mobile/styles/es/<kebab-name>.css`.
+Component styles are never inlined. Always import styles alongside components — either global `@centui/styles/global.css` or per-component `@centui/styles/es/<kebab-name>.css`.
 :::
 
 ## Imperative API
@@ -55,7 +55,7 @@ Component styles are never inlined. Always import styles alongside components �
 Toast, Dialog and ActionSheet also expose imperative APIs, no overlay state needed:
 
 ```ts
-import { Toast, Dialog, ActionSheet } from 'mand-mobile'
+import { Toast, Dialog, ActionSheet } from 'centui'
 
 Toast.info('Operation succeeded')
 Dialog.confirm({ content: 'Delete this record?' })
@@ -69,7 +69,7 @@ The `docs/` folder in this repo renders every component demo from `packages/vue/
 ```bash
 # from the repo root
 pnpm install
-pnpm --filter @mand-mobile/docs dev
+pnpm --filter @centui/docs dev
 ```
 
 Open `http://localhost:4321` and interact with every component page. Editing component sources under `packages/vue/src` hot-reloads the pages right away.
@@ -77,11 +77,11 @@ Open `http://localhost:4321` and interact with every component page. Editing com
 To regenerate the API tables (when components or props change):
 
 ```bash
-pnpm --filter @mand-mobile/docs gen   # generate only
-pnpm --filter @mand-mobile/docs build # generate + static build
+pnpm --filter @centui/docs gen   # generate only
+pnpm --filter @centui/docs build # generate + static build
 ```
 
 ## Next steps
 
 - [Browse all components](/en/components/): every page ships an interactive scene preview plus full props / events / slots tables
-- Open an issue or PR on [GitHub](https://github.com/didi/mand-mobile)
+- Open an issue or PR on [GitHub](https://github.com/renkunx/centui)

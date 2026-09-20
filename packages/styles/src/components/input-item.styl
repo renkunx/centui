@@ -1,23 +1,23 @@
 /* Extracted from legacy/components/input-item — do not edit by hand; re-run scripts/extract.mjs */
 /* --- index.vue --- */
-.md-input-item
-  .md-field-item-content
+.cu-input-item
+  .cu-field-item-content
     padding-top 0
     padding-bottom 0
-  .md-field-item-control
+  .cu-field-item-control
     display flex
     align-items center
 
-.md-input-item-clear
+.cu-input-item-clear
   padding 10px 0
   color input-item-icon
-  .md-icon
+  .cu-icon
     display flex
     background color-bg-base
     border-radius radius-circle
 
-.md-input-item-input,
-.md-input-item-fake
+.cu-input-item-input,
+.cu-input-item-fake
   // display flex
   width 100%
   height input-item-height
@@ -34,7 +34,7 @@
   -webkit-tap-highlight-color transparent
   appearance none
 
-.md-input-item-input
+.cu-input-item-input
   &:disabled, &[disabled]
     opacity 1
   &::-webkit-input-placeholder
@@ -43,7 +43,7 @@
   &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
     -webkit-appearance none
 
-.md-input-item-fake
+.cu-input-item-fake
   line-height input-item-height
   word-ellipsis()
   cursor text
@@ -59,7 +59,7 @@
   &.is-waiting:after
     animation keyboard-cursor infinite 1s step-start
 
-.md-input-item-fake-placeholder
+.cu-input-item-fake-placeholder
   position absolute
   top 0
   left 0
@@ -67,38 +67,38 @@
   color input-item-placeholder
   font-weight font-weight-normal
 
-.md-input-item-msg,
-.md-input-item-brief
+.cu-input-item-msg,
+.cu-input-item-brief
   word-break()
   &:not(:last-child)
     margin-bottom 10px
 
-.md-input-item-brief
+.cu-input-item-brief
   font-size input-item-font-size-brief
   color input-item-color-brief
 
-.md-input-item-msg
+.cu-input-item-msg
   font-size input-item-font-size-error
   color input-item-color-error
 
-.md-input-item
+.cu-input-item
   &.left
-    .md-input-item-input,
-    .md-input-item-fake
+    .cu-input-item-input,
+    .cu-input-item-fake
       text-align left
 
   &.center
-    .md-input-item-input,
-    .md-input-item-fake
+    .cu-input-item-input,
+    .cu-input-item-fake
       text-align center
 
   &.right
-    .md-input-item-input,
-    .md-input-item-fake
+    .cu-input-item-input,
+    .cu-input-item-fake
       text-align right
 
   &.is-title-latent
-    .md-field-item-title
+    .cu-field-item-title
       position absolute
       top 50%
       left 0
@@ -109,67 +109,67 @@
       transition all .3s ease
       opacity 0
       will-change auto
-    .md-field-item-content
+    .cu-field-item-content
       min-height 115px
-    .md-field-item-content,
-    .md-field-item-left,
-    .md-field-item-right,
-    .md-input-item-input,
-    .md-input-item-fake
+    .cu-field-item-content,
+    .cu-field-item-left,
+    .cu-field-item-right,
+    .cu-input-item-input,
+    .cu-input-item-fake
       padding-top 20px
     &.is-active
-      .md-field-item-title
+      .cu-field-item-title
         opacity 1
         top 20px
         transform translate3d(0, 0, 0)
 
   &.is-highlight
     &.is-focus
-      .md-field-item-content
+      .cu-field-item-content
         hairline(bottom, input-item-color-highlight, 0, 4px)
 
   &.is-disabled
-    .md-input-item-input,
-    .md-input-item-fake,
-    .md-input-item-fake-placeholder
+    .cu-input-item-input,
+    .cu-input-item-fake,
+    .cu-input-item-fake-placeholder
       -webkit-text-fill-color input-item-color-disabled
       color input-item-color-disabled
 
   &.is-amount
-    .md-input-item-input,
-    .md-input-item-fake
+    .cu-input-item-input,
+    .cu-input-item-fake
       font-family font-family-number
     &.large
-      .md-input-item-input,
-      .md-input-item-fake
+      .cu-input-item-input,
+      .cu-input-item-fake
         padding-top v-gap-xs
 
   &.large
-    .md-input-item-input,
-    .md-input-item-fake
+    .cu-input-item-input,
+    .cu-input-item-fake
       padding-bottom 15px
       font-size input-item-font-size-large
-    .md-input-item-input::-webkit-input-placeholder
+    .cu-input-item-input::-webkit-input-placeholder
         font-size 60px
         line-height 100px
 
   &.is-error
-    .md-field-item-content
+    .cu-field-item-content
       hairline(bottom, input-item-color-error, 0, 4px)
 
   &.is-ios
-    .md-input-item-input::-webkit-input-placeholder
+    .cu-input-item-input::-webkit-input-placeholder
       position relative
       top 3px
       overflow visible
-    .md-input-item-fake::after
+    .cu-input-item-fake::after
       border-right solid 6px #2C6CF5
       border-radius 2px
   &.is-android
-    .md-input-item-fake::after
+    .cu-input-item-fake::after
       border-right solid 4px color-text-base
-    .md-input-item-input,
-    .md-input-item-fake
+    .cu-input-item-input,
+    .cu-input-item-fake
       font-weight input-item-font-weight-android
 
 @-webkit-keyframes keyboard-cursor

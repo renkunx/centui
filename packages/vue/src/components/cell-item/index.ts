@@ -1,1 +1,1 @@
-export { default as MdCellItem } from './CellItem.vue'
+export { default as CuCellItem } from './CellItem.vue'

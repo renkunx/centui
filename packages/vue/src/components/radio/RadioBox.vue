@@ -1,6 +1,6 @@
 <template>
-  <MdCheckBaseBox
-    class="md-radio-box"
+  <CuCheckBaseBox
+    class="cu-radio-box"
     :label="label"
     :is-checked="isChecked"
     :disabled="disabled"
@@ -8,14 +8,14 @@
     @click="onClick"
   >
     <slot>{{ label }}</slot>
-  </MdCheckBaseBox>
+  </CuCheckBaseBox>
 </template>
 
 <script setup lang="ts">
-import MdCheckBaseBox from '../check-base/CheckBoxBase.vue'
+import CuCheckBaseBox from '../check-base/CheckBoxBase.vue'
 import { useRadioDelegate } from '../check/shared'
 
-defineOptions({ name: 'md-radio-box' })
+defineOptions({ name: 'cu-radio-box' })
 
 const props = withDefaults(
   defineProps<{

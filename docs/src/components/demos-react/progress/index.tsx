@@ -1,9 +1,9 @@
-import { MdProgress, MdAmount } from 'mand-mobile-react'
+import { CuProgress, CuAmount } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['基础', '其他配置']
-const code = `<MdProgress size={100} value={0.2} width={5}>20%</MdProgress>
-<MdProgress value={0.8} color="url(#linear)" rotate={-90} transition />`
+const code = `<CuProgress size={100} value={0.2} width={5}>20%</CuProgress>
+<CuProgress value={0.8} color="url(#linear)" rotate={-90} transition />`
 
 export default function ProgressDemo() {
   return (
@@ -12,14 +12,14 @@ export default function ProgressDemo() {
         if (active === 0)
           return (
             <div style={{ display: 'flex', gap: 40, alignItems: 'center', justifyContent: 'center', padding: '30px 0' }}>
-              <MdProgress size={100} value={0.2} width={5}>20%</MdProgress>
-              <MdProgress size={100} value={0.5} width={5}>50%</MdProgress>
-              <MdProgress size={100} value={0.8} width={5}>80%</MdProgress>
+              <CuProgress size={100} value={0.2} width={5}>20%</CuProgress>
+              <CuProgress size={100} value={0.5} width={5}>50%</CuProgress>
+              <CuProgress size={100} value={0.8} width={5}>80%</CuProgress>
             </div>
           )
         return (
           <div style={{ display: 'flex', gap: 40, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', padding: '20px 0' }}>
-            <MdProgress
+            <CuProgress
               value={0.8}
               width={10}
               size={100}
@@ -34,10 +34,10 @@ export default function ProgressDemo() {
               }
             >
               <span style={{ fontSize: 24 }}>80%</span>
-            </MdProgress>
-            <MdProgress value={0.8} width={10} size={100} rotate={-90} color="#FF5257" transition>
-              <MdAmount value={80} precision={0} />
-            </MdProgress>
+            </CuProgress>
+            <CuProgress value={0.8} width={10} size={100} rotate={-90} color="#FF5257" transition>
+              <CuAmount value={80} precision={0} />
+            </CuProgress>
           </div>
         )
       }}

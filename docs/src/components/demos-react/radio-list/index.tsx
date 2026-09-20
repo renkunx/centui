@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { MdRadioList } from 'mand-mobile-react'
+import { CuRadioList } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['选项列表', '带自定义输入']
-const code = `<MdRadioList v-model="value" :options="options" />`
+const code = `<CuRadioList v-model="value" :options="options" />`
 
 const options = [
   { value: 'a', text: '选项一' },
@@ -16,9 +16,9 @@ export default function RadioListDemo() {
     <DemoCanvasReact mode="phone" scenes={scenes} code={code}>
       {active =>
         active === 0 ? (
-          <MdRadioList value={value} options={options} onChangeValue={setValue} />
+          <CuRadioList value={value} options={options} onChangeValue={setValue} />
         ) : (
-          <MdRadioList
+          <CuRadioList
             value={value}
             options={options}
             hasInput

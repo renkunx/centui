@@ -1,6 +1,6 @@
 /**
- * @mand-mobile/react 主入口。
- * 样式不内嵌：配合 @mand-mobile/styles 使用（与 Vue 包共享同一份 CSS）。
+ * @centui/react 主入口。
+ * 样式不内嵌：配合 @centui/styles 使用（与 Vue 包共享同一份 CSS）。
  */
 export const VERSION = '0.1.0'
 
@@ -29,12 +29,12 @@ export * from './components/popup/Popup'
 export * from './components/popup/PopupTitleBar'
 export * from './components/tip/Tip'
 export * from './components/tip/TipContent'
-export { MdToast, type ToastProps, type ToastExposed } from './components/toast/Toast'
+export { CuToast, type ToastProps, type ToastExposed } from './components/toast/Toast'
 export { default as Toast } from './components/toast'
-export { MdDialog, type DialogProps, type DialogBtn } from './components/dialog/Dialog'
+export { CuDialog, type DialogProps, type DialogBtn } from './components/dialog/Dialog'
 export { default as Dialog } from './components/dialog'
 export {
-  MdActionSheet,
+  CuActionSheet,
   type ActionSheetProps,
   type ActionSheetOption,
 } from './components/action-sheet/ActionSheet'
@@ -43,23 +43,23 @@ export * from './components/picker/Picker'
 export * from './components/picker/DatePicker'
 
 // 滚动类（M6-1）
-export { MdScrollView, MdScrollViewRefresh, MdScrollViewMore, type ScrollViewProps } from './components/scroll-view'
-export { MdSwiper, MdSwiperItem, type SwiperProps, type SwiperExposed } from './components/swiper/Swiper'
-export { MdSlider, type SliderProps } from './components/slider/Slider'
+export { CuScrollView, CuScrollViewRefresh, CuScrollViewMore, type ScrollViewProps } from './components/scroll-view'
+export { CuSwiper, CuSwiperItem, type SwiperProps, type SwiperExposed } from './components/swiper/Swiper'
+export { CuSlider, type SliderProps } from './components/slider/Slider'
 
 // M6-2 展示与排版类
-export { MdActionBar, type ActionBarAction, type ActionBarProps } from './components/action-bar'
-export { MdDetailItem, type DetailItemProps } from './components/detail-item'
+export { CuActionBar, type ActionBarAction, type ActionBarProps } from './components/action-bar'
+export { CuDetailItem, type DetailItemProps } from './components/detail-item'
 export {
-  MdTextareaItem,
+  CuTextareaItem,
   type TextareaItemProps,
   type TextareaItemExposed,
 } from './components/textarea-item'
-export { MdSteps, type StepItem, type StepsProps } from './components/steps'
+export { CuSteps, type StepItem, type StepsProps } from './components/steps'
 export {
-  MdTabs,
-  MdTabBar,
-  MdTabPane,
+  CuTabs,
+  CuTabBar,
+  CuTabPane,
   useTabsContext,
   type TabsProps,
   type TabsExposed,
@@ -68,24 +68,24 @@ export {
   type TabBarExposed,
   type TabPaneProps,
 } from './components/tabs'
-export { MdTransition, type TransitionProps } from './components/transition'
+export { CuTransition, type TransitionProps } from './components/transition'
 
 // M6-3 展示与画布类
-export { MdWaterMark, type WaterMarkProps } from './components/water-mark'
-export { MdResultPage, type ResultPageButton, type ResultPageProps } from './components/result-page'
-export { MdRuler, type RulerProps } from './components/ruler'
-export { MdLandscape, type LandscapeProps } from './components/landscape'
+export { CuWaterMark, type WaterMarkProps } from './components/water-mark'
+export { CuResultPage, type ResultPageButton, type ResultPageProps } from './components/result-page'
+export { CuRuler, type RulerProps } from './components/ruler'
+export { CuLandscape, type LandscapeProps } from './components/landscape'
 
 // M6-4 交互选择类
-export { MdSelector, type SelectorItem, type SelectorProps } from './components/selector'
+export { CuSelector, type SelectorItem, type SelectorProps } from './components/selector'
 export {
-  MdDropMenu,
+  CuDropMenu,
   type DropMenuItem,
   type DropMenuProps,
   type DropMenuExposed,
 } from './components/drop-menu'
 export {
-  MdTabPicker,
+  CuTabPicker,
   type TabPickerNode,
   type TabPickerOption,
   type TabPickerProps,
@@ -93,27 +93,27 @@ export {
 } from './components/tab-picker'
 
 // M6-5 组合展示类
-export { MdBill, type BillProps } from './components/bill'
-export { MdImageViewer, type ImageViewerItem, type ImageViewerProps } from './components/image-viewer'
-export { MdCaptcha, type CaptchaProps } from './components/captcha'
+export { CuBill, type BillProps } from './components/bill'
+export { CuImageViewer, type ImageViewerItem, type ImageViewerProps } from './components/image-viewer'
+export { CuCaptcha, type CaptchaProps } from './components/captcha'
 
 // M6-6 收官批次
-export { MdChart, type ChartDataset, type ChartProps } from './components/chart'
-export { MdImageReader, type ImageReaderProps } from './components/image-reader'
+export { CuChart, type ChartDataset, type ChartProps } from './components/chart'
+export { CuImageReader, type ImageReaderProps } from './components/image-reader'
 export {
-  MdLicensePlate,
-  MdLicensePlateInput,
-  MdLicensePlateKeyboard,
+  CuLicensePlate,
+  CuLicensePlateInput,
+  CuLicensePlateKeyboard,
   type LicensePlateProps,
   type LicenseKeyItem,
 } from './components/license-plate'
 export {
-  MdCashier,
-  MdCashierChannel,
-  MdCashierChannelButton,
-  MdCashierChannelItem,
+  CuCashier,
+  CuCashierChannel,
+  CuCashierChannelButton,
+  CuCashierChannelItem,
   type CashierProps,
   type CashierScene,
   type CashierChannel,
 } from './components/cashier'
-export { MdRollerSuccess, type RollerSuccessProps } from './components/activity-indicator'
+export { CuRollerSuccess, type RollerSuccessProps } from './components/activity-indicator'

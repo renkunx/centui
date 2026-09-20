@@ -1,1 +1,1 @@
-export { default as MdField } from './Field.vue'
+export { default as CuField } from './Field.vue'

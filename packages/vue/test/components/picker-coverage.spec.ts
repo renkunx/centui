@@ -11,7 +11,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 // vi.mock 工厂会被提升到文件顶部，实例表须经 vi.hoisted 共享
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async (importOriginal) => {
+vi.mock('@centui/core/web', async (importOriginal) => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     cb: (left: number, top: number) => void
@@ -47,8 +47,8 @@ vi.mock('@mand-mobile/core/web', async (importOriginal) => {
   return { ...orig, Scroller: FakeScrollerImpl }
 })
 
-import { MdDatePicker, MdPicker } from '../../src'
-import MdPickerColumn from '../../src/components/picker/PickerColumn.vue'
+import { CuDatePicker, CuPicker } from '../../src'
+import CuPickerColumn from '../../src/components/picker/PickerColumn.vue'
 
 async function flushAll() {
   await flushPromises()
@@ -56,13 +56,13 @@ async function flushAll() {
   await flushPromises()
 }
 
-describe('MdPickerColumn（FakeScroller）', () => {
+describe('CuPickerColumn（FakeScroller）', () => {
   beforeEach(() => {
     ;(scrollerInstances as unknown[]).length = 0
   })
 
   function mountColumn(props: Record<string, unknown> = {}) {
-    const wrapper = mount(MdPickerColumn, {
+    const wrapper = mount(CuPickerColumn, {
       props: {
         cols: 2,
         data: [
@@ -143,7 +143,7 @@ describe('MdPickerColumn（FakeScroller）', () => {
   })
 })
 
-describe('MdPicker（弹层模式）', () => {
+describe('CuPicker（弹层模式）', () => {
   beforeEach(() => {
     document.body.innerHTML = ''
     scrollerInstances.length = 0
@@ -154,7 +154,7 @@ describe('MdPicker（弹层模式）', () => {
 
   it('opens popup and confirms with column values', async () => {
     const onConfirm = vi.fn()
-    const wrapper = mount(MdPicker, {
+    const wrapper = mount(CuPicker, {
       props: {
         data: [[{ text: 'A' }, { text: 'B' }]],
         defaultValue: ['B'],
@@ -165,9 +165,9 @@ describe('MdPicker（弹层模式）', () => {
       attachTo: document.body,
     })
     await flushAll()
-    expect(document.body.querySelector('.md-popup-title-bar')).not.toBeNull()
+    expect(document.body.querySelector('.cu-popup-title-bar')).not.toBeNull()
 
-    ;(document.body.querySelector('.md-popup-confirm') as HTMLElement).click()
+    ;(document.body.querySelector('.cu-popup-confirm') as HTMLElement).click()
     await flushAll()
     expect(onConfirm).toBeTruthy()
     expect(wrapper.emitted('confirm')).toBeTruthy()
@@ -175,61 +175,61 @@ describe('MdPicker（弹层模式）', () => {
   })
 
   it('cancel resets and mask click cancels', async () => {
-    const wrapper = mount(MdPicker, {
+    const wrapper = mount(CuPicker, {
       props: { modelValue: true, data: [[{ text: 'A' }]] },
       attachTo: document.body,
     })
     await flushAll()
-    ;(document.body.querySelector('.md-popup-cancel') as HTMLElement).click()
+    ;(document.body.querySelector('.cu-popup-cancel') as HTMLElement).click()
     await flushAll()
     expect(wrapper.emitted('cancel')).toBeTruthy()
     wrapper.unmount()
   })
 
   it('blocks confirm while a scroller animates', async () => {
-    const wrapper = mount(MdPicker, {
+    const wrapper = mount(CuPicker, {
       props: { modelValue: true, data: [[{ text: 'A' }]] },
       attachTo: document.body,
     })
     await flushAll()
     // 经组件实例取当前生效的 scroller（refresh 可能多次，全局表首项可能已过期）
-    const scrollers = wrapper.findComponent(MdPickerColumn).vm.scrollers as unknown as Array<{
+    const scrollers = wrapper.findComponent(CuPickerColumn).vm.scrollers as unknown as Array<{
       _isAnimating: boolean
     }>
     scrollers[0]._isAnimating = true
-    ;(document.body.querySelector('.md-popup-confirm') as HTMLElement).click()
+    ;(document.body.querySelector('.cu-popup-confirm') as HTMLElement).click()
     await flushAll()
     expect(wrapper.emitted('confirm')).toBeUndefined()
     wrapper.unmount()
   })
 })
 
-describe('MdDatePicker 补充', () => {
+describe('CuDatePicker 补充', () => {
   beforeEach(() => {
     document.body.innerHTML = ''
     scrollerInstances.length = 0
   })
 
   it('builds time/datetime columns', async () => {
-    const time = mount(MdDatePicker, {
+    const time = mount(CuDatePicker, {
       props: { isView: true, type: 'time', defaultDate: new Date(2024, 5, 15, 10, 30) },
       attachTo: document.body,
     })
     await flushAll()
-    expect(time.findAll('.md-picker-column-item')).toHaveLength(2)
+    expect(time.findAll('.cu-picker-column-item')).toHaveLength(2)
     time.unmount()
 
-    const datetime = mount(MdDatePicker, {
+    const datetime = mount(CuDatePicker, {
       props: { isView: true, type: 'datetime', defaultDate: new Date(2024, 5, 15, 10, 30) },
       attachTo: document.body,
     })
     await flushAll()
-    expect(datetime.findAll('.md-picker-column-item')).toHaveLength(5)
+    expect(datetime.findAll('.cu-picker-column-item')).toHaveLength(5)
     datetime.unmount()
   })
 
   it('rebuilds columns on defaultDate change', async () => {
-    const wrapper = mount(MdDatePicker, {
+    const wrapper = mount(CuDatePicker, {
       props: { isView: true, type: 'date', defaultDate: new Date(2024, 5, 15) },
       attachTo: document.body,
     })
@@ -237,7 +237,7 @@ describe('MdDatePicker 补充', () => {
     await wrapper.setProps({ defaultDate: new Date(2030, 0, 1) })
     await flushAll()
     const yearTexts = wrapper
-      .findAll('.md-picker-column-item')[0]
+      .findAll('.cu-picker-column-item')[0]
       .findAll('.column-item')
       .map((li) => li.text())
     expect(yearTexts).toContain('2030年')

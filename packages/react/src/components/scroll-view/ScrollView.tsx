@@ -5,8 +5,8 @@ import { useEffect, forwardRef,
   useState,
   type ReactNode,
 } from 'react'
-import { debounce } from '@mand-mobile/core'
-import { render, Scroller, type Scroller as ScrollerType } from '@mand-mobile/core/web'
+import { debounce } from '@centui/core'
+import { render, Scroller, type Scroller as ScrollerType } from '@centui/core/web'
 
 export interface ScrollViewProps {
   style?: React.CSSProperties
@@ -41,7 +41,7 @@ export interface ScrollViewExposed {
   finishLoadMore: () => void
 }
 
-export const MdScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(function MdScrollView(
+export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(function CuScrollView(
   {
     scrollingX = true,
     scrollingY = true,
@@ -397,7 +397,7 @@ export const MdScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
   return (
     <div
       ref={rootRef}
-      className="md-scroll-view"
+      className="cu-scroll-view"
       style={style}
       onTouchStart={onScrollerTouchStart}
       onTouchMove={onScrollerTouchMove}

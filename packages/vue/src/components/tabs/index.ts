@@ -1,3 +1,3 @@
-export { default as MdTabs } from './Tabs.vue'
-export { default as MdTabBar, type TabBarItem } from './TabBar.vue'
-export { default as MdTabPane } from './TabPane.vue'
+export { default as CuTabs } from './Tabs.vue'
+export { default as CuTabBar, type TabBarItem } from './TabBar.vue'
+export { default as CuTabPane } from './TabPane.vue'

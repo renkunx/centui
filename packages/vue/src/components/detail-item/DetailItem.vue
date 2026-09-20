@@ -1,14 +1,14 @@
 <template>
-  <div class="md-detail-item" :class="{ 'is-bold': bold }">
-    <div class="md-detail-title" v-text="title"></div>
-    <div class="md-detail-content">
+  <div class="cu-detail-item" :class="{ 'is-bold': bold }">
+    <div class="cu-detail-title" v-text="title"></div>
+    <div class="cu-detail-content">
       <slot>{{ content }}</slot>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-defineOptions({ name: 'md-detail-item' })
+defineOptions({ name: 'cu-detail-item' })
 
 withDefaults(
   defineProps<{

@@ -1,1 +1,1 @@
-export { MdResultPage, type ResultPageButton, type ResultPageProps } from './ResultPage'
+export { CuResultPage, type ResultPageButton, type ResultPageProps } from './ResultPage'

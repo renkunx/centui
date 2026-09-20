@@ -1,5 +1,5 @@
 <template>
-  <div class="md-cashier-channel">
+  <div class="cu-cashier-channel">
     <div class="choose-text">
       <p v-if="paymentTitle" class="choose-title" v-html="paymentTitle"></p>
       <p v-if="paymentAmount" class="choose-number" v-html="paymentAmount"></p>
@@ -8,7 +8,7 @@
     <div class="choose-channel" :class="{ active: isChannelActive }">
       <slot></slot>
       <div v-if="isChannelShow || isSingle" class="choose-channel-list">
-        <MdCashierChannelItem
+        <CuCashierChannelItem
           v-for="(item, index) in channels"
           :key="index"
           :class="{ default: index === defaultIndex }"
@@ -18,7 +18,7 @@
         />
       </div>
       <div v-else-if="channels[defaultIndex]" class="choose-channel-list">
-        <MdCashierChannelItem
+        <CuCashierChannelItem
           class="default"
           :data="channels[defaultIndex] as unknown as CashierChannel & Record<string, unknown>"
           active
@@ -33,24 +33,24 @@
         @click="onChannelMoreClick"
       ></div>
     </div>
-    <div class="md-cashier-block-btn">
-      <MdButton
-        class="md-cashier-pay-button"
+    <div class="cu-cashier-block-btn">
+      <CuButton
+        class="cu-cashier-pay-button"
         :type="payButtonDisabled ? 'disabled' : 'primary'"
         @click="onChannelBtnClick"
       >
         <slot name="button">{{ payButtonText }}</slot>
-      </MdButton>
+      </CuButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import MdButton from '../button/Button.vue'
-import MdCashierChannelItem from './CashierChannelItem.vue'
+import CuButton from '../button/Button.vue'
+import CuCashierChannelItem from './CashierChannelItem.vue'
 
-defineOptions({ name: 'md-cashier-channel' })
+defineOptions({ name: 'cu-cashier-channel' })
 
 export interface CashierChannel {
   text?: string

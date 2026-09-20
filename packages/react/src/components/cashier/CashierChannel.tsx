@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react'
-import { MdButton } from '../button/Button'
-import { MdCashierChannelItem } from './CashierChannelItem'
+import { CuButton } from '../button/Button'
+import { CuCashierChannelItem } from './CashierChannelItem'
 import type { CashierChannelItemData } from './CashierChannelItem'
 
 export interface CashierChannel {
@@ -29,7 +29,7 @@ export interface CashierChannelProps {
   onPay?: (item: CashierChannel) => void
 }
 
-export function MdCashierChannel({
+export function CuCashierChannel({
   paymentTitle = '',
   paymentAmount = '',
   paymentDescribe = '',
@@ -51,7 +51,7 @@ export function MdCashierChannel({
   const isSingle = channelLimit < 1 || !(channels.length > channelLimit)
 
   return (
-    <div className="md-cashier-channel">
+    <div className="cu-cashier-channel">
       <div className="choose-text">
         {paymentTitle ? <p className="choose-title" dangerouslySetInnerHTML={{ __html: paymentTitle }} /> : null}
         {paymentAmount ? <p className="choose-number" dangerouslySetInnerHTML={{ __html: paymentAmount }} /> : null}
@@ -62,7 +62,7 @@ export function MdCashierChannel({
         {isChannelShow || isSingle ? (
           <div className="choose-channel-list">
             {channels.map((item, index) => (
-              <MdCashierChannelItem
+              <CuCashierChannelItem
                 key={index}
                 className={index === defaultIndex ? 'default' : undefined}
                 data={item}
@@ -79,7 +79,7 @@ export function MdCashierChannel({
           </div>
         ) : channels[defaultIndex] ? (
           <div className="choose-channel-list">
-            <MdCashierChannelItem
+            <CuCashierChannelItem
               data={channels[defaultIndex] as unknown as CashierChannelItemData}
               active
               onClick={() => onSelect?.(channels[defaultIndex])}
@@ -100,14 +100,14 @@ export function MdCashierChannel({
           />
         ) : null}
       </div>
-      <div className="md-cashier-block-btn">
-        <MdButton
-          className="md-cashier-pay-button"
+      <div className="cu-cashier-block-btn">
+        <CuButton
+          className="cu-cashier-pay-button"
           type={payButtonDisabled ? 'disabled' : 'primary'}
           onClick={() => onPay?.(channels[activeChannelIndex])}
         >
           {buttonSlot ?? payButtonText}
-        </MdButton>
+        </CuButton>
       </div>
     </div>
   )

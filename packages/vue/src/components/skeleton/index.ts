@@ -1,1 +1,1 @@
-export { default as MdSkeleton } from './Skeleton.vue'
+export { default as CuSkeleton } from './Skeleton.vue'

@@ -1,7 +1,7 @@
 <template>
-  <div v-show="isViewerShow" class="md-image-viewer" @click="onViewerClick">
+  <div v-show="isViewerShow" class="cu-image-viewer" @click="onViewerClick">
     <div class="viewer-container">
-      <MdSwiper
+      <CuSwiper
         v-if="isViewerShow"
         ref="swiper"
         :autoplay="0"
@@ -10,7 +10,7 @@
         :is-prevent="false"
         @after-change="afterChange"
       >
-        <MdSwiperItem
+        <CuSwiperItem
           v-for="(item, index) in imgs"
           :key="index"
           class="viewer-item-wrap"
@@ -18,8 +18,8 @@
           <div class="item">
             <img v-if="item.url" :src="item.url" :alt="item.alt" />
           </div>
-        </MdSwiperItem>
-      </MdSwiper>
+        </CuSwiperItem>
+      </CuSwiper>
       <div v-if="hasDots" class="viewer-index">{{ currentImgIndex + 1 }}/{{ list.length }}</div>
     </div>
   </div>
@@ -27,10 +27,10 @@
 
 <script setup lang="ts">
 import { nextTick, ref, watch } from 'vue'
-import MdSwiper from '../swiper/Swiper.vue'
-import MdSwiperItem from '../swiper/SwiperItem.vue'
+import CuSwiper from '../swiper/Swiper.vue'
+import CuSwiperItem from '../swiper/SwiperItem.vue'
 
-defineOptions({ name: 'md-image-viewer' })
+defineOptions({ name: 'cu-image-viewer' })
 
 export interface ImageViewerItem {
   url?: string

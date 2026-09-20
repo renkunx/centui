@@ -22,6 +22,6 @@ if (inBrowser) {
   mdBody = document.body
 }
 
-export type MdDocument = Document | DomStub
-export type MdBody = HTMLElement | DomStub
+export type CuDocument = Document | DomStub
+export type CuBody = HTMLElement | DomStub
 export { mdDocument, mdBody, dom }

@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type ReactNode } from 'react'
-import { MdPopup } from '../popup/Popup'
-import { MdRadioList, type RadioListOption } from '../radio-list/RadioList'
+import { CuPopup } from '../popup/Popup'
+import { CuRadioList, type RadioListOption } from '../radio-list/RadioList'
 
 export interface DropMenuItem {
   text?: string
@@ -22,7 +22,7 @@ export interface DropMenuExposed {
   getSelectedValue: (index: number) => Record<string, unknown> | undefined
 }
 
-export const MdDropMenu = forwardRef<DropMenuExposed, DropMenuProps>(function MdDropMenu(
+export const CuDropMenu = forwardRef<DropMenuExposed, DropMenuProps>(function CuDropMenu(
   { data = [], defaultValue = [], children, onChange, onShow, onHide },
   ref,
 ) {
@@ -122,8 +122,8 @@ export const MdDropMenu = forwardRef<DropMenuExposed, DropMenuProps>(function Md
   }))
 
   return (
-    <div className="md-drop-menu">
-      <div className="md-drop-menu-bar">
+    <div className="cu-drop-menu">
+      <div className="cu-drop-menu-bar">
         {data.map((item, index) => (
           <div
             key={index}
@@ -136,21 +136,21 @@ export const MdDropMenu = forwardRef<DropMenuExposed, DropMenuProps>(function Md
           </div>
         ))}
       </div>
-      <MdPopup
+      <CuPopup
         value={isPopupShow}
         position="top"
         preventScroll
         preventScrollExclude={scroller}
         onShow={() => {
           // v2 $_setScroller：弹层高度超出时列表自滚
-          setScroller('.md-drop-menu-list')
+          setScroller('.cu-drop-menu-list')
           onShow?.()
         }}
         onHide={onHide}
         onBeforeHide={() => setActiveMenuBarIndex(-1)}
       >
-        <div className="md-drop-menu-list">
-          <MdRadioList
+        <div className="cu-drop-menu-list">
+          <CuRadioList
             value={selectedMenuListValue[activeMenuBarIndex]}
             options={activeMenuListData}
             isSlotScope={hasSlot}
@@ -158,9 +158,9 @@ export const MdDropMenu = forwardRef<DropMenuExposed, DropMenuProps>(function Md
             onChange={(option) => onListItemClick(option)}
           >
             {children}
-          </MdRadioList>
+          </CuRadioList>
         </div>
-      </MdPopup>
+      </CuPopup>
     </div>
   )
 })

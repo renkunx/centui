@@ -9,7 +9,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async importOriginal => {
+vi.mock('@centui/core/web', async importOriginal => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     _isAnimating = false
@@ -43,7 +43,7 @@ vi.mock('@mand-mobile/core/web', async importOriginal => {
   return { ...orig, Scroller: FakeScrollerImpl }
 })
 
-import { MdScrollView, MdSlider, MdSwiper, MdSwiperItem } from '../../src'
+import { CuScrollView, CuSlider, CuSwiper, CuSwiperItem } from '../../src'
 
 async function flush(ms = 30) {
   await vi.advanceTimersByTimeAsync(ms)
@@ -51,11 +51,11 @@ async function flush(ms = 30) {
 
 function mountSwiper(props: Record<string, unknown> = {}, count = 3) {
   const items = Array.from({ length: count }, (_, i) => i + 1)
-    .map(n => `<MdSwiperItem>第${n}页</MdSwiperItem>`)
+    .map(n => `<CuSwiperItem>第${n}页</CuSwiperItem>`)
     .join('')
   return mount({
-    components: { MdSwiper, MdSwiperItem },
-    template: `<MdSwiper v-bind="props">${items}</MdSwiper>`,
+    components: { CuSwiper, CuSwiperItem },
+    template: `<CuSwiper v-bind="props">${items}</CuSwiper>`,
     setup() {
       return { props }
     },
@@ -71,14 +71,14 @@ describe('Swiper 分支第四轮 (vue)', () => {
     vi.useFakeTimers()
     const wrapper = mountSwiper({ autoplay: 0, transition: 'fade', isPrevent: false })
     await flush(120)
-    const root = wrapper.find('.md-swiper')
+    const root = wrapper.find('.cu-swiper')
     const start = [{ pageX: 100, pageY: 100 }]
     await root.trigger('touchstart', { touches: start, targetTouches: start })
     const move = [{ pageX: 40, pageY: 100 }]
     await root.trigger('touchmove', { touches: move, targetTouches: move })
     await root.trigger('touchend', { touches: [], targetTouches: [], changedTouches: move })
     await flush(600)
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       getIndex: () => number
     }
     expect(vm.getIndex()).toBe(1)
@@ -89,7 +89,7 @@ describe('Swiper 分支第四轮 (vue)', () => {
     vi.useFakeTimers()
     const wrapper = mountSwiper({ autoplay: 0, isLoop: false })
     await flush(120)
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       prev: () => void
       getIndex: () => number
     }
@@ -103,12 +103,12 @@ describe('Swiper 分支第四轮 (vue)', () => {
     vi.useFakeTimers()
     const wrapper = mountSwiper({ autoplay: 0, isLoop: false, defaultIndex: 2 })
     await flush(120)
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       next: () => void
       getIndex: () => number
     }
     expect(vm.getIndex()).toBe(2)
-    const swVm = wrapper.findComponent({ name: 'md-swiper' }).vm
+    const swVm = wrapper.findComponent({ name: 'cu-swiper' }).vm
     console.log(
       '[dbg] isLoop prop=',
       (swVm as unknown as { $props: { isLoop: boolean } }).$props.isLoop,
@@ -119,7 +119,7 @@ describe('Swiper 分支第四轮 (vue)', () => {
     )
     vm.next()
     await flush(20)
-    const swVm2 = wrapper.findComponent({ name: 'md-swiper' }).vm
+    const swVm2 = wrapper.findComponent({ name: 'cu-swiper' }).vm
     console.log('[dbg] after next, isLoop=', (swVm2 as unknown as { $props: { isLoop: boolean } }).$props.isLoop, 'index=', (swVm2 as unknown as { index: number }).index)
     expect(vm.getIndex()).toBe(2)
     vi.useRealTimers()
@@ -129,10 +129,10 @@ describe('Swiper 分支第四轮 (vue)', () => {
     vi.useFakeTimers()
     const wrapper = mountSwiper({ autoplay: 0 })
     await flush(120)
-    const before = wrapper.findAll('.md-swiper-indicator').length
+    const before = wrapper.findAll('.cu-swiper-indicator').length
     window.dispatchEvent(new Event('resize'))
     await flush(400)
-    expect(wrapper.findAll('.md-swiper-indicator').length).toBe(before)
+    expect(wrapper.findAll('.cu-swiper-indicator').length).toBe(before)
     vi.useRealTimers()
   })
 
@@ -140,7 +140,7 @@ describe('Swiper 分支第四轮 (vue)', () => {
     vi.useFakeTimers()
     const wrapper = mountSwiper({ autoplay: 0, isLoop: false, defaultIndex: 0 })
     await flush(120)
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       goto: (i: number) => void
       getIndex: () => number
     }
@@ -155,7 +155,7 @@ describe('Swiper 分支第四轮 (vue)', () => {
     const onAfter = vi.fn()
     const wrapper = mountSwiper({ autoplay: 0, isPrevent: false, onAfterChange: onAfter })
     await flush(120)
-    const root = wrapper.find('.md-swiper')
+    const root = wrapper.find('.cu-swiper')
     await root.trigger('mousedown', { pageX: 100, pageY: 100 })
     await root.trigger('mousemove', { pageX: 20, pageY: 100 })
     await root.trigger('mouseup', { pageX: 20, pageY: 100 })
@@ -185,7 +185,7 @@ describe('ScrollView 分支第四轮 (vue)', () => {
     await flush(120)
     expect(wrapper.find('.scroll-view-container').classes()).toContain('horizon')
 
-    const root = wrapper.find('.md-scroll-view')
+    const root = wrapper.find('.cu-scroll-view')
     const t1 = [{ pageX: 100, pageY: 100 }]
     await root.trigger('touchstart', { touches: t1, targetTouches: t1 })
     const t2 = [{ pageX: 160, pageY: 100 }]
@@ -202,7 +202,7 @@ describe('ScrollView 分支第四轮 (vue)', () => {
     vi.useFakeTimers()
     const wrapper = mountSV()
     await flush(120)
-    const root = wrapper.find('.md-scroll-view')
+    const root = wrapper.find('.cu-scroll-view')
     const t1 = [{ pageX: 5, pageY: 5 }]
     await root.trigger('touchstart', { touches: t1, targetTouches: t1 })
     // scrollingY=false：水平移动角度 0 > 45 为 false？——角度门仅对单轴模式启用；
@@ -218,12 +218,12 @@ describe('ScrollView 分支第四轮 (vue)', () => {
 
   function mountSV() {
     return mount({
-      components: { MdScrollView },
+      components: { CuScrollView },
       template: `
-        <MdScrollView :scrolling-y="false">
+        <CuScrollView :scrolling-y="false">
           <div class="item">A</div>
-          <div class="md-scroll-view-more">加载更多</div>
-        </MdScrollView>
+          <div class="cu-scroll-view-more">加载更多</div>
+        </CuScrollView>
       `,
     })
   }
@@ -233,7 +233,7 @@ describe('Slider 分支第四轮 (vue)', () => {
   it('upper handle drag updates upper value via rAF', async () => {
     vi.useFakeTimers()
     const onUpdate = vi.fn()
-    const wrapper = mount(MdSlider, {
+    const wrapper = mount(CuSlider, {
       props: { modelValue: [20, 80], range: true, 'onUpdate:modelValue': onUpdate },
     })
     document.body.appendChild(wrapper.element)
@@ -261,13 +261,13 @@ describe('Slider 分支第四轮 (vue)', () => {
 
   it('stopDrag via disabled toggle cleans listeners', async () => {
     vi.useFakeTimers()
-    const wrapper = mount(MdSlider, { props: { modelValue: 30 } })
+    const wrapper = mount(CuSlider, { props: { modelValue: 30 } })
     document.body.appendChild(wrapper.element)
     Object.defineProperty(wrapper.element, 'offsetWidth', { value: 100 })
 
     const mousedown = new MouseEvent('mousedown', { bubbles: true, cancelable: true })
     Object.defineProperty(mousedown, 'pageX', { value: 30 })
-    wrapper.element.querySelector('.md-slider-handle span')!.dispatchEvent(mousedown)
+    wrapper.element.querySelector('.cu-slider-handle span')!.dispatchEvent(mousedown)
     await vi.advanceTimersByTimeAsync(0)
 
     await wrapper.setProps({ disabled: true })
@@ -284,7 +284,7 @@ describe('Slider 分支第四轮 (vue)', () => {
     vi.useRealTimers()
 
     function onUpdateUnchanged(w: { find: (s: string) => { attributes: () => Record<string, string | undefined> } }) {
-      return (w.find('.md-slider-handle').attributes()['data-hint'] ?? '30') === '30'
+      return (w.find('.cu-slider-handle').attributes()['data-hint'] ?? '30') === '30'
     }
   })
 })

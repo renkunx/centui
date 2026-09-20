@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
-import { MdIcon } from '../icon/Icon'
-import { MdCheckBaseBox } from '../check/Check'
+import { CuIcon } from '../icon/Icon'
+import { CuCheckBaseBox } from '../check/Check'
 import { RadioGroupContext, useRadioDelegate, type CheckValue, type RadioRootGroupValue } from '../check/Check'
 
 export interface RadioProps {
@@ -18,7 +18,7 @@ export interface RadioProps {
   onChange?: (value: CheckValue) => void
 }
 
-export function MdRadio({
+export function CuRadio({
   name,
   value = '',
   size = 'md',
@@ -38,7 +38,7 @@ export function MdRadio({
   return (
     <label
       className={[
-        'md-radio',
+        'cu-radio',
         disabled ? 'is-disabled' : '',
         isChecked ? 'is-checked' : '',
         inline ? 'is-inline' : '',
@@ -47,10 +47,10 @@ export function MdRadio({
         .join(' ')}
       onClick={onClick}
     >
-      <div className="md-radio-icon">
-        <MdIcon name={currentIcon} size={size} svg={iconSvg} />
+      <div className="cu-radio-icon">
+        <CuIcon name={currentIcon} size={size} svg={iconSvg} />
       </div>
-      {children || label ? <div className="md-radio-label">{children ?? label}</div> : null}
+      {children || label ? <div className="cu-radio-label">{children ?? label}</div> : null}
     </label>
   )
 }
@@ -66,7 +66,7 @@ export interface RadioBoxProps {
   onChange?: (value: CheckValue) => void
 }
 
-export function MdRadioBox({
+export function CuRadioBox({
   name = true,
   value = false,
   label = '',
@@ -78,8 +78,8 @@ export function MdRadioBox({
   const { isChecked, onClick } = useRadioDelegate({ name, value, disabled }, onChange!)
 
   return (
-    <MdCheckBaseBox
-      className="md-radio-box"
+    <CuCheckBaseBox
+      className="cu-radio-box"
       isChecked={isChecked}
       disabled={disabled}
       iconPosition={iconPosition}
@@ -87,7 +87,7 @@ export function MdRadioBox({
       onClick={onClick}
     >
       {children ?? label}
-    </MdCheckBaseBox>
+    </CuCheckBaseBox>
   )
 }
 
@@ -98,7 +98,7 @@ export interface RadioGroupProps {
   onChange?: (value: CheckValue) => void
 }
 
-export function MdRadioGroup({ value = '', children, onChange }: RadioGroupProps) {
+export function CuRadioGroup({ value = '', children, onChange }: RadioGroupProps) {
   const group: RadioRootGroupValue = {
     value,
     check(name) {
@@ -108,7 +108,7 @@ export function MdRadioGroup({ value = '', children, onChange }: RadioGroupProps
 
   return (
     <RadioGroupContext.Provider value={group}>
-      <div className="md-radio-group">{children}</div>
+      <div className="cu-radio-group">{children}</div>
     </RadioGroupContext.Provider>
   )
 }

@@ -53,7 +53,7 @@ function normalize(newVal: number | number[], cur: Values, min: number, max: num
   return [newValues[0]!, newValues[1]!]
 }
 
-export function MdSlider({
+export function CuSlider({
   value = 0,
   min = 0,
   max = 100,
@@ -193,19 +193,19 @@ export function MdSlider({
   const formatHint = (val: number) => (format ? format(val) : val)
 
   return (
-    <div className={`md-slider${disabled ? ' is-disabled' : ''}`} ref={elRef}>
+    <div className={`cu-slider${disabled ? ' is-disabled' : ''}`} ref={elRef}>
       {range ? (
         <>
-          <div className="md-slider-bar" style={barStyle}></div>
+          <div className="cu-slider-bar" style={barStyle}></div>
           <div
-            className={`md-slider-handle is-lower${isDragging && !isDragingUpper ? ' is-active' : ''}`}
+            className={`cu-slider-handle is-lower${isDragging && !isDragingUpper ? ' is-active' : ''}`}
             data-hint={String(formatHint(values[0]))}
             style={{ left: lowerHandlePosition + '%' }}
           >
             <span onMouseDown={startLowerDrag} onTouchStart={startLowerDrag}></span>
           </div>
           <div
-            className={`md-slider-handle is-higher${isDragging && isDragingUpper ? ' is-active' : ''}`}
+            className={`cu-slider-handle is-higher${isDragging && isDragingUpper ? ' is-active' : ''}`}
             data-hint={String(formatHint(values[1]))}
             style={{ left: upperHandlePosition + '%' }}
           >
@@ -214,9 +214,9 @@ export function MdSlider({
         </>
       ) : (
         <>
-          <div className="md-slider-bar" style={barStyle}></div>
+          <div className="cu-slider-bar" style={barStyle}></div>
           <div
-            className={`md-slider-handle${isDragging ? ' is-active' : ''}`}
+            className={`cu-slider-handle${isDragging ? ' is-active' : ''}`}
             data-hint={String(formatHint(values[0]))}
             style={{ left: lowerHandlePosition + '%' }}
           >

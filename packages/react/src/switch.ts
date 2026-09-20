@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/switch
+// 按需入口：@centui/react/es/switch
 export * from './components/switch'

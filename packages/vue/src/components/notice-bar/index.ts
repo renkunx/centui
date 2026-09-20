@@ -1,1 +1,1 @@
-export { default as MdNoticeBar } from './NoticeBar.vue'
+export { default as CuNoticeBar } from './NoticeBar.vue'

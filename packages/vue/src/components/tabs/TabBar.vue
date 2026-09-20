@@ -1,17 +1,17 @@
 <template>
-  <nav class="md-tab-bar">
-    <div ref="wrapper" class="md-tab-bar-inner">
+  <nav class="cu-tab-bar">
+    <div ref="wrapper" class="cu-tab-bar-inner">
       <template v-if="scrollable">
-        <div v-show="maskStartShown" class="md-tab-bar-start"></div>
-        <div v-show="maskEndShown" class="md-tab-bar-end"></div>
+        <div v-show="maskStartShown" class="cu-tab-bar-start"></div>
+        <div v-show="maskEndShown" class="cu-tab-bar-end"></div>
       </template>
-      <MdScrollView ref="scroller" :scrolling-x="scrollable" :scrolling-y="false" :key="scrollerTmpKey" @scroll="onScroll">
-        <div class="md-tab-bar-list" :style="{ width: contentW + 'px' }">
+      <CuScrollView ref="scroller" :scrolling-x="scrollable" :scrolling-y="false" :key="scrollerTmpKey" @scroll="onScroll">
+        <div class="cu-tab-bar-list" :style="{ width: contentW + 'px' }">
           <a
             v-for="(item, index) in items"
             :key="item.name"
             :ref="el => setItemRef(el, index)"
-            class="md-tab-bar-item"
+            class="cu-tab-bar-item"
             :class="{
               'is-active': currentName === item.name,
               'is-disabled': !!item.disabled,
@@ -30,7 +30,7 @@
         </div>
         <span
           v-if="hasInk"
-          class="md-tab-bar-ink"
+          class="cu-tab-bar-ink"
           :class="{
             'is-disabled': currentTab && currentTab.disabled,
           }"
@@ -39,16 +39,16 @@
             transform: 'translateX(' + inkPos + 'px)',
           }"
         ></span>
-      </MdScrollView>
+      </CuScrollView>
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
 import { computed, nextTick, onActivated, onBeforeUnmount, onDeactivated, onMounted, ref, watch } from 'vue'
-import MdScrollView from '../scroll-view/ScrollView.vue'
+import CuScrollView from '../scroll-view/ScrollView.vue'
 
-defineOptions({ name: 'md-tab-bar' })
+defineOptions({ name: 'cu-tab-bar' })
 
 export interface TabBarItem {
   name: string | number
@@ -82,7 +82,7 @@ const maskStartShown = ref(false)
 const maskEndShown = ref(true)
 
 const wrapper = ref<HTMLElement>()
-const scroller = ref<InstanceType<typeof MdScrollView> | null>(null)
+const scroller = ref<InstanceType<typeof CuScrollView> | null>(null)
 const itemRefs: HTMLElement[] = []
 function setItemRef(el: unknown, index: number) {
   if (el) {

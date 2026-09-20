@@ -1,5 +1,5 @@
 import { type MouseEvent, type ReactNode, type HTMLAttributes } from 'react'
-import { MdIcon } from '../icon/Icon'
+import { CuIcon } from '../icon/Icon'
 
 export type AgreeProps = {
   value?: boolean
@@ -14,7 +14,7 @@ export type AgreeProps = {
   checked?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
-export function MdAgree({
+export function CuAgree({
   value = false,
   checked,
   disabled = false,
@@ -39,11 +39,11 @@ export function MdAgree({
   return (
     <div
       ref={applyCheckedAttr}
-      className={`md-agree${disabled ? ' disabled' : ''}`}
+      className={`cu-agree${disabled ? ' disabled' : ''}`}
       {...rest}
     >
       <div
-        className={`md-agree-icon${value ? ' checked' : ''}`}
+        className={`cu-agree-icon${value ? ' checked' : ''}`}
         onClick={event => {
           if (disabled) {
             return
@@ -51,25 +51,25 @@ export function MdAgree({
           onChange?.(!value, event)
         }}
       >
-        <div className="md-agree-icon-container">
+        <div className="cu-agree-icon-container">
           {iconSlot?.(value) ?? (
             <span>
               {iconType === 'square' ? (
                 <>
-                  <MdIcon name="square-checked" size={size} />
-                  <MdIcon name="square-check" size={size} />
+                  <CuIcon name="square-checked" size={size} />
+                  <CuIcon name="square-check" size={size} />
                 </>
               ) : (
                 <>
-                  <MdIcon name="checked" size={size} />
-                  <MdIcon name="check" size={size} />
+                  <CuIcon name="checked" size={size} />
+                  <CuIcon name="check" size={size} />
                 </>
               )}
             </span>
           )}
         </div>
       </div>
-      <div className="md-agree-content">{children}</div>
+      <div className="cu-agree-content">{children}</div>
     </div>
   )
 }

@@ -51,7 +51,7 @@ function computeMin(datasets: ChartDataset[], explicit?: number) {
   return Math.floor(min) * multiple
 }
 
-export function MdChart({ labels = [], datasets = [], size = [480, 320], max, min, lines = 5, step, shift = 0.6, format = (v: number) => v }: ChartProps) {
+export function CuChart({ labels = [], datasets = [], size = [480, 320], max, min, lines = 5, step, shift = 0.6, format = (v: number) => v }: ChartProps) {
   const [unit, setUnit] = useState(16)
   const unitRef = useRef(unit)
   unitRef.current = unit
@@ -106,7 +106,7 @@ export function MdChart({ labels = [], datasets = [], size = [480, 320], max, mi
   })
 
   return (
-    <svg className="md-chart" viewBox={`0 0 ${width} ${height}`}>
+    <svg className="cu-chart" viewBox={`0 0 ${width} ${height}`}>
       <defs>
         {colors.map(color => (
           <linearGradient key={color} id={`path-fill-gradient-${color}`} x1="0" x2="0" y1="0" y2="1">
@@ -116,8 +116,8 @@ export function MdChart({ labels = [], datasets = [], size = [480, 320], max, mi
           </linearGradient>
         ))}
       </defs>
-      <g className="md-chart-graph" transform={`translate(${offset.left}, ${offset.top})`}>
-        <g className="md-chart-axis-y">
+      <g className="cu-chart-graph" transform={`translate(${offset.left}, ${offset.top})`}>
+        <g className="cu-chart-axis-y">
           {yaxis.map((item, index) => (
             <g key={index} transform={`translate(0, ${item.offset})`}>
               <line x1="0" x2={innerWidth} y1="0" y2="0"></line>
@@ -125,7 +125,7 @@ export function MdChart({ labels = [], datasets = [], size = [480, 320], max, mi
             </g>
           ))}
         </g>
-        <g className="md-chart-axis-x" transform={`translate(0, ${innerHeight})`}>
+        <g className="cu-chart-axis-x" transform={`translate(0, ${innerHeight})`}>
           {xaxis.map((item, index) => (
             <g key={index} transform={`translate(${item.offset}, 0)`}>
               <line x1="0" x2="0" y1="0" y2="6"></line>
@@ -133,7 +133,7 @@ export function MdChart({ labels = [], datasets = [], size = [480, 320], max, mi
             </g>
           ))}
         </g>
-        <g className="md-chart-paths">
+        <g className="cu-chart-paths">
           {datasets.map((data, index) => {
             const dx = innerWidth / (data.values.length - 1)
             const dy = innerHeight / lines
@@ -176,8 +176,8 @@ export function MdChart({ labels = [], datasets = [], size = [480, 320], max, mi
 
             return (
               <Fragment key={index}>
-                <path className="md-chart-path" style={style} d={d}></path>
-                {area ? <path className="md-chart-path-area" style={area.style} d={area.d}></path> : null}
+                <path className="cu-chart-path" style={style} d={d}></path>
+                {area ? <path className="cu-chart-path-area" style={area.style} d={area.d}></path> : null}
               </Fragment>
             )
           })}

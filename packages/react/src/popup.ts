@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/popup
+// 按需入口：@centui/react/es/popup
 export * from './components/popup'

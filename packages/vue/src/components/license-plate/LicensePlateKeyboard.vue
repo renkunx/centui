@@ -1,22 +1,22 @@
 <template>
-  <div class="md-license-plate-keyboard">
+  <div class="cu-license-plate-keyboard">
     <!-- 省份简写键盘（第一位） -->
-    <div v-if="keyboardType === 1" class="md-shortcut-row">
+    <div v-if="keyboardType === 1" class="cu-shortcut-row">
       <div
         v-for="(item, index) in shortcuts"
         :key="index"
-        class="md-shortcut-row-item"
+        class="cu-shortcut-row-item"
         @click="$emit('enter', item)"
       >
         {{ item }}
       </div>
     </div>
     <!-- 字母数字混合键盘（第二位起） -->
-    <div v-else class="md-mixed-key-board">
+    <div v-else class="cu-mixed-key-board">
       <div
         v-for="(item, index) in mixedKeyboard"
         :key="index"
-        class="md-mixed-key-board-item"
+        class="cu-mixed-key-board-item"
         :class="{ disabled: item.disabled }"
       >
         <template v-if="item.type">
@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-defineOptions({ name: 'md-license-plate-keyboard' })
+defineOptions({ name: 'cu-license-plate-keyboard' })
 
 export interface LicenseKeyItem {
   value?: string | number

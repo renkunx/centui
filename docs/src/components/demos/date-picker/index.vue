@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MdDatePicker, MdButton } from 'mand-mobile'
+import { CuDatePicker, CuButton } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['日期选择', '时间选择', '日期时间', '常驻视图']
@@ -10,10 +10,10 @@ const show2 = ref(false)
 const show3 = ref(false)
 const show4 = ref(true)
 
-const dp1 = ref<InstanceType<typeof MdDatePicker>>()
-const dp2 = ref<InstanceType<typeof MdDatePicker>>()
-const dp3 = ref<InstanceType<typeof MdDatePicker>>()
-const dp4 = ref<InstanceType<typeof MdDatePicker>>()
+const dp1 = ref<InstanceType<typeof CuDatePicker>>()
+const dp2 = ref<InstanceType<typeof CuDatePicker>>()
+const dp3 = ref<InstanceType<typeof CuDatePicker>>()
+const dp4 = ref<InstanceType<typeof CuDatePicker>>()
 
 const result1 = ref('')
 const result2 = ref('')
@@ -37,20 +37,20 @@ function onChange4() {
 const today = new Date()
 const twoYearsLater = new Date(today.getFullYear() + 2, 11, 31)
 
-const code = `<MdDatePicker v-model="show" type="date" @confirm="onConfirm" />
-<MdDatePicker v-model="show" type="time" @confirm="onConfirm" />
-<MdDatePicker v-model="show" type="datetime" :min-date="min" :max-date="max" @confirm="onConfirm" />
-<MdDatePicker v-model="show" is-view type="datetime" :default-date="today" @change="onChange" />`
+const code = `<CuDatePicker v-model="show" type="date" @confirm="onConfirm" />
+<CuDatePicker v-model="show" type="time" @confirm="onConfirm" />
+<CuDatePicker v-model="show" type="datetime" :min-date="min" :max-date="max" @confirm="onConfirm" />
+<CuDatePicker v-model="show" is-view type="datetime" :default-date="today" @change="onChange" />`
 </script>
 
 <template>
   <DemoCanvas mode="phone" :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="dp-pad">
-        <MdButton type="primary" round @click="show1 = true">选择日期</MdButton>
+        <CuButton type="primary" round @click="show1 = true">选择日期</CuButton>
         <div class="dp-note">{{ result1 || '未选择' }}</div>
       </div>
-      <MdDatePicker
+      <CuDatePicker
         ref="dp1"
         v-model="show1"
         type="date"
@@ -60,17 +60,17 @@ const code = `<MdDatePicker v-model="show" type="date" @confirm="onConfirm" />
     </template>
     <template #scene-1>
       <div class="dp-pad">
-        <MdButton type="warning" round @click="show2 = true">选择时间</MdButton>
+        <CuButton type="warning" round @click="show2 = true">选择时间</CuButton>
         <div class="dp-note">{{ result2 || '未选择' }}</div>
       </div>
-      <MdDatePicker ref="dp2" v-model="show2" type="time" title="选择时间" @confirm="onConfirm2" />
+      <CuDatePicker ref="dp2" v-model="show2" type="time" title="选择时间" @confirm="onConfirm2" />
     </template>
     <template #scene-2>
       <div class="dp-pad">
-        <MdButton type="primary" round @click="show3 = true">选择日期时间</MdButton>
+        <CuButton type="primary" round @click="show3 = true">选择日期时间</CuButton>
         <div class="dp-note">{{ result3 || '未选择' }}</div>
       </div>
-      <MdDatePicker
+      <CuDatePicker
         ref="dp3"
         v-model="show3"
         type="datetime"
@@ -83,7 +83,7 @@ const code = `<MdDatePicker v-model="show" type="date" @confirm="onConfirm" />
     <template #scene-3>
       <div class="dp-pad">
         <div class="dp-note">常驻视图，滚动即时回显：{{ result4 || '未选择' }}</div>
-        <MdDatePicker
+        <CuDatePicker
           ref="dp4"
           v-model="show4"
           type="datetime"

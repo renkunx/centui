@@ -1,1 +1,1 @@
-export { default as MdProgress } from './Progress.vue'
+export { default as CuProgress } from './Progress.vue'

@@ -6,7 +6,7 @@
  * 3. 生成 src/data/api/<name>.json（API 数据，供 mdx 页面渲染 API 表）
  * 4. 生成组件内容页 mdx（zh-CN 默认 / en 双语），每页含 demo 岛 + API 表
  *
- * 运行：pnpm --filter @mand-mobile/docs gen（dev/build 前自动执行）
+ * 运行：pnpm --filter @centui/docs gen（dev/build 前自动执行）
  */
 import fs from 'node:fs'
 import path from 'node:path'

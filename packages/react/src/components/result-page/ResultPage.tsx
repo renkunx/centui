@@ -1,5 +1,5 @@
 import { forwardRef, type MouseEvent, type ReactNode } from 'react'
-import { MdButton } from '../button/Button'
+import { CuButton } from '../button/Button'
 
 export interface ResultPageButton {
   text?: string
@@ -37,7 +37,7 @@ const DEFAULT_SUBTEXT: Record<string, string> = {
   lost: '您要访问的页面已丢失',
 }
 
-export const MdResultPage = forwardRef<HTMLDivElement, ResultPageProps>(function MdResultPage(
+export const CuResultPage = forwardRef<HTMLDivElement, ResultPageProps>(function CuResultPage(
   { type = 'empty', imgUrl = '', text = '', subtext = '', buttons = [], children },
   ref,
 ) {
@@ -46,16 +46,16 @@ export const MdResultPage = forwardRef<HTMLDivElement, ResultPageProps>(function
   const actualSubtext = subtext || DEFAULT_SUBTEXT[type] || ''
 
   return (
-    <div className="md-result" ref={ref}>
-      <div className="md-result-image">
+    <div className="cu-result" ref={ref}>
+      <div className="cu-result-image">
         <img src={actualImgUrl} className={!imgUrl ? type : ''} />
       </div>
-      {actualText ? <div className="md-result-text">{actualText}</div> : null}
-      {actualSubtext ? <div className="md-result-subtext">{actualSubtext}</div> : null}
+      {actualText ? <div className="cu-result-text">{actualText}</div> : null}
+      {actualSubtext ? <div className="cu-result-subtext">{actualSubtext}</div> : null}
       {buttons.length ? (
-        <div className="md-result-buttons">
+        <div className="cu-result-buttons">
           {buttons.map((button, index) => (
-            <MdButton
+            <CuButton
               key={index}
               type={button.type}
               plain={button.plain === undefined || button.plain}
@@ -69,7 +69,7 @@ export const MdResultPage = forwardRef<HTMLDivElement, ResultPageProps>(function
               onClick={(event) => button.handler?.(event)}
             >
               {button.text}
-            </MdButton>
+            </CuButton>
           ))}
         </div>
       ) : null}

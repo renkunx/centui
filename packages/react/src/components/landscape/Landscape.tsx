@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef, useState, type ReactNode } from 'react'
-import { MdPopup } from '../popup/Popup'
-import { MdIcon } from '../icon/Icon'
+import { CuPopup } from '../popup/Popup'
+import { CuIcon } from '../icon/Icon'
 
 export interface LandscapeProps {
   value?: boolean
@@ -14,7 +14,7 @@ export interface LandscapeProps {
   onHide?: () => void
 }
 
-export const MdLandscape = forwardRef<HTMLDivElement, LandscapeProps>(function MdLandscape(
+export const CuLandscape = forwardRef<HTMLDivElement, LandscapeProps>(function CuLandscape(
   { value = false, scroll = false, fullScreen = false, hasMask = true, maskClosable = false, transition, children, onShow, onHide },
   ref,
 ) {
@@ -29,16 +29,16 @@ export const MdLandscape = forwardRef<HTMLDivElement, LandscapeProps>(function M
     }
   }, [value])
 
-  // v2 契约：默认过渡按 fullScreen 区分（md-fade / md-punch）
-  const actualTransition = transition ?? (fullScreen ? 'md-fade' : 'md-punch')
+  // v2 契约：默认过渡按 fullScreen 区分（cu-fade / cu-punch）
+  const actualTransition = transition ?? (fullScreen ? 'cu-fade' : 'cu-punch')
 
   return (
-    <div className={`md-landscape${fullScreen ? ' is-full' : ''}`} ref={ref}>
-      <MdPopup
+    <div className={`cu-landscape${fullScreen ? ' is-full' : ''}`} ref={ref}>
+      <CuPopup
         value={isLandscapeShow}
         maskClosable={maskClosable}
         preventScroll
-        preventScrollExclude=".md-landscape-content"
+        preventScrollExclude=".cu-landscape-content"
         hasMask={!fullScreen && hasMask}
         transition={actualTransition}
         onChange={(val) => {
@@ -47,15 +47,15 @@ export const MdLandscape = forwardRef<HTMLDivElement, LandscapeProps>(function M
         onShow={onShow}
         onHide={onHide}
       >
-        <div className={`md-landscape-body${scroll ? ' scroll' : ''}`}>
-          <div className="md-landscape-content">{children}</div>
-          <MdIcon
-            className={`md-landscape-close${!hasMask || fullScreen ? ' dark' : ''}`}
+        <div className={`cu-landscape-body${scroll ? ' scroll' : ''}`}>
+          <div className="cu-landscape-content">{children}</div>
+          <CuIcon
+            className={`cu-landscape-close${!hasMask || fullScreen ? ' dark' : ''}`}
             name={fullScreen ? 'clear' : 'close'}
             onClick={() => setIsLandscapeShow(false)}
           />
         </div>
-      </MdPopup>
+      </CuPopup>
     </div>
   )
 })

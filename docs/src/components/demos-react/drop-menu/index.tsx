@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { MdDropMenu } from 'mand-mobile-react'
+import { CuDropMenu } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['基础联动', '初始选中', '禁用项', '自定义菜单项']
-const code = `<MdDropMenu data={data} defaultValue={defaultValue} onChange={onChange} />`
+const code = `<CuDropMenu data={data} defaultValue={defaultValue} onChange={onChange} />`
 const data0 = [
   { text: '类别', options: [{ value: '1', text: '全部' }, { value: '2', text: '数码' }, { value: '3', text: '服饰' }] },
   { text: '排序', options: [{ value: '4', text: '默认排序' }, { value: '5', text: '价格' }] },
@@ -31,7 +31,7 @@ export default function DropMenuDemo() {
         const dv = active === 0 ? ['2'] : active === 1 ? ['2', '4'] : undefined
         return (
           <>
-            <MdDropMenu
+            <CuDropMenu
               data={d}
               defaultValue={dv}
               onChange={(barItem, listItem) => setResult(`${barItem.text}: ${listItem.text}`)}

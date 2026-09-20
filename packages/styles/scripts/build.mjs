@@ -6,7 +6,7 @@
  *    + dist/global.css（可选的全局 reset 与字体，v2 语义，由使用方显式引入）
  * 与 v2 差异：
  *   - index.css 不再内联 global.styl——组件库不得影响组件之外的样式，
- *     需要 v2 全局 reset 的项目自行引入 @mand-mobile/styles/global.css
+ *     需要 v2 全局 reset 的项目自行引入 @centui/styles/global.css
  *   - px 保持原样（v2 发布产物同样不落 pxtorem，rem 转换留给用户侧 postcss）
  */
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'

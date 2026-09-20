@@ -1,10 +1,10 @@
-/* mand-mobile v3 docs 全局样式（Starlight customCss） */
+/* centui v3 docs 全局样式（Starlight customCss） */
 
 /*
  * 组件库全量样式（纯组件样式，不含全局 reset——v3 起 index.css 不再内联
  * global.styl，组件库不得影响使用方组件之外的样式）。
  */
-@import '@mand-mobile/styles';
+@import '@centui/styles';
 
 /*
  * Starlight 的内容流间距规则（相邻块级元素 margin-top: var(--sl-content-gap-y)）
@@ -35,8 +35,8 @@
 .phone-frame {
   --phone-screen-w: 440px; /* iPhone 16 逻辑宽 */
   --phone-screen-h: 956px; /* iPhone 16 逻辑高 */
-  --md-design-width: 750px; /* 组件样式设计稿基准宽 */
-  --md-demo-scale: calc(var(--phone-screen-w) / var(--md-design-width));
+  --cu-design-width: 750px; /* 组件样式设计稿基准宽 */
+  --cu-demo-scale: calc(var(--phone-screen-w) / var(--cu-design-width));
 
   position: relative;
   width: calc(var(--phone-screen-w) + 20px);
@@ -76,10 +76,10 @@
 
 /* 750 设计稿像素视口：等比缩放到屏幕逻辑宽度 */
 .phone-frame__viewport {
-  width: var(--md-design-width);
+  width: var(--cu-design-width);
   /* 屏幕逻辑高换算回设计稿像素：956 / scale */
-  height: calc(var(--phone-screen-h) / var(--md-demo-scale));
-  transform: scale(var(--md-demo-scale));
+  height: calc(var(--phone-screen-h) / var(--cu-demo-scale));
+  transform: scale(var(--cu-demo-scale));
   transform-origin: top left;
   /* transformed 元素作为 fixed 弹层的 containing block（弹层定位以屏幕为准） */
   background: #f7f8fa;
@@ -264,9 +264,9 @@
 }
 
 /* 包裹容器定高，滚动/轮播根节点撑满 */
-.swiper-demo-box .md-swiper,
-.scroll-demo-box .md-scroll-view,
-.scroll-demo-box--short .md-scroll-view {
+.swiper-demo-box .cu-swiper,
+.scroll-demo-box .cu-scroll-view,
+.scroll-demo-box--short .cu-scroll-view {
   height: 100%;
 }
 
@@ -309,7 +309,7 @@
 }
 
 /* ActionBar 为 fixed 定位，demo 内转为相对定位 */
-.action-bar-demo-box .md-action-bar {
+.action-bar-demo-box .cu-action-bar {
   position: relative;
 }
 
@@ -318,7 +318,7 @@
   width: 100%;
 }
 
-.steps-demo-box .md-steps {
+.steps-demo-box .cu-steps {
   width: 100%;
 }
 
@@ -435,7 +435,7 @@
   padding: 20px 10px;
 }
 
-.chart-demo-box .md-chart {
+.chart-demo-box .cu-chart {
   width: 100%;
 }
 

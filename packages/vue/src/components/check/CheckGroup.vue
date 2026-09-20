@@ -1,5 +1,5 @@
 <template>
-  <div class="md-check-group">
+  <div class="cu-check-group">
     <slot></slot>
   </div>
 </template>
@@ -8,7 +8,7 @@
 import { provide } from 'vue'
 import { type CheckRootGroup } from './shared'
 
-defineOptions({ name: 'md-check-group' })
+defineOptions({ name: 'cu-check-group' })
 
 const props = withDefaults(
   defineProps<{

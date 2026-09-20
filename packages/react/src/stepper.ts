@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/stepper
+// 按需入口：@centui/react/es/stepper
 export * from './components/stepper'

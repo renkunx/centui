@@ -1,7 +1,7 @@
 <template>
-  <div class="md-cashier-channel-item">
+  <div class="cu-cashier-channel-item">
     <div v-if="data.icon" class="item-icon" :class="data.icon">
-      <MdIcon :name="data.icon" size="lg"></MdIcon>
+      <CuIcon :name="data.icon" size="lg"></CuIcon>
     </div>
     <div v-else-if="data.img" class="item-image">
       <img :src="data.img" />
@@ -19,17 +19,17 @@
       <p v-if="data.desc" class="desc" v-html="data.desc"></p>
     </div>
     <div class="item-check-icon">
-      <MdIcon v-if="data.disabled" name="check-disabled"></MdIcon>
-      <MdIcon v-else-if="active" name="checked"></MdIcon>
-      <MdIcon v-else name="check"></MdIcon>
+      <CuIcon v-if="data.disabled" name="check-disabled"></CuIcon>
+      <CuIcon v-else-if="active" name="checked"></CuIcon>
+      <CuIcon v-else name="check"></CuIcon>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import MdIcon from '../icon/Icon.vue'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-cashier-channel-item' })
+defineOptions({ name: 'cu-cashier-channel-item' })
 
 const props = withDefaults(
   defineProps<{

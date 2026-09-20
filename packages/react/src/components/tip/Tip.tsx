@@ -9,8 +9,8 @@ import {
 } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { flushSync } from 'react-dom'
-import { randomId } from '@mand-mobile/core'
-import { MdTipContent } from './TipContent'
+import { randomId } from '@centui/core'
+import { CuTipContent } from './TipContent'
 
 export interface TipProps {
   /** top | left | bottom | right */
@@ -31,7 +31,7 @@ export interface TipProps {
  * Tip 包装器：只渲染插槽的第一个元素节点，并在其上追加点击触发；
  * 气泡内容懒创建为游离 DOM（createRoot），绝对定位于第一个可滚动祖先内（v2 契约）。
  */
-export function MdTip({
+export function CuTip({
   placement = 'top',
   name,
   icon,
@@ -175,7 +175,7 @@ export function MdTip({
 
     flushSync(() => {
       tip.root.render(
-        <MdTipContent
+        <CuTipContent
           icon={icon}
           iconSvg={iconSvg}
           placement={placement}

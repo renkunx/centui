@@ -4,23 +4,23 @@ export interface LicensePlateInputProps {
   onKeyMapping?: (index: number) => void
 }
 
-export function MdLicensePlateInput({ keyArray = [], selectedIndex = 0, onKeyMapping }: LicensePlateInputProps) {
+export function CuLicensePlateInput({ keyArray = [], selectedIndex = 0, onKeyMapping }: LicensePlateInputProps) {
   return (
-    <div className="md-license-plate-input">
+    <div className="cu-license-plate-input">
       {keyArray.map((item, index) => (
         <div
           key={index}
-          className={`md-license-plate-input-item${selectedIndex === index ? ' active' : ''}${
+          className={`cu-license-plate-input-item${selectedIndex === index ? ' active' : ''}${
             selectedIndex === index && !item ? ' animation' : ''
           }`}
           onClick={() => onKeyMapping?.(index)}
         >
           {/* 非新能源键位 */}
           {index !== keyArray.length - 1 ? (
-            <div className="md-license-plate-input-item_content">{item}</div>
+            <div className="cu-license-plate-input-item_content">{item}</div>
           ) : (
             /* 新能源键位 */
-            <div className="md-license-plate-input-item_content">
+            <div className="cu-license-plate-input-item_content">
               {item && item !== ' ' ? <div>{item}</div> : <div className="emptyValue"></div>}
             </div>
           )}

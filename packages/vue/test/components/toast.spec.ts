@@ -1,5 +1,5 @@
 /**
- * MdToast 行为清单（自 v2 components/toast spec/源码提取）：
+ * CuToast 行为清单（自 v2 components/toast spec/源码提取）：
  * 组件：
  * 1. 默认隐藏；show/hide 控制 visible；duration 到时自动隐藏
  * 2. icon/content 渲染（iconSvg 控制字体/图标模式）；默认插槽覆盖内容分支；square 修饰类
@@ -12,9 +12,9 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
-import { MdToast, Toast } from '../../src'
+import { CuToast, Toast } from '../../src'
 
-describe('MdToast', () => {
+describe('CuToast', () => {
   afterEach(() => {
     vi.useRealTimers()
     Toast.hide()
@@ -23,13 +23,13 @@ describe('MdToast', () => {
 
   it('shows and hides with duration', async () => {
     vi.useFakeTimers()
-    const wrapper = mount(MdToast, { props: { content: '提示', duration: 1000 } })
-    expect(wrapper.find('.md-popup').attributes('style')).toContain('display: none')
+    const wrapper = mount(CuToast, { props: { content: '提示', duration: 1000 } })
+    expect(wrapper.find('.cu-popup').attributes('style')).toContain('display: none')
 
     wrapper.vm.show()
     await nextTick()
     expect(wrapper.emitted('show')).toHaveLength(1)
-    expect(wrapper.find('.md-popup').attributes('style')).not.toContain('display: none')
+    expect(wrapper.find('.cu-popup').attributes('style')).not.toContain('display: none')
 
     vi.advanceTimersByTime(1000)
     await nextTick()
@@ -37,26 +37,26 @@ describe('MdToast', () => {
   })
 
   it('renders icon and content, slot overrides, square modifier', () => {
-    const iconed = mount(MdToast, { props: { icon: 'success', content: '成功' } })
-    expect(iconed.find('.md-icon-success').exists()).toBe(true)
-    expect(iconed.find('.md-toast-text').text()).toBe('成功')
+    const iconed = mount(CuToast, { props: { icon: 'success', content: '成功' } })
+    expect(iconed.find('.cu-icon-success').exists()).toBe(true)
+    expect(iconed.find('.cu-toast-text').text()).toBe('成功')
 
-    const svg = mount(MdToast, { props: { icon: 'spinner', iconSvg: true, content: '加载' } })
-    expect(svg.find('svg.md-icon-spinner').exists()).toBe(true)
+    const svg = mount(CuToast, { props: { icon: 'spinner', iconSvg: true, content: '加载' } })
+    expect(svg.find('svg.cu-icon-spinner').exists()).toBe(true)
 
-    const slotted = mount(MdToast, { slots: { default: '<span>自定义</span>' } })
-    expect(slotted.find('.md-toast-content span').text()).toBe('自定义')
-    expect(slotted.find('.md-toast-text').exists()).toBe(false)
+    const slotted = mount(CuToast, { slots: { default: '<span>自定义</span>' } })
+    expect(slotted.find('.cu-toast-content span').text()).toBe('自定义')
+    expect(slotted.find('.cu-toast-text').exists()).toBe(false)
 
-    const square = mount(MdToast, { props: { square: true } })
-    expect(square.find('.md-toast-content').classes()).toContain('square')
+    const square = mount(CuToast, { props: { square: true } })
+    expect(square.find('.cu-toast-content').classes()).toContain('square')
   })
 
   it('creates singleton via factory and hides', async () => {
     const vm = Toast({ content: '工厂提示', duration: 0 })
     await nextTick()
-    expect(document.body.querySelector('.md-toast')).not.toBeNull()
-    expect(document.body.querySelector('.md-toast-text')?.textContent).toBe('工厂提示')
+    expect(document.body.querySelector('.cu-toast')).not.toBeNull()
+    expect(document.body.querySelector('.cu-toast-text')?.textContent).toBe('工厂提示')
     expect(vm.visible).toBe(true)
 
     Toast.hide()
@@ -66,23 +66,23 @@ describe('MdToast', () => {
 
   it('reuses the same singleton container', () => {
     Toast.info('第一条')
-    const first = document.body.querySelector('.md-toast')
+    const first = document.body.querySelector('.cu-toast')
     Toast.info('第二条')
-    const second = document.body.querySelector('.md-toast')
+    const second = document.body.querySelector('.cu-toast')
     expect(first).toBe(second)
-    expect(document.querySelectorAll('.md-toast')).toHaveLength(1)
-    expect(document.body.querySelector('.md-toast-text')?.textContent).toBe('第二条')
+    expect(document.querySelectorAll('.cu-toast')).toHaveLength(1)
+    expect(document.body.querySelector('.cu-toast-text')?.textContent).toBe('第二条')
   })
 
   it('exposes preset variants', async () => {
     Toast.succeed('成功')
-    expect(document.body.querySelector('.md-icon-success')).not.toBeNull()
+    expect(document.body.querySelector('.cu-icon-success')).not.toBeNull()
 
     Toast.failed('失败')
-    expect(document.body.querySelector('.md-icon-fail')).not.toBeNull()
+    expect(document.body.querySelector('.cu-icon-fail')).not.toBeNull()
 
     Toast.loading('加载中')
-    expect(document.body.querySelector('svg.md-icon-spinner')).not.toBeNull()
+    expect(document.body.querySelector('svg.cu-icon-spinner')).not.toBeNull()
     await nextTick()
   })
 

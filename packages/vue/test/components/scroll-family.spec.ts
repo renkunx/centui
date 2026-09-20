@@ -12,7 +12,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async importOriginal => {
+vi.mock('@centui/core/web', async importOriginal => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     _isAnimating = false
@@ -52,15 +52,15 @@ vi.mock('@mand-mobile/core/web', async importOriginal => {
   return { ...orig, Scroller: FakeScrollerImpl }
 })
 
-import { MdScrollView, MdScrollViewMore, MdScrollViewRefresh } from '../../src'
-import { MdSlider } from '../../src'
-import { MdSwiper, MdSwiperItem } from '../../src'
+import { CuScrollView, CuScrollViewMore, CuScrollViewRefresh } from '../../src'
+import { CuSlider } from '../../src'
+import { CuSwiper, CuSwiperItem } from '../../src'
 
 async function flush(ms = 30) {
   await vi.advanceTimersByTimeAsync(ms)
 }
 
-describe('MdScrollView (react-free, FakeScroller)', () => {
+describe('CuScrollView (react-free, FakeScroller)', () => {
   beforeEach(() => {
     ;(scrollerInstances as unknown[]).length = 0
   })
@@ -68,12 +68,12 @@ describe('MdScrollView (react-free, FakeScroller)', () => {
   it('initializes scroller on mount and exposes APIs', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdScrollView, MdScrollViewMore },
+      components: { CuScrollView, CuScrollViewMore },
       template: `
-        <MdScrollView ref="sv">
+        <CuScrollView ref="sv">
           <div class="item">A</div>
-          <MdScrollViewMore :is-finished="false" />
-        </MdScrollView>
+          <CuScrollViewMore :is-finished="false" />
+        </CuScrollView>
       `,
     })
     await flush(120)
@@ -82,10 +82,10 @@ describe('MdScrollView (react-free, FakeScroller)', () => {
     const moreWrapper = wrapper.find('.scroll-view-more')
     expect(moreWrapper.exists()).toBe(false) // v2 场景 More 在默认插槽，无外层 wrapper
 
-    wrapper.findComponent({ name: 'md-scroll-view' }).vm.finishLoadMore()
+    wrapper.findComponent({ name: 'cu-scroll-view' }).vm.finishLoadMore()
     await flush(10)
     // v2 场景：More 组件位于默认插槽，无外层 wrapper；复位后不触发 endReached
-    expect(wrapper.find('.md-scroll-view-more').exists()).toBe(true)
+    expect(wrapper.find('.cu-scroll-view-more').exists()).toBe(true)
     expect(scrollerInstances.length).toBe(1)
     vi.useRealTimers()
   })
@@ -95,14 +95,14 @@ describe('MdScrollView (react-free, FakeScroller)', () => {
     const onEndReached = vi.fn()
     const wrapper = mount(
       {
-        components: { MdScrollView },
+        components: { CuScrollView },
         setup() {
           return { onEndReached }
         },
         template: `
-          <MdScrollView :immediate-check-end-reaching="true" @end-reached="onEndReached">
+          <CuScrollView :immediate-check-end-reaching="true" @end-reached="onEndReached">
             <div class="item">A</div>
-          </MdScrollView>
+          </CuScrollView>
         `,
       },
       {
@@ -116,22 +116,22 @@ describe('MdScrollView (react-free, FakeScroller)', () => {
   })
 
   it('refresh slot renders ScrollViewRefresh text variants', () => {
-    const refreshing = mount(MdScrollViewRefresh, {
+    const refreshing = mount(CuScrollViewRefresh, {
       props: { isRefreshing: true },
     })
     expect(refreshing.find('.refresh-tip').text()).toBe('刷新中...')
 
-    const active = mount(MdScrollViewRefresh, {
+    const active = mount(CuScrollViewRefresh, {
       props: { isRefreshActive: true, scrollTop: -60 },
     })
     expect(active.find('.refresh-tip').text()).toBe('释放刷新')
 
-    const idle = mount(MdScrollViewRefresh, { props: { scrollTop: 0 } })
+    const idle = mount(CuScrollViewRefresh, { props: { scrollTop: 0 } })
     expect(idle.find('.refresh-tip').text()).toBe('下拉刷新')
   })
 
   it('ScrollViewMore toggles finished text', async () => {
-    const wrapper = mount(MdScrollViewMore, { props: { isFinished: false } })
+    const wrapper = mount(CuScrollViewMore, { props: { isFinished: false } })
     expect(wrapper.text()).toBe('更多加载中...')
     await wrapper.setProps({ isFinished: true })
     expect(wrapper.text()).toBe('全部已加载')
@@ -141,14 +141,14 @@ describe('MdScrollView (react-free, FakeScroller)', () => {
     vi.useFakeTimers()
     const onScroll = vi.fn()
     mount({
-      components: { MdScrollView },
+      components: { CuScrollView },
       setup() {
         return { onScroll }
       },
       template: `
-        <MdScrollView @scroll="onScroll">
+        <CuScrollView @scroll="onScroll">
           <div class="item">A</div>
-        </MdScrollView>
+        </CuScrollView>
       `,
     })
     await flush(120)
@@ -162,20 +162,20 @@ describe('MdScrollView (react-free, FakeScroller)', () => {
   })
 })
 
-describe('MdSwiper (vue)', () => {
+describe('CuSwiper (vue)', () => {
   beforeEach(() => {
     ;(scrollerInstances as unknown[]).length = 0
   })
 
   function mountSwiper(props: Record<string, unknown> = {}) {
     return mount({
-      components: { MdSwiper, MdSwiperItem },
+      components: { CuSwiper, CuSwiperItem },
       template: `
-        <MdSwiper v-bind="props">
-          <MdSwiperItem><div class="sw-item">第 1 页</div></MdSwiperItem>
-          <MdSwiperItem><div class="sw-item">第 2 页</div></MdSwiperItem>
-          <MdSwiperItem><div class="sw-item">第 3 页</div></MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper v-bind="props">
+          <CuSwiperItem><div class="sw-item">第 1 页</div></CuSwiperItem>
+          <CuSwiperItem><div class="sw-item">第 2 页</div></CuSwiperItem>
+          <CuSwiperItem><div class="sw-item">第 3 页</div></CuSwiperItem>
+        </CuSwiper>
       `,
       setup() {
         return { props }
@@ -188,11 +188,11 @@ describe('MdSwiper (vue)', () => {
     const wrapper = mountSwiper({ autoplay: 0 })
     // 挂载后 nextTick → reInitItems（同步部分）
     await vi.advanceTimersByTimeAsync(10)
-    const rootEl = wrapper.find('.md-swiper')
+    const rootEl = wrapper.find('.cu-swiper')
     expect(rootEl.classes()).not.toContain('disabled')
-    expect(wrapper.findAll('.md-swiper-indicator')).toHaveLength(3)
-    expect(wrapper.findAll('.md-swiper-indicator')[0].classes()).toContain(
-      'md-swiper-indicator-active',
+    expect(wrapper.findAll('.cu-swiper-indicator')).toHaveLength(3)
+    expect(wrapper.findAll('.cu-swiper-indicator')[0].classes()).toContain(
+      'cu-swiper-indicator-active',
     )
     vi.useRealTimers()
   })
@@ -202,20 +202,20 @@ describe('MdSwiper (vue)', () => {
     const onBefore = vi.fn()
     const onAfter = vi.fn()
     const wrapper = mount({
-      components: { MdSwiper, MdSwiperItem },
+      components: { CuSwiper, CuSwiperItem },
       setup() {
         return { onBefore, onAfter }
       },
       template: `
-        <MdSwiper :autoplay="0" @before-change="onBefore" @after-change="onAfter">
-          <MdSwiperItem>1</MdSwiperItem>
-          <MdSwiperItem>2</MdSwiperItem>
-          <MdSwiperItem>3</MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper :autoplay="0" @before-change="onBefore" @after-change="onAfter">
+          <CuSwiperItem>1</CuSwiperItem>
+          <CuSwiperItem>2</CuSwiperItem>
+          <CuSwiperItem>3</CuSwiperItem>
+        </CuSwiper>
       `,
     })
     await vi.advanceTimersByTimeAsync(10)
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       next: () => void
       prev: () => void
       goto: (i: number) => void
@@ -243,7 +243,7 @@ describe('MdSwiper (vue)', () => {
     vi.useFakeTimers()
     const wrapper = mountSwiper({ autoplay: 0 })
     await vi.advanceTimersByTimeAsync(10)
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       prev: () => void
       getIndex: () => number
     }
@@ -258,36 +258,36 @@ describe('MdSwiper (vue)', () => {
     vi.useFakeTimers()
     const wrapper = mountSwiper({ autoplay: 0 })
     await vi.advanceTimersByTimeAsync(10)
-    expect(wrapper.find('.md-swiper-item-first-copy').exists()).toBe(true)
-    expect(wrapper.find('.md-swiper-item-last-copy').exists()).toBe(true)
+    expect(wrapper.find('.cu-swiper-item-first-copy').exists()).toBe(true)
+    expect(wrapper.find('.cu-swiper-item-last-copy').exists()).toBe(true)
     vi.useRealTimers()
   })
 
   it('fade transition has no loop copies', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdSwiper, MdSwiperItem },
+      components: { CuSwiper, CuSwiperItem },
       template: `
-        <MdSwiper :autoplay="0" transition="fade">
-          <MdSwiperItem>1</MdSwiperItem>
-          <MdSwiperItem>2</MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper :autoplay="0" transition="fade">
+          <CuSwiperItem>1</CuSwiperItem>
+          <CuSwiperItem>2</CuSwiperItem>
+        </CuSwiper>
       `,
     })
     await vi.advanceTimersByTimeAsync(10)
-    expect(wrapper.find('.md-swiper').classes()).toContain('md-swiper-fade')
-    expect(wrapper.find('.md-swiper-item-first-copy').exists()).toBe(false)
+    expect(wrapper.find('.cu-swiper').classes()).toContain('cu-swiper-fade')
+    expect(wrapper.find('.cu-swiper-item-first-copy').exists()).toBe(false)
     vi.useRealTimers()
   })
 })
 
-describe('MdSlider (vue)', () => {
+describe('CuSlider (vue)', () => {
   it('emits stepped modelValue on prop change', async () => {
     const onUpdate = vi.fn()
-    const wrapper = mount(MdSlider, {
+    const wrapper = mount(CuSlider, {
       props: { modelValue: 20, min: 0, max: 100, step: 10, 'onUpdate:modelValue': onUpdate },
     })
-    expect(wrapper.find('.md-slider-handle').attributes('data-hint')).toBe('20')
+    expect(wrapper.find('.cu-slider-handle').attributes('data-hint')).toBe('20')
     await wrapper.setProps({ modelValue: 33 })
     // 33 → 就近 10 的倍数 = 30
     expect(onUpdate).toHaveBeenCalledWith(30)
@@ -295,10 +295,10 @@ describe('MdSlider (vue)', () => {
 
   it('range renders two handles and clamps overlap', async () => {
     const onUpdate = vi.fn()
-    const wrapper = mount(MdSlider, {
+    const wrapper = mount(CuSlider, {
       props: { modelValue: [20, 80], range: true, 'onUpdate:modelValue': onUpdate },
     })
-    const handles = wrapper.findAll('.md-slider-handle')
+    const handles = wrapper.findAll('.cu-slider-handle')
     expect(handles).toHaveLength(2)
     expect(handles[0].attributes('data-hint')).toBe('20')
     expect(handles[1].attributes('data-hint')).toBe('80')
@@ -310,23 +310,23 @@ describe('MdSlider (vue)', () => {
 
   it('clamps value into [min, max]', async () => {
     const onUpdate = vi.fn()
-    const wrapper = mount(MdSlider, {
+    const wrapper = mount(CuSlider, {
       props: { modelValue: 50, min: 0, max: 40, 'onUpdate:modelValue': onUpdate },
     })
     await wrapper.setProps({ modelValue: 100 })
     expect(onUpdate).toHaveBeenCalledWith(40)
-    expect(wrapper.find('.md-slider-handle').attributes('data-hint')).toBe('40')
+    expect(wrapper.find('.cu-slider-handle').attributes('data-hint')).toBe('40')
   })
 
   it('disabled blocks drag start', async () => {
     const onUpdate = vi.fn()
-    const wrapper = mount(MdSlider, {
+    const wrapper = mount(CuSlider, {
       props: { modelValue: 40, disabled: true, 'onUpdate:modelValue': onUpdate },
     })
     // v2 watch immediate：挂载即归一化并派发一次
     expect(onUpdate).toHaveBeenCalledWith(40)
 
-    const span = wrapper.find('.md-slider-handle span')
+    const span = wrapper.find('.cu-slider-handle span')
     await span.trigger('mousedown', { pageX: 100 })
     await window.dispatchEvent(new Event('mousemove'))
     // 禁用态：拖拽不产生新值

@@ -9,10 +9,13 @@ const GOLDEN_DIR = join(dirname(fileURLToPath(import.meta.url)), '../golden')
 const UPDATE = process.env.GOLDEN_UPDATE === '1'
 
 /** 规范化：折叠标签间空白与连续空白；其余由 Vue 2 渲染器确定性保证。
- * input 的 name 属性为 randomId 产物（每次渲染随机），采集与对比均剥离。 */
+ * input 的 name 属性为 randomId 产物（每次渲染随机），采集与对比均剥离；
+ * license-plate 的 id="..._divisionInput/Keyboard" 为 unique() 产物（UUID，不可复现），
+ * 与 v3 对比端 normalizeForCompare 第 12 条同规则剥离。 */
 function normalize(html: string): string {
   return html
     .replace(/(<input[^>]*?)\sname="[^"]*"/g, '$1')
+    .replace(/\s*id="[^"]*_division(?:Input|Keyboard)"/g, '')
     .replace(/>\s+</g, '><')
     .replace(/\s+/g, ' ')
     .trim()

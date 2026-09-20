@@ -1,1 +1,1 @@
-export { MdAgree, type AgreeProps } from './Agree'
+export { CuAgree, type AgreeProps } from './Agree'

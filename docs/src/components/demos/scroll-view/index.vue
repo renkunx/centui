@@ -1,23 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MdScrollView, MdScrollViewRefresh, MdScrollViewMore } from 'mand-mobile'
+import { CuScrollView, CuScrollViewRefresh, CuScrollViewMore } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['下拉刷新 + 加载更多', '横向滚动']
-const code = `<MdScrollView
+const code = `<CuScrollView
   ref="scrollView"
   :auto-reflow="true"
   @end-reached="loadMore"
   @refreshing="refresh"
 >
   <template #refresh="{ scrollTop }">
-    <MdScrollViewRefresh :scroll-top="scrollTop" />
+    <CuScrollViewRefresh :scroll-top="scrollTop" />
   </template>
   <div v-for="i in items" :key="i" class="scroll-demo-item">{{ i }}</div>
   <template #more="{ isEndReaching }">
-    <MdScrollViewMore :is-finished="isEndReaching" />
+    <CuScrollViewMore :is-finished="isEndReaching" />
   </template>
-</MdScrollView>`
+</CuScrollView>`
 
 const scrollView = ref()
 const items = ref<number[]>(Array.from({ length: 15 }, (_, i) => i + 1))
@@ -50,7 +50,7 @@ function loadMore() {
 <template>
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
-      <MdScrollView
+      <CuScrollView
         ref="scrollView"
         class="scroll-demo-box"
         :auto-reflow="true"
@@ -58,16 +58,16 @@ function loadMore() {
         @refreshing="refresh"
       >
         <template #refresh="{ scrollTop }">
-          <MdScrollViewRefresh :scroll-top="scrollTop" />
+          <CuScrollViewRefresh :scroll-top="scrollTop" />
         </template>
         <div v-for="i in items" :key="i" class="scroll-demo-item">{{ i }}</div>
         <template #more="{ isEndReaching }">
-          <MdScrollViewMore :is-finished="isEndReaching" />
+          <CuScrollViewMore :is-finished="isEndReaching" />
         </template>
-      </MdScrollView>
+      </CuScrollView>
     </template>
     <template #scene-1>
-      <MdScrollView
+      <CuScrollView
         class="scroll-demo-box--short"
         :scrolling-y="false"
         :auto-reflow="true"
@@ -75,7 +75,7 @@ function loadMore() {
         <div class="scroll-demo-horizon">
           <div v-for="i in 10" :key="i" class="scroll-demo-card">{{ i }}</div>
         </div>
-      </MdScrollView>
+      </CuScrollView>
     </template>
   </DemoCanvas>
 </template>

@@ -1,5 +1,5 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState, type ReactNode } from 'react'
-import { MdScrollView, type ScrollViewExposed } from '../scroll-view/ScrollView'
+import { CuScrollView, type ScrollViewExposed } from '../scroll-view/ScrollView'
 
 export interface TabBarItem {
   name: string | number
@@ -22,7 +22,7 @@ export interface TabBarExposed {
   reflow: () => void
 }
 
-export const MdTabBar = forwardRef<TabBarExposed, TabBarProps>(function MdTabBar(
+export const CuTabBar = forwardRef<TabBarExposed, TabBarProps>(function CuTabBar(
   { value = '', items = [], hasInk = true, inkLength = '25', immediate = false, renderItem, onChange, onInput },
   ref,
 ) {
@@ -144,15 +144,15 @@ export const MdTabBar = forwardRef<TabBarExposed, TabBarProps>(function MdTabBar
   }
 
   return (
-    <nav className="md-tab-bar">
-      <div className="md-tab-bar-inner" ref={wrapperRef}>
+    <nav className="cu-tab-bar">
+      <div className="cu-tab-bar-inner" ref={wrapperRef}>
         {scrollable ? (
           <>
-            <div className="md-tab-bar-start" style={{ display: maskStartShown ? '' : 'none' }}></div>
-            <div className="md-tab-bar-end" style={{ display: maskEndShown ? '' : 'none' }}></div>
+            <div className="cu-tab-bar-start" style={{ display: maskStartShown ? '' : 'none' }}></div>
+            <div className="cu-tab-bar-end" style={{ display: maskEndShown ? '' : 'none' }}></div>
           </>
         ) : null}
-        <MdScrollView
+        <CuScrollView
           key={scrollerTmpKey}
           ref={scrollViewRef as never}
           scrollingX={scrollable}
@@ -166,12 +166,12 @@ export const MdTabBar = forwardRef<TabBarExposed, TabBarProps>(function MdTabBar
             setMaskEndShown(!(contentW > 0 && scrollLeft >= contentW - wrapperW))
           }}
         >
-          <div className="md-tab-bar-list" style={{ width: `${contentW}px` }}>
+          <div className="cu-tab-bar-list" style={{ width: `${contentW}px` }}>
             {items.map((item, index) => (
               <a
                 key={item.name}
                 ref={(el) => setItemRef(el, index)}
-                className={`md-tab-bar-item${currentName === item.name ? ' is-active' : ''}${
+                className={`cu-tab-bar-item${currentName === item.name ? ' is-active' : ''}${
                   item.disabled ? ' is-disabled' : ''
                 }${items.length > 5 && index === 0 ? ' more-than-five' : ''}`}
                 onClick={() => {
@@ -191,14 +191,14 @@ export const MdTabBar = forwardRef<TabBarExposed, TabBarProps>(function MdTabBar
           </div>
           {hasInk ? (
             <span
-              className={`md-tab-bar-ink${currentTab && currentTab.disabled ? ' is-disabled' : ''}`}
+              className={`cu-tab-bar-ink${currentTab && currentTab.disabled ? ' is-disabled' : ''}`}
               style={{
                 width: `${inkWidth}px`,
                 transform: `translateX(${inkPos}px)`,
               }}
             ></span>
           ) : null}
-        </MdScrollView>
+        </CuScrollView>
       </div>
     </nav>
   )

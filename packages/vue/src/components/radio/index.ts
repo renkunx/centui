@@ -1,3 +1,3 @@
-export { default as MdRadio } from './Radio.vue'
-export { default as MdRadioBox } from './RadioBox.vue'
-export { default as MdRadioGroup } from './RadioGroup.vue'
+export { default as CuRadio } from './Radio.vue'
+export { default as CuRadioBox } from './RadioBox.vue'
+export { default as CuRadioGroup } from './RadioGroup.vue'

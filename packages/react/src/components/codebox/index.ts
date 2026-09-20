@@ -1,1 +1,1 @@
-export { MdCodebox, type CodeboxProps, type CodeboxExposed } from './Codebox'
+export { CuCodebox, type CodeboxProps, type CodeboxExposed } from './Codebox'

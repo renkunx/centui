@@ -1,5 +1,5 @@
 export {
-  MdTabPicker,
+  CuTabPicker,
   type TabPickerNode,
   type TabPickerOption,
   type TabPickerProps,

@@ -1,2 +1,2 @@
-// 按需入口：mand-mobile/es/codebox
+// 按需入口：centui/es/codebox
 export * from './components/codebox'

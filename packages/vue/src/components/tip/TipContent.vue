@@ -1,24 +1,24 @@
 <template>
-  <div class="md-tip" :class="wrapperCls">
-    <div class="md-tip-content">
+  <div class="cu-tip" :class="wrapperCls">
+    <div class="cu-tip-content">
       <template v-if="!$slots.default">
-        <MdIcon v-if="icon" class="content-icon" :name="icon" :svg="iconSvg" />
+        <CuIcon v-if="icon" class="content-icon" :name="icon" :svg="iconSvg" />
         <div class="content-text" v-text="content"></div>
       </template>
       <template v-else>
         <slot></slot>
       </template>
-      <MdIcon v-if="closable" name="close" size="md" @click="onClose" />
+      <CuIcon v-if="closable" name="close" size="md" @click="onClose" />
     </div>
-    <div class="md-tip-bg"></div>
+    <div class="cu-tip-bg"></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import MdIcon from '../icon/Icon.vue'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-tip-content' })
+defineOptions({ name: 'cu-tip-content' })
 
 const props = withDefaults(
   defineProps<{

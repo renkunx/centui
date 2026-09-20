@@ -14,7 +14,7 @@ export interface IconProps {
   className?: string
 }
 
-export function MdIcon({
+export function CuIcon({
   name,
   size = 'md',
   color = '',
@@ -30,7 +30,7 @@ export function MdIcon({
   if (svg) {
     return (
       <svg
-        className={['md-icon', 'icon-svg', `md-icon-${name}`, size, className]
+        className={['cu-icon', 'icon-svg', `cu-icon-${name}`, size, className]
           .filter(Boolean)
           .join(' ')}
         style={{ fill: color, ...style }}
@@ -45,7 +45,7 @@ export function MdIcon({
   }
   return (
     <i
-      className={['md-icon', 'icon-font', `md-icon-${name}`, name, size, className]
+      className={['cu-icon', 'icon-font', `cu-icon-${name}`, name, size, className]
         .filter(Boolean)
         .join(' ')}
       style={{ color, ...style }}

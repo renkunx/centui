@@ -3,8 +3,8 @@
  * 导出的 Dialog 既是可模板使用的组件，也携带 confirm/alert/succeed/failed/closeAll 静态方法（v2 契约）。
  */
 import { createVNode, render } from 'vue'
-import { t } from '@mand-mobile/core'
-import MdDialogComponent, { type DialogBtn } from './Dialog.vue'
+import { t } from '@centui/core'
+import CuDialogComponent, { type DialogBtn } from './Dialog.vue'
 
 export type { DialogBtn }
 
@@ -41,7 +41,7 @@ interface AlertOptions extends Omit<GenerateOptions, 'btns'> {
   onConfirm?: () => boolean | void
 }
 
-type DialogStatic = typeof MdDialogComponent & {
+type DialogStatic = typeof CuDialogComponent & {
   confirm: (options: ConfirmOptions) => DialogInstance
   alert: (options: AlertOptions) => DialogInstance
   succeed: (options: ConfirmOptions) => DialogInstance
@@ -63,7 +63,7 @@ function generate({
   iconSvg = true,
   content = '',
   closable = false,
-  transition = 'md-bounce',
+  transition = 'cu-bounce',
   btns = [],
   onShow = noop,
   onHide = noop,
@@ -74,7 +74,7 @@ function generate({
   let value = true
 
   const mount = () => {
-    const vnode = createVNode(MdDialogComponent, {
+    const vnode = createVNode(CuDialogComponent, {
       modelValue: value,
       title,
       icon,
@@ -119,7 +119,7 @@ function generate({
   return instance
 }
 
-const Dialog = MdDialogComponent as DialogStatic
+const Dialog = CuDialogComponent as DialogStatic
 
 /**
  * Dynamically create a confirm dialog
@@ -240,5 +240,5 @@ Dialog.closeAll = () => {
   })
 }
 
-export { MdDialogComponent as MdDialog }
+export { CuDialogComponent as CuDialog }
 export default Dialog

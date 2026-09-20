@@ -1,1 +1,1 @@
-export { default as MdSwitch } from './Switch.vue'
+export { default as CuSwitch } from './Switch.vue'

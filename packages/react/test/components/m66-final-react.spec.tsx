@@ -4,12 +4,12 @@
 import { act, fireEvent, render } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import {
-  MdCashier,
-  MdChart,
-  MdCaptcha,
-  MdImageReader,
-  MdLicensePlate,
-  MdRollerSuccess,
+  CuCashier,
+  CuChart,
+  CuCaptcha,
+  CuImageReader,
+  CuLicensePlate,
+  CuRollerSuccess,
 } from '../../src'
 
 async function flush(ms = 60) {
@@ -18,23 +18,23 @@ async function flush(ms = 60) {
   })
 }
 
-describe('MdChart', () => {
+describe('CuChart', () => {
   const labels = ['一', '二', '三']
   const datasets = [{ color: '#5b8ff9', values: [10, 20, 30] }]
 
   it('renders svg with axis ticks and paths', () => {
     const { container } = render(
-      <MdChart labels={labels} datasets={datasets} size={[300, 200]} max={30} min={0} lines={3} step={10} />,
+      <CuChart labels={labels} datasets={datasets} size={[300, 200]} max={30} min={0} lines={3} step={10} />,
     )
-    expect(container.querySelector('svg.md-chart')).not.toBeNull()
-    expect(container.querySelectorAll('.md-chart-axis-y g')).toHaveLength(4)
-    expect(container.querySelectorAll('.md-chart-axis-x g')).toHaveLength(3)
-    expect(container.querySelector('.md-chart-path')).not.toBeNull()
+    expect(container.querySelector('svg.cu-chart')).not.toBeNull()
+    expect(container.querySelectorAll('.cu-chart-axis-y g')).toHaveLength(4)
+    expect(container.querySelectorAll('.cu-chart-axis-x g')).toHaveLength(3)
+    expect(container.querySelector('.cu-chart-path')).not.toBeNull()
   })
 
   it('region theme renders area path', () => {
     const { container } = render(
-      <MdChart
+      <CuChart
         labels={labels}
         datasets={[{ color: '#fa8919', theme: 'region', values: [10, 20, 30] }]}
         size={[300, 200]}
@@ -44,13 +44,13 @@ describe('MdChart', () => {
         step={10}
       />,
     )
-    expect(container.querySelector('.md-chart-path-area')).not.toBeNull()
+    expect(container.querySelector('.cu-chart-path-area')).not.toBeNull()
   })
 })
 
-describe('MdImageReader', () => {
+describe('CuImageReader', () => {
   it('renders file input with mime', () => {
-    const { container } = render(<MdImageReader mime={['png', 'jpeg']} />)
+    const { container } = render(<CuImageReader mime={['png', 'jpeg']} />)
     const input = container.querySelector('input[type=file]')
     expect(input).not.toBeNull()
     expect(input?.getAttribute('accept')).toBe('image/png,image/jpeg')
@@ -59,7 +59,7 @@ describe('MdImageReader', () => {
   it('select emits files and amount overflow errors', async () => {
     const onSelect = vi.fn()
     const onError = vi.fn()
-    const { container } = render(<MdImageReader onSelect={onSelect} onError={onError} amount={1} />)
+    const { container } = render(<CuImageReader onSelect={onSelect} onError={onError} amount={1} />)
     const input = container.querySelector('input[type=file]') as HTMLInputElement
     Object.defineProperty(input, 'files', {
       value: [new File(['x'], 'a.png'), new File(['y'], 'b.png')],
@@ -73,40 +73,40 @@ describe('MdImageReader', () => {
   })
 })
 
-describe('MdLicensePlate', () => {
+describe('CuLicensePlate', () => {
   it('defaultValue fills key array', () => {
-    const { container } = render(<MdLicensePlate defaultValue="浙AD12345" />)
-    const items = container.querySelectorAll('.md-license-plate-input-item')
+    const { container } = render(<CuLicensePlate defaultValue="浙AD12345" />)
+    const items = container.querySelectorAll('.cu-license-plate-input-item')
     expect(items).toHaveLength(8)
     expect(items[0].textContent).toBe('浙')
   })
 
   it('shortcut click fills first slot and switches keyboard', async () => {
-    const { container } = render(<MdLicensePlate modeShow="division" />)
-    expect(container.querySelector('.md-license-plate-keyboard')).toBeNull()
-    fireEvent.click(container.querySelectorAll('.md-license-plate-input-item')[0])
+    const { container } = render(<CuLicensePlate modeShow="division" />)
+    expect(container.querySelector('.cu-license-plate-keyboard')).toBeNull()
+    fireEvent.click(container.querySelectorAll('.cu-license-plate-input-item')[0])
     await flush(40)
-    expect(container.querySelector('.md-shortcut-row')).not.toBeNull()
-    fireEvent.click(container.querySelectorAll('.md-shortcut-row-item')[0])
+    expect(container.querySelector('.cu-shortcut-row')).not.toBeNull()
+    fireEvent.click(container.querySelectorAll('.cu-shortcut-row-item')[0])
     await flush(40)
-    expect(container.querySelectorAll('.md-license-plate-input-item')[0].textContent).toBe('京')
-    expect(container.querySelector('.md-mixed-key-board')).not.toBeNull()
+    expect(container.querySelectorAll('.cu-license-plate-input-item')[0].textContent).toBe('京')
+    expect(container.querySelector('.cu-mixed-key-board')).not.toBeNull()
   })
 
   it('popUp mode renders title bar', () => {
-    const { container } = render(<MdLicensePlate modeShow="popUp" showPopUp />)
-    expect(container.querySelector('.md-popup-title-bar')).not.toBeNull()
+    const { container } = render(<CuLicensePlate modeShow="popUp" showPopUp />)
+    expect(container.querySelector('.cu-popup-title-bar')).not.toBeNull()
   })
 })
 
-describe('MdRollerSuccess', () => {
+describe('CuRollerSuccess', () => {
   it('renders success check lines when isSuccess', () => {
-    const { container } = render(<MdRollerSuccess isSuccess />)
+    const { container } = render(<CuRollerSuccess isSuccess />)
     expect(container.querySelectorAll('line')).toHaveLength(2)
   })
 })
 
-describe('MdCashier', () => {
+describe('CuCashier', () => {
   const channels = [
     { text: '招商银行储蓄卡', desc: '招商银行(1234)' },
     { text: '支付宝' },
@@ -114,42 +114,42 @@ describe('MdCashier', () => {
 
   it('choose scene lists channels with pay button', async () => {
     const { container } = render(
-      <MdCashier value paymentAmount="1000.00" channels={channels} />,
+      <CuCashier value paymentAmount="1000.00" channels={channels} />,
     )
     await flush(80)
-    expect(container.querySelectorAll('.md-cashier-channel-item')).toHaveLength(2)
+    expect(container.querySelectorAll('.cu-cashier-channel-item')).toHaveLength(2)
     expect(container.querySelector('.choose-number')?.textContent).toBe('1000.00')
-    expect(container.querySelector('.md-cashier-pay-button')?.textContent).toContain('确定支付')
+    expect(container.querySelector('.cu-cashier-pay-button')?.textContent).toContain('确定支付')
   })
 
   it('channel select and pay events', async () => {
     const onSelect = vi.fn()
     const onPay = vi.fn()
     const { container } = render(
-      <MdCashier value channels={channels} onSelect={onSelect} onPay={onPay} />,
+      <CuCashier value channels={channels} onSelect={onSelect} onPay={onPay} />,
     )
     await flush(80)
-    fireEvent.click(container.querySelectorAll('.md-cashier-channel-item')[1])
+    fireEvent.click(container.querySelectorAll('.cu-cashier-channel-item')[1])
     expect(onSelect.mock.calls[0][0].text).toBe('支付宝')
-    fireEvent.click(container.querySelector('.md-cashier-pay-button')!)
+    fireEvent.click(container.querySelector('.cu-cashier-pay-button')!)
     expect(onPay.mock.calls[0][0].text).toBe('支付宝')
   })
 
   it('next(scene) switches scene blocks', async () => {
     const ref = { current: null as unknown as { next: (s: 'success', o?: object) => void } }
-    const { container } = render(<MdCashier value channels={channels} ref={ref as never} />)
+    const { container } = render(<CuCashier value channels={channels} ref={ref as never} />)
     await flush(80)
     ref.current.next('success', { text: '支付成功啦' })
     await flush(40)
-    expect(container.querySelector('.md-cashier-success')).not.toBeNull()
-    expect(container.querySelector('.md-cashier-block-text')?.textContent).toBe('支付成功啦')
+    expect(container.querySelector('.cu-cashier-success')).not.toBeNull()
+    expect(container.querySelector('.cu-cashier-block-text')?.textContent).toBe('支付成功啦')
   })
 })
 
 describe('M6-6 分支补强', () => {
   it('image-reader: size limit 101 fires error', async () => {
     const onError = vi.fn()
-    const { container } = render(<MdImageReader size={1} onError={onError} />)
+    const { container } = render(<CuImageReader size={1} onError={onError} />)
     const input = container.querySelector('input[type=file]') as HTMLInputElement
     const bigFile = new File(['x'.repeat(4000)], 'big.png', { type: 'image/png' })
     Object.defineProperty(input, 'files', { value: [bigFile], configurable: true })
@@ -178,7 +178,7 @@ describe('M6-6 分支补强', () => {
         setTimeout(() => this.onload?.(), 0)
       }
     }
-    const { container } = render(<MdImageReader onComplete={onComplete} />)
+    const { container } = render(<CuImageReader onComplete={onComplete} />)
     const input = container.querySelector('input[type=file]') as HTMLInputElement
     const file = new File([new Uint8Array(1)], 'a.png', { type: 'image/png' })
     Object.defineProperty(input, 'files', { value: [file], configurable: true })
@@ -193,7 +193,7 @@ describe('M6-6 分支补强', () => {
 
   it('chart: rem size and heat theme', () => {
     const { container } = render(
-      <MdChart
+      <CuChart
         labels={['一', '二']}
         datasets={[{ color: '#5b8ff9', theme: 'heat', values: [10, 20] }]}
         size={['30rem', '20rem']}
@@ -211,17 +211,17 @@ describe('M6-6 分支补强', () => {
   it('license-plate: disorderClick guards and confirm key', async () => {
     const onConfirm = vi.fn()
     const { container } = render(
-      <MdLicensePlate modeShow="division" disorderClick={false} onConfirm={onConfirm} defaultValue="浙A" />,
+      <CuLicensePlate modeShow="division" disorderClick={false} onConfirm={onConfirm} defaultValue="浙A" />,
     )
     // disorderClick=false：点击第 3 格（前两格未连填）不切换选中
-    fireEvent.click(container.querySelectorAll('.md-license-plate-input-item')[2])
+    fireEvent.click(container.querySelectorAll('.cu-license-plate-input-item')[2])
     await flush(40)
     // 键盘未展开（首格未填时点击被拒）→ 也无确认
     expect(onConfirm).not.toHaveBeenCalled()
     // 点击第一格 → 键盘展开 → shortcut 京 → confirm 键存在
-    fireEvent.click(container.querySelectorAll('.md-license-plate-input-item')[0])
+    fireEvent.click(container.querySelectorAll('.cu-license-plate-input-item')[0])
     await flush(40)
-    expect(container.querySelector('.md-shortcut-row')).not.toBeNull()
+    expect(container.querySelector('.cu-shortcut-row')).not.toBeNull()
   })
 
   it('cashier: captcha scene and fail scene via next()', async () => {
@@ -229,23 +229,23 @@ describe('M6-6 分支补强', () => {
     const onSubmit = vi.fn()
     const ref = { current: null as unknown as { next: (s: 'captcha' | 'fail', o?: object) => void } }
     const { container } = render(
-      <MdCashier value channels={[{ text: 'A' }]} ref={ref as never} />,
+      <CuCashier value channels={[{ text: 'A' }]} ref={ref as never} />,
     )
     await flush(80)
     ref.current.next('captcha', { text: '请输入验证码', brief: '已发送', onSend, onSubmit })
     await flush(80)
-    expect(container.querySelector('.md-cashier-captcha')).not.toBeNull()
+    expect(container.querySelector('.cu-cashier-captcha')).not.toBeNull()
     expect(onSend).toHaveBeenCalled()
     ref.current.next('fail', { text: '支付失败' })
     await flush(80)
-    expect(container.querySelector('.md-cashier-fail')).not.toBeNull()
-    expect(container.querySelector('.md-cashier-block-text')?.textContent).toBe('支付失败')
+    expect(container.querySelector('.cu-cashier-fail')).not.toBeNull()
+    expect(container.querySelector('.cu-cashier-block-text')?.textContent).toBe('支付失败')
   })
 
   it('cashier: loading scene and custom scene', async () => {
     const ref = { current: null as unknown as { next: (s: 'loading' | 'custom', o?: object) => void } }
     const { container } = render(
-      <MdCashier
+      <CuCashier
         value
         channels={[{ text: 'A' }]}
         ref={ref as never}
@@ -255,14 +255,14 @@ describe('M6-6 分支补强', () => {
     await flush(80)
     ref.current.next('loading')
     await flush(40)
-    expect(container.querySelector('.md-cashier-loading')).not.toBeNull()
+    expect(container.querySelector('.cu-cashier-loading')).not.toBeNull()
     ref.current.next('custom')
     await flush(40)
     expect(container.querySelector('.my-custom')).not.toBeNull()
   })
 
   it('roller-success: non-success hides check lines', () => {
-    const { container } = render(<MdRollerSuccess isSuccess={false} />)
+    const { container } = render(<CuRollerSuccess isSuccess={false} />)
     expect(container.querySelectorAll('line')).toHaveLength(0)
   })
 })
@@ -270,7 +270,7 @@ describe('M6-6 分支补强', () => {
 describe('M6-6 CashierChannel 分支补强', () => {
   it('channelLimit<1 renders single default channel only', async () => {
     const { container } = render(
-      <MdCashier
+      <CuCashier
         value
         channels={[{ text: 'A' }, { text: 'B' }]}
         channelLimit={0}
@@ -279,7 +279,7 @@ describe('M6-6 CashierChannel 分支补强', () => {
     )
     await flush(80)
     // 单渠道模式只渲染 defaultIndex 指定的渠道
-    const items = container.querySelectorAll('.md-cashier-channel-item')
+    const items = container.querySelectorAll('.cu-cashier-channel-item')
     // v2 契约：isSingle 渲染全部渠道
     expect(items).toHaveLength(2)
     // 无 more 按钮
@@ -289,7 +289,7 @@ describe('M6-6 CashierChannel 分支补强', () => {
   it('disabled channel item blocks select', async () => {
     const onSelect = vi.fn()
     const { container } = render(
-      <MdCashier
+      <CuCashier
         value
         channels={[{ text: 'A', disabled: true }]}
         channelLimit={0}
@@ -297,13 +297,13 @@ describe('M6-6 CashierChannel 分支补强', () => {
       />,
     )
     await flush(80)
-    fireEvent.click(container.querySelector('.md-cashier-channel-item')!)
+    fireEvent.click(container.querySelector('.cu-cashier-channel-item')!)
     expect(onSelect).not.toHaveBeenCalled()
   })
 
   it('more button expands channel list', async () => {
     const { container } = render(
-      <MdCashier
+      <CuCashier
         value
         channels={[{ text: 'A' }, { text: 'B' }, { text: 'C' }]}
         channelLimit={2}
@@ -312,22 +312,22 @@ describe('M6-6 CashierChannel 分支补强', () => {
     )
     await flush(80)
     // 渠道数 > channelLimit → 先只渲染一个 default
-    expect(container.querySelectorAll('.md-cashier-channel-item')).toHaveLength(1)
+    expect(container.querySelectorAll('.cu-cashier-channel-item')).toHaveLength(1)
     const more = container.querySelector('.choose-channel-more')!
     fireEvent.click(more)
     await flush(60)
-    expect(container.querySelectorAll('.md-cashier-channel-item')).toHaveLength(3)
+    expect(container.querySelectorAll('.cu-cashier-channel-item')).toHaveLength(3)
     expect(container.querySelector('.choose-channel-more')?.className).toContain('disabled')
     // 再点击无效（已激活）
     fireEvent.click(container.querySelector('.choose-channel-more')!)
     await flush(40)
-    expect(container.querySelectorAll('.md-cashier-channel-item')).toHaveLength(3)
+    expect(container.querySelectorAll('.cu-cashier-channel-item')).toHaveLength(3)
   })
 
   it('channel action link triggers handler', async () => {
     const handler = vi.fn()
     const { container } = render(
-      <MdCashier
+      <CuCashier
         value
         channels={[{ text: 'A', action: { text: '换卡', handler } }]}
         channelLimit={0}
@@ -340,7 +340,7 @@ describe('M6-6 CashierChannel 分支补强', () => {
 
   it('channel button slot overrides pay text', () => {
     const { container } = render(
-      <MdCashier
+      <CuCashier
         value
         channels={[{ text: 'A' }]}
         channelLimit={0}
@@ -354,39 +354,39 @@ describe('M6-6 CashierChannel 分支补强', () => {
 describe('M6-6 LicensePlate/Cashier 收尾分支', () => {
   it('license-plate delete key clears current slot', async () => {
     const { container } = render(
-      <MdLicensePlate modeShow="division" defaultValue="浙AD12345" />,
+      <CuLicensePlate modeShow="division" defaultValue="浙AD12345" />,
     )
-    fireEvent.click(container.querySelectorAll('.md-license-plate-input-item')[0])
+    fireEvent.click(container.querySelectorAll('.cu-license-plate-input-item')[0])
     await flush(40)
     // 先按 shortcut 填第一位 → 进入混合键盘
-    fireEvent.click(container.querySelectorAll('.md-shortcut-row-item')[0])
+    fireEvent.click(container.querySelectorAll('.cu-shortcut-row-item')[0])
     await flush(40)
     // delete 键清空当前位并回退到 0 → 键盘收起（division）
-    fireEvent.click(container.querySelector('.md-mixed-key-board-item .delete')!)
+    fireEvent.click(container.querySelector('.cu-mixed-key-board-item .delete')!)
     await flush(40)
-    expect(container.querySelectorAll('.md-license-plate-input-item')[1].textContent).toBe('')
+    expect(container.querySelectorAll('.cu-license-plate-input-item')[1].textContent).toBe('')
     // 回退到第 1 位 → 切回 shortcut 键盘（无 delete 键），键盘保持展开
-    expect(container.querySelector('.md-shortcut-row')).not.toBeNull()
+    expect(container.querySelector('.cu-shortcut-row')).not.toBeNull()
   })
 
   it('license-plate confirm key emits joined value', async () => {
     const onConfirm = vi.fn()
     const { container } = render(
-      <MdLicensePlate modeShow="division" defaultValue="浙AD12345" onConfirm={onConfirm} />,
+      <CuLicensePlate modeShow="division" defaultValue="浙AD12345" onConfirm={onConfirm} />,
     )
-    fireEvent.click(container.querySelectorAll('.md-license-plate-input-item')[0])
+    fireEvent.click(container.querySelectorAll('.cu-license-plate-input-item')[0])
     await flush(40)
     // 第一位是 shortcut 键盘：先填 京 再进混合键盘按确认
-    fireEvent.click(container.querySelectorAll('.md-shortcut-row-item')[0])
+    fireEvent.click(container.querySelectorAll('.cu-shortcut-row-item')[0])
     await flush(40)
-    fireEvent.click(container.querySelector('.md-mixed-key-board-item .confirm')!)
+    fireEvent.click(container.querySelector('.cu-mixed-key-board-item .confirm')!)
     await flush(40)
     expect(onConfirm).toHaveBeenCalledWith('京AD12345')
   })
 
   it('chart: heat theme and custom format', () => {
     const { container } = render(
-      <MdChart
+      <CuChart
         labels={['一', '二']}
         datasets={[{ color: '#5b8ff9', theme: 'heat', values: [10, 20] }]}
         size={[300, 200]}
@@ -402,34 +402,34 @@ describe('M6-6 LicensePlate/Cashier 收尾分支', () => {
   })
 
   it('image-reader: camera only adds capture attr', () => {
-    const { container } = render(<MdImageReader isCameraOnly />)
+    const { container } = render(<CuImageReader isCameraOnly />)
     expect(container.querySelector('input')?.getAttribute('capture')).not.toBeNull()
   })
 })
 
 describe('M6-6 Captcha 分支补强', () => {
   it('dialog mode renders popup skeleton inline (appendTo false)', async () => {
-    const { container } = render(<MdCaptcha type="dialog" value brief="b" maxlength={4} />)
+    const { container } = render(<CuCaptcha type="dialog" value brief="b" maxlength={4} />)
     await flush(80)
     // dialog 留在组件树内（appendTo=false 契约）
-    expect(container.querySelector('.md-dialog .md-captcha-content')).not.toBeNull()
-    const dialogEl = container.querySelector('.md-dialog')
+    expect(container.querySelector('.cu-dialog .cu-captcha-content')).not.toBeNull()
+    const dialogEl = container.querySelector('.cu-dialog')
     expect(dialogEl?.getAttribute('position')).toBe('center')
   })
 
   it('halfScreen mode with system keyboard and mask', async () => {
     const { container } = render(
-      <MdCaptcha type="halfScreen" value system mask title="T" subtitle="S" maxlength={6} />,
+      <CuCaptcha type="halfScreen" value system mask title="T" subtitle="S" maxlength={6} />,
     )
     await flush(80)
-    expect(container.querySelector('.md-popup-title-bar')).not.toBeNull()
+    expect(container.querySelector('.cu-popup-title-bar')).not.toBeNull()
     const input = container.querySelector('input')
     expect(input?.getAttribute('maxlength')).toBe('6')
   })
 
   it('value=true clears typed code (v2 watch 契约)', async () => {
     const { container, rerender } = render(
-      <MdCaptcha isView maxlength={4} />,
+      <CuCaptcha isView maxlength={4} />,
     )
     await flush(60)
     // 真实输入框在隐藏 form 内（system=false）
@@ -438,41 +438,41 @@ describe('M6-6 Captcha 分支补强', () => {
       fireEvent.change(input, { target: { value: '12' } })
     })
     await flush(40)
-    const boxes = container.querySelectorAll('.md-codebox-box')
+    const boxes = container.querySelectorAll('.cu-codebox-box')
     expect(boxes[0].textContent).toBe('1')
     expect(boxes[1].textContent).toBe('2')
     // 重开弹层 → 码值清空
-    rerender(<MdCaptcha isView={false} maxlength={4} />)
-    rerender(<MdCaptcha isView maxlength={4} value />)
+    rerender(<CuCaptcha isView={false} maxlength={4} />)
+    rerender(<CuCaptcha isView maxlength={4} value />)
     await flush(150)
     const inputEl = container.querySelector('form input') as HTMLInputElement
     expect(inputEl.value).toBe('')
-    expect(container.querySelectorAll('.md-codebox-box.is-filled')).toHaveLength(0)
+    expect(container.querySelectorAll('.cu-codebox-box.is-filled')).toHaveLength(0)
   })
 
   it('disableSend styles the button in halfScreen mode', () => {
     const { container } = render(
-      <MdCaptcha type="halfScreen" value system mask maxlength={4} disableSend count={30} />,
+      <CuCaptcha type="halfScreen" value system mask maxlength={4} disableSend count={30} />,
     )
-    expect(container.querySelector('.md-captcha-btn.is-disabled-send')).not.toBeNull()
+    expect(container.querySelector('.cu-captcha-btn.is-disabled-send')).not.toBeNull()
   })
 })
 
 describe('M6-6 LicensePlate popUp 分支', () => {
   it('popUp closed hides popup box', () => {
     const { container } = render(
-      <MdLicensePlate modeShow="popUp" showPopUp={false} defaultValue="浙AD12345" />,
+      <CuLicensePlate modeShow="popUp" showPopUp={false} defaultValue="浙AD12345" />,
     )
-    expect(container.querySelector('.md-popup-box')?.getAttribute('style')).toContain('display: none')
+    expect(container.querySelector('.cu-popup-box')?.getAttribute('style')).toContain('display: none')
   })
 
   it('shortcuts prop override renders custom provinces', async () => {
     const { container } = render(
-      <MdLicensePlate modeShow="division" shortcuts={['苏', '粤']} />,
+      <CuLicensePlate modeShow="division" shortcuts={['苏', '粤']} />,
     )
-    fireEvent.click(container.querySelectorAll('.md-license-plate-input-item')[0])
+    fireEvent.click(container.querySelectorAll('.cu-license-plate-input-item')[0])
     await flush(40)
-    const rows = container.querySelectorAll('.md-shortcut-row-item')
+    const rows = container.querySelectorAll('.cu-shortcut-row-item')
     expect(rows).toHaveLength(2)
     expect(rows[0].textContent).toBe('苏')
   })

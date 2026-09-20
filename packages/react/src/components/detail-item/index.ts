@@ -1,1 +1,1 @@
-export { MdDetailItem, type DetailItemProps } from './DetailItem'
+export { CuDetailItem, type DetailItemProps } from './DetailItem'

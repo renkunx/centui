@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MdImageReader } from 'mand-mobile'
+import { CuImageReader } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['文件选择']
-const code = `<MdImageReader @select="onSelect" @complete="onComplete" @error="onError" />`
+const code = `<CuImageReader @select="onSelect" @complete="onComplete" @error="onError" />`
 const msg = ref('')
 function onSelect(name: string, d: { files: File[] }) {
   msg.value = `已选择 ${d.files.length} 个文件`
@@ -19,7 +19,7 @@ function onError(name: string, d: { code: string; msg: string }) {
     <template #scene-0>
       <div class="image-reader-demo">
         <div class="image-reader-demo-box">
-          <MdImageReader @select="onSelect" @error="onError" />
+          <CuImageReader @select="onSelect" @error="onError" />
           <span class="image-reader-demo-tip">点击选择图片</span>
         </div>
         <p v-if="msg" class="image-reader-demo-msg">{{ msg }}</p>

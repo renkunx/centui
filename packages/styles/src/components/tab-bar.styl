@@ -1,22 +1,22 @@
 /* Extracted from legacy/components/tab-bar — do not edit by hand; re-run scripts/extract.mjs */
 /* --- index.vue --- */
-.md-tab-bar
+.cu-tab-bar
   position relative
   padding-left tab-offset
   padding-right tab-offset
   background-color tab-bg
 
-.md-tab-bar-inner
+.cu-tab-bar-inner
   position relative
   width 100%
   // line-height 0
 
-.md-tab-bar-list
+.cu-tab-bar-list
   display flex
   justify-content space-between
   min-width 100%
 
-.md-tab-bar-item
+.cu-tab-bar-item
   flex auto
   flex-shrink 0
   position relative
@@ -39,7 +39,7 @@
 .more-than-five
   padding 0
   margin-right tab-item-gap
-.md-tab-bar-ink
+.cu-tab-bar-ink
   position absolute
   bottom 10px
   left 0
@@ -51,8 +51,8 @@
   &.is-disabled
     background-color tab-disabled-color
 
-.md-tab-bar-start,
-.md-tab-bar-end
+.cu-tab-bar-start,
+.cu-tab-bar-end
   position absolute
   top 0
   left 0
@@ -74,13 +74,13 @@
       height "calc(%s * 0.8)" % tab-height
     border-radius 50%
     box-shadow: -1px 0 12px 0 rgba(0,0,0,0.2)
-.md-tab-bar-end
+.cu-tab-bar-end
   left auto
   right 0
   transform rotate(180deg)
 
-.md-tab-bar
-  .md-scroll-view
+.cu-tab-bar
+  .cu-scroll-view
     display block
   .scroll-view-container
     min-width 100%

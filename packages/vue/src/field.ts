@@ -1,2 +1,2 @@
-// 按需入口：mand-mobile/es/field
+// 按需入口：centui/es/field
 export * from './components/field'

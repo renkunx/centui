@@ -1,6 +1,6 @@
 <template>
-  <div class="md-date-picker" :class="[type]">
-    <MdPicker
+  <div class="cu-date-picker" :class="[type]">
+    <CuPicker
       ref="picker"
       :model-value="modelValue"
       :is-view="isView"
@@ -22,13 +22,13 @@
       @cancel="onPickerCancel"
       @show="onPickerShow"
       @hide="onPickerHide"
-    ></MdPicker>
+    ></CuPicker>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { warn } from '@mand-mobile/core'
+import { warn } from '@centui/core'
 import {
   buildDateColumns,
   formatDate,
@@ -36,11 +36,11 @@ import {
   type DateColumnItem,
   type DatePickerColumnOptions,
   type PrevColumnRef,
-} from '@mand-mobile/core'
-import MdPicker from '../picker/Picker.vue'
+} from '@centui/core'
+import CuPicker from '../picker/Picker.vue'
 import type { PickerColumnItem } from '../picker/PickerColumn.vue'
 
-defineOptions({ name: 'md-date-picker' })
+defineOptions({ name: 'cu-date-picker' })
 
 const props = withDefaults(
   defineProps<{
@@ -99,7 +99,7 @@ const emit = defineEmits<{
   (e: 'hide'): void
 }>()
 
-const picker = ref<InstanceType<typeof MdPicker>>()
+const picker = ref<InstanceType<typeof CuPicker>>()
 
 const columnData = ref<DateColumnItem[][]>([])
 const columnDataDefault = ref<Array<string | number>>([])

@@ -7,15 +7,15 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { MdFieldItem } from '../field-item/FieldItem'
-import { MdIcon } from '../icon/Icon'
-import { MdNumberKeyboard } from '../number-keyboard/NumberKeyboard'
+import { CuFieldItem } from '../field-item/FieldItem'
+import { CuIcon } from '../icon/Icon'
+import { CuNumberKeyboard } from '../number-keyboard/NumberKeyboard'
 import {
   formatValueByGapRule,
   formatValueByGapStep,
   trimValue,
   type FormattedValue,
-} from '@mand-mobile/core'
+} from '@centui/core'
 
 /** 输入光标位置读写（自 v2 cursor.js 迁移） */
 export function getCursorsPosition(ctrl: HTMLInputElement | null): number {
@@ -87,7 +87,7 @@ export interface InputItemExposed {
   getValue: () => string
 }
 
-export const MdInputItem = forwardRef<InputItemExposed, InputItemProps>(function MdInputItem(
+export const CuInputItem = forwardRef<InputItemExposed, InputItemProps>(function CuInputItem(
   {
     className,
     type = 'text',
@@ -447,7 +447,7 @@ export const MdInputItem = forwardRef<InputItemExposed, InputItemProps>(function
   const hasBrief = !!briefSlot || brief !== ''
 
   const classes = [
-    'md-input-item',
+    'cu-input-item',
     className,
     isHighlight ? 'is-highlight' : '',
     isTitleLatent ? 'is-title-latent' : '',
@@ -466,19 +466,19 @@ export const MdInputItem = forwardRef<InputItemExposed, InputItemProps>(function
 
   return (
     <>
-      <MdFieldItem
+      <CuFieldItem
         className={classes}
         title={title}
         solid={solid && !isTitleLatent}
         left={leftSlot}
         childrenSlot={
           hasError ? (
-            <div className="md-input-item-msg">
+            <div className="cu-input-item-msg">
               <p>{error}</p>
               {errorSlot}
             </div>
           ) : hasBrief ? (
-            <div className="md-input-item-brief">
+            <div className="cu-input-item-brief">
               <p>{brief}</p>
               {briefSlot}
             </div>
@@ -489,7 +489,7 @@ export const MdInputItem = forwardRef<InputItemExposed, InputItemProps>(function
             <>
               {clearable && !disabled && !readonly ? (
                 <div
-                  className="md-input-item-clear"
+                  className="cu-input-item-clear"
                   style={{ display: !isInputEmpty && isInputFocus ? undefined : 'none' }}
                   onClick={() => {
                     setInputValue('')
@@ -499,7 +499,7 @@ export const MdInputItem = forwardRef<InputItemExposed, InputItemProps>(function
                     setIsPreview(false)
                   }}
                 >
-                  <MdIcon name="clear" />
+                  <CuIcon name="clear" />
                 </div>
               ) : null}
               {rightSlot}
@@ -514,7 +514,7 @@ export const MdInputItem = forwardRef<InputItemExposed, InputItemProps>(function
               // v2 golden 契约：maxlength 始终落 attr（格式化模式为空串）；React 对空串不渲染
               node?.setAttribute('maxlength', isInputFormative ? '' : String(inputMaxLength))
             }}
-            className="md-input-item-input"
+            className="cu-input-item-input"
             type={inputType}
             name={name}
             value={inputBindValue}
@@ -538,20 +538,20 @@ export const MdInputItem = forwardRef<InputItemExposed, InputItemProps>(function
           />
         ) : (
           <div
-            className={`md-input-item-fake${isInputFocus ? ' is-focus' : ''}${
+            className={`cu-input-item-fake${isInputFocus ? ' is-focus' : ''}${
               !isEditingRef.current ? ' is-waiting' : ''
             }${disabled ? ' disabled' : ''}${readonly ? ' readonly' : ''}`}
             onClick={onFakeInputClick}
           >
             <span>{inputValue}</span>
             {inputValue === '' && inputPlaceholder !== '' ? (
-              <span className="md-input-item-fake-placeholder">{inputPlaceholder}</span>
+              <span className="cu-input-item-fake-placeholder">{inputPlaceholder}</span>
             ) : null}
           </div>
         )}
-      </MdFieldItem>
+      </CuFieldItem>
       {isVirtualKeyboard && !virtualKeyboardVm ? (
-        <MdNumberKeyboard
+        <CuNumberKeyboard
           ref={keyboardRef}
           okText={virtualKeyboardOkText}
           disorder={virtualKeyboardDisorder}

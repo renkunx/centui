@@ -1,1 +1,1 @@
-export { MdRuler, type RulerProps } from './Ruler'
+export { CuRuler, type RulerProps } from './Ruler'

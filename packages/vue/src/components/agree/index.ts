@@ -1,1 +1,1 @@
-export { default as MdAgree } from './Agree.vue'
+export { default as CuAgree } from './Agree.vue'

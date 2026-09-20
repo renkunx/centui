@@ -1,5 +1,5 @@
 <template>
-  <div class="md-radio-group">
+  <div class="cu-radio-group">
     <slot></slot>
   </div>
 </template>
@@ -8,7 +8,7 @@
 import { provide } from 'vue'
 import { type RadioRootGroup } from '../check/shared'
 
-defineOptions({ name: 'md-radio-group' })
+defineOptions({ name: 'cu-radio-group' })
 
 const props = withDefaults(
   defineProps<{

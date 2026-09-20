@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
-import { MdIcon } from '../icon/Icon'
+import { CuIcon } from '../icon/Icon'
 
 export interface StepItem {
   name?: string
@@ -58,7 +58,7 @@ function sliceProgress(steps: StepItem[], current: number, prev: Progress): Prog
   })
 }
 
-export function MdSteps({
+export function CuSteps({
   steps = [],
   current = 0,
   direction = 'horizontal',
@@ -191,7 +191,7 @@ export function MdSteps({
       return renderReached ? renderReached({ index }) : nodeDefault
     }
     if (index === currentLength) {
-      return renderCurrent ? renderCurrent({ index }) : <MdIcon name="success"></MdIcon>
+      return renderCurrent ? renderCurrent({ index }) : <CuIcon name="success"></CuIcon>
     }
     return renderUnreached ? renderUnreached({ index }) : nodeDefault
   }
@@ -199,8 +199,8 @@ export function MdSteps({
   return (
     <div
       ref={rootRef}
-      className={`md-steps${direction === 'vertical' ? ' md-steps-vertical' : ''}${
-        direction === 'horizontal' ? ' md-steps-horizontal' : ''
+      className={`cu-steps${direction === 'vertical' ? ' cu-steps-vertical' : ''}${
+        direction === 'horizontal' ? ' cu-steps-horizontal' : ''
       }${direction === 'vertical' && verticalAdaptive ? ' vertical-adaptive' : ''}${
         currentLength % 1 !== 0 ? ' no-current' : ''
       }`}

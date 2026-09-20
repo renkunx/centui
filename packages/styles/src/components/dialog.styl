@@ -1,30 +1,30 @@
 /* Extracted from legacy/components/dialog — do not edit by hand; re-run scripts/extract.mjs */
 /* --- dialog.vue --- */
-.md-dialog
-  .md-popup
+.cu-dialog
+  .cu-popup
     z-index dialog-zindex
 
-.md-dialog-content
+.cu-dialog-content
   width dialog-width
   border-radius dialog-radius
   background-color color-bg-inverse
   overflow hidden
 
-.md-dialog-body
+.cu-dialog-body
   color dialog-text-color
   font-size dialog-text-font-size
   text-align left
   padding dialog-body-padding
 
-.md-dialog-icon
+.cu-dialog-icon
   position relative
   display block
   width dialog-icon-size
   height dialog-icon-size
   margin v-gap-md auto 28px
-.md-dialog .md-dialog-icon .md-icon
-.md-dialog .md-dialog-icon .md-icon.icon-svg
-.md-dialog .md-dialog-icon .md-icon.icon-font
+.cu-dialog .cu-dialog-icon .cu-icon
+.cu-dialog .cu-dialog-icon .cu-icon.icon-svg
+.cu-dialog .cu-dialog-icon .cu-icon.icon-font
   display flex
   align-items center
   justify-content center
@@ -38,14 +38,14 @@
   font-size dialog-icon-size
   line-height dialog-icon-size
 
-.md-dialog-close
+.cu-dialog-close
   position absolute
   color dialog-close-color
   top 32px
   right 32px
   z-index 15
 
-.md-dialog-title
+.cu-dialog-title
   color dialog-title-color
   text-align center
   font-size dialog-title-font-size
@@ -53,17 +53,17 @@
   line-height 1.2
   margin 0 0 28px 0
 
-.md-dialog-text
+.cu-dialog-text
   display flex
   justify-content center
 
-.md-dialog-actions
+.cu-dialog-actions
   position relative
   display flex
   hairline(top, dialog-action-border-color)
   &.is-column
     flex-direction column
-    .md-dialog-btn
+    .cu-dialog-btn
       flex 0 0 auto
       remove-hairline(right)
       &:not(:first-child)
@@ -73,7 +73,7 @@
       &:first-child
         color dialog-action-highlight-color
 
-.md-dialog-btn
+.cu-dialog-btn
   position relative
   flex 1 1 0%
   display flex
@@ -90,24 +90,24 @@
   -webkit-tap-highlight-color transparent
   &.warning
     color color-text-error !important
-    .md-dialog-btn-loading .md-activity-indicator-svg .circle circle
+    .cu-dialog-btn-loading .cu-activity-indicator-svg .circle circle
       stroke color-text-error !important
   &.disabled
     color color-text-disabled !important
-    .md-dialog-btn-loading .md-activity-indicator-svg .circle circle
+    .cu-dialog-btn-loading .cu-activity-indicator-svg .circle circle
       stroke color-text-disabled !important
   &:last-child
     color dialog-action-highlight-color
     remove-hairline(right)
-    .md-dialog-btn-loading .md-activity-indicator-svg .circle circle
+    .cu-dialog-btn-loading .cu-activity-indicator-svg .circle circle
       stroke dialog-action-highlight-color 
   &:not(.disabled):active
     background-color color-bg-tap
-  .md-dialog-btn-loading .md-activity-indicator-svg
+  .cu-dialog-btn-loading .cu-activity-indicator-svg
     width 32px !important
     height 32px !important
     margin-right 10px
     .circle circle
       stroke color-text-minor
-  .md-dialog-btn-icon
+  .cu-dialog-btn-icon
     margin-right 10px

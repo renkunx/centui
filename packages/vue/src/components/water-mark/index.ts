@@ -1,1 +1,1 @@
-export { default as MdWaterMark } from './WaterMark.vue'
+export { default as CuWaterMark } from './WaterMark.vue'

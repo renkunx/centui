@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { MdTabs, MdTabPane } from 'mand-mobile-react'
+import { CuTabs, CuTabPane } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['基础', '多标签']
-const code = `<MdTabs value={current} onChange={setCurrent}>
-  <MdTabPane label="标签一" name="a">内容一</MdTabPane>
-  <MdTabPane label="标签二" name="b">内容二</MdTabPane>
-</MdTabs>`
+const code = `<CuTabs value={current} onChange={setCurrent}>
+  <CuTabPane label="标签一" name="a">内容一</CuTabPane>
+  <CuTabPane label="标签二" name="b">内容二</CuTabPane>
+</CuTabs>`
 
 export default function TabsDemo() {
   const [current, setCurrent] = useState('a')
@@ -17,23 +17,23 @@ export default function TabsDemo() {
       {active => {
         if (active === 0)
           return (
-            <MdTabs value={current} onChange={t => setCurrent(String(t.name))}>
-              <MdTabPane label="标签一" name="a">
+            <CuTabs value={current} onChange={t => setCurrent(String(t.name))}>
+              <CuTabPane label="标签一" name="a">
                 <p className="tabs-demo-content">标签一的内容</p>
-              </MdTabPane>
-              <MdTabPane label="标签二" name="b">
+              </CuTabPane>
+              <CuTabPane label="标签二" name="b">
                 <p className="tabs-demo-content">标签二的内容</p>
-              </MdTabPane>
-            </MdTabs>
+              </CuTabPane>
+            </CuTabs>
           )
         return (
-          <MdTabs value={many} onChange={t => setMany(String(t.name))}>
+          <CuTabs value={many} onChange={t => setMany(String(t.name))}>
             {Array.from({ length: 6 }, (_, i) => (
-              <MdTabPane key={i} label={`标签${i + 1}`} name={`p${i + 1}`}>
+              <CuTabPane key={i} label={`标签${i + 1}`} name={`p${i + 1}`}>
                 <p className="tabs-demo-content">第 {i + 1} 个标签的内容</p>
-              </MdTabPane>
+              </CuTabPane>
             ))}
-          </MdTabs>
+          </CuTabs>
         )
       }}
     </DemoCanvasReact>

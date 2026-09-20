@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { MdIcon } from 'mand-mobile'
+import { CuIcon } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['字体图标', 'SVG 图标', '大小', '颜色']
-const code = `<MdIcon :name="icon" size="lg" />
-<MdIcon :name="icon" size="lg" svg />
-<MdIcon :name="icon" size="xs|sm|md|lg" />
-<MdIcon name="security" color="orange" />`
+const code = `<CuIcon :name="icon" size="lg" />
+<CuIcon :name="icon" size="lg" svg />
+<CuIcon :name="icon" size="xs|sm|md|lg" />
+<CuIcon name="security" color="orange" />`
 const iconList = [
   'square-checked', 'square-check', 'rectangle', 'right', 'wrong', 'arrow',
   'arrow-left', 'arrow-right', 'arrow-up', 'arrow-down', 'invisible', 'visible',
@@ -23,7 +23,7 @@ const colors = ['gray', 'orange', 'blue', 'green', 'red']
     <template #scene-0>
       <div class="icon-demo-grid">
         <div v-for="icon in iconList" :key="icon" class="icon-demo-item">
-          <MdIcon :name="icon.split('/')[0]" size="lg" />
+          <CuIcon :name="icon.split('/')[0]" size="lg" />
           <p>{{ icon }}</p>
         </div>
       </div>
@@ -31,7 +31,7 @@ const colors = ['gray', 'orange', 'blue', 'green', 'red']
     <template #scene-1>
       <div class="icon-demo-grid">
         <div v-for="icon in ['spinner', 'warn-color', 'success-color', 'checked']" :key="icon" class="icon-demo-item">
-          <MdIcon :name="icon" size="lg" svg />
+          <CuIcon :name="icon" size="lg" svg />
           <p>{{ icon }}</p>
         </div>
       </div>
@@ -39,7 +39,7 @@ const colors = ['gray', 'orange', 'blue', 'green', 'red']
     <template #scene-2>
       <div class="icon-demo-grid">
         <div v-for="s in sizes" :key="s" class="icon-demo-item">
-          <MdIcon :name="'location'" :size="s" />
+          <CuIcon :name="'location'" :size="s" />
           <p>{{ s }}</p>
         </div>
       </div>
@@ -47,7 +47,7 @@ const colors = ['gray', 'orange', 'blue', 'green', 'red']
     <template #scene-3>
       <div class="icon-demo-grid">
         <div v-for="c in colors" :key="c" class="icon-demo-item">
-          <MdIcon name="security" :color="c" />
+          <CuIcon name="security" :color="c" />
           <p>{{ c }}</p>
         </div>
       </div>

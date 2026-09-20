@@ -1,1 +1,1 @@
-export { default as MdImageReader } from './ImageReader.vue'
+export { default as CuImageReader } from './ImageReader.vue'

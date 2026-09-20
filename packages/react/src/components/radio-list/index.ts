@@ -1,1 +1,1 @@
-export { MdRadioList, type RadioListProps, type RadioListOption } from './RadioList'
+export { CuRadioList, type RadioListProps, type RadioListOption } from './RadioList'

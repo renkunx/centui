@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { transformCamelCase } from '@mand-mobile/core'
+import { transformCamelCase } from '@centui/core'
 
 export interface TagProps {
   /** tiny | small | large */
@@ -20,7 +20,7 @@ export interface TagProps {
 const BASE_CLASSES = (size: string, shape: string, type: string, fontWeight: string) =>
   ['default', `size-${size}`, `shape-${shape}`, `type-${type}`, `font-weight-${fontWeight}`]
 
-export function MdTag({
+export function CuTag({
   size = 'large',
   shape = 'square',
   sharp = '',
@@ -77,7 +77,7 @@ export function MdTag({
 
   if (shape === 'quarter') {
     return (
-      <div className="md-tag">
+      <div className="cu-tag">
         <div className={classes}>
           <div className="quarter-content">{children}</div>
           <div className="quarter-bg" style={colorStyle}></div>
@@ -91,7 +91,7 @@ export function MdTag({
           `radial-gradient(circle at ${side}, transparent 33%, ${fillColor} 33%)`
       : undefined
     return (
-      <div className="md-tag">
+      <div className="cu-tag">
         <div className={classes}>
           <div className="coupon-container" style={colorStyle}>
             <div
@@ -109,7 +109,7 @@ export function MdTag({
     )
   }
   return (
-    <div className="md-tag">
+    <div className="cu-tag">
       <div ref={elRef} className={classes} style={{ ...colorStyle, ...sizeStyle }}>
         {children}
       </div>

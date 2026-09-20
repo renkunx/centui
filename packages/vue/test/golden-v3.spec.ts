@@ -3,58 +3,58 @@ import { describe, expect, it } from 'vitest'
 import type { Component } from 'vue'
 import { normalizeForCompare, readGolden } from './helpers/golden'
 import {
-  MdActionSheet,
-  MdActivityIndicator,
-  MdAgree,
-  MdAmount,
-  MdButton,
-  MdCellItem,
-  MdCheckBox,
-  MdCheck,
-  MdCodebox,
-  MdDatePicker,
-  MdDialog,
-  MdField,
-  MdFieldItem,
-  MdIcon,
-  MdInputItem,
-  MdNoticeBar,
-  MdNumberKeyboard,
-  MdPicker,
-  MdPopup,
-  MdPopupTitleBar,
-  MdProgress,
-  MdRadioBox,
-  MdRadioList,
-  MdRadio,
-  MdSkeleton,
-  MdStepper,
-  MdSwitch,
-  MdTag,
-  MdScrollView,
-  MdScrollViewMore,
-  MdScrollViewRefresh,
-  MdSlider,
-  MdSwiper,
-  MdSwiperItem,
-  MdToast,
-  MdActionBar,
-  MdDetailItem,
-  MdTextareaItem,
-  MdSteps,
-  MdTabs,
-  MdTabBar,
-  MdTabPane,
-  MdTransition,
-  MdResultPage,
-  MdLandscape,
-  MdSelector,
-  MdDropMenu,
-  MdCaptcha,
-  MdChart,
-  MdImageReader,
-  MdLicensePlate,
-  MdCashier,
+  CuActionSheet,
+  CuActivityIndicator,
+  CuAgree,
+  CuAmount,
+  CuButton,
+  CuCellItem,
+  CuCheckBox,
+  CuCheck,
+  CuCodebox,
+  CuDatePicker,
+  CuDialog,
+  CuField,
+  CuFieldItem,
+  CuIcon,
+  CuInputItem,
+  CuNoticeBar,
+  CuNumberKeyboard,
+  CuPicker,
+  CuPopup,
+  CuPopupTitleBar,
+  CuProgress,
+  CuRadioBox,
+  CuRadioList,
+  CuRadio,
+  CuSkeleton,
+  CuStepper,
+  CuSwitch,
+  CuTag,
+  CuScrollView,
+  CuScrollViewMore,
+  CuScrollViewRefresh,
+  CuSlider,
+  CuSwiper,
+  CuSwiperItem,
+  CuToast,
+  CuActionBar,
+  CuDetailItem,
+  CuTextareaItem,
+  CuSteps,
+  CuTabs,
+  CuTabBar,
+  CuTabPane,
+  CuTransition,
+  CuResultPage,
+  CuLandscape,
+  CuSelector,
+  CuDropMenu,
+  CuCaptcha,
+  CuChart,
+  CuImageReader,
+  CuLicensePlate,
+  CuCashier,
 } from '../src'
 
 interface V3Scenario {
@@ -74,78 +74,78 @@ interface V3Scenario {
  */
 export const v3Scenarios: Record<string, V3Scenario[]> = {
   button: [
-    { name: 'default', component: MdButton, slots: { default: '主要按钮' } },
+    { name: 'default', component: CuButton, slots: { default: '主要按钮' } },
     {
       name: 'primary',
-      component: MdButton,
+      component: CuButton,
       props: { type: 'primary' },
       slots: { default: '主要按钮' },
     },
     {
       name: 'disabled',
-      component: MdButton,
+      component: CuButton,
       props: { type: 'primary', disabled: true },
       slots: { default: '主要按钮' },
     },
     {
       name: 'round',
-      component: MdButton,
+      component: CuButton,
       props: { type: 'primary', round: true },
       slots: { default: '主要按钮' },
     },
     {
       name: 'plain-warn',
-      component: MdButton,
+      component: CuButton,
       props: { type: 'warning', plain: true },
       slots: { default: '次要按钮' },
     },
   ],
   icon: [
-    { name: 'home', component: MdIcon, props: { name: 'home' } },
-    { name: 'success-lg', component: MdIcon, props: { name: 'success-color', size: 'lg' } },
-    { name: 'spinner-svg', component: MdIcon, props: { name: 'spinner', svg: true } },
+    { name: 'home', component: CuIcon, props: { name: 'home' } },
+    { name: 'success-lg', component: CuIcon, props: { name: 'success-color', size: 'lg' } },
+    { name: 'spinner-svg', component: CuIcon, props: { name: 'spinner', svg: true } },
   ],
   tag: [
     {
       name: 'fill',
-      component: MdTag,
+      component: CuTag,
       props: { size: 'tiny', type: 'fill' },
       slots: { default: '标签' },
     },
     {
       name: 'ghost',
-      component: MdTag,
+      component: CuTag,
       props: { size: 'small', type: 'ghost' },
       slots: { default: '标签' },
     },
   ],
   amount: [
-    { name: 'default', component: MdAmount, props: { value: 1234.56 } },
-    { name: 'uppercase', component: MdAmount, props: { value: 1234.56, isCapital: true } },
+    { name: 'default', component: CuAmount, props: { value: 1234.56 } },
+    { name: 'uppercase', component: CuAmount, props: { value: 1234.56, isCapital: true } },
   ],
   'cell-item': [
     {
       name: 'basic',
-      component: MdCellItem,
+      component: CuCellItem,
       slots: { title: '标题', brief: '描述文案', right: '内容' },
     },
     {
       name: 'no-border',
-      component: MdCellItem,
+      component: CuCellItem,
       props: { noBorder: true },
       slots: { title: '标题' },
     },
   ],
-  skeleton: [{ name: 'avatar', component: MdSkeleton, props: { avatar: true, loading: true } }],
+  skeleton: [{ name: 'avatar', component: CuSkeleton, props: { avatar: true, loading: true } }],
   'notice-bar': [
     {
       name: 'basic',
-      component: MdNoticeBar,
+      component: CuNoticeBar,
       slots: { default: '为了确保你的资金安全，请设置支付密码' },
     },
     {
       name: 'closable',
-      component: MdNoticeBar,
+      component: CuNoticeBar,
       props: { mode: 'closable' },
       slots: { default: '为了确保你的资金安全，请设置支付密码' },
     },
@@ -153,55 +153,55 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   'activity-indicator': [
     {
       name: 'roller',
-      component: MdActivityIndicator,
+      component: CuActivityIndicator,
       props: { type: 'roller', text: '加载中...' },
     },
     {
       name: 'spinner',
-      component: MdActivityIndicator,
+      component: CuActivityIndicator,
       props: { type: 'spinner', text: '加载中...' },
     },
   ],
-  progress: [{ name: 'bar', component: MdProgress, props: { value: 0.44 } }],
+  progress: [{ name: 'bar', component: CuProgress, props: { value: 0.44 } }],
   switch: [
-    { name: 'on', component: MdSwitch, props: { modelValue: true } },
-    { name: 'off', component: MdSwitch, props: { modelValue: false } },
-    { name: 'disabled', component: MdSwitch, props: { modelValue: true, disabled: true } },
+    { name: 'on', component: CuSwitch, props: { modelValue: true } },
+    { name: 'off', component: CuSwitch, props: { modelValue: false } },
+    { name: 'disabled', component: CuSwitch, props: { modelValue: true, disabled: true } },
   ],
   agree: [
     {
       name: 'checked',
-      component: MdAgree,
+      component: CuAgree,
       // 与 v2 场景一致：checked 未声明为 prop，作为 attr 透传（v2 golden 即如此渲染）
       props: { checked: true },
       slots: { default: '我已阅读并同意协议' },
     },
     {
       name: 'unchecked',
-      component: MdAgree,
+      component: CuAgree,
       slots: { default: '我已阅读并同意协议' },
     },
   ],
   stepper: [
-    { name: 'basic', component: MdStepper, props: { modelValue: 3, min: 0, max: 10 } },
-    { name: 'disabled', component: MdStepper, props: { modelValue: 3, disabled: true } },
+    { name: 'basic', component: CuStepper, props: { modelValue: 3, min: 0, max: 10 } },
+    { name: 'disabled', component: CuStepper, props: { modelValue: 3, disabled: true } },
   ],
   popup: [
     {
       name: 'center-open',
-      component: MdPopup,
+      component: CuPopup,
       props: { modelValue: true },
       slots: { default: '<p>弹层内容</p>' },
     },
     {
       name: 'bottom-open',
-      component: MdPopup,
+      component: CuPopup,
       props: { modelValue: true, position: 'bottom' },
       slots: { default: '<p>底部面板</p>' },
     },
     {
       name: 'no-mask-open',
-      component: MdPopup,
+      component: CuPopup,
       props: { modelValue: true, hasMask: false },
       slots: { default: '<p>无遮罩</p>' },
     },
@@ -209,31 +209,31 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   'popup-title-bar': [
     {
       name: 'ok-cancel',
-      component: MdPopupTitleBar,
+      component: CuPopupTitleBar,
       props: { title: '标题', okText: '确定', cancelText: '取消' },
     },
     {
       name: 'describe-only-close',
-      component: MdPopupTitleBar,
+      component: CuPopupTitleBar,
       props: { title: '标题', describe: '描述文案', onlyClose: true },
     },
   ],
   toast: [
     {
       name: 'closed',
-      component: MdToast,
+      component: CuToast,
       props: { icon: 'success', content: '操作成功' },
     },
     {
       name: 'slot-closed',
-      component: MdToast,
+      component: CuToast,
       slots: { default: '<span>自定义</span>' },
     },
   ],
   dialog: [
     {
       name: 'basic-open',
-      component: MdDialog,
+      component: CuDialog,
       props: {
         modelValue: true,
         title: '对话框标题',
@@ -243,7 +243,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
     },
     {
       name: 'warning-open',
-      component: MdDialog,
+      component: CuDialog,
       props: {
         modelValue: true,
         title: '警告',
@@ -254,7 +254,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   'action-sheet': [
     {
       name: 'open',
-      component: MdActionSheet,
+      component: CuActionSheet,
       props: {
         modelValue: true,
         title: '操作弹层',
@@ -266,19 +266,19 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   check: [
     {
       name: 'checked',
-      component: MdCheck,
+      component: CuCheck,
       props: { name: 'day', modelValue: 'day' },
       slots: { default: '日结算' },
     },
     {
       name: 'unchecked',
-      component: MdCheck,
+      component: CuCheck,
       props: { name: 'month' },
       slots: { default: '月结算' },
     },
     {
       name: 'disabled',
-      component: MdCheck,
+      component: CuCheck,
       props: { name: 'day', modelValue: 'day', disabled: true },
       slots: { default: '日结算' },
     },
@@ -287,25 +287,25 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
     // 与 v2 场景一致：未入组的数组 value 不构成选中态
     {
       name: 'checked',
-      component: MdCheckBox,
+      component: CuCheckBox,
       props: { name: 'a', modelValue: ['a'] as never, label: '选项一' },
     },
     {
       name: 'disabled',
-      component: MdCheckBox,
+      component: CuCheckBox,
       props: { name: 'b', disabled: true, label: '选项二' },
     },
   ],
   radio: [
     {
       name: 'checked',
-      component: MdRadio,
+      component: CuRadio,
       props: { name: 'day', modelValue: 'day' },
       slots: { default: '日结算' },
     },
     {
       name: 'unchecked-inline',
-      component: MdRadio,
+      component: CuRadio,
       props: { name: 'month', inline: true },
       slots: { default: '月结算' },
     },
@@ -313,20 +313,20 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   'radio-box': [
     {
       name: 'checked',
-      component: MdRadioBox,
+      component: CuRadioBox,
       props: { name: 'a', modelValue: 'a', label: '选项一' },
     },
   ],
   field: [
     {
       name: 'basic',
-      component: MdField,
+      component: CuField,
       props: { title: '标题', brief: '描述' },
       slots: { default: '<div>内容</div>', action: '<a>操作</a>' },
     },
     {
       name: 'plain',
-      component: MdField,
+      component: CuField,
       props: { plain: true },
       slots: { default: '<p>内容</p>' },
     },
@@ -334,54 +334,54 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   'field-item': [
     {
       name: 'basic',
-      component: MdFieldItem,
+      component: CuFieldItem,
       props: { title: '标题', addon: '附加', arrow: true },
       slots: { default: '内容' },
     },
     {
       name: 'placeholder',
-      component: MdFieldItem,
+      component: CuFieldItem,
       props: { title: '标题', placeholder: '占位', solid: true },
     },
   ],
   'number-keyboard': [
     {
       name: 'professional-view',
-      component: MdNumberKeyboard,
+      component: CuNumberKeyboard,
       props: { isView: true, modelValue: true },
     },
     {
       name: 'simple-view',
-      component: MdNumberKeyboard,
+      component: CuNumberKeyboard,
       props: { isView: true, modelValue: true, type: 'simple' },
     },
   ],
   codebox: [
-    { name: 'basic', component: MdCodebox, props: { modelValue: '12' } },
-    { name: 'mask', component: MdCodebox, props: { modelValue: '1234', mask: true } },
+    { name: 'basic', component: CuCodebox, props: { modelValue: '12' } },
+    { name: 'mask', component: CuCodebox, props: { modelValue: '1234', mask: true } },
     {
       name: 'disabled',
-      component: MdCodebox,
+      component: CuCodebox,
       props: { modelValue: '1', disabled: true, maxlength: 4 },
     },
   ],
   'input-item': [
-    { name: 'basic', component: MdInputItem, props: { title: '姓名', placeholder: '请输入' } },
+    { name: 'basic', component: CuInputItem, props: { title: '姓名', placeholder: '请输入' } },
     {
       name: 'phone',
-      component: MdInputItem,
+      component: CuInputItem,
       props: { title: '手机号', type: 'phone', modelValue: '13812345678' },
     },
     {
       name: 'bankcard',
-      component: MdInputItem,
+      component: CuInputItem,
       props: { title: '银行卡', type: 'bankCard', modelValue: '6222021234561234' },
     },
   ],
   'radio-list': [
     {
       name: 'basic',
-      component: MdRadioList,
+      component: CuRadioList,
       props: {
         modelValue: 'a',
         options: [
@@ -394,7 +394,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   picker: [
     {
       name: 'view',
-      component: MdPicker,
+      component: CuPicker,
       props: {
         isView: true,
         cols: 2,
@@ -411,16 +411,16 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
       name: 'basic',
       slots: {
         default:
-          '<div class="scroll-item">内容一</div><div class="scroll-item">内容二</div><MdScrollViewMore :is-finished="false" />',
+          '<div class="scroll-item">内容一</div><div class="scroll-item">内容二</div><CuScrollViewMore :is-finished="false" />',
       },
-      component: MdScrollView,
+      component: CuScrollView,
     },
     {
       name: 'refresh',
       slots: {
-        default: '<MdScrollViewRefresh :scroll-top="-30" /><div class="scroll-item">内容</div>',
+        default: '<CuScrollViewRefresh :scroll-top="-30" /><div class="scroll-item">内容</div>',
       },
-      component: MdScrollView,
+      component: CuScrollView,
     },
   ],
   swiper: [
@@ -428,63 +428,63 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
       name: 'three-items',
       slots: {
         default: `
-          <MdSwiperItem><div class="sw-item">第 1 页</div></MdSwiperItem>
-          <MdSwiperItem><div class="sw-item">第 2 页</div></MdSwiperItem>
-          <MdSwiperItem><div class="sw-item">第 3 页</div></MdSwiperItem>
+          <CuSwiperItem><div class="sw-item">第 1 页</div></CuSwiperItem>
+          <CuSwiperItem><div class="sw-item">第 2 页</div></CuSwiperItem>
+          <CuSwiperItem><div class="sw-item">第 3 页</div></CuSwiperItem>
         `,
       },
-      component: MdSwiper,
+      component: CuSwiper,
     },
   ],
   slider: [
-    { name: 'single', component: MdSlider, props: { modelValue: 20 } },
-    { name: 'range', component: MdSlider, props: { modelValue: [20, 80], range: true } },
-    { name: 'disabled', component: MdSlider, props: { modelValue: 40, disabled: true } },
+    { name: 'single', component: CuSlider, props: { modelValue: 20 } },
+    { name: 'range', component: CuSlider, props: { modelValue: [20, 80], range: true } },
+    { name: 'disabled', component: CuSlider, props: { modelValue: 40, disabled: true } },
   ],
   'action-bar': [
-    { name: 'single', component: MdActionBar, props: { actions: [{ text: '主要按钮' }] } },
+    { name: 'single', component: CuActionBar, props: { actions: [{ text: '主要按钮' }] } },
     {
       name: 'double',
-      component: MdActionBar,
+      component: CuActionBar,
       props: { actions: [{ text: '次要按钮' }, { text: '主要按钮' }] },
     },
     {
       name: 'disabled',
-      component: MdActionBar,
+      component: CuActionBar,
       props: { actions: [{ text: '禁用按钮', disabled: true }] },
     },
     {
       name: 'with-text',
-      component: MdActionBar,
+      component: CuActionBar,
       props: { actions: [{ text: '主要按钮' }] },
       slots: { default: '<p class="bar-text">合计：¥128.00</p>' },
     },
   ],
   'detail-item': [
-    { name: 'basic', component: MdDetailItem, props: { title: '标题', content: '内容' } },
-    { name: 'bold', component: MdDetailItem, props: { title: '标题', content: '内容', bold: true } },
-    { name: 'slot', component: MdDetailItem, props: { title: '标题' }, slots: { default: '插槽内容' } },
+    { name: 'basic', component: CuDetailItem, props: { title: '标题', content: '内容' } },
+    { name: 'bold', component: CuDetailItem, props: { title: '标题', content: '内容', bold: true } },
+    { name: 'slot', component: CuDetailItem, props: { title: '标题' }, slots: { default: '插槽内容' } },
   ],
   'textarea-item': [
-    { name: 'basic', component: MdTextareaItem, props: { title: '标题', placeholder: '请输入' } },
-    { name: 'value', component: MdTextareaItem, props: { title: '标题', value: '预置内容' } },
+    { name: 'basic', component: CuTextareaItem, props: { title: '标题', placeholder: '请输入' } },
+    { name: 'value', component: CuTextareaItem, props: { title: '标题', value: '预置内容' } },
     {
       name: 'clearable',
-      component: MdTextareaItem,
+      component: CuTextareaItem,
       props: { title: '标题', value: '可清除内容', clearable: true },
     },
     {
       name: 'disabled',
-      component: MdTextareaItem,
+      component: CuTextareaItem,
       props: { title: '标题', value: '禁用内容', disabled: true },
     },
-    { name: 'error', component: MdTextareaItem, props: { title: '标题', value: '出错了', error: '错误提示' } },
-    { name: 'rows', component: MdTextareaItem, props: { title: '标题', rows: 5, placeholder: '五行' } },
+    { name: 'error', component: CuTextareaItem, props: { title: '标题', value: '出错了', error: '错误提示' } },
+    { name: 'rows', component: CuTextareaItem, props: { title: '标题', rows: 5, placeholder: '五行' } },
   ],
   steps: [
     {
       name: 'horizontal',
-      component: MdSteps,
+      component: CuSteps,
       props: {
         steps: [{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }],
         current: 1,
@@ -492,7 +492,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
     },
     {
       name: 'with-desc',
-      component: MdSteps,
+      component: CuSteps,
       props: {
         steps: [
           { name: '下单', text: '2016-12-12' },
@@ -504,7 +504,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
     },
     {
       name: 'vertical',
-      component: MdSteps,
+      component: CuSteps,
       props: {
         steps: [{ name: '第一步' }, { name: '第二步' }, { name: '第三步' }],
         current: 1,
@@ -513,7 +513,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
     },
     {
       name: 'fraction-current',
-      component: MdSteps,
+      component: CuSteps,
       props: {
         steps: [{ name: '第一步' }, { name: '第二步' }],
         current: 0.5,
@@ -523,7 +523,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   'tab-bar': [
     {
       name: 'items',
-      component: MdTabBar,
+      component: CuTabBar,
       props: {
         items: [
           { name: 'a', label: '第一项' },
@@ -537,32 +537,32 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
     {
       name: 'basic',
       component: {
-        components: { MdTabs, MdTabPane },
-        template: `<md-tabs>
-          <md-tab-pane label="标签一" name="a">内容一</md-tab-pane>
-          <md-tab-pane label="标签二" name="b">内容二</md-tab-pane>
-        </md-tabs>`,
+        components: { CuTabs, CuTabPane },
+        template: `<cu-tabs>
+          <cu-tab-pane label="标签一" name="a">内容一</cu-tab-pane>
+          <cu-tab-pane label="标签二" name="b">内容二</cu-tab-pane>
+        </cu-tabs>`,
       },
     },
     {
       name: 'second-active',
       component: {
-        components: { MdTabs, MdTabPane },
-        template: `<md-tabs model-value="b">
-          <md-tab-pane label="标签一" name="a">内容一</md-tab-pane>
-          <md-tab-pane label="标签二" name="b">内容二</md-tab-pane>
-          <md-tab-pane label="标签三" name="c">内容三</md-tab-pane>
-        </md-tabs>`,
+        components: { CuTabs, CuTabPane },
+        template: `<cu-tabs model-value="b">
+          <cu-tab-pane label="标签一" name="a">内容一</cu-tab-pane>
+          <cu-tab-pane label="标签二" name="b">内容二</cu-tab-pane>
+          <cu-tab-pane label="标签三" name="c">内容三</cu-tab-pane>
+        </cu-tabs>`,
       },
     },
     {
       name: 'no-ink',
       component: {
-        components: { MdTabs, MdTabPane },
-        template: `<md-tabs :has-ink="false">
-          <md-tab-pane label="标签一" name="a">内容一</md-tab-pane>
-          <md-tab-pane label="标签二" name="b">内容二</md-tab-pane>
-        </md-tabs>`,
+        components: { CuTabs, CuTabPane },
+        template: `<cu-tabs :has-ink="false">
+          <cu-tab-pane label="标签一" name="a">内容一</cu-tab-pane>
+          <cu-tab-pane label="标签二" name="b">内容二</cu-tab-pane>
+        </cu-tabs>`,
       },
     },
   ],
@@ -570,25 +570,25 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
     {
       name: 'fade',
       component: {
-        components: { MdTransition },
-        template: `<md-transition name="md-fade"><div class="trans-demo">内容</div></md-transition>`,
+        components: { CuTransition },
+        template: `<cu-transition name="cu-fade"><div class="trans-demo">内容</div></cu-transition>`,
       },
     },
     {
       name: 'bounce',
       component: {
-        components: { MdTransition },
-        template: `<md-transition name="md-bounce"><div class="trans-demo">内容</div></md-transition>`,
+        components: { CuTransition },
+        template: `<cu-transition name="cu-bounce"><div class="trans-demo">内容</div></cu-transition>`,
       },
     },
   ],
   'result-page': [
-    { name: 'empty', component: MdResultPage },
-    { name: 'network', component: MdResultPage, props: { type: 'network' } },
-    { name: 'lost', component: MdResultPage, props: { type: 'lost' } },
+    { name: 'empty', component: CuResultPage },
+    { name: 'network', component: CuResultPage, props: { type: 'network' } },
+    { name: 'lost', component: CuResultPage, props: { type: 'lost' } },
     {
       name: 'custom',
-      component: MdResultPage,
+      component: CuResultPage,
       props: {
         imgUrl: 'https://example.com/a.png',
         text: '自定义标题',
@@ -600,27 +600,27 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   landscape: [
     {
       name: 'closed',
-      component: MdLandscape,
+      component: CuLandscape,
       slots: { default: '<p class="ls-content">横屏内容</p>' },
     },
     {
       name: 'open',
-      component: MdLandscape,
+      component: CuLandscape,
       props: { modelValue: true },
       slots: { default: '<p class="ls-content">横屏内容</p>' },
     },
     {
       name: 'fullscreen',
-      component: MdLandscape,
+      component: CuLandscape,
       props: { modelValue: true, fullScreen: true },
       slots: { default: '<p class="ls-content">横屏内容</p>' },
     },
   ],
   selector: [
-    { name: 'closed', component: MdSelector, props: { data: [] } },
+    { name: 'closed', component: CuSelector, props: { data: [] } },
     {
       name: 'open',
-      component: MdSelector,
+      component: CuSelector,
       props: {
         modelValue: true,
         title: '选择地区',
@@ -634,7 +634,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
     },
     {
       name: 'multi-check',
-      component: MdSelector,
+      component: CuSelector,
       props: {
         modelValue: true,
         multi: true,
@@ -651,7 +651,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   'drop-menu': [
     {
       name: 'bar',
-      component: MdDropMenu,
+      component: CuDropMenu,
       props: {
         data: [
           { text: '类别', options: [{ value: '1', text: '全部' }, { value: '2', text: '数码' }] },
@@ -665,7 +665,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   captcha: [
     {
       name: 'inline',
-      component: MdCaptcha,
+      component: CuCaptcha,
       props: { isView: true, title: '输入验证码', brief: '验证码已发送至 138****1234', maxlength: 4 },
       slots: { default: '短信验证码已发送' },
     },
@@ -673,7 +673,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   chart: [
     {
       name: 'basic',
-      component: MdChart,
+      component: CuChart,
       props: {
         labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
         datasets: [
@@ -692,7 +692,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
     },
     {
       name: 'region',
-      component: MdChart,
+      component: CuChart,
       props: {
         labels: ['1', '2', '3', '4'],
         datasets: [
@@ -712,15 +712,15 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
     },
   ],
   'image-reader': [
-    { name: 'default', component: MdImageReader, props: {} },
+    { name: 'default', component: CuImageReader, props: {} },
   ],
   'license-plate': [
-    { name: 'division', component: MdLicensePlate, props: { defaultValue: '浙AD12345' } },
+    { name: 'division', component: CuLicensePlate, props: { defaultValue: '浙AD12345' } },
   ],
   cashier: [
     {
       name: 'choose',
-      component: MdCashier,
+      component: CuCashier,
       props: {
         modelValue: true,
         title: '支付',
@@ -735,7 +735,7 @@ export const v3Scenarios: Record<string, V3Scenario[]> = {
   'date-picker': [
     {
       name: 'view',
-      component: MdDatePicker,
+      component: CuDatePicker,
       props: {
         isView: true,
         type: 'date',
@@ -756,7 +756,7 @@ describe('L3 golden 对比（v3 渲染 vs v2 基线）', () => {
             props: scenario.props,
             slots: scenario.slots,
             global: {
-              components: { MdScrollViewMore, MdScrollViewRefresh, MdSwiperItem },
+              components: { CuScrollViewMore, CuScrollViewRefresh, CuSwiperItem },
             },
           })
           // 与 test/golden 采集端一致：等渲染队列与定时器初始化（scroller/swiper init）

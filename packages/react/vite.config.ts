@@ -9,7 +9,7 @@ const pkgRoot = dirname(fileURLToPath(import.meta.url))
 
 /**
  * lib 构建：主入口 + per-component 按需入口，esm + cjs 双格式。
- * 与 Vue 包同构：样式不打入组件，统一由 @mand-mobile/styles 提供。
+ * 与 Vue 包同构：样式不打入组件，统一由 @centui/styles 提供。
  */
 export default defineConfig({
   plugins: [
@@ -32,8 +32,8 @@ export default defineConfig({
         'react-dom',
         'react/jsx-runtime',
         'react/jsx-dev-runtime',
-        '@mand-mobile/core',
-        '@mand-mobile/core/web',
+        '@centui/core',
+        '@centui/core/web',
       ],
     },
   },

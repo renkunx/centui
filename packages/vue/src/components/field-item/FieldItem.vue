@@ -1,6 +1,6 @@
 <template>
   <div
-    class="md-field-item"
+    class="cu-field-item"
     :class="[
       solid ? 'is-solid' : '',
       currentDisabled ? 'is-disabled' : '',
@@ -9,23 +9,23 @@
     ]"
     @click="onClick"
   >
-    <div class="md-field-item-content">
-      <label v-if="title" class="md-field-item-title" v-text="title"></label>
-      <div v-if="hasSlot('left')" class="md-field-item-left">
+    <div class="cu-field-item-content">
+      <label v-if="title" class="cu-field-item-title" v-text="title"></label>
+      <div v-if="hasSlot('left')" class="cu-field-item-left">
         <slot name="left"></slot>
       </div>
-      <div class="md-field-item-control">
+      <div class="cu-field-item-control">
         <slot>
           <template v-if="content">{{ content }}</template>
-          <div v-else-if="placeholder" class="md-field-item-placeholder" v-text="placeholder"></div>
+          <div v-else-if="placeholder" class="cu-field-item-placeholder" v-text="placeholder"></div>
         </slot>
       </div>
-      <div v-if="arrow || addon || hasSlot('right')" class="md-field-item-right">
+      <div v-if="arrow || addon || hasSlot('right')" class="cu-field-item-right">
         <slot name="right">{{ addon }}</slot>
-        <MdIcon v-if="arrow" :name="arrow === true ? 'arrow' : arrow" size="md" />
+        <CuIcon v-if="arrow" :name="arrow === true ? 'arrow' : arrow" size="md" />
       </div>
     </div>
-    <div v-if="hasSlot('children')" class="md-field-item-children">
+    <div v-if="hasSlot('children')" class="cu-field-item-children">
       <slot name="children"></slot>
     </div>
   </div>
@@ -33,10 +33,10 @@
 
 <script setup lang="ts">
 import { computed, inject, useSlots, Comment, Fragment, Text, type VNode } from 'vue'
-import { isAndroid, isIOS } from '@mand-mobile/core'
-import MdIcon from '../icon/Icon.vue'
+import { isAndroid, isIOS } from '@centui/core'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-field-item' })
+defineOptions({ name: 'cu-field-item' })
 
 const props = withDefaults(
   defineProps<{

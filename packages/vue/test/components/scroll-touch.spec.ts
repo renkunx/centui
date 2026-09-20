@@ -7,7 +7,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const { scrollerInstances } = vi.hoisted(() => ({ scrollerInstances: [] as unknown[] }))
 
-vi.mock('@mand-mobile/core/web', async importOriginal => {
+vi.mock('@centui/core/web', async importOriginal => {
   const orig = (await importOriginal()) as Record<string, unknown>
   class FakeScrollerImpl {
     _isAnimating = false
@@ -41,7 +41,7 @@ vi.mock('@mand-mobile/core/web', async importOriginal => {
   return { ...orig, Scroller: FakeScrollerImpl }
 })
 
-import { MdScrollView, MdSwiper, MdSwiperItem } from '../../src'
+import { CuScrollView, CuSwiper, CuSwiperItem } from '../../src'
 
 async function flush(ms = 30) {
   await vi.advanceTimersByTimeAsync(ms)
@@ -55,11 +55,11 @@ describe('ScrollView touch 全链路 (vue)', () => {
   it('touch drag drives doTouchStart/Move/End', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdScrollView },
-      template: `<MdScrollView><div class="item">A</div></MdScrollView>`,
+      components: { CuScrollView },
+      template: `<CuScrollView><div class="item">A</div></CuScrollView>`,
     })
     await flush(120)
-    const root = wrapper.find('.md-scroll-view')
+    const root = wrapper.find('.cu-scroll-view')
     const t1 = [{ pageX: 100, pageY: 100 }]
     await root.trigger('touchstart', { touches: t1, targetTouches: t1 })
     const t2 = [{ pageX: 60, pageY: 100 }]
@@ -81,11 +81,11 @@ describe('ScrollView touch 全链路 (vue)', () => {
     vi.useFakeTimers()
     const onScroll = vi.fn()
     mount({
-      components: { MdScrollView },
+      components: { CuScrollView },
       setup() {
         return { onScroll }
       },
-      template: `<MdScrollView @scroll="onScroll"><div class="item">A</div></MdScrollView>`,
+      template: `<CuScrollView @scroll="onScroll"><div class="item">A</div></CuScrollView>`,
     })
     await flush(120)
     const scroller = scrollerInstances[0] as unknown as {
@@ -103,11 +103,11 @@ describe('ScrollView touch 全链路 (vue)', () => {
     vi.useFakeTimers()
     const onEndReached = vi.fn()
     mount({
-      components: { MdScrollView },
+      components: { CuScrollView },
       setup() {
         return { onEndReached }
       },
-      template: `<MdScrollView @endReached="onEndReached"><div class="item">A</div></MdScrollView>`,
+      template: `<CuScrollView @endReached="onEndReached"><div class="item">A</div></CuScrollView>`,
     })
     await flush(120)
     const scroller = scrollerInstances[0] as unknown as {
@@ -126,13 +126,13 @@ describe('ScrollView touch 全链路 (vue)', () => {
   it('manualInit defers scroller until init()', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdScrollView },
-      template: `<MdScrollView manual-init ref="sv"><div class="item">A</div></MdScrollView>`,
+      components: { CuScrollView },
+      template: `<CuScrollView manual-init ref="sv"><div class="item">A</div></CuScrollView>`,
     })
     await flush(120)
     expect(scrollerInstances.length).toBe(0)
 
-    wrapper.findComponent({ name: 'md-scroll-view' }).vm.init()
+    wrapper.findComponent({ name: 'cu-scroll-view' }).vm.init()
     await flush(120)
     expect(scrollerInstances.length).toBe(1)
     vi.useRealTimers()
@@ -141,8 +141,8 @@ describe('ScrollView touch 全链路 (vue)', () => {
   it('autoReflow starts and stops interval', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdScrollView },
-      template: `<MdScrollView :auto-reflow="true" ref="sv"><div class="item">A</div></MdScrollView>`,
+      components: { CuScrollView },
+      template: `<CuScrollView :auto-reflow="true" ref="sv"><div class="item">A</div></CuScrollView>`,
     })
     await flush(120)
     const getSetDimCalls = () =>
@@ -169,17 +169,17 @@ describe('Swiper drag 翻页 (vue)', () => {
   it('drag left past half page turns to next', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdSwiper, MdSwiperItem },
+      components: { CuSwiper, CuSwiperItem },
       template: `
-        <MdSwiper :autoplay="0" :is-prevent="false">
-          <MdSwiperItem>1</MdSwiperItem>
-          <MdSwiperItem>2</MdSwiperItem>
-          <MdSwiperItem>3</MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper :autoplay="0" :is-prevent="false">
+          <CuSwiperItem>1</CuSwiperItem>
+          <CuSwiperItem>2</CuSwiperItem>
+          <CuSwiperItem>3</CuSwiperItem>
+        </CuSwiper>
       `,
     })
     await flush(120)
-    const root = wrapper.find('.md-swiper')
+    const root = wrapper.find('.cu-swiper')
     // MAND_ENV=test 下 itemWidth/Height 固定 100；翻页阈值 50
     const start = [{ pageX: 100, pageY: 100 }]
     await root.trigger('touchstart', { touches: start, targetTouches: start })
@@ -188,7 +188,7 @@ describe('Swiper drag 翻页 (vue)', () => {
     await root.trigger('touchend', { touches: [], targetTouches: [], changedTouches: move })
     await flush(20)
 
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       getIndex: () => number
     }
     expect(vm.getIndex()).toBe(1)
@@ -198,18 +198,18 @@ describe('Swiper drag 翻页 (vue)', () => {
   it('vertical swiper with slideY', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdSwiper, MdSwiperItem },
+      components: { CuSwiper, CuSwiperItem },
       template: `
-        <MdSwiper :autoplay="0" transition="slideY" :is-prevent="false">
-          <MdSwiperItem>1</MdSwiperItem>
-          <MdSwiperItem>2</MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper :autoplay="0" transition="slideY" :is-prevent="false">
+          <CuSwiperItem>1</CuSwiperItem>
+          <CuSwiperItem>2</CuSwiperItem>
+        </CuSwiper>
       `,
     })
     await flush(120)
-    expect(wrapper.find('.md-swiper').classes()).toContain('md-swiper-vertical')
+    expect(wrapper.find('.cu-swiper').classes()).toContain('cu-swiper-vertical')
 
-    const root = wrapper.find('.md-swiper')
+    const root = wrapper.find('.cu-swiper')
     const start = [{ pageX: 100, pageY: 100 }]
     await root.trigger('touchstart', { touches: start, targetTouches: start })
     const move = [{ pageX: 100, pageY: 20 }]
@@ -217,7 +217,7 @@ describe('Swiper drag 翻页 (vue)', () => {
     await root.trigger('touchend', { touches: [], targetTouches: [], changedTouches: move })
     await flush(20)
 
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       getIndex: () => number
     }
     expect(vm.getIndex()).toBe(1)
@@ -227,16 +227,16 @@ describe('Swiper drag 翻页 (vue)', () => {
   it('userScrolling (vertical intent) cancels drag', async () => {
     vi.useFakeTimers()
     const wrapper = mount({
-      components: { MdSwiper, MdSwiperItem },
+      components: { CuSwiper, CuSwiperItem },
       template: `
-        <MdSwiper :autoplay="0" :is-prevent="false">
-          <MdSwiperItem>1</MdSwiperItem>
-          <MdSwiperItem>2</MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper :autoplay="0" :is-prevent="false">
+          <CuSwiperItem>1</CuSwiperItem>
+          <CuSwiperItem>2</CuSwiperItem>
+        </CuSwiper>
       `,
     })
     await flush(120)
-    const root = wrapper.find('.md-swiper')
+    const root = wrapper.find('.cu-swiper')
     const start = [{ pageX: 100, pageY: 100 }]
     await root.trigger('touchstart', { touches: start, targetTouches: start })
     // 垂直位移大于水平 → userScrolling=true → drag 终止，不翻页
@@ -245,7 +245,7 @@ describe('Swiper drag 翻页 (vue)', () => {
     await root.trigger('touchend', { touches: [], targetTouches: [], changedTouches: move })
     await flush(20)
 
-    const vm = wrapper.findComponent({ name: 'md-swiper' }).vm as unknown as {
+    const vm = wrapper.findComponent({ name: 'cu-swiper' }).vm as unknown as {
       getIndex: () => number
     }
     expect(vm.getIndex()).toBe(0)
@@ -256,13 +256,13 @@ describe('Swiper drag 翻页 (vue)', () => {
     vi.useFakeTimers()
     const wrapper = mount(
       {
-        components: { MdSwiper, MdSwiperItem },
+        components: { CuSwiper, CuSwiperItem },
         props: { show: { type: Boolean, default: true } },
         template: `
-        <MdSwiper :autoplay="0">
-          <MdSwiperItem v-if="show">1</MdSwiperItem>
-          <MdSwiperItem>2</MdSwiperItem>
-        </MdSwiper>
+        <CuSwiper :autoplay="0">
+          <CuSwiperItem v-if="show">1</CuSwiperItem>
+          <CuSwiperItem>2</CuSwiperItem>
+        </CuSwiper>
       `,
       },
       { props: { show: true } },
@@ -271,7 +271,7 @@ describe('Swiper drag 翻页 (vue)', () => {
     await wrapper.setProps({ show: false })
     await flush(100)
     // 重建后 item 数量 1 → indicators 消失
-    expect(wrapper.find('.md-swiper-indicators').exists()).toBe(false)
+    expect(wrapper.find('.cu-swiper-indicators').exists()).toBe(false)
     vi.useRealTimers()
   })
 })

@@ -1,27 +1,27 @@
 /* Extracted from legacy/components/swiper — do not edit by hand; re-run scripts/extract.mjs */
 /* --- index.vue --- */
-.md-swiper-box
+.cu-swiper-box
   overflow hidden
   will-change tranform
-.md-swiper, .md-swiper-box
+.cu-swiper, .cu-swiper-box
   width 100%
   height 100%
   position relative
   &.disabled
     visibility hidden
-  &.md-swiper-fade
-    .md-swiper-item
+  &.cu-swiper-fade
+    .cu-swiper-item
       position absolute
       opacity 0
       top 0
       left 0
-  &.md-swiper-vertical
-    .md-swiper-container
+  &.cu-swiper-vertical
+    .cu-swiper-container
       width 100%
       height auto
       box-orient vertical
       flex-direction column
-    .md-swiper-indicators
+    .cu-swiper-indicators
       flex-direction column
       right 20px
       left auto
@@ -30,36 +30,36 @@
       transform translate(0, -50%)
       &.disabled
         visibility hidden
-      .md-swiper-indicator
+      .cu-swiper-indicator
         width 4px
         height 16px
         margin 2.5px 0
 
-.md-swiper-container
+.cu-swiper-container
   height 100%
   width auto
   position relative
   display flex
   box-sizing content-box
 
-.md-swiper-indicators
+.cu-swiper-indicators
     position absolute
     bottom 20px
     left 50%
     display flex
     transform translateX(-50%)
 
-.md-swiper-indicator
+.cu-swiper-indicator
   width 16px
   height 4px
   display inline-block
   background #ddd
   margin 0 3px
-  &.md-swiper-indicator-active
+  &.cu-swiper-indicator-active
     background swiper-indicator-fill
 
 /* --- swiper-item.vue --- */
-  .md-swiper-item
+  .cu-swiper-item
     position relative
     width 100%
     flex-shrink 0

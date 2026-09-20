@@ -26,9 +26,12 @@ export function readGolden(component: string, scenario: string): string {
  * 8. VTU v1 采集 v2 基线时的 <transition-stub> 包装（真实 DOM 无此元素）与 scoped 的
  *    data-v-<hash>（v3 样式走全局 CSS，无 scoped）→ 一律移除
  * 9. input 的 name 属性：v2 基线采集时 randomId 产物为随机值（不可复现）→ 剥离
+ * 0. 品牌前缀：rebrand 后 v3 输出 cu-，基线来自上游 mand-mobile@2.7.0 的 md- →
+ *    统一映射回 md- 再比较（对基线幂等）
  */
 export function normalizeForCompare(html: string): string {
   return html
+    .replace(/\bcu-/g, 'md-')
     .replace(/<!--.*?-->/g, '')
     .replace(/<\/?transition-stub[^>]*>/g, '')
     .replace(/\s*data-v-[0-9a-f]+=""/g, '')

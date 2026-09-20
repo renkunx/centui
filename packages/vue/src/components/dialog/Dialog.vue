@@ -1,6 +1,6 @@
 <template>
-  <div ref="root" class="md-dialog">
-    <MdPopup
+  <div ref="root" class="cu-dialog">
+    <CuPopup
       :model-value="modelValue"
       :has-mask="hasMask"
       :mask-closable="maskClosable"
@@ -12,25 +12,25 @@
       @show="onShow"
       @hide="onHide"
     >
-      <div class="md-dialog-content">
+      <div class="cu-dialog-content">
         <slot name="header"></slot>
-        <div class="md-dialog-body">
-          <a v-if="closable" role="button" class="md-dialog-close" @click="close">
-            <MdIcon name="close" />
+        <div class="cu-dialog-body">
+          <a v-if="closable" role="button" class="cu-dialog-close" @click="close">
+            <CuIcon name="close" />
           </a>
-          <div v-if="icon" class="md-dialog-icon">
-            <MdIcon :name="icon" :svg="iconSvg" />
+          <div v-if="icon" class="cu-dialog-icon">
+            <CuIcon :name="icon" :svg="iconSvg" />
           </div>
-          <h2 v-if="title" class="md-dialog-title" v-text="title"></h2>
+          <h2 v-if="title" class="cu-dialog-title" v-text="title"></h2>
           <slot>
-            <div class="md-dialog-text" v-html="content"></div>
+            <div class="cu-dialog-text" v-html="content"></div>
           </slot>
         </div>
-        <footer class="md-dialog-actions" :class="{ 'is-column': layout === 'column' }">
+        <footer class="cu-dialog-actions" :class="{ 'is-column': layout === 'column' }">
           <template v-for="(btn, index) in btns" :key="index">
             <a
               role="button"
-              class="md-dialog-btn"
+              class="cu-dialog-btn"
               :class="{
                 disabled: !!btn.disabled,
                 warning: !btn.disabled && !!btn.warning,
@@ -38,23 +38,23 @@
               @click="onClickBtn(btn)"
               @touchmove.prevent
             >
-              <MdActivityIndicatorRolling
+              <CuActivityIndicatorRolling
                 v-if="btn.loading"
-                class="md-dialog-btn-loading"
-              ></MdActivityIndicatorRolling>
-              <MdIcon
+                class="cu-dialog-btn-loading"
+              ></CuActivityIndicatorRolling>
+              <CuIcon
                 v-else-if="btn.icon"
-                class="md-dialog-btn-icon"
+                class="cu-dialog-btn-icon"
                 :name="btn.icon"
                 :svg="btn.iconSvg"
                 size="md"
-              ></MdIcon>
+              ></CuIcon>
               {{ btn.text }}
             </a>
           </template>
         </footer>
       </div>
-    </MdPopup>
+    </CuPopup>
   </div>
 </template>
 
@@ -72,11 +72,11 @@ export interface DialogBtn {
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import MdPopup from '../popup/Popup.vue'
-import MdIcon from '../icon/Icon.vue'
-import MdActivityIndicatorRolling from '../activity-indicator/Roller.vue'
+import CuPopup from '../popup/Popup.vue'
+import CuIcon from '../icon/Icon.vue'
+import CuActivityIndicatorRolling from '../activity-indicator/Roller.vue'
 
-defineOptions({ name: 'md-dialog' })
+defineOptions({ name: 'cu-dialog' })
 
 const props = withDefaults(
   defineProps<{
@@ -108,7 +108,7 @@ const props = withDefaults(
     appendTo: undefined,
     hasMask: true,
     maskClosable: false,
-    transition: 'md-fade',
+    transition: 'cu-fade',
     preventScroll: false,
     preventScrollExclude: '',
   },

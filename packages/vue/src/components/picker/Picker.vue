@@ -1,7 +1,7 @@
 <template>
-  <div class="md-picker" :class="{ 'with-popup': !isView }">
+  <div class="cu-picker" :class="{ 'with-popup': !isView }">
     <template v-if="isView">
-      <MdPickerColumn
+      <CuPickerColumn
         ref="pickerColumn"
         :data="data"
         :default-value="defaultValue"
@@ -12,10 +12,10 @@
         :cols="cols"
         @initialed="emit('initialed')"
         @change="onPickerChange"
-      ></MdPickerColumn>
+      ></CuPickerColumn>
     </template>
     <template v-else>
-      <MdPopup
+      <CuPopup
         :model-value="isPickerShow"
         class="inner-popup"
         position="bottom"
@@ -27,7 +27,7 @@
         @hide="onPickerHide"
         @mask-click="onPickerCancel"
       >
-        <MdPopupTitleBar
+        <CuPopupTitleBar
           :title="title"
           :describe="describe"
           :ok-text="okText"
@@ -35,8 +35,8 @@
           :large-radius="largeRadius"
           @confirm="onPickerConfirm"
           @cancel="onPickerCancel"
-        ></MdPopupTitleBar>
-        <MdPickerColumn
+        ></CuPopupTitleBar>
+        <CuPickerColumn
           ref="pickerColumn"
           :data="data"
           :default-value="getDefaultValue()"
@@ -47,21 +47,21 @@
           :cols="cols"
           @initialed="onPickerInitialed"
           @change="onPickerChange"
-        ></MdPickerColumn>
-      </MdPopup>
+        ></CuPickerColumn>
+      </CuPopup>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { cascade, compareObjects, t, type CascadeNode } from '@mand-mobile/core'
-import MdPopup from '../popup/Popup.vue'
-import MdPopupTitleBar from '../popup/PopupTitleBar.vue'
-import MdPickerColumn from './PickerColumn.vue'
+import { cascade, compareObjects, t, type CascadeNode } from '@centui/core'
+import CuPopup from '../popup/Popup.vue'
+import CuPopupTitleBar from '../popup/PopupTitleBar.vue'
+import CuPickerColumn from './PickerColumn.vue'
 import type { PickerColumnItem, PickerColumnInstance } from './PickerColumn.vue'
 
-defineOptions({ name: 'md-picker' })
+defineOptions({ name: 'cu-picker' })
 
 const props = withDefaults(
   defineProps<{

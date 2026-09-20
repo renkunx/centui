@@ -1,8 +1,8 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type ReactNode } from 'react'
-import { cascade, t, type CascadeNode } from '@mand-mobile/core'
-import { MdPopup } from '../popup/Popup'
-import { MdPopupTitleBar } from '../popup/PopupTitleBar'
-import { MdPickerColumn, type PickerColumnExposed, type PickerColumnItem } from './PickerColumn'
+import { cascade, t, type CascadeNode } from '@centui/core'
+import { CuPopup } from '../popup/Popup'
+import { CuPopupTitleBar } from '../popup/PopupTitleBar'
+import { CuPickerColumn, type PickerColumnExposed, type PickerColumnItem } from './PickerColumn'
 
 export interface PickerExposed {
   refresh: (callback?: () => void, startIndex?: number) => void
@@ -38,7 +38,7 @@ export interface PickerProps {
   onChangeValue?: (value: boolean) => void
 }
 
-export const MdPicker = forwardRef<PickerExposed, PickerProps>(function MdPicker({
+export const CuPicker = forwardRef<PickerExposed, PickerProps>(function CuPicker({
   value = false,
   isView = false,
   title = '',
@@ -193,7 +193,7 @@ export const MdPicker = forwardRef<PickerExposed, PickerProps>(function MdPicker
   const getColumnValuesSafe = () => column()?.getColumnValues() ?? []
 
   const columnNode = (
-    <MdPickerColumn
+    <CuPickerColumn
       ref={columnRef}
       data={data}
       defaultValue={oldActivedIndexsRef.current ? [] : defaultValue}
@@ -209,15 +209,15 @@ export const MdPicker = forwardRef<PickerExposed, PickerProps>(function MdPicker
 
   if (isView) {
     return (
-      <div className="md-picker">
+      <div className="cu-picker">
         {columnNode}
       </div>
     )
   }
 
   return (
-    <div className="md-picker with-popup">
-      <MdPopup
+    <div className="cu-picker with-popup">
+      <CuPopup
         className="inner-popup"
         value={isPickerShow}
         position="bottom"
@@ -238,7 +238,7 @@ export const MdPicker = forwardRef<PickerExposed, PickerProps>(function MdPicker
         onHide={onHide}
         onMaskClick={onPickerCancel}
       >
-        <MdPopupTitleBar
+        <CuPopupTitleBar
           title={title}
           describe={describe}
           okText={resolvedOkText}
@@ -246,12 +246,12 @@ export const MdPicker = forwardRef<PickerExposed, PickerProps>(function MdPicker
           largeRadius={largeRadius}
           onConfirm={onPickerConfirm}
           onCancel={onPickerCancel}
-        ></MdPopupTitleBar>
+        ></CuPopupTitleBar>
         {columnNode}
-      </MdPopup>
+      </CuPopup>
     </div>
   )
 })
 
-export { MdPickerColumn }
+export { CuPickerColumn }
 export type { PickerColumnItem, PickerColumnExposed }

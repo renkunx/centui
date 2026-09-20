@@ -1,4 +1,4 @@
-import { MdIcon } from '../icon/Icon'
+import { CuIcon } from '../icon/Icon'
 
 export interface CashierChannelItemData {
   icon?: string
@@ -9,7 +9,7 @@ export interface CashierChannelItemData {
   action?: { text: string; handler: () => void }
 }
 
-export function MdCashierChannelItem({
+export function CuCashierChannelItem({
   data = {},
   active = false,
   className,
@@ -22,12 +22,12 @@ export function MdCashierChannelItem({
 }) {
   return (
     <div
-      className={`md-cashier-channel-item${className ? ` ${className}` : ''}`}
+      className={`cu-cashier-channel-item${className ? ` ${className}` : ''}`}
       onClick={onClick}
     >
       {data.icon ? (
         <div className="item-icon" data-icon={data.icon}>
-          <MdIcon name={data.icon} size="lg" />
+          <CuIcon name={data.icon} size="lg" />
         </div>
       ) : data.img ? (
         <div className="item-image">
@@ -51,7 +51,7 @@ export function MdCashierChannelItem({
         {data.desc ? <p className="desc" dangerouslySetInnerHTML={{ __html: data.desc }} /> : null}
       </div>
       <div className="item-check-icon">
-        {data.disabled ? <MdIcon name="check-disabled" /> : active ? <MdIcon name="checked" /> : <MdIcon name="check" />}
+        {data.disabled ? <CuIcon name="check-disabled" /> : active ? <CuIcon name="checked" /> : <CuIcon name="check" />}
       </div>
     </div>
   )

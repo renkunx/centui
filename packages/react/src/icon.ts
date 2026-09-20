@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/icon
+// 按需入口：@centui/react/es/icon
 export * from './components/icon'

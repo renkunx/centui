@@ -1,14 +1,14 @@
 <template>
-  <div v-show="isInline || modelValue || visible" class="md-captcha">
+  <div v-show="isInline || modelValue || visible" class="cu-captcha">
     <!-- 内联模式 -->
     <template v-if="isInline">
-      <div class="md-captcha-content">
-        <h2 v-if="title" class="md-captcha-title" v-text="title"></h2>
-        <div class="md-captcha-message">
+      <div class="cu-captcha-content">
+        <h2 v-if="title" class="cu-captcha-title" v-text="title"></h2>
+        <div class="cu-captcha-message">
           <slot></slot>
         </div>
       </div>
-      <MdCodebox
+      <CuCodebox
         ref="codebox"
         v-model="code"
         :maxlength="maxlength"
@@ -21,22 +21,22 @@
         :input-type="inputType"
         @submit="onSubmit"
       >
-        <footer class="md-captcha-footer">
-          <div v-if="errorMsg" class="md-captcha-error" v-text="errorMsg"></div>
-          <div v-else class="md-captcha-brief" v-text="brief"></div>
+        <footer class="cu-captcha-footer">
+          <div v-if="errorMsg" class="cu-captcha-error" v-text="errorMsg"></div>
+          <div v-else class="cu-captcha-brief" v-text="brief"></div>
           <button
             v-if="count"
-            class="md-captcha-btn"
+            class="cu-captcha-btn"
             v-text="countBtnText"
             :disabled="isCounting"
             @click="onResend"
           ></button>
         </footer>
-      </MdCodebox>
+      </CuCodebox>
     </template>
     <!-- 半屏弹层模式 -->
     <template v-if="type === 'halfScreen'">
-      <MdPopup
+      <CuPopup
         :model-value="modelValue"
         :has-mask="true"
         position="bottom"
@@ -45,19 +45,19 @@
         @show="onShow"
         @hide="onHide"
       >
-        <div class="md-captcha-half-container">
-          <MdPopupTitleBar
+        <div class="cu-captcha-half-container">
+          <CuPopupTitleBar
             only-close
             large-radius
             :title="title"
             :describe="subtitle"
             title-align="left"
             @cancel="close"
-          ></MdPopupTitleBar>
-          <div class="md-captcha-half-content">
+          ></CuPopupTitleBar>
+          <div class="cu-captcha-half-content">
             <slot></slot>
           </div>
-          <MdCodebox
+          <CuCodebox
             ref="codebox"
             v-model="code"
             :maxlength="maxlength"
@@ -72,25 +72,25 @@
             :is-error-style="isShowErrorStyle"
             @submit="onSubmit"
           >
-            <footer class="md-captcha-footer" :class="{ halfStyle: isKeyboard }">
-              <div v-if="errorMsg" class="md-captcha-error" v-text="errorMsg"></div>
-              <div v-else class="md-captcha-brief" v-text="brief"></div>
+            <footer class="cu-captcha-footer" :class="{ halfStyle: isKeyboard }">
+              <div v-if="errorMsg" class="cu-captcha-error" v-text="errorMsg"></div>
+              <div v-else class="cu-captcha-brief" v-text="brief"></div>
               <button
                 v-if="count"
-                class="md-captcha-btn"
+                class="cu-captcha-btn"
                 :class="[disableSend && 'is-disabled-send']"
                 v-text="countBtnText"
                 :disabled="isCounting"
                 @click="onResend"
               ></button>
             </footer>
-          </MdCodebox>
+          </CuCodebox>
         </div>
-      </MdPopup>
+      </CuPopup>
     </template>
     <!-- 对话框模式 -->
     <template v-if="type === 'dialog'">
-      <MdDialog
+      <CuDialog
         :model-value="modelValue"
         :closable="true"
         :append-to="false"
@@ -99,13 +99,13 @@
         @show="onShow"
         @hide="onHide"
       >
-        <div class="md-captcha-content">
-          <h2 v-if="title" class="md-captcha-title" v-text="title"></h2>
-          <div class="md-captcha-message">
+        <div class="cu-captcha-content">
+          <h2 v-if="title" class="cu-captcha-title" v-text="title"></h2>
+          <div class="cu-captcha-message">
             <slot></slot>
           </div>
         </div>
-        <MdCodebox
+        <CuCodebox
           ref="codebox"
           v-model="code"
           :maxlength="maxlength"
@@ -117,32 +117,32 @@
           :input-type="inputType"
           @submit="onSubmit"
         >
-          <footer class="md-captcha-footer">
-            <div v-if="errorMsg" class="md-captcha-error" v-text="errorMsg"></div>
-            <div v-else class="md-captcha-brief" v-text="brief"></div>
+          <footer class="cu-captcha-footer">
+            <div v-if="errorMsg" class="cu-captcha-error" v-text="errorMsg"></div>
+            <div v-else class="cu-captcha-brief" v-text="brief"></div>
             <button
               v-if="count"
-              class="md-captcha-btn"
+              class="cu-captcha-btn"
               v-text="countBtnText"
               :disabled="isCounting"
               @click="onResend"
             ></button>
           </footer>
-        </MdCodebox>
-      </MdDialog>
+        </CuCodebox>
+      </CuDialog>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { t } from '@mand-mobile/core'
-import MdPopup from '../popup/Popup.vue'
-import MdPopupTitleBar from '../popup/PopupTitleBar.vue'
-import MdDialog from '../dialog/Dialog.vue'
-import MdCodebox from '../codebox/Codebox.vue'
+import { t } from '@centui/core'
+import CuPopup from '../popup/Popup.vue'
+import CuPopupTitleBar from '../popup/PopupTitleBar.vue'
+import CuDialog from '../dialog/Dialog.vue'
+import CuCodebox from '../codebox/Codebox.vue'
 
-defineOptions({ name: 'md-captcha' })
+defineOptions({ name: 'cu-captcha' })
 
 const props = withDefaults(
   defineProps<{
@@ -192,7 +192,7 @@ const emit = defineEmits<{
   (e: 'send', countdown: () => void): void
 }>()
 
-const codebox = ref<InstanceType<typeof MdCodebox> | null>(null)
+const codebox = ref<InstanceType<typeof CuCodebox> | null>(null)
 const code = ref('')
 const visible = ref(false)
 const errorMsg = ref('')

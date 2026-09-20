@@ -1,12 +1,12 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type ReactNode } from 'react'
-import { t } from '@mand-mobile/core'
-import { MdPopup } from '../popup/Popup'
-import { MdPopupTitleBar } from '../popup/PopupTitleBar'
-import { MdCaptcha } from '../captcha/Captcha'
-import { MdIcon } from '../icon/Icon'
-import { MdRollerSuccess } from '../activity-indicator/RollerSuccess'
-import { MdCashierChannel, type CashierChannel } from './CashierChannel'
-import { MdCashierChannelButton, type CashierAction } from './CashierChannelButton'
+import { t } from '@centui/core'
+import { CuPopup } from '../popup/Popup'
+import { CuPopupTitleBar } from '../popup/PopupTitleBar'
+import { CuCaptcha } from '../captcha/Captcha'
+import { CuIcon } from '../icon/Icon'
+import { CuRollerSuccess } from '../activity-indicator/RollerSuccess'
+import { CuCashierChannel, type CashierChannel } from './CashierChannel'
+import { CuCashierChannelButton, type CashierAction } from './CashierChannelButton'
 
 export type CashierScene = 'choose' | 'captcha' | 'loading' | 'success' | 'fail' | 'custom'
 
@@ -54,10 +54,10 @@ export interface CashierSceneOption {
   }
 }
 
-export const MdCashier = forwardRef<
+export const CuCashier = forwardRef<
   { next: (scene: CashierScene, option?: CashierSceneOption) => void },
   CashierProps
->(function MdCashier(
+>(function CuCashier(
   {
     value = false,
     channels = [],
@@ -160,8 +160,8 @@ export const MdCashier = forwardRef<
   const captcha = sceneOptionRef.current.captcha
 
   return (
-    <div className="md-cashier">
-      <MdPopup
+    <div className="cu-cashier">
+      <CuPopup
         className="inner-popup"
         value={isCashierShow}
         position="bottom"
@@ -174,7 +174,7 @@ export const MdCashier = forwardRef<
           onHide?.()
         }}
       >
-        <MdPopupTitleBar
+        <CuPopupTitleBar
           title={title}
           describe={describe}
           largeRadius={largeRadius}
@@ -184,12 +184,12 @@ export const MdCashier = forwardRef<
             onCancel?.()
           }}
         />
-        <div className="md-cashier-container">
+        <div className="cu-cashier-container">
           {headerSlot ? headerSlot(scene) : null}
 
           {scene === 'choose' ? (
-            <div key={sceneKey} className="md-cashier-block md-cashier-choose">
-              <MdCashierChannel
+            <div key={sceneKey} className="cu-cashier-block cu-cashier-choose">
+              <CuCashierChannel
                 paymentTitle={paymentTitle}
                 paymentAmount={paymentAmount}
                 paymentDescribe={paymentDescribe}
@@ -206,8 +206,8 @@ export const MdCashier = forwardRef<
               />
             </div>
           ) : scene === 'captcha' ? (
-            <div key={sceneKey} className="md-cashier-block md-cashier-captcha">
-              <MdCaptcha
+            <div key={sceneKey} className="cu-cashier-block cu-cashier-captcha">
+              <CuCaptcha
                 maxlength={captcha.maxlength}
                 count={captcha.count}
                 countNormalText={captcha.countNormalText}
@@ -219,23 +219,23 @@ export const MdCashier = forwardRef<
                 onSubmit={code => captcha.onSubmit(code)}
               >
                 <div>{captcha.text}</div>
-              </MdCaptcha>
+              </CuCaptcha>
             </div>
           ) : scene === 'loading' || scene === 'success' ? (
             <div
               key={sceneKey}
-              className={`md-cashier-block${scene === 'loading' ? ' md-cashier-loading' : ''}${
-                scene === 'success' ? ' md-cashier-success' : ''
+              className={`cu-cashier-block${scene === 'loading' ? ' cu-cashier-loading' : ''}${
+                scene === 'success' ? ' cu-cashier-success' : ''
               }`}
             >
-              <div className="md-cashier-block-icon">
-                <MdRollerSuccess isSuccess={scene === 'success'} />
+              <div className="cu-cashier-block-icon">
+                <CuRollerSuccess isSuccess={scene === 'success'} />
               </div>
-              <div className="md-cashier-block-text">
+              <div className="cu-cashier-block-text">
                 {scene === 'success' ? sceneOptionRef.current.success.text : sceneOptionRef.current.loading.text}
               </div>
               {scene === 'success' ? (
-                <MdCashierChannelButton
+                <CuCashierChannelButton
                   actions={
                     sceneOptionRef.current.success.actions || [
                       {
@@ -248,12 +248,12 @@ export const MdCashier = forwardRef<
               ) : null}
             </div>
           ) : scene === 'fail' ? (
-            <div key={sceneKey} className="md-cashier-block md-cashier-fail">
-              <div className="md-cashier-block-icon">
-                <MdIcon name="warn-color" />
+            <div key={sceneKey} className="cu-cashier-block cu-cashier-fail">
+              <div className="cu-cashier-block-icon">
+                <CuIcon name="warn-color" />
               </div>
-              <div className="md-cashier-block-text">{sceneOptionRef.current.fail.text}</div>
-              <MdCashierChannelButton
+              <div className="cu-cashier-block-text">{sceneOptionRef.current.fail.text}</div>
+              <CuCashierChannelButton
                 actions={
                   sceneOptionRef.current.fail.actions || [
                     {
@@ -265,14 +265,14 @@ export const MdCashier = forwardRef<
               />
             </div>
           ) : scene === 'custom' ? (
-            <div key={sceneKey} className="md-cashier-block md-cashier-custom">
+            <div key={sceneKey} className="cu-cashier-block cu-cashier-custom">
               {sceneSlot}
             </div>
           ) : null}
 
           {footerSlot ? footerSlot(scene) : null}
         </div>
-      </MdPopup>
+      </CuPopup>
     </div>
   )
 })

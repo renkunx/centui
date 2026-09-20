@@ -1,1 +1,1 @@
-export { default as MdTag } from './Tag.vue'
+export { default as CuTag } from './Tag.vue'

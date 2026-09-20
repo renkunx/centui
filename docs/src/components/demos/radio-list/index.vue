@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MdRadioList } from 'mand-mobile'
+import { CuRadioList } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
 const scenes = ['基础', '带自定义', '禁用']
@@ -17,21 +17,21 @@ const options2 = [
   { value: 'b', text: '圆通', brief: '3-5 天' },
   { value: 'c', text: '邮政', brief: '较慢，偏远可送达' },
 ]
-const code = `<MdRadioList :options="options" v-model="value" />
-<MdRadioList :options="options2" v-model="value2" has-input input-label="自定义" />`
+const code = `<CuRadioList :options="options" v-model="value" />
+<CuRadioList :options="options2" v-model="value2" has-input input-label="自定义" />`
 </script>
 
 <template>
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
-      <MdRadioList :options="options" v-model="value" />
+      <CuRadioList :options="options" v-model="value" />
       <div class="rd-note">当前选择：{{ value }}</div>
     </template>
     <template #scene-1>
-      <MdRadioList :options="options2" v-model="value2" />
+      <CuRadioList :options="options2" v-model="value2" />
     </template>
     <template #scene-2>
-      <MdRadioList :options="options" v-model="value3" disabled />
+      <CuRadioList :options="options" v-model="value3" disabled />
     </template>
   </DemoCanvas>
 </template>

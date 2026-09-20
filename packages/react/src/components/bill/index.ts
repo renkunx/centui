@@ -1,1 +1,1 @@
-export { MdBill, type BillProps } from './Bill'
+export { CuBill, type BillProps } from './Bill'

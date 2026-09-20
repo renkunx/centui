@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { MdCheck, MdCheckBox, MdCheckGroup, MdCheckList, MdField, MdButton, MdCellItem } from 'mand-mobile-react'
+import { CuCheck, CuCheckBox, CuCheckGroup, CuCheckList, CuField, CuButton, CuCellItem } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['复选项', '复选项组', '复选框', '复选框组', '复选列表', '图标左置']
-const code = `<MdCheck value={checked} onChange={setChecked} label="复选项" />
-<MdCheckGroup value={favorites} onChange={setFavorites}>
-  <MdCheck name="apple" label="苹果" />
-</MdCheckGroup>
-<MdCheckBox name="month" value={pay} onChange={setPay} label="月付" />`
+const code = `<CuCheck value={checked} onChange={setChecked} label="复选项" />
+<CuCheckGroup value={favorites} onChange={setFavorites}>
+  <CuCheck name="apple" label="苹果" />
+</CuCheckGroup>
+<CuCheckBox name="month" value={pay} onChange={setPay} label="月付" />`
 const fruits = [
   { value: 'apple', text: '苹果' },
   { value: 'banana', text: '香蕉' },
@@ -30,51 +30,51 @@ export default function CheckDemo() {
         if (active === 0)
           return (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <MdCheck value={checked} onChange={setChecked} label="复选项" />
-              <MdCheck label="禁用" disabled />
+              <CuCheck value={checked} onChange={setChecked} label="复选项" />
+              <CuCheck label="禁用" disabled />
             </div>
           )
         if (active === 1)
           return (
-            <MdCheckGroup value={favorites} onChange={setFavorites}>
-              <MdCheck name="watermelon" label="西瓜" />
-              <MdCheck name="apple" label="苹果" />
-              <MdCheck name="banana" label="香蕉" />
-              <MdCheck name="orange" label="橙子" />
-              <MdCheck name="tomato" label="西红柿" disabled />
-            </MdCheckGroup>
+            <CuCheckGroup value={favorites} onChange={setFavorites}>
+              <CuCheck name="watermelon" label="西瓜" />
+              <CuCheck name="apple" label="苹果" />
+              <CuCheck name="banana" label="香蕉" />
+              <CuCheck name="orange" label="橙子" />
+              <CuCheck name="tomato" label="西红柿" disabled />
+            </CuCheckGroup>
           )
         if (active === 2)
           return (
             <div style={{ display: 'flex', gap: 24 }}>
-              <MdCheckBox name="day" value={pay} onChange={setPay} label="日缴" disabled />
-              <MdCheckBox name="month" value={pay} onChange={setPay} label="月付" />
-              <MdCheckBox name="season" value={pay} onChange={setPay} label="季度费" />
+              <CuCheckBox name="day" value={pay} onChange={setPay} label="日缴" disabled />
+              <CuCheckBox name="month" value={pay} onChange={setPay} label="月付" />
+              <CuCheckBox name="season" value={pay} onChange={setPay} label="季度费" />
             </div>
           )
         if (active === 3)
           return (
-            <MdCheckGroup value={insurants} onChange={setInsurants}>
-              <MdCheckBox iconPosition="lt" name="self" disabled>自己</MdCheckBox>
-              <MdCheckBox iconPosition="rt" name="couple" disabled>配偶</MdCheckBox>
-              <MdCheckBox iconPosition="lt" name="parent">父母</MdCheckBox>
-              <MdCheckBox iconPosition="rt" name="child">子女</MdCheckBox>
-            </MdCheckGroup>
+            <CuCheckGroup value={insurants} onChange={setInsurants}>
+              <CuCheckBox iconPosition="lt" name="self" disabled>自己</CuCheckBox>
+              <CuCheckBox iconPosition="rt" name="couple" disabled>配偶</CuCheckBox>
+              <CuCheckBox iconPosition="lt" name="parent">父母</CuCheckBox>
+              <CuCheckBox iconPosition="rt" name="child">子女</CuCheckBox>
+            </CuCheckGroup>
           )
         if (active === 4)
           return (
-            <MdField title="复选列表">
-              <MdCheckList value={checkListFav} onChange={setCheckListFav} icon="right" iconInverse="" options={fruits} />
-              <MdCellItem noBorder>
-                <MdButton type="primary" size="small" inline onClick={checkAll}>全选</MdButton>
-                <MdButton size="small" inline onClick={toggleAll}>反选</MdButton>
-              </MdCellItem>
-            </MdField>
+            <CuField title="复选列表">
+              <CuCheckList value={checkListFav} onChange={setCheckListFav} icon="right" iconInverse="" options={fruits} />
+              <CuCellItem noBorder>
+                <CuButton type="primary" size="small" inline onClick={checkAll}>全选</CuButton>
+                <CuButton size="small" inline onClick={toggleAll}>反选</CuButton>
+              </CuCellItem>
+            </CuField>
           )
         return (
-          <MdField title="复选列表">
-            <MdCheckList value={checkListFav} onChange={setCheckListFav} iconPosition="left" options={fruits} />
-          </MdField>
+          <CuField title="复选列表">
+            <CuCheckList value={checkListFav} onChange={setCheckListFav} iconPosition="left" options={fruits} />
+          </CuField>
         )
       }}
     </DemoCanvasReact>

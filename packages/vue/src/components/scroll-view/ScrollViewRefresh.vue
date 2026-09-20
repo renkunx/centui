@@ -1,16 +1,16 @@
 <template>
-  <div ref="el" class="md-scroll-view-refresh">
-    <MdActivityIndicatorRolling :process="!isRefreshing ? process : undefined" :width="10" :color="rollerColor"></MdActivityIndicatorRolling>
+  <div ref="el" class="cu-scroll-view-refresh">
+    <CuActivityIndicatorRolling :process="!isRefreshing ? process : undefined" :width="10" :color="rollerColor"></CuActivityIndicatorRolling>
     <p class="refresh-tip">{{ refreshTip }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { t } from '@mand-mobile/core'
-import MdActivityIndicatorRolling from '../activity-indicator/Roller.vue'
+import { t } from '@centui/core'
+import CuActivityIndicatorRolling from '../activity-indicator/Roller.vue'
 
-defineOptions({ name: 'md-scroll-view-refresh' })
+defineOptions({ name: 'cu-scroll-view-refresh' })
 
 const props = withDefaults(
   defineProps<{

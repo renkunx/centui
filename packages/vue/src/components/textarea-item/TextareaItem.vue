@@ -1,6 +1,6 @@
 <template>
-  <MdFieldItem
-    class="md-textarea-item"
+  <CuFieldItem
+    class="cu-textarea-item"
     :class="[isDisabled ? 'is-disabled' : '', errorInfo ? 'is-error' : '']"
     :title="title"
     :solid="solid"
@@ -8,7 +8,7 @@
     <textarea
       ref="textarea"
       v-model="inputValue"
-      class="md-textarea-item__textarea"
+      class="cu-textarea-item__textarea"
       :disabled="isDisabled"
       :readonly="readonly"
       :maxlength="maxLength"
@@ -25,28 +25,28 @@
       <div
         v-if="clearable && !isDisabled && !readonly"
         v-show="!isInputEmpty && isInputFocus"
-        class="md-textarea-item__clear"
+        class="cu-textarea-item__clear"
         @click="clearInput"
       >
-        <MdIcon name="clear"></MdIcon>
+        <CuIcon name="clear"></CuIcon>
       </div>
       <slot name="right"></slot>
     </template>
     <template #children>
-      <div v-if="errorInfo" class="md-textarea-item-msg">
+      <div v-if="errorInfo" class="cu-textarea-item-msg">
         <p>{{ errorInfo }}</p>
       </div>
     </template>
-  </MdFieldItem>
+  </CuFieldItem>
 </template>
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
-import MdFieldItem from '../field-item/FieldItem.vue'
-import MdIcon from '../icon/Icon.vue'
+import CuFieldItem from '../field-item/FieldItem.vue'
+import CuIcon from '../icon/Icon.vue'
 import { getCursorsPosition, setCursorsPosition } from '../input-item/cursor'
 
-defineOptions({ name: 'md-textarea-item' })
+defineOptions({ name: 'cu-textarea-item' })
 
 const props = withDefaults(
   defineProps<{

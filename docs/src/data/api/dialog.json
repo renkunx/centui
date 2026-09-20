@@ -81,7 +81,7 @@
     {
       "name": "transition",
       "type": "string",
-      "default": "'md-fade'",
+      "default": "'cu-fade'",
       "desc": "",
       "required": false
     },

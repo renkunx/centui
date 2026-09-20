@@ -1,6 +1,6 @@
 <template>
   <div
-    class="md-popup-title-bar"
+    class="cu-popup-title-bar"
     :class="[
       `title-align-${titleAlign}`,
       {
@@ -14,11 +14,11 @@
     <template v-if="!onlyClose">
       <div
         v-if="cancelText"
-        class="title-bar-left md-popup-cancel"
+        class="title-bar-left cu-popup-cancel"
         v-html="cancelText"
         @click="emit('cancel')"
       ></div>
-      <div v-else-if="$slots.cancel" class="title-bar-left md-popup-cancel" @click="emit('cancel')">
+      <div v-else-if="$slots.cancel" class="title-bar-left cu-popup-cancel" @click="emit('cancel')">
         <slot name="cancel"></slot>
       </div>
     </template>
@@ -36,21 +36,21 @@
     <template v-if="!onlyClose">
       <div
         v-if="okText"
-        class="title-bar-right md-popup-confirm"
+        class="title-bar-right cu-popup-confirm"
         v-html="okText"
         @click="emit('confirm')"
       ></div>
       <div
         v-else-if="$slots.confirm"
-        class="title-bar-right md-popup-confirm"
+        class="title-bar-right cu-popup-confirm"
         @click="emit('confirm')"
       >
         <slot name="confirm"></slot>
       </div>
     </template>
     <template v-if="onlyClose">
-      <div class="title-bar-right md-popup-close" @click="emit('cancel')">
-        <MdIcon name="close" size="lg"></MdIcon>
+      <div class="title-bar-right cu-popup-close" @click="emit('cancel')">
+        <CuIcon name="close" size="lg"></CuIcon>
       </div>
     </template>
   </div>
@@ -58,9 +58,9 @@
 
 <script setup lang="ts">
 import { inject, watch, type Ref } from 'vue'
-import MdIcon from '../icon/Icon.vue'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-popup-title-bar' })
+defineOptions({ name: 'cu-popup-title-bar' })
 
 const props = withDefaults(
   defineProps<{

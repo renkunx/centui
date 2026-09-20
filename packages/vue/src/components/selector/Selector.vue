@@ -1,6 +1,6 @@
 <template>
-  <div class="md-selector" :class="{ 'is-normal': !isCheck, 'is-check': isCheck }">
-    <MdPopup
+  <div class="cu-selector" :class="{ 'is-normal': !isCheck, 'is-check': isCheck }">
+    <CuPopup
       class="inner-popup"
       v-model="isSelectorShow"
       position="bottom"
@@ -9,7 +9,7 @@
       @hide="$emit('hide')"
       @mask-click="onSelectorCancel"
     >
-      <MdPopupTitleBar
+      <CuPopupTitleBar
         v-show="!hideTitleBar || isNeedConfirm"
         :title="title"
         :describe="describe"
@@ -19,9 +19,9 @@
         :only-close="!isCheck && !isNeedConfirm && !cancelText"
         @confirm="onSelectorConfirm"
         @cancel="onSelectorCancel"
-      ></MdPopupTitleBar>
-      <div class="md-selector-container">
-        <MdScrollView
+      ></CuPopupTitleBar>
+      <div class="cu-selector-container">
+        <CuScrollView
           ref="scroll"
           :scrolling-x="false"
           :style="{
@@ -32,8 +32,8 @@
           <slot name="header"></slot>
           <!-- 单选列表 -->
           <template v-if="!multi">
-            <MdRadioList
-              class="md-selector-list"
+            <CuRadioList
+              class="cu-selector-list"
               ref="radio"
               :key="radioKey"
               :model-value="defaultValue as RadioListOption['value']"
@@ -50,12 +50,12 @@
               <template v-if="hasSlot" #default="{ option, index, selected }">
                 <slot :option="option" :index="index" :selected="selected"></slot>
               </template>
-            </MdRadioList>
+            </CuRadioList>
           </template>
           <!-- 多选列表 -->
           <template v-else>
-            <MdCheckList
-              class="md-selector-list"
+            <CuCheckList
+              class="cu-selector-list"
               ref="check"
               :key="checkKey"
               v-model="multiDefaultValue"
@@ -71,26 +71,26 @@
               <template v-if="hasSlot" #default="{ option, index, selected }">
                 <slot :option="option" :index="index" :selected="selected"></slot>
               </template>
-            </MdCheckList>
+            </CuCheckList>
           </template>
           <slot name="footer"></slot>
-        </MdScrollView>
+        </CuScrollView>
       </div>
-    </MdPopup>
+    </CuPopup>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, watch, useSlots } from 'vue'
-import { t } from '@mand-mobile/core'
-import MdPopup from '../popup/Popup.vue'
-import MdPopupTitleBar from '../popup/PopupTitleBar.vue'
-import MdScrollView from '../scroll-view/ScrollView.vue'
-import MdRadioList from '../radio-list/RadioList.vue'
-import MdCheckList from '../check/CheckList.vue'
+import { t } from '@centui/core'
+import CuPopup from '../popup/Popup.vue'
+import CuPopupTitleBar from '../popup/PopupTitleBar.vue'
+import CuScrollView from '../scroll-view/ScrollView.vue'
+import CuRadioList from '../radio-list/RadioList.vue'
+import CuCheckList from '../check/CheckList.vue'
 import type { RadioListOption } from '../radio-list/RadioList.vue'
 
-defineOptions({ name: 'md-selector' })
+defineOptions({ name: 'cu-selector' })
 
 export type SelectorItem = RadioListOption & { text?: string }
 
@@ -151,7 +151,7 @@ const emit = defineEmits<{
 }>()
 
 const slots = useSlots()
-const radio = ref<InstanceType<typeof MdRadioList> | null>(null)
+const radio = ref<InstanceType<typeof CuRadioList> | null>(null)
 
 const isSelectorShow = ref(props.modelValue)
 const radioKey = ref(Date.now())

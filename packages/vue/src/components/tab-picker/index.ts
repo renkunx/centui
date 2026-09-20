@@ -1,1 +1,1 @@
-export { default as MdTabPicker, type TabPickerNode } from './TabPicker.vue'
+export { default as CuTabPicker, type TabPickerNode } from './TabPicker.vue'

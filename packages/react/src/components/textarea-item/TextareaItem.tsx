@@ -7,8 +7,8 @@ import {
   type FocusEvent as ReactFocusEvent,
   type KeyboardEvent as ReactKeyboardEvent,
 } from 'react'
-import { MdFieldItem } from '../field-item/FieldItem'
-import { MdIcon } from '../icon/Icon'
+import { CuFieldItem } from '../field-item/FieldItem'
+import { CuIcon } from '../icon/Icon'
 import { getCursorsPosition, setCursorsPosition } from '../input-item/cursor'
 
 export interface TextareaItemProps {
@@ -44,7 +44,7 @@ export interface TextareaItemExposed {
   getValue: () => string
 }
 
-export const MdTextareaItem = forwardRef<TextareaItemExposed, TextareaItemProps>(function MdTextareaItem(
+export const CuTextareaItem = forwardRef<TextareaItemExposed, TextareaItemProps>(function CuTextareaItem(
   {
     title = '',
     name = `textarea-item-${Math.floor(Math.random() * 10000)}`,
@@ -144,15 +144,15 @@ export const MdTextareaItem = forwardRef<TextareaItemExposed, TextareaItemProps>
   }
 
   return (
-    <MdFieldItem
-      className={`md-textarea-item${disabled ? ' is-disabled' : ''}${errorInfo ? ' is-error' : ''}`}
+    <CuFieldItem
+      className={`cu-textarea-item${disabled ? ' is-disabled' : ''}${errorInfo ? ' is-error' : ''}`}
       title={title}
       solid={solid}
       // v2.7.0 契约：clear 不参与渲染时右插槽整体不出现
       right={
         clearable && !disabled && !readonly ? (
           <div
-            className="md-textarea-item__clear"
+            className="cu-textarea-item__clear"
             style={{ display: !isInputEmpty && isInputFocus ? '' : 'none' }}
             onClick={() => {
               setInputValue('')
@@ -162,13 +162,13 @@ export const MdTextareaItem = forwardRef<TextareaItemExposed, TextareaItemProps>
               setTimeout(() => setIsInputFocus(true), 200)
             }}
           >
-            <MdIcon name="clear"></MdIcon>
+            <CuIcon name="clear"></CuIcon>
           </div>
         ) : undefined
       }
       childrenSlot={
         errorInfo ? (
-          <div className="md-textarea-item-msg">
+          <div className="cu-textarea-item-msg">
             <p>{errorInfo}</p>
           </div>
         ) : undefined
@@ -176,7 +176,7 @@ export const MdTextareaItem = forwardRef<TextareaItemExposed, TextareaItemProps>
     >
       <textarea
         ref={textareaRef}
-        className="md-textarea-item__textarea"
+        className="cu-textarea-item__textarea"
         disabled={disabled}
         readOnly={readonly}
         {...({ maxlength: maxLength === '' ? '' : Number(maxLength) } as object)}
@@ -200,6 +200,6 @@ export const MdTextareaItem = forwardRef<TextareaItemExposed, TextareaItemProps>
         onKeyUp={(e) => onKeyup?.(e)}
         onKeyDown={(e) => onKeydown?.(e)}
       ></textarea>
-    </MdFieldItem>
+    </CuFieldItem>
   )
 })

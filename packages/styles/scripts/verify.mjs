@@ -26,6 +26,9 @@ function parseCss(css) {
   const map = new Map()
   const addRule = (sel, decls, media = '') => {
     sel = sel.replace(/\s+/g, ' ').trim()
+    // 品牌 rebrand 归一：centui 产物为 cu- 前缀，上游 v2 lib 为 cu- 前缀 →
+    // 统一映射回 cu- 再比较（对 v2 侧幂等，覆盖选择器与 @keyframes 名）
+    sel = sel.replace(/\bcu-/g, 'md-')
     if (media) sel = `@${media} ${sel}`
     const set = map.get(sel) ?? new Set()
     decls.forEach(d => set.add(d))

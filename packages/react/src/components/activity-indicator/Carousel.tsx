@@ -6,7 +6,7 @@ export interface CarouselCircleProps {
   animateValues?: number[]
 }
 
-export function MdCarouselCircle({
+export function CuCarouselCircle({
   size = 30,
   index = 0,
   animateValues = [],
@@ -50,21 +50,21 @@ const CIRCLE_ANIMATE_VALUES: number[][] = [
   [0.6, 0.6, 0.6, 0.8, 1, 0.8, 0.6],
 ]
 
-export function MdCarousel({ size = 30, color = '#2F86F6' }: CarouselProps) {
+export function CuCarousel({ size = 30, color = '#2F86F6' }: CarouselProps) {
   const len = CIRCLE_ANIMATE_VALUES.length
   const viewWidth = len * size + ((len - 1) * size) / 2
 
   return (
-    <div className="md-activity-indicator-carousel">
+    <div className="cu-activity-indicator-carousel">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox={`0 0 ${viewWidth} ${size}`}
         fill={color}
         style={{ width: `${viewWidth}px`, height: `${size}px` }}
-        className="md-activity-indicator-svg carouseling"
+        className="cu-activity-indicator-svg carouseling"
       >
         {CIRCLE_ANIMATE_VALUES.map((values, index) => (
-          <MdCarouselCircle
+          <CuCarouselCircle
             key={`carousel-circle-${index}`}
             size={size}
             index={index}

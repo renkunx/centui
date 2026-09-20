@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { MdDatePicker, MdButton, Toast } from 'mand-mobile-react'
+import { CuDatePicker, CuButton, Toast } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
 const scenes = ['日期选择', '常驻视图']
-const code = `<MdDatePicker v-model="show" type="date" @confirm="onConfirm" />`
+const code = `<CuDatePicker v-model="show" type="date" @confirm="onConfirm" />`
 
 export default function DatePickerDemo() {
   const [show, setShow] = useState(false)
@@ -12,8 +12,8 @@ export default function DatePickerDemo() {
       {active =>
         active === 0 ? (
           <div style={{ padding: 16 }}>
-            <MdButton size="small" inline onClick={() => setShow(true)}>选择日期</MdButton>
-            <MdDatePicker
+            <CuButton size="small" inline onClick={() => setShow(true)}>选择日期</CuButton>
+            <CuDatePicker
               value={show}
               type="date"
               default-date={new Date(2024, 5, 15)}
@@ -27,7 +27,7 @@ export default function DatePickerDemo() {
             />
           </div>
         ) : (
-          <MdDatePicker
+          <CuDatePicker
             isView
             type="date"
             default-date={new Date(2024, 5, 15)}

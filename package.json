@@ -1,9 +1,9 @@
 {
-  "name": "mand-mobile-repo",
+  "name": "centui-repo",
   "version": "3.0.0-alpha.0",
   "private": true,
   "type": "module",
-  "description": "mand-mobile monorepo — Vue 3 / React multi-framework mobile UI toolkit",
+  "description": "centui monorepo — Vue 3 / React multi-framework mobile UI toolkit",
   "license": "Apache-2.0",
   "packageManager": "pnpm@12.4.1",
   "engines": {
@@ -16,13 +16,13 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "build": "pnpm -r --filter './packages/*' run build",
-    "golden:capture": "pnpm --filter @mand-mobile/golden run capture",
-    "golden:test": "pnpm --filter @mand-mobile/golden run test",
-    "playground": "pnpm --filter mand-mobile run playground",
+    "golden:capture": "pnpm --filter @centui/golden run capture",
+    "golden:test": "pnpm --filter @centui/golden run test",
+    "playground": "pnpm --filter centui run playground",
     "test:visual": "playwright test",
-    "docs:dev": "pnpm --filter @mand-mobile/docs run dev",
-    "docs:build": "pnpm --filter @mand-mobile/docs run build",
-    "docs:preview": "pnpm --filter @mand-mobile/docs run preview"
+    "docs:dev": "pnpm --filter @centui/docs run dev",
+    "docs:build": "pnpm --filter @centui/docs run build",
+    "docs:preview": "pnpm --filter @centui/docs run preview"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.2",

@@ -1,15 +1,15 @@
 /**
- * MdField 行为清单（自 v2 components/field spec/源码提取）：
+ * CuField 行为清单（自 v2 components/field spec/源码提取）：
  * 1. title/brief 渲染；header/action/footer 插槽；无内容时不渲染对应区块
  * 2. plain/is-disabled 修饰类
  */
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { MdField } from '../../src'
+import { CuField } from '../../src'
 
-describe('MdField', () => {
+describe('CuField', () => {
   it('renders title, brief and slots', () => {
-    const wrapper = mount(MdField, {
+    const wrapper = mount(CuField, {
       props: { title: '标题', brief: '描述' },
       slots: {
         default: '<div class="content">内容</div>',
@@ -18,8 +18,8 @@ describe('MdField', () => {
         footer: '<span class="footer">尾部</span>',
       },
     })
-    expect(wrapper.find('.md-field-title').text()).toBe('标题')
-    expect(wrapper.find('.md-field-brief').text()).toBe('描述')
+    expect(wrapper.find('.cu-field-title').text()).toBe('标题')
+    expect(wrapper.find('.cu-field-brief').text()).toBe('描述')
     expect(wrapper.find('.content').exists()).toBe(true)
     expect(wrapper.find('.action').text()).toBe('操作')
     expect(wrapper.find('.header').exists()).toBe(true)
@@ -27,14 +27,14 @@ describe('MdField', () => {
   })
 
   it('omits header/footer when empty', () => {
-    const wrapper = mount(MdField, { slots: { default: '<p>x</p>' } })
-    expect(wrapper.find('.md-field-header').exists()).toBe(false)
-    expect(wrapper.find('.md-field-footer').exists()).toBe(false)
-    expect(wrapper.find('.md-field-content').exists()).toBe(true)
+    const wrapper = mount(CuField, { slots: { default: '<p>x</p>' } })
+    expect(wrapper.find('.cu-field-header').exists()).toBe(false)
+    expect(wrapper.find('.cu-field-footer').exists()).toBe(false)
+    expect(wrapper.find('.cu-field-content').exists()).toBe(true)
   })
 
   it('applies plain and disabled modifiers', () => {
-    const wrapper = mount(MdField, { props: { plain: true, disabled: true } })
+    const wrapper = mount(CuField, { props: { plain: true, disabled: true } })
     expect(wrapper.classes()).toContain('is-plain')
     expect(wrapper.classes()).toContain('is-disabled')
   })

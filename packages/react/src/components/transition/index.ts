@@ -1,1 +1,1 @@
-export { MdTransition, type TransitionProps } from './Transition'
+export { CuTransition, type TransitionProps } from './Transition'

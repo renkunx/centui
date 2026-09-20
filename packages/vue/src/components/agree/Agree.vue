@@ -1,29 +1,29 @@
 <template>
-  <div class="md-agree" :class="[disabled ? 'disabled' : '']">
-    <div class="md-agree-icon" :class="[modelValue ? 'checked' : '']" @click="onChange($event)">
-      <div class="md-agree-icon-container">
+  <div class="cu-agree" :class="[disabled ? 'disabled' : '']">
+    <div class="cu-agree-icon" :class="[modelValue ? 'checked' : '']" @click="onChange($event)">
+      <div class="cu-agree-icon-container">
         <slot name="icon" :checked="modelValue">
           <span v-if="iconType === 'square'">
-            <MdIcon name="square-checked" :size="size"></MdIcon>
-            <MdIcon name="square-check" :size="size"></MdIcon>
+            <CuIcon name="square-checked" :size="size"></CuIcon>
+            <CuIcon name="square-check" :size="size"></CuIcon>
           </span>
           <span v-else>
-            <MdIcon name="checked" :size="size"></MdIcon>
-            <MdIcon name="check" :size="size"></MdIcon>
+            <CuIcon name="checked" :size="size"></CuIcon>
+            <CuIcon name="check" :size="size"></CuIcon>
           </span>
         </slot>
       </div>
     </div>
-    <div class="md-agree-content">
+    <div class="cu-agree-content">
       <slot></slot>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import MdIcon from '../icon/Icon.vue'
+import CuIcon from '../icon/Icon.vue'
 
-defineOptions({ name: 'md-agree' })
+defineOptions({ name: 'cu-agree' })
 
 const props = withDefaults(
   defineProps<{

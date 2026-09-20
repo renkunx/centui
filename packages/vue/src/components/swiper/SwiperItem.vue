@@ -1,5 +1,5 @@
 <template>
-  <div class="md-swiper-item" :style="{ width: swiperWidth, height: swiperHeight }">
+  <div class="cu-swiper-item" :style="{ width: swiperWidth, height: swiperHeight }">
     <slot></slot>
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, inject, onBeforeUnmount, onMounted, type ComponentPublicInstance } from 'vue'
 
-defineOptions({ name: 'md-swiper-item' })
+defineOptions({ name: 'cu-swiper-item' })
 
 export interface SwiperItemProps {
   /** loop 拷贝实例（不注册回 Swiper） */

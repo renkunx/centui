@@ -1,2 +1,2 @@
-export { default as MdSelector } from './Selector.vue'
+export { default as CuSelector } from './Selector.vue'
 export type { SelectorItem } from './Selector.vue'

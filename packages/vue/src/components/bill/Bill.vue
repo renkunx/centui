@@ -1,36 +1,36 @@
 <template>
-  <MdWaterMark class="md-bill" :content="waterMark">
-    <header class="md-bill-header">
+  <CuWaterMark class="cu-bill" :content="waterMark">
+    <header class="cu-bill-header">
       <template v-if="!hasHeaderSlot">
-        <h4 v-if="title" class="md-bill-title" v-text="title"></h4>
-        <div v-if="no" class="md-bill-no">NO.{{ no }}</div>
+        <h4 v-if="title" class="cu-bill-title" v-text="title"></h4>
+        <div v-if="no" class="cu-bill-no">NO.{{ no }}</div>
       </template>
       <template v-else>
         <slot name="header"></slot>
       </template>
     </header>
-    <div class="md-bill-neck">
+    <div class="cu-bill-neck">
       <span></span>
     </div>
-    <div class="md-bill-content">
-      <div class="md-bill-detail">
+    <div class="cu-bill-content">
+      <div class="cu-bill-detail">
         <slot></slot>
       </div>
-      <footer v-if="hasFooterSlot" class="md-bill-footer">
+      <footer v-if="hasFooterSlot" class="cu-bill-footer">
         <slot name="footer"></slot>
       </footer>
     </div>
     <template v-if="hasWatermarkSlot" #watermark="{ coord }">
       <slot name="watermark" :coord="coord"></slot>
     </template>
-  </MdWaterMark>
+  </CuWaterMark>
 </template>
 
 <script setup lang="ts">
 import { computed, useSlots, Comment, Fragment } from 'vue'
-import MdWaterMark from '../water-mark/WaterMark.vue'
+import CuWaterMark from '../water-mark/WaterMark.vue'
 
-defineOptions({ name: 'md-bill' })
+defineOptions({ name: 'cu-bill' })
 
 const props = withDefaults(
   defineProps<{

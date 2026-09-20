@@ -1,1 +1,1 @@
-export { default as MdButton } from './Button.vue'
+export { default as CuButton } from './Button.vue'

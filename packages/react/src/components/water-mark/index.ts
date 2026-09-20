@@ -1,1 +1,1 @@
-export { MdWaterMark, type WaterMarkProps } from './WaterMark'
+export { CuWaterMark, type WaterMarkProps } from './WaterMark'

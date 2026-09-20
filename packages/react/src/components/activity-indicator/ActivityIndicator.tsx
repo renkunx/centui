@@ -1,7 +1,7 @@
 import type { ReactNode, HTMLAttributes } from 'react'
-import { MdRoller } from './Roller'
-import { MdSpinning } from './Spinning'
-import { MdCarousel } from './Carousel'
+import { CuRoller } from './Roller'
+import { CuSpinning } from './Spinning'
+import { CuCarousel } from './Carousel'
 
 export type ActivityIndicatorProps = {
   /** roller | spinner | carousel */
@@ -17,7 +17,7 @@ export type ActivityIndicatorProps = {
   text?: string
 } & HTMLAttributes<HTMLDivElement>
 
-export function MdActivityIndicator({
+export function CuActivityIndicator({
   type = 'roller',
   size = 70,
   width,
@@ -31,20 +31,20 @@ export function MdActivityIndicator({
   const resolvedColor = color ?? (type === 'spinner' ? 'dark' : '#2F86F6')
 
   return (
-    <div className={`md-activity-indicator ${type}`} {...rest}>
+    <div className={`cu-activity-indicator ${type}`} {...rest}>
       <div className={`indicator-container${vertical ? ' vertical' : ''}`}>
         <div className="indicator-loading">
           {type === 'roller' ? (
-            <MdRoller size={size} color={resolvedColor} width={width} />
+            <CuRoller size={size} color={resolvedColor} width={width} />
           ) : type === 'spinner' ? (
-            <MdSpinning size={size} color={resolvedColor} />
+            <CuSpinning size={size} color={resolvedColor} />
           ) : type === 'carousel' ? (
-            <MdCarousel size={size} color={resolvedColor} />
+            <CuCarousel size={size} color={resolvedColor} />
           ) : null}
         </div>
         {children ? (
           <div
-            className="md-activity-indicator-text indicator-text"
+            className="cu-activity-indicator-text indicator-text"
             style={{ fontSize: `${textSize}px`, color: textColor }}
           >
             {children}
@@ -55,6 +55,6 @@ export function MdActivityIndicator({
   )
 }
 
-export { MdRoller, type RollerProps } from './Roller'
-export { MdSpinning, type SpinningProps } from './Spinning'
-export { MdCarousel, MdCarouselCircle } from './Carousel'
+export { CuRoller, type RollerProps } from './Roller'
+export { CuSpinning, type SpinningProps } from './Spinning'
+export { CuCarousel, CuCarouselCircle } from './Carousel'

@@ -4,7 +4,7 @@
 import { createElement } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { flushSync } from 'react-dom'
-import { MdActionSheet, type ActionSheetOption } from './ActionSheet'
+import { CuActionSheet, type ActionSheetOption } from './ActionSheet'
 
 export type { ActionSheetOption, ActionSheetProps } from './ActionSheet'
 
@@ -43,7 +43,7 @@ function renderSheet(store: ActionSheetStore) {
   const { props } = store
   flushSync(() =>
     store.root.render(
-    createElement(MdActionSheet, {
+    createElement(CuActionSheet, {
       value: store.value,
       title: props.title ?? '',
       options: props.options ?? [],
@@ -71,7 +71,7 @@ function renderSheet(store: ActionSheetStore) {
   ))
 }
 
-type ActionSheetStatic = typeof MdActionSheet & {
+type ActionSheetStatic = typeof CuActionSheet & {
   create: (props: ActionSheetCreateProps) => ActionSheetInstance
 }
 
@@ -118,8 +118,8 @@ function create({
   return instance
 }
 
-const ActionSheet = MdActionSheet as ActionSheetStatic
+const ActionSheet = CuActionSheet as ActionSheetStatic
 ActionSheet.create = create
 
-export { MdActionSheet }
+export { CuActionSheet }
 export default ActionSheet

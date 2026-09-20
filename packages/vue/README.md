@@ -1,15 +1,15 @@
-# mand-mobile（Vue 3 版）
+# centui（Vue 3 版）
 
-mand-mobile v3 的 Vue 3 实现。组件逻辑与 `@mand-mobile/core` 共享，样式来自
-`@mand-mobile/styles`（与 v2 同源 CSS，Vue / React / 小程序多端复用同一份产物）。
+centui v3 的 Vue 3 实现。组件逻辑与 `@centui/core` 共享，样式来自
+`@centui/styles`（与 v2 同源 CSS，Vue / React / 小程序多端复用同一份产物）。
 
 ## 安装
 
 ```bash
-pnpm add mand-mobile@3 @mand-mobile/styles
+pnpm add centui@3 @centui/styles
 ```
 
-`mand-mobile` 的 peer 依赖为 `vue >= 3.4`。
+`centui` 的 peer 依赖为 `vue >= 3.4`。
 
 ## 使用
 
@@ -17,8 +17,8 @@ pnpm add mand-mobile@3 @mand-mobile/styles
 
 ```ts
 import { createApp } from 'vue'
-import { MdButton } from 'mand-mobile'
-import '@mand-mobile/styles/es/button.css'
+import { CuButton } from 'centui'
+import '@centui/styles/es/button.css'
 
 createApp(App).use(/* 组件按需注册 */)
 ```
@@ -26,23 +26,23 @@ createApp(App).use(/* 组件按需注册 */)
 按需引入（`sideEffects: false`，tree-shaking 友好）：
 
 ```ts
-import { MdButton } from 'mand-mobile/es/button'
-import '@mand-mobile/styles/es/button.css'
+import { CuButton } from 'centui/es/button'
+import '@centui/styles/es/button.css'
 ```
 
 表单类组件的 `v-model` 对应 `modelValue` / `update:modelValue`（Switch、Agree、Stepper）。
 
-## 首批组件（12）
+## 组件（55+）
 
-基础：Button、Icon、Tag、Amount、CellItem、Skeleton、NoticeBar、ActivityIndicator、Progress
-表单：Switch、Agree、Stepper
+完整清单见仓库根 README 与文档站；组件统一以 `Cu` 前缀导出（如 `CuButton`），
+覆盖基础、表单、弹层反馈、滚动导航、画布与金融场景（Cashier、Chart、LicensePlate 等）。
 
 ## 约定
 
 - 组件标记结构与 v2.7.0 逐场景对齐（L3 golden 契约，见 `test/golden-v3.spec.ts`，
   基线由 `test/golden` 工程以 vue2.7 + mand-mobile@2.7.0 渲染产出）
-- 组件不内嵌样式，CSS 统一由 `@mand-mobile/styles` 提供
-- 纯逻辑（金额格式化、中文大写等）下沉 `@mand-mobile/core`，供 React 版复用
+- 组件不内嵌样式，CSS 统一由 `@centui/styles` 提供
+- 纯逻辑（金额格式化、中文大写等）下沉 `@centui/core`，供 React 版复用
 
 ## 开发
 

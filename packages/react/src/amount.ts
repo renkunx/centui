@@ -1,2 +1,2 @@
-// 按需入口：@mand-mobile/react/es/amount
+// 按需入口：@centui/react/es/amount
 export * from './components/amount'

@@ -1,21 +1,21 @@
 <template>
-  <div class="md-activity-indicator" :class="type">
+  <div class="cu-activity-indicator" :class="type">
     <div class="indicator-container" :class="{ vertical }">
       <div class="indicator-loading">
         <template v-if="type === 'roller'">
-          <MdRoller :size="size" :color="color" :width="width"></MdRoller>
+          <CuRoller :size="size" :color="color" :width="width"></CuRoller>
         </template>
         <template v-else-if="type === 'spinner'">
-          <MdSpinning :size="size" :color="color"></MdSpinning>
+          <CuSpinning :size="size" :color="color"></CuSpinning>
         </template>
         <template v-else-if="type === 'carousel'">
-          <MdCarousel :size="size" :color="color"></MdCarousel>
+          <CuCarousel :size="size" :color="color"></CuCarousel>
         </template>
       </div>
       <div
         v-if="$slots.default"
         :style="{ fontSize: `${textSize}px`, color: textColor }"
-        class="md-activity-indicator-text indicator-text"
+        class="cu-activity-indicator-text indicator-text"
       >
         <slot></slot>
       </div>
@@ -25,11 +25,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import MdRoller from './Roller.vue'
-import MdSpinning from './Spinning.vue'
-import MdCarousel from './Carousel.vue'
+import CuRoller from './Roller.vue'
+import CuSpinning from './Spinning.vue'
+import CuCarousel from './Carousel.vue'
 
-defineOptions({ name: 'md-activity-indicator' })
+defineOptions({ name: 'cu-activity-indicator' })
 
 const props = withDefaults(
   defineProps<{

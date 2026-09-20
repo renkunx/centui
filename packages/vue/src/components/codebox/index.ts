@@ -1,1 +1,1 @@
-export { default as MdCodebox } from './Codebox.vue'
+export { default as CuCodebox } from './Codebox.vue'

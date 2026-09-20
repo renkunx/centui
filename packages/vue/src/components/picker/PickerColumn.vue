@@ -1,17 +1,17 @@
 <template>
   <div
     ref="root"
-    class="md-picker-column"
+    class="cu-picker-column"
     :style="{ height: `${style.indicatorHeight + 2 * style.maskerHeight}px` }"
   >
-    <div class="md-picker-column-container">
-      <div class="md-picker-column-masker top" :style="{ height: `${style.maskerHeight}px` }"></div>
+    <div class="cu-picker-column-container">
+      <div class="cu-picker-column-masker top" :style="{ height: `${style.maskerHeight}px` }"></div>
       <div
-        class="md-picker-column-masker bottom"
+        class="cu-picker-column-masker bottom"
         :style="{ height: `${style.maskerHeight}px` }"
       ></div>
-      <div class="md-picker-column-list">
-        <div v-for="(colunm, i) in columnValues" :key="i" class="md-picker-column-item">
+      <div class="cu-picker-column-list">
+        <div v-for="(colunm, i) in columnValues" :key="i" class="cu-picker-column-item">
           <ul class="column-list" :style="{ 'padding-top': `${style.maskerHeight}px` }">
             <li
               v-for="(item, j) in colunm"
@@ -33,18 +33,18 @@
           <div
             v-for="n in cols - columnValues.length"
             :key="n + columnValues.length - 1"
-            class="md-picker-column-item"
+            class="cu-picker-column-item"
           >
             <ul class="column-list" :style="{ 'padding-top': `${style.maskerHeight}px` }"></ul>
           </div>
         </template>
       </div>
-      <div class="md-picker-column-hooks">
+      <div class="cu-picker-column-hooks">
         <template v-if="cols">
           <div
             v-for="n in cols"
             :key="n - 1"
-            class="md-picker-column-hook"
+            class="cu-picker-column-hook"
             @touchstart="onColumnTouchStart($event, n - 1)"
             @mousedown="onColumnTouchStart($event, n - 1, true)"
             @touchmove="onColumnTouchMove($event, n - 1)"
@@ -60,10 +60,10 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onBeforeMount, ref, watch } from 'vue'
-import { inArray, traverse, warn, type TraverseNode } from '@mand-mobile/core'
-import { getDpr, render, Scroller, type Scroller as ScrollerType } from '@mand-mobile/core/web'
+import { inArray, traverse, warn, type TraverseNode } from '@centui/core'
+import { getDpr, render, Scroller, type Scroller as ScrollerType } from '@centui/core/web'
 
-defineOptions({ name: 'md-picker-column' })
+defineOptions({ name: 'cu-picker-column' })
 
 const props = withDefaults(
   defineProps<{
@@ -126,7 +126,7 @@ function hooks(): HTMLElement[] {
   if (!root.value) {
     return []
   }
-  return Array.from(root.value.querySelectorAll<HTMLElement>('.md-picker-column-hook'))
+  return Array.from(root.value.querySelectorAll<HTMLElement>('.cu-picker-column-hook'))
 }
 
 // initial scroller for each column

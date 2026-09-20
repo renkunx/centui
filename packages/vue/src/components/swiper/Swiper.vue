@@ -1,8 +1,8 @@
 <template>
   <div
     ref="root"
-    class="md-swiper"
-    :class="{ 'md-swiper-vertical': isVertical, 'md-swiper-fade': !isSlide, disabled: !isInitial }"
+    class="cu-swiper"
+    :class="{ 'cu-swiper-vertical': isVertical, 'cu-swiper-fade': !isSlide, disabled: !isInitial }"
     @mousedown="onDragStart"
     @mousemove="onDragMove"
     @mouseup="onDragEnd"
@@ -12,8 +12,8 @@
     @touchend="onDragEnd"
     @touchcancel="onDragEnd"
   >
-    <div ref="swiperBox" class="md-swiper-box">
-      <div ref="swiper" class="md-swiper-container">
+    <div ref="swiperBox" class="cu-swiper-box">
+      <div ref="swiper" class="cu-swiper-container">
         <!-- v2 契约：lastCopy 置于最前、firstCopy 追加最后（[c3, 1, 2, 3, c1]） -->
         <template v-if="loopCopies && $slots.default">
           <VNodeRenderer :vnode="lastCopyVnode" v-if="lastCopyVnode" />
@@ -24,12 +24,12 @@
         </template>
       </div>
     </div>
-    <div class="md-swiper-indicators" :class="{ disabled: !hasDots }" v-if="oItemCount > 1 && hasDots">
+    <div class="cu-swiper-indicators" :class="{ disabled: !hasDots }" v-if="oItemCount > 1 && hasDots">
       <div
         v-for="index in oItemCount"
         :key="index"
-        class="md-swiper-indicator"
-        :class="{ 'md-swiper-indicator-active': index - 1 === realIndex }"
+        class="cu-swiper-indicator"
+        :class="{ 'cu-swiper-indicator-active': index - 1 === realIndex }"
       ></div>
     </div>
   </div>
@@ -51,12 +51,12 @@ import {
   watch,
   type VNode,
 } from 'vue'
-import { debounce, warn } from '@mand-mobile/core'
-import { render as renderTransform, Scroller, type Scroller as ScrollerType } from '@mand-mobile/core/web'
+import { debounce, warn } from '@centui/core'
+import { render as renderTransform, Scroller, type Scroller as ScrollerType } from '@centui/core/web'
 
 const isTestEnv = typeof process !== 'undefined' && process.env.MAND_ENV === 'test'
 
-defineOptions({ name: 'md-swiper' })
+defineOptions({ name: 'cu-swiper' })
 
 // scale of sliding distance & touch duration that triggers page turning
 const PAGING_SCALE = 0.5
@@ -129,7 +129,7 @@ interface ComponentPublicInstanceLike {
   $el: HTMLElement
 }
 
-// 子项注册（由 MdSwiperItem 调用）
+// 子项注册（由 CuSwiperItem 调用）
 function registerItem(item: ComponentPublicInstanceLike) {
   itemInstances.push(item)
   if (ready.value) {
@@ -186,7 +186,7 @@ const firstCopyVnode = computed<VNode | null>(() => {
     return null
   }
   return cloneVNode(elementChildren[0], {
-    class: 'md-swiper-item-first-copy',
+    class: 'cu-swiper-item-first-copy',
     style: copyStyle.value,
     isCopy: true,
   })
@@ -198,7 +198,7 @@ const lastCopyVnode = computed<VNode | null>(() => {
     return null
   }
   return cloneVNode(elementChildren[elementChildren.length - 1], {
-    class: 'md-swiper-item-last-copy',
+    class: 'cu-swiper-item-last-copy',
     style: copyStyle.value,
     isCopy: true,
   })
@@ -304,7 +304,7 @@ function backupItem() {
 
 function translate(element: HTMLElement | undefined, offset: number, animate = true) {
   if (!element) {
-    warn('[md-swiper] no element for translate')
+    warn('[cu-swiper] no element for translate')
     return
   }
   const x = isVertical.value ? 0 : -offset

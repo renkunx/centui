@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
-import { MdIcon } from '../icon/Icon'
+import { CuIcon } from '../icon/Icon'
 
 export interface NoticeBarProps {
   /** link | closable */
@@ -19,7 +19,7 @@ export interface NoticeBarProps {
   onClose?: () => void
 }
 
-export function MdNoticeBar({
+export function CuNoticeBar({
   mode = '',
   type = 'default',
   time = 0,
@@ -85,32 +85,32 @@ export function MdNoticeBar({
 
   return (
     <div
-      className={`md-notice-bar${round ? ' md-notice-bar-round' : ''} ${type}`}
+      className={`cu-notice-bar${round ? ' cu-notice-bar-round' : ''} ${type}`}
     >
       <div
-        className={`md-notice-bar-left${!customLeft && !icon ? ' md-notice-bar-empty' : ''}`}
+        className={`cu-notice-bar-left${!customLeft && !icon ? ' cu-notice-bar-empty' : ''}`}
       >
         {customLeft ? (
           left
         ) : icon ? (
-          <MdIcon name={icon} svg={iconSvg} className="md-notice-icon" />
+          <CuIcon name={icon} svg={iconSvg} className="cu-notice-icon" />
         ) : null}
       </div>
       <div
         ref={wrapRef}
-        className={`md-notice-bar-content${multiRows ? ' md-notice-bar-multi-content' : ''}`}
+        className={`cu-notice-bar-content${multiRows ? ' cu-notice-bar-multi-content' : ''}`}
       >
-        <div ref={contentRef} className={overflow && scrollable ? 'md-notice-bar-content-animate' : ''}>
+        <div ref={contentRef} className={overflow && scrollable ? 'cu-notice-bar-content-animate' : ''}>
           {children}
         </div>
       </div>
-      <div className="md-notice-bar-right">
+      <div className="cu-notice-bar-right">
         {customRight ? (
           right
         ) : mode || closable ? (
-          <MdIcon
+          <CuIcon
             name={rightIcon}
-            className="md-notice-icon md-notice-icon-right"
+            className="cu-notice-icon cu-notice-icon-right"
             onClick={event => {
               event.stopPropagation()
               close()
