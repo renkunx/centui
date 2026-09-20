@@ -11,8 +11,10 @@ import { defineConfig } from 'astro/config'
  * - 组件内容页（mdx）与 API 表由 scripts/gen.mjs 从 registry 生成
  */
 export default defineConfig({
-  site: 'https://renkunx.github.io/centui',
-  base: '/',
+  // GitHub Pages 项目页：CI 注入 DOCS_SITE/DOCS_BASE（deploy-docs.yml），
+  // 跟随仓库名；本地 dev/build 未注入时按 origin + '/' 处理
+  site: process.env.DOCS_SITE ?? 'https://renkunx.github.io',
+  base: process.env.DOCS_BASE ?? '/',
   integrations: [
     vue(),
     react(),

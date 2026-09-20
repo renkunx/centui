@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [master, v3-monorepo]
+    branches: [main]
   pull_request:
-    branches: [master, v3-monorepo]
+    branches: [main]
 
 jobs:
   verify:

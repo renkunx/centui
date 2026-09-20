@@ -1,0 +1,65 @@
+name: Deploy Docs
+
+# 文档站（Astro + Starlight）构建并发布到 GitHub Pages：
+# https://renkunx.github.io/mand-mobile/
+# （仓库 Settings → Pages 的 Source 已设为 GitHub Actions，见首次配置）
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'packages/**'
+      - '.github/workflows/deploy-docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true # 仅静态站点发布，取消旧部署安全
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        # 版本读取根 package.json 的 packageManager 字段
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # docs 的 vite alias 将 centui 指向 packages/vue/dist，必须先构建包
+      - name: Build packages
+        run: pnpm build
+
+      - name: Build docs
+        run: pnpm docs:build
+        env:
+          # GitHub Pages 项目页地址为 https://<owner>.github.io/<repo>/，
+          # 跟随仓库名注入，仓库改名后无需改配置（本地默认 origin + /）
+          DOCS_SITE: https://${{ github.repository_owner }}.github.io
+          DOCS_BASE: /${{ github.event.repository.name }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

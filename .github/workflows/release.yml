@@ -1,0 +1,61 @@
+name: Release
+
+# changesets 发布流水线（npmjs.com + GitHub Packages 双 registry）：
+# - 普通 push 到 main：存在 changeset 文件 → 创建/更新「Version Packages」PR，不发布
+# - 合并「Version Packages」PR：版本号已提升、changeset 已消费 → 执行双 registry
+#   发布（幂等，已发布的版本自动跳过），随后由 changesets/action 推 tag 并创建
+#   GitHub Release
+#
+# 所需 secrets：
+# - NPM_TOKEN  npmjs.com 的 Automation token（绕过 2FA），账号需拥有/加入
+#              npm 的 centui org（@centui/* scope 发布的前提）
+# - GPR_TOKEN  可选。GitHub Packages 硬性要求包 scope 与认证账号同名：
+#              @centui/* 需要 GitHub 账号/组织 centui 的 PAT（write:packages）。
+#              未配置时回退内置 GITHUB_TOKEN，仅当仓库 owner 为 centui 时可用，
+#              否则 GPR 发布失败只产生 warning，不影响 npm 发布与 tag/Release
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-${{ github.ref }}
+  # 不能取消：取消进行中的发布会造成半发布状态
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 推 tag、创建 GitHub Release 与 Version Packages PR
+      pull-requests: write # 创建/更新 Version Packages PR
+      packages: write # 发布 GitHub Packages
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        # 版本读取根 package.json 的 packageManager 字段
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # 发布产物 + GPR/文档构建都依赖各包 dist
+      - name: Build packages
+        run: pnpm build
+
+      - uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          publish: bash ./.github/scripts/publish-packages.sh
+          title: 'chore(release): version packages'
+          commit: 'chore(release): version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GPR_TOKEN: ${{ secrets.GPR_TOKEN }}
