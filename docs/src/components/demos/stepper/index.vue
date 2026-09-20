@@ -1,52 +1,36 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MdStepper } from 'mand-mobile'
+import { MdStepper, MdField, MdFieldItem } from 'mand-mobile'
 import DemoCanvas from '../../DemoCanvas.vue'
 
-const scenes = ['基础', '步长与范围', '禁用']
-const v1 = ref(2)
-const v2 = ref(1)
-const v3 = ref(5)
-const code = `<MdStepper v-model="v1" />
-<MdStepper v-model="v2" :min="0" :max="10" :step="2" />
-<MdStepper v-model="v3" disabled />`
+const scenes = ['禁用', '只读', '最小-12 最大18', '步进2 整数', '最小值4', 'step 1.3']
+const code = `<MdStepper disabled />
+<MdStepper read-only />
+<MdStepper v-model="value" :min="-12" :max="18" />
+<MdStepper v-model="value" :step="2" :min="2" is-integer />`
+const value = ref(0)
+const value2 = ref(3)
 </script>
 
 <template>
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
-      <div class="sp-row">
-        <MdStepper v-model="v1" />
-      </div>
-      <div class="sp-row sp-info">当前值：{{ v1 }}</div>
+      <MdField><MdFieldItem title="禁用"><MdStepper disabled /></MdFieldItem></MdField>
     </template>
     <template #scene-1>
-      <div class="sp-row">
-        <MdStepper v-model="v2" :min="0" :max="10" :step="2" />
-      </div>
-      <div class="sp-info">步长 2，范围 0 ~ 10，当前值：{{ v2 }}</div>
-      <div class="sp-row">
-        <MdStepper v-model="v3" :min="0" :max="5" :step="1" integer />
-      </div>
+      <MdField><MdFieldItem title="只读"><MdStepper read-only /></MdFieldItem></MdField>
     </template>
     <template #scene-2>
-      <div class="sp-row">
-        <MdStepper v-model="v1" disabled />
-      </div>
-      <div class="sp-row">
-        <MdStepper v-model="v1" read-only />
-      </div>
+      <MdField><MdFieldItem title="最小值-12，最大值18"><MdStepper v-model="value" :min="-12" :max="18" /></MdFieldItem></MdField>
+    </template>
+    <template #scene-3>
+      <MdField><MdFieldItem title="步进2, 只允许输入整数"><MdStepper v-model="value2" :step="2" :min="2" is-integer /></MdFieldItem></MdField>
+    </template>
+    <template #scene-4>
+      <MdField><MdFieldItem title="最小值4大于默认值"><MdStepper :min="4" /></MdFieldItem></MdField>
+    </template>
+    <template #scene-5>
+      <MdField><MdFieldItem title="step为小数1.3"><MdStepper :step="1.3" /></MdFieldItem></MdField>
     </template>
   </DemoCanvas>
 </template>
-
-<style scoped>
-.sp-row {
-  padding: 12px 14px;
-}
-.sp-desc {
-  padding: 0 14px;
-  font-size: 12px;
-  color: #999;
-}
-</style>

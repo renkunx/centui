@@ -1,32 +1,31 @@
 import { useState } from 'react'
-import { MdSkeleton } from 'mand-mobile-react'
+import { MdSkeleton, MdCellItem } from 'mand-mobile-react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
-const scenes = ['头像骨架', '段落骨架', '加载完成']
-const code = `<MdSkeleton avatar title :row="2" loading />
-<MdSkeleton :loading="false">内容</MdSkeleton>`
+const scenes = ['加载正文', '组合骨架', '组合完整内容']
+const code = `<MdSkeleton title loading={loading} />
+<MdSkeleton avatar title />
+<MdSkeleton avatar title loading={loading} row={2}>
+  <MdCellItem title="交通银行" brief="展示摘要描述" />
+</MdSkeleton>`
 
 export default function SkeletonDemo() {
-  const [loading, setLoading] = useState(true)
+  const [loading] = useState(true)
+
   return (
     <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
       {active => {
-        if (active === 0)
-          return (
-            <div style={{ background: '#fff', padding: 16 }}>
-              <MdSkeleton avatar title row={2} loading />
-            </div>
-          )
-        if (active === 1)
-          return (
-            <div style={{ background: '#fff', padding: 16 }}>
-              <MdSkeleton title row={3} loading />
-            </div>
-          )
+        if (active === 0) return <MdSkeleton title loading={loading} />
+        if (active === 1) return <MdSkeleton avatar title loading={loading} />
         return (
-          <div style={{ background: '#fff', padding: 16, minHeight: 80 }} onClick={() => setLoading(true)}>
-            {loading ? <MdSkeleton avatar loading /> : <p>内容加载完成，点击重试</p>}
-          </div>
+          <MdField>
+            <MdSkeleton avatar title loading={loading} row={2}>
+              <MdCellItem title="交通银行" brief="展示摘要描述" addon="附加文案" arrow />
+            </MdSkeleton>
+            <MdSkeleton avatar title loading={loading} row={2}>
+              <MdCellItem title="招商银行" brief="展示摘要描述" addon="附加文案" arrow />
+            </MdSkeleton>
+          </MdField>
         )
       }}
     </DemoCanvasReact>

@@ -1,23 +1,26 @@
+import { useEffect, useState } from 'react'
 import { MdAmount } from 'mand-mobile-react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
-const scenes = ['常规', '千分位', '大写']
-const code = `<MdAmount :value="1234.56" />
-<MdAmount :value="1234.56" has-separator />
-<MdAmount :value="1234.56" is-capital />`
+const scenes = ['千位分隔符', '变化动效', '大写中文']
+const code = `<MdAmount value={1234.125} precision={3} />
+<MdAmount value={v} precision={2} transition />
+<MdAmount value={1234.125} isCapital />`
 
 export default function AmountDemo() {
+  const [v, setV] = useState(1000)
+  useEffect(() => {
+    const t = setInterval(() => setV(Math.round(Math.random() * 10000)), 2000)
+    return () => clearInterval(t)
+  }, [])
+
   return (
     <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
-      {active =>
-        active === 0 ? (
-          <p className="amounts"><MdAmount value={1234.56} /></p>
-        ) : active === 1 ? (
-          <p className="amounts"><MdAmount value={1234567.89} hasSeparator /></p>
-        ) : (
-          <p className="amounts"><MdAmount value={1234.56} isCapital /></p>
-        )
-      }
+      {active => {
+        if (active === 0) return <MdAmount value={1234.125} precision={3} />
+        if (active === 1) return <MdAmount value={v} precision={2} transition />
+        return <MdAmount value={1234.125} isCapital />
+      }}
     </DemoCanvasReact>
   )
 }

@@ -2,52 +2,46 @@
 import { MdTag } from 'mand-mobile'
 import DemoCanvas from '../../DemoCanvas.vue'
 
-const scenes = ['填充', '幽灵', '圆角', '自定义颜色']
-const code = `<MdTag type="fill">特惠</MdTag>
-<MdTag type="ghost">满减券</MdTag>
-<MdTag shape="fillet">新品</MdTag>`
+const scenes = ['圆角', '半圆', '线框', '阳文', '特殊标签']
+const code = `<MdTag size="small" shape="circle" type="fill" fill-color="#FC7353">特惠</MdTag>
+<MdTag size="large" shape="fillet" type="fill" font-color="#FF5B60">逾期23天</MdTag>
+<MdTag shape="coupon" fill-color="#FC9153">免息券70.1</MdTag>`
 </script>
 
 <template>
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
-      <div class="tag-row">
-        <MdTag type="fill">特惠</MdTag>
-        <MdTag type="fill" sharp="orange">满减券</MdTag>
-        <MdTag type="fill" sharp="red">新品</MdTag>
-        <MdTag type="fill" sharp="blue">限时</MdTag>
+      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
+        <MdTag size="tiny" shape="circle" type="fill" fill-color="#FC7353" font-color="#000" />
+        <MdTag size="small" shape="circle" type="fill" fill-color="#FC7353" font-color="#fff">特惠</MdTag>
+        <MdTag size="large" shape="circle" type="fill" fill-color="#FC7353" font-color="#fff">返5000</MdTag>
+        <MdTag size="small" shape="circle" type="ghost" font-color="#FC7353">特惠</MdTag>
+        <MdTag size="small" shape="circle" sharp="bottom-left" type="fill" fill-color="linear-gradient(90deg, #FC7353 0%, #FC9153 100%)" font-color="#fff">续保3折起</MdTag>
       </div>
     </template>
     <template #scene-1>
-      <div class="tag-row">
-        <MdTag type="ghost">默认</MdTag>
-        <MdTag type="ghost" sharp="orange">可领取</MdTag>
-        <MdTag type="ghost" sharp="red">已抢光</MdTag>
+      <div style="display: flex; gap: 12px; align-items: center">
+        <MdTag size="large" shape="fillet" type="fill" fill-color="rgba(255, 91, 96, .1)" font-weight="normal" font-color="#FF5B60">逾期23天</MdTag>
+        <MdTag size="large" shape="fillet" type="ghost" font-color="#FF5B60">逾期23天</MdTag>
       </div>
     </template>
     <template #scene-2>
-      <div class="tag-row">
-        <MdTag shape="fillet">圆角</MdTag>
-        <MdTag shape="fillet" sharp="orange" size="lg">大号圆角</MdTag>
-        <MdTag shape="square">方角</MdTag>
+      <div style="display: flex; gap: 12px; align-items: center">
+        <MdTag size="large" shape="square" font-color="#FF8843" type="ghost">可选</MdTag>
+        <MdTag size="small" shape="square" font-color="#28AA91" type="ghost">可选</MdTag>
       </div>
     </template>
     <template #scene-3>
-      <div class="tag-row">
-        <MdTag fill-color="#35C454" font-color="#fff" type="fill">自定义绿色</MdTag>
-        <MdTag fill-color="#FFE9A8" font-color="#8C5A00" type="fill">自定义浅黄</MdTag>
-        <MdTag font-color="#8A35C7" type="ghost">自定义描边</MdTag>
+      <div style="display: flex; gap: 12px; align-items: center">
+        <MdTag size="large" shape="square" fill-color="rgba(0,0,0,0)" type="fill" font-weight="bolder" font-color="#333">￥3600</MdTag>
+        <MdTag size="small" shape="square" fill-color="rgba(0,0,0,0)" type="fill" font-weight="bolder" font-color="#333">￥300</MdTag>
+      </div>
+    </template>
+    <template #scene-4>
+      <div style="display: flex; gap: 20px; align-items: center">
+        <MdTag size="large" shape="coupon" fill-color="#FC9153" type="fill" font-color="#fff">免息券70.1</MdTag>
+        <MdTag size="large" shape="quarter" fill-color="#FC9153" type="fill" font-color="#fff">免息券</MdTag>
       </div>
     </template>
   </DemoCanvas>
 </template>
-
-<style scoped>
-.tag-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  padding: 12px;
-}
-</style>

@@ -484,3 +484,20 @@
   font-size: 26px;
   color: #2f86f6;
 }
+
+/* icon demo 网格（双框架共享） */
+.icon-demo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.icon-demo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  color: #666;
+}

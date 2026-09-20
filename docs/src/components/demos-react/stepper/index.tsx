@@ -1,34 +1,32 @@
 import { useState } from 'react'
-import { MdStepper } from 'mand-mobile-react'
+import { MdStepper, MdField, MdFieldItem } from 'mand-mobile-react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
-const scenes = ['基础', '步长与范围', '禁用']
-const code = `<MdStepper value={v} />
-<MdStepper value={v} min={0} max={10} step={2} />
-<MdStepper value={v} disabled />`
+const scenes = ['禁用', '只读', '最小-12 最大18', '步进2 整数', '最小值4', 'step 1.3']
+const code = `<MdStepper disabled />
+<MdStepper readOnly />
+<MdStepper value={v} onChange={setV} min={-12} max={18} />
+<MdStepper value={v} onChange={setV} step={2} min={2} isInteger />`
 
 export default function StepperDemo() {
-  const [v1, setV1] = useState(2)
-  const [v2, setV2] = useState(2)
+  const [value, setValue] = useState(0)
+  const [value2, setValue2] = useState(3)
+
   return (
     <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
-      {active =>
-        active === 0 ? (
-          <div style={{ padding: 8 }}>
-            <MdStepper value={v1} onChange={setV1} />
-            <p style={{ color: '#999', fontSize: 13 }}>当前值：{v1}</p>
-          </div>
-        ) : active === 1 ? (
-          <div style={{ padding: 8 }}>
-            <MdStepper value={v2} min={0} max={10} step={2} onChange={setV2} />
-            <p style={{ color: '#999', fontSize: 13 }}>步长 2，范围 0 ~ 10</p>
-          </div>
-        ) : (
-          <div style={{ padding: 8 }}>
-            <MdStepper value={3} disabled />
-          </div>
-        )
-      }
+      {active => {
+        if (active === 0)
+          return <MdField><MdFieldItem title="禁用"><MdStepper disabled /></MdFieldItem></MdField>
+        if (active === 1)
+          return <MdField><MdFieldItem title="只读"><MdStepper readOnly /></MdFieldItem></MdField>
+        if (active === 2)
+          return <MdField><MdFieldItem title="最小值-12，最大值18"><MdStepper value={value} onChange={setValue} min={-12} max={18} /></MdFieldItem></MdField>
+        if (active === 3)
+          return <MdField><MdFieldItem title="步进2, 只允许输入整数"><MdStepper value={value2} onChange={setValue2} step={2} min={2} isInteger /></MdFieldItem></MdField>
+        if (active === 4)
+          return <MdField><MdFieldItem title="最小值4大于默认值"><MdStepper min={4} /></MdFieldItem></MdField>
+        return <MdField><MdFieldItem title="step为小数1.3"><MdStepper step={1.3} /></MdFieldItem></MdField>
+      }}
     </DemoCanvasReact>
   )
 }

@@ -1,41 +1,54 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { MdIcon } from 'mand-mobile'
 import DemoCanvas from '../../DemoCanvas.vue'
 
-const scenes = ['常用图标', '状态图标', '尺寸与颜色']
-const code = `<MdIcon name="home" size="lg" />
-<MdIcon name="success-color" size="lg" color="#35C454" />
-<MdIcon name="search" svg />`
+const scenes = ['字体图标', 'SVG 图标', '大小', '颜色']
+const code = `<MdIcon :name="icon" size="lg" />
+<MdIcon :name="icon" size="lg" svg />
+<MdIcon :name="icon" size="xs|sm|md|lg" />
+<MdIcon name="security" color="orange" />`
+const iconList = [
+  'square-checked', 'square-check', 'rectangle', 'right', 'wrong', 'arrow',
+  'arrow-left', 'arrow-right', 'arrow-up', 'arrow-down', 'invisible', 'visible',
+  'service', 'setting', 'close', 'refresh', 'edit', 'sort', 'info', 'question',
+  'security', 'rmb', 'wait', 'check', 'checked', 'check-disabled', 'clear',
+  'success', 'fail', 'location', 'calendar', 'user', 'bank-zs', 'bank-ny',
+]
+const sizes = ['xs', 'sm', 'md', 'lg']
+const colors = ['gray', 'orange', 'blue', 'green', 'red']
 </script>
 
 <template>
   <DemoCanvas mode="stage" :scenes="scenes" :code="code">
     <template #scene-0>
-      <div class="icon-grid">
-        <MdIcon v-for="n in ['home', 'search', 'location', 'mobile-phone', 'id-card', 'card-bag', 'security', 'time', 'discovery', 'profession', 'arrow-right', 'question']" :key="n" :name="n" size="lg" />
+      <div class="icon-demo-grid">
+        <div v-for="icon in iconList" :key="icon" class="icon-demo-item">
+          <MdIcon :name="icon.split('/')[0]" size="lg" />
+          <p>{{ icon }}</p>
+        </div>
       </div>
     </template>
     <template #scene-1>
-      <div class="icon-grid">
-        <MdIcon name="success-color" size="lg" />
-        <MdIcon name="warn-color" size="lg" />
-        <MdIcon name="fail-color" size="lg" />
-        <MdIcon name="info-solid" size="lg" />
-        <MdIcon name="checked" size="lg" color="#2F86F6" />
-        <MdIcon name="check-disabled" size="lg" />
-        <MdIcon name="spinner" size="lg" color="#2F86F6" :svg="false" />
-        <MdIcon name="ring" size="lg" color="#A7A7A7" />
+      <div class="icon-demo-grid">
+        <div v-for="icon in ['spinner', 'warn-color', 'success-color', 'checked']" :key="icon" class="icon-demo-item">
+          <MdIcon :name="icon" size="lg" svg />
+          <p>{{ icon }}</p>
+        </div>
       </div>
     </template>
     <template #scene-2>
-      <div class="icon-column">
-        <div class="icon-line"><MdIcon name="home" size="xs" /><MdIcon name="home" size="sm" /><MdIcon name="home" size="md" /><MdIcon name="home" size="lg" /><MdIcon name="home" size="xl" /></div>
-        <div class="icon-line">
-          <MdIcon name="arrow-left" size="lg" color="#2F86F6" />
-          <MdIcon name="arrow-left" size="lg" color="#FF9F0F" />
-          <MdIcon name="arrow-left" size="lg" color="#35C454" />
-          <MdIcon name="arrow-left" size="lg" color="#F5222D" />
+      <div class="icon-demo-grid">
+        <div v-for="s in sizes" :key="s" class="icon-demo-item">
+          <MdIcon :name="'location'" :size="s" />
+          <p>{{ s }}</p>
+        </div>
+      </div>
+    </template>
+    <template #scene-3>
+      <div class="icon-demo-grid">
+        <div v-for="c in colors" :key="c" class="icon-demo-item">
+          <MdIcon name="security" :color="c" />
+          <p>{{ c }}</p>
         </div>
       </div>
     </template>
@@ -43,21 +56,18 @@ const code = `<MdIcon name="home" size="lg" />
 </template>
 
 <style scoped>
-.icon-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px 8px;
-  padding: 12px;
+.icon-demo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px 0;
 }
-.icon-column {
+.icon-demo-item {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 12px;
-}
-.icon-line {
-  display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 8px;
+  font-size: 20px;
+  color: #666;
 }
 </style>
