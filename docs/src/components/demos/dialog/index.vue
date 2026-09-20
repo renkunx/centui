@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MdDialog, MdButton, type DialogBtn } from 'mand-mobile'
+import { MdDialog, Dialog, MdButton, type DialogBtn } from 'mand-mobile'
 import DemoCanvas from '../../DemoCanvas.vue'
 
-const scenes = ['基础', '竖排布局', '带图标']
+const scenes = ['基础', '竖排布局', '单例模式', '带图标']
 const show1 = ref(false)
 const show2 = ref(false)
 const show3 = ref(false)
@@ -31,6 +31,14 @@ const code = `<MdDialog v-model="show" title="温馨提示" content="是否确�
         <MdButton type="primary" @click="show2 = true">竖排布局</MdButton>
       </div>
       <MdDialog v-model="show2" title="删除确认" content="删除后将无法恢复，是否继续？" layout="column" :btns="[btnOk2, btnClose2]" />
+    </template>
+    <template #scene-3>
+      <div style="display: flex; gap: 12px; justify-content: center">
+        <MdButton @click="Dialog.alert({ title: '警告', content: '警告弹窗', confirmText: '知道了' })">警告弹窗</MdButton>
+        <MdButton @click="Dialog.confirm({ title: '确认', content: '确认弹窗' })">确认弹窗</MdButton>
+        <MdButton @click="Dialog.succeed({ title: '成功', content: '操作成功' })">成功弹窗</MdButton>
+        <MdButton @click="Dialog.failed({ title: '失败', content: '操作失败' })">失败弹窗</MdButton>
+      </div>
     </template>
     <template #scene-2>
       <div class="btn-col">

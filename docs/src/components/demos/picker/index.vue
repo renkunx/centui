@@ -4,7 +4,7 @@ import { MdPicker, MdButton } from 'mand-mobile'
 import { Toast } from 'mand-mobile'
 import DemoCanvas from '../../DemoCanvas.vue'
 
-const scenes = ['单列选择', '多列选择', '级联选择']
+const scenes = ['单列选择', '多列选择', '级联选择', '内联展示']
 
 const show1 = ref(false)
 const show2 = ref(false)
@@ -126,6 +126,12 @@ const code = `<MdPicker v-model="show" title="选择城市" :data="[data1]" @con
         keep-index
         @confirm="onConfirm3"
       />
+    </template>
+    <template #scene-3>
+      <div class="pk-pad">
+        <p style="font-size: 24px; color: #999; margin-bottom: 12px">内联选择器（is-view）</p>
+        <MdPicker :data="[data1]" is-view @confirm="onConfirm1" />
+      </div>
     </template>
   </DemoCanvas>
 </template>
