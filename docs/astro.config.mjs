@@ -7,7 +7,7 @@ import { defineConfig } from 'astro/config'
 /**
  * M5 文档站：Astro + Starlight 双语（zh-CN / en）。
  * - Vue 组件岛：组件预览（PhoneFrame + demo）client 水合
- * - centui 走源码（packages/vue/src），dev 即改即见
+ * - CentUI 走源码（packages/vue/src），dev 即改即见
  * - 组件内容页（mdx）与 API 表由 scripts/gen.mjs 从 registry 生成
  */
 export default defineConfig({
@@ -19,8 +19,8 @@ export default defineConfig({
     vue(),
     react(),
     starlight({
-      title: 'centui',
-      description: 'centui 3.0 —— 多端移动 UI 组件库（mand-mobile 续作）',
+      title: 'CentUI',
+      description: 'CentUI 3.0 —— 多端移动 UI 组件库（mand-mobile 续作）',
       favicon: '/favicon.png',
       // 根语言放在 root（URL 无前缀），英文走 /en/：
       // 否则 Starlight 自动生成的 Astro i18n 配置会要求默认语言带 /zh-CN/ 前缀，
