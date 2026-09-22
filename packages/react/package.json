@@ -1,6 +1,6 @@
 {
   "name": "@centui/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "centui React implementation — shares @centui/core logic and @centui/styles CSS with the Vue package",
   "license": "Apache-2.0",
   "type": "module",
