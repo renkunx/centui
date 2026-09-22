@@ -1,6 +1,6 @@
 {
   "name": "centui",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0",
   "description": "A Vue 3 based mobile UI toolkit, the successor of mand-mobile v2",
   "license": "Apache-2.0",
   "type": "module",
