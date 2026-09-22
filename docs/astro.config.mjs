@@ -21,6 +21,7 @@ export default defineConfig({
     starlight({
       title: 'centui',
       description: 'centui 3.0 —— 多端移动 UI 组件库（mand-mobile 续作）',
+      favicon: '/favicon.png',
       // 根语言放在 root（URL 无前缀），英文走 /en/：
       // 否则 Starlight 自动生成的 Astro i18n 配置会要求默认语言带 /zh-CN/ 前缀，
       // 导致 dev 模式下根路径页面被 i18n 路由器判定 notFound 而返回 404

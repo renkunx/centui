@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="docs/public/favicon.png" width="120" alt="CentUI logo">
+</p>
 <h2 align="center">CentUI</h2>
 <p align="center">面向金融场景的移动端 UI 组件库，基于 Vue 3 与 React——<a href="https://github.com/didi/mand-mobile">mand-mobile</a> 的延续之作。</p>
 <p align="center">

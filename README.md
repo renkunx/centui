@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="docs/public/favicon.png" width="120" alt="CentUI logo">
+</p>
 <h2 align="center">CentUI</h2>
 <p align="center">A mobile UI toolkit for financial scenarios, built on Vue 3 & React — the successor of <a href="https://github.com/didi/mand-mobile">mand-mobile</a>.</p>
 <p align="center">
