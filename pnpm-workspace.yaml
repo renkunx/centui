@@ -1,6 +1,7 @@
 packages:
   - packages/*
   - test/*
+  - test/visual/app
   - docs
 
 # pnpm 12+: pnpm 设置只在 workspace.yaml 生效（.npmrc 仅 auth/registry）

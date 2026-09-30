@@ -42,6 +42,10 @@ jobs:
       - name: Coverage gate
         run: pnpm coverage
 
-      # L4 视觉回归（M3/M4 组件落地后启用实际用例）
-      # - name: Visual regression
-      #   run: pnpm test:visual
+      # L4 e2e/视觉回归：双框架场景页（@centui/e2e）驱动，
+      # 基线随 PR 显式提交（test/visual/specs/screenshots）
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E & visual regression
+        run: pnpm test:visual

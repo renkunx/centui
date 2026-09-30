@@ -1,0 +1,61 @@
+/*
+ * e2e 场景页通用样式：
+ * - 动画/过渡压缩到 1ms（保留 transitionend/animationend 生命周期事件，
+ *   Vue 弹层开合依赖它们收尾；不可用 none 直接禁用）
+ * - 统一画布底色与内边距
+ */
+*,
+*::before,
+*::after {
+  animation-duration: 0.001s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001s !important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #f3f4f5;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.e2e-page {
+  padding: 16px 16px 40px;
+}
+
+.e2e-scene {
+  position: relative;
+  margin: 0 0 20px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.e2e-state {
+  min-height: 20px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #111a34;
+}
+
+.e2e-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.e2e-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.e2e-fill {
+  width: 100%;
+}

@@ -15,7 +15,7 @@
     "coverage": "pnpm -r --filter './packages/*' run test:coverage",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "build": "pnpm -r --filter './packages/*' run build",
+    "build": "pnpm -r --filter './packages/*' --filter '@centui/e2e' run build",
     "golden:capture": "pnpm --filter @centui/golden run capture",
     "golden:test": "pnpm --filter @centui/golden run test",
     "playground": "pnpm --filter centui run playground",

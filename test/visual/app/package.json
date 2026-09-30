@@ -1,0 +1,27 @@
+{
+  "name": "@centui/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "L4 e2e 场景页：Vue 3 / React 双框架组件画廊，供 Playwright 交互测试与视觉回归截图",
+  "scripts": {
+    "dev": "vite --port 4517 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --port 4517 --strictPort"
+  },
+  "dependencies": {
+    "@centui/react": "workspace:*",
+    "@centui/styles": "workspace:*",
+    "centui": "workspace:*",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "vue": "^3.5.42"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^5.1.1",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "vite": "^8.3.0"
+  }
+}
