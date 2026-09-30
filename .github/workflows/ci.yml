@@ -42,10 +42,9 @@ jobs:
       - name: Coverage gate
         run: pnpm coverage
 
-      # L4 e2e/视觉回归：双框架场景页（@centui/e2e）驱动，
-      # 基线随 PR 显式提交（test/visual/specs/screenshots）
+      # L4 e2e：双框架行为契约（截图基线与 OS 字体绑定，仅本地比对）
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      - name: E2E & visual regression
-        run: pnpm test:visual
+      - name: E2E interaction
+        run: npx playwright test interaction
