@@ -22,8 +22,10 @@ interface Props {
 const { title, rows = [], kind = 'props' } = Astro.props
 ---
 
-<h3>{title}</h3>
-<div class="api-table-wrap">
+{rows.length > 0 && (
+  <Fragment>
+    <h3>{title}</h3>
+    <div class="api-table-wrap">
   <table class="api-table">
     <thead>
       <tr>
@@ -69,3 +71,5 @@ const { title, rows = [], kind = 'props' } = Astro.props
     </tbody>
   </table>
 </div>
+  </Fragment>
+)}

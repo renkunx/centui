@@ -33,3 +33,4 @@ coverage/
 .pnpm-store/
 
 .vitest/
+test-results/

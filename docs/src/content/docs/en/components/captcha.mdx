@@ -1,0 +1,42 @@
+---
+title: 验证码窗口 Captcha
+description: Captcha dialog with SMS countdown input and verification.
+---
+
+import ComponentDemoVue from '@/components/demos/captcha/index.vue'
+import ComponentDemoReact from '@/components/demos-react/captcha/index.tsx'
+import ApiTable from '@/components/ApiTable.astro'
+import api from '@/data/api/captcha.json'
+
+Interactive preview and API reference for **Captcha**.
+
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
+
+## Props
+
+<ApiTable title="Props" kind="props" rows={api.props} />
+
+## Events
+
+<ApiTable title="Events" kind="emits" rows={api.events} />
+
+## Methods
+
+<ApiTable title="Methods" kind="emits" rows={api.methods} />
+
+## Slots
+
+<ApiTable title="Slots" kind="slots" rows={api.slots} />

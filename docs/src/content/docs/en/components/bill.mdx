@@ -1,0 +1,38 @@
+---
+title: 票据 Bill
+description: Electronic bill component showing bill header and detail list.
+---
+
+import ComponentDemoVue from '@/components/demos/bill/index.vue'
+import ComponentDemoReact from '@/components/demos-react/bill/index.tsx'
+import ApiTable from '@/components/ApiTable.astro'
+import api from '@/data/api/bill.json'
+
+Interactive preview and API reference for **Bill**.
+
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
+
+## Props
+
+<ApiTable title="Props" kind="props" rows={api.props} />
+
+## Events
+
+<ApiTable title="Events" kind="emits" rows={api.events} />
+
+## Slots
+
+<ApiTable title="Slots" kind="slots" rows={api.slots} />

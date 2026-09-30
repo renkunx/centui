@@ -14,6 +14,11 @@ export interface ComponentMeta {
   en: string
   zhDesc: string
   enDesc: string
+  /**
+   * true = 页面 mdx 与 API JSON 由 writer 手工维护（含 events/methods 的完整契约），
+   * gen.mjs 跳过重新生成，仅登记进 registry（首页索引 / 分组）。
+   */
+  curated?: boolean
 }
 
 export interface GroupMeta {
@@ -42,6 +47,14 @@ export const COMPONENTS: ComponentMeta[] = [
       'Button component supporting multiple variants (default, primary, warning, disabled), icon, loading and sizes.',
   },
   {
+    name: 'action-bar',
+    zh: '操作栏',
+    en: 'ActionBar',
+    zhDesc: '底部操作栏，聚合主/次操作与金额信息，常用于收银与详情页。',
+    enDesc: 'Bottom action bar aggregating primary/secondary actions and amount info.',
+    curated: true,
+  },
+  {
     name: 'icon',
     zh: '图标',
     en: 'Icon',
@@ -68,6 +81,30 @@ export const COMPONENTS: ComponentMeta[] = [
     en: 'CellItem',
     zhDesc: '列表单元格组件，支持标题、附加说明、操作位与箭头。',
     enDesc: 'List cell item with title, addon, action slot and arrow indicator.',
+  },
+  {
+    name: 'detail-item',
+    zh: '清单项',
+    en: 'DetailItem',
+    zhDesc: '清单项组件，以键值对形式展示账单/记录明细。',
+    enDesc: 'Detail list item rendering key-value pairs for bills and records.',
+    curated: true,
+  },
+  {
+    name: 'tabs',
+    zh: '标签页',
+    en: 'Tabs',
+    zhDesc: '标签页组件，配合 TabPane 实现内容切换，支持墨条指示与多标签滚动。',
+    enDesc: 'Tabs component with TabPane, ink-bar indicator and scrollable tab list.',
+    curated: true,
+  },
+  {
+    name: 'tab-bar',
+    zh: '标签栏',
+    en: 'TabBar',
+    zhDesc: '标签栏组件，Tabs 的导航条部分，可单独用于自定义内容切换。',
+    enDesc: 'Tab bar, the navigation part of Tabs, usable standalone for custom panels.',
+    curated: true,
   },
 
   // ---------------- 数据展示 ----------------
@@ -98,6 +135,70 @@ export const COMPONENTS: ComponentMeta[] = [
     en: 'NoticeBar',
     zhDesc: '通告栏组件，用于展示滚动公告或提示信息，支持关闭。',
     enDesc: 'Notice bar for showing scrolling announcements or alerts, closable.',
+  },
+  {
+    name: 'bill',
+    zh: '票据',
+    en: 'Bill',
+    zhDesc: '电子票据组件，展示账单主体与流水明细列表。',
+    enDesc: 'Electronic bill component showing bill header and detail list.',
+    curated: true,
+  },
+  {
+    name: 'chart',
+    zh: '折线图表',
+    en: 'Chart',
+    zhDesc: '折线图表组件，基于 SVG 渲染，支持坐标轴与渐变面积。',
+    enDesc: 'SVG-based line chart with axes and gradient area support.',
+    curated: true,
+  },
+  {
+    name: 'image-viewer',
+    zh: '图片浏览器',
+    en: 'ImageViewer',
+    zhDesc: '图片浏览器组件，全屏查看多张图片，支持双指缩放与页码。',
+    enDesc: 'Fullscreen image viewer with pinch zoom and page indicator.',
+    curated: true,
+  },
+  {
+    name: 'result-page',
+    zh: '结果页',
+    en: 'ResultPage',
+    zhDesc: '结果页组件，展示操作成功/失败等结果与后续操作引导。',
+    enDesc: 'Result page showing success/failure outcomes and follow-up actions.',
+    curated: true,
+  },
+  {
+    name: 'scroll-view',
+    zh: '滚动区域',
+    en: 'ScrollView',
+    zhDesc: '滚动区域组件，支持下拉刷新、加载更多与自定义内容。',
+    enDesc: 'Scrollable region with pull-to-refresh, load-more and custom content.',
+    curated: true,
+  },
+  {
+    name: 'steps',
+    zh: '步骤条',
+    en: 'Steps',
+    zhDesc: '步骤条组件，横向展示流程进度，支持自定义图标与文案。',
+    enDesc: 'Horizontal steps indicator with custom icon and text support.',
+    curated: true,
+  },
+  {
+    name: 'swiper',
+    zh: '轮播',
+    en: 'Swiper',
+    zhDesc: '轮播组件，支持横/纵向滑动、自动播放与无缝循环。',
+    enDesc: 'Swiper with vertical/horizontal sliding, autoplay and seamless loop.',
+    curated: true,
+  },
+  {
+    name: 'water-mark',
+    zh: '水印',
+    en: 'WaterMark',
+    zhDesc: '水印组件，全屏覆盖半透明水印文字或图案。',
+    enDesc: 'Fullscreen semi-transparent watermark with text or pattern.',
+    curated: true,
   },
 
   // ---------------- 弹层反馈 ----------------
@@ -135,6 +236,38 @@ export const COMPONENTS: ComponentMeta[] = [
     en: 'Tip',
     zhDesc: '气泡提示组件，围绕目标元素展示文字说明，可配置方向。',
     enDesc: 'Tip bubble anchoring to an element with direction options.',
+  },
+  {
+    name: 'captcha',
+    zh: '验证码窗口',
+    en: 'Captcha',
+    zhDesc: '验证码窗口组件，短信验证码倒计时输入与校验。',
+    enDesc: 'Captcha dialog with SMS countdown input and verification.',
+    curated: true,
+  },
+  {
+    name: 'cashier',
+    zh: '收银台',
+    en: 'Cashier',
+    zhDesc: '收银台组件，支付渠道选择、支付中/成功/失败场景切换。',
+    enDesc: 'Cashier with channel selection and paying/success/fail scenes.',
+    curated: true,
+  },
+  {
+    name: 'landscape',
+    zh: '压屏窗',
+    en: 'Landscape',
+    zhDesc: '压屏窗组件，全屏弹层展示详情内容，支持滚动区域。',
+    enDesc: 'Landscape fullscreen overlay for detail content with scroll region.',
+    curated: true,
+  },
+  {
+    name: 'transition',
+    zh: '动画',
+    en: 'Transition',
+    zhDesc: '动画组件，内置常用过渡（fade/slide/up-down 等）与弹出动画。',
+    enDesc: 'Built-in transitions (fade/slide/up-down etc.) for overlays.',
+    curated: true,
   },
 
   // ---------------- 表单 ----------------
@@ -222,6 +355,46 @@ export const COMPONENTS: ComponentMeta[] = [
     zhDesc: '数字键盘组件，支持随机键位与简单模式，可内嵌或弹出。',
     enDesc: 'Number keyboard with disorder keys and simple mode, inline or popup.',
   },
+  {
+    name: 'image-reader',
+    zh: '图片选择器',
+    en: 'ImageReader',
+    zhDesc: '图片选择组件，读取本地图片并压缩，支持多选与校验。',
+    enDesc: 'Image picker reading local files with compression and validation.',
+    curated: true,
+  },
+  {
+    name: 'license-plate',
+    zh: '车牌键盘',
+    en: 'LicensePlate',
+    zhDesc: '车牌号输入组件，含省份简称键盘与能源类型切换。',
+    enDesc: 'License plate input with province keyboard and energy-type toggle.',
+    curated: true,
+  },
+  {
+    name: 'ruler',
+    zh: '刻度尺',
+    en: 'Ruler',
+    zhDesc: '刻度尺组件，拖动选择数值，支持范围、步长与刻度文案。',
+    enDesc: 'Ruler for picking a value by dragging, with scope/step/step-text.',
+    curated: true,
+  },
+  {
+    name: 'slider',
+    zh: '滑块',
+    en: 'Slider',
+    zhDesc: '滑块组件，拖动选择数值或数值范围。',
+    enDesc: 'Slider for picking a value or a value range.',
+    curated: true,
+  },
+  {
+    name: 'textarea-item',
+    zh: '文本域',
+    en: 'TextareaItem',
+    zhDesc: '多行文本域组件，支持字数统计、自动增高与清除按钮。',
+    enDesc: 'Multi-line textarea with count, autosize and clear button.',
+    curated: true,
+  },
 
   // ---------------- 选择器 ----------------
   {
@@ -237,6 +410,30 @@ export const COMPONENTS: ComponentMeta[] = [
     en: 'DatePicker',
     zhDesc: '日期时间选择器组件，支持日期、时间与日期时间类型。',
     enDesc: 'Date/time picker supporting date, time and datetime types.',
+  },
+  {
+    name: 'drop-menu',
+    zh: '下拉菜单',
+    en: 'DropMenu',
+    zhDesc: '下拉菜单组件，多栏目筛选，点击栏头展开选项列表。',
+    enDesc: 'Drop-down menu for multi-column filtering with bar triggers.',
+    curated: true,
+  },
+  {
+    name: 'selector',
+    zh: '列表选择器',
+    en: 'Selector',
+    zhDesc: '列表选择器组件，弹层展示多级/多选列表，支持搜索与自定义。',
+    enDesc: 'Popup list selector with multi-level/multi-choice and search.',
+    curated: true,
+  },
+  {
+    name: 'tab-picker',
+    zh: '多频道选择器',
+    en: 'TabPicker',
+    zhDesc: '多频道选择器组件，弹层内多标签页级联选择。',
+    enDesc: 'Tab picker with cascading selection across popup tabs.',
+    curated: true,
   },
 ]
 
@@ -256,17 +453,33 @@ export const GROUP_OF: Record<string, string> = {
   tag: 'basic',
   amount: 'basic',
   'cell-item': 'basic',
+  'action-bar': 'basic',
+  'detail-item': 'basic',
+  tabs: 'basic',
+  'tab-bar': 'basic',
 
   skeleton: 'display',
   'activity-indicator': 'display',
   progress: 'display',
   'notice-bar': 'display',
+  bill: 'display',
+  chart: 'display',
+  'image-viewer': 'display',
+  'result-page': 'display',
+  'scroll-view': 'display',
+  steps: 'display',
+  swiper: 'display',
+  'water-mark': 'display',
 
   popup: 'overlay',
   toast: 'overlay',
   dialog: 'overlay',
   'action-sheet': 'overlay',
   tip: 'overlay',
+  captcha: 'overlay',
+  cashier: 'overlay',
+  landscape: 'overlay',
+  transition: 'overlay',
 
   field: 'form',
   'field-item': 'form',
@@ -280,7 +493,15 @@ export const GROUP_OF: Record<string, string> = {
   stepper: 'form',
   codebox: 'form',
   'number-keyboard': 'form',
+  'image-reader': 'form',
+  'license-plate': 'form',
+  ruler: 'form',
+  slider: 'form',
+  'textarea-item': 'form',
 
   picker: 'select',
   'date-picker': 'select',
+  'drop-menu': 'select',
+  selector: 'select',
+  'tab-picker': 'select',
 }

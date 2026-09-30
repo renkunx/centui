@@ -233,7 +233,57 @@ function findMainSfc(compDir) {
 
 /* ============ mdx 生成 ============ */
 
-function mdxFor(meta, locale) {
+function mdxFor(meta, locale, api) {
+  const isEn = locale === 'en'
+  const pageTitle = meta.en === meta.zh ? meta.zh : `${meta.zh} ${meta.en}`
+  const desc = isEn ? meta.enDesc : meta.zhDesc
+  const intro = isEn
+    ? `Interactive preview and API reference for **${meta.en}**.`
+    : `**${meta.zh}** 组件交互预览与 API 说明。`
+  return `---
+title: ${pageTitle}
+description: ${desc}
+---
+
+import ComponentDemoVue from '@/components/demos/${meta.name}/index.vue'
+import ComponentDemoReact from '@/components/demos-react/${meta.name}/index.tsx'
+import ApiTable from '@/components/ApiTable.astro'
+import api from '@/data/api/${meta.name}.json'
+
+${intro}
+
+<div class="fw-tabs">
+  <input type="radio" name="fw" id="fw-vue" checked />
+  <input type="radio" name="fw" id="fw-react" />
+  <div class="fw-nav">
+    <label for="fw-vue">Vue</label>
+    <label for="fw-react">React</label>
+  </div>
+  <div class="fw-panel fw-panel-vue">
+    <ComponentDemoVue client:visible />
+  </div>
+  <div class="fw-panel fw-panel-react">
+    <ComponentDemoReact client:visible />
+  </div>
+</div>
+
+## ${isEn ? 'Props' : '属性 Props'}
+
+<ApiTable title="${isEn ? 'Props' : '属性'}" kind="props" rows={api.props} />
+${api.emits?.length ? `
+## ${isEn ? 'Events' : '事件 Events'}
+
+<ApiTable title="${isEn ? 'Events' : '事件'}" kind="emits" rows={api.emits} />
+` : ''}${api.slots?.length ? `
+## ${isEn ? 'Slots' : '插槽 Slots'}
+
+<ApiTable title="${isEn ? 'Slots' : '插槽'}" kind="slots" rows={api.slots} />
+` : ''}
+`
+}
+
+/** curated 组件（手工 JSON：{props, events, methods, slots}）的页面模板，与手写页面同构 */
+function mdxForCurated(meta, locale, api) {
   const isEn = locale === 'en'
   const pageTitle = meta.en === meta.zh ? meta.zh : `${meta.zh} ${meta.en}`
   const desc = isEn ? meta.enDesc : meta.zhDesc
@@ -273,8 +323,12 @@ ${intro}
 
 ## ${isEn ? 'Events' : '事件 Events'}
 
-<ApiTable title="${isEn ? 'Events' : '事件'}" kind="emits" rows={api.emits} />
+<ApiTable title="${isEn ? 'Events' : '事件'}" kind="emits" rows={api.events} />
+${api.methods?.length ? `
+## ${isEn ? 'Methods' : '方法 Methods'}
 
+<ApiTable title="${isEn ? 'Methods' : '方法'}" kind="emits" rows={api.methods} />
+` : ''}
 ## ${isEn ? 'Slots' : '插槽 Slots'}
 
 <ApiTable title="${isEn ? 'Slots' : '插槽'}" kind="slots" rows={api.slots} />
@@ -284,7 +338,28 @@ ${intro}
 /* ============ main ============ */
 
 let generated = 0
+let curated = 0
+let curatedEn = 0
 for (const meta of COMPONENTS) {
+  // curated 组件：页面 mdx 与 API JSON 由 writer 手工维护（含 events/methods 完整契约），
+  // gen 仅登记 registry（首页索引 / 分组），不覆盖文件；缺失的 en 页面按同构模板补生成
+  if (meta.curated) {
+    const page = path.join(CONTENT_ROOT, 'components', `${meta.name}.mdx`)
+    const apiJson = path.join(DATA_ROOT, `${meta.name}.json`)
+    if (!fs.existsSync(page) || !fs.existsSync(apiJson)) {
+      console.warn(`[gen] ⚠ curated 组件缺页面或 API JSON: ${meta.name}`)
+    } else {
+      const enFile = path.join(CONTENT_ROOT, 'en', 'components', `${meta.name}.mdx`)
+      if (!fs.existsSync(enFile)) {
+        fs.mkdirSync(path.dirname(enFile), { recursive: true })
+        const api = JSON.parse(fs.readFileSync(apiJson, 'utf8'))
+        fs.writeFileSync(enFile, mdxForCurated(meta, 'en', api))
+        curatedEn++
+      }
+    }
+    curated++
+    continue
+  }
   const compDir = path.join(VUE_SRC, 'components', meta.name)
   if (!fs.existsSync(compDir)) {
     console.warn(`[gen] ⚠ 组件目录不存在: ${compDir}`)
@@ -303,11 +378,12 @@ for (const meta of COMPONENTS) {
     const dir = locale === 'en' ? 'en/components' : 'components'
     const file = path.join(CONTENT_ROOT, dir, `${meta.name}.mdx`)
     fs.mkdirSync(path.dirname(file), { recursive: true })
-    fs.writeFileSync(file, mdxFor(meta, locale))
+    fs.writeFileSync(file, mdxFor(meta, locale, api))
   }
   generated++
 }
 
-console.log(`[gen] ✔ ${generated} 个组件 → API JSON + 双语页面已生成`)
+console.log(`[gen] ✔ ${generated} 个组件 → API JSON + 双语页面已生成（+${curated} 个 curated 手工维护，仅登记）`)
+if (curatedEn) console.log(`[gen] ✔ 补生成 ${curatedEn} 个 curated 组件缺失的 en 页面`)
 console.log(`     API: ${path.relative(DOCS_ROOT, DATA_ROOT)}`)
 console.log(`     页面: ${path.relative(DOCS_ROOT, path.join(CONTENT_ROOT, 'components'))} (+ en/)`)
