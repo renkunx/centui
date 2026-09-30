@@ -1,6 +1,6 @@
 {
   "name": "@centui/styles",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "centui design tokens & component styles (stylus sources + compiled css; global reset ships separately as global.css)",
   "license": "Apache-2.0",
   "type": "module",
