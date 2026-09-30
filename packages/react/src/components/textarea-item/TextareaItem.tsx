@@ -90,6 +90,12 @@ export const CuTextareaItem = forwardRef<TextareaItemExposed, TextareaItemProps>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // v2 golden 契约：maxlength 始终落 attr（未设置为空串）；绕开 React 属性名校验
+  useEffect(() => {
+    textareaRef.current?.setAttribute('maxlength', maxLength === '' ? '' : String(maxLength))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [maxLength])
+
   const resizeTextareaRef = useRef<() => void>(() => {})
 
   useImperativeHandle(ref, () => ({
@@ -179,7 +185,6 @@ export const CuTextareaItem = forwardRef<TextareaItemExposed, TextareaItemProps>
         className="cu-textarea-item__textarea"
         disabled={disabled}
         readOnly={readonly}
-        {...({ maxlength: maxLength === '' ? '' : Number(maxLength) } as object)}
         placeholder={placeholder}
         rows={typeof rows === 'string' ? Number(rows) : rows}
         value={inputValue}

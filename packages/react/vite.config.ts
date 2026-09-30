@@ -27,14 +27,17 @@ export default defineConfig({
     },
     rollupOptions: {
       output: { exports: 'named' },
-      external: [
-        'react',
-        'react-dom',
-        'react/jsx-runtime',
-        'react/jsx-dev-runtime',
-        '@centui/core',
-        '@centui/core/web',
-      ],
+      // 函数式 external：react 家族全子路径（react-dom/client、jsx-runtime 等）
+      // 必须保持 external——此前漏掉 react-dom/client 导致 react-dom + scheduler
+      // 以 CJS interop 打进 ESM 产物，在纯 ESM 环境（vite dev 直引 dist）运行时
+      // require("react") 崩溃
+      external: id =>
+        id === 'react' ||
+        id.startsWith('react/') ||
+        id === 'react-dom' ||
+        id.startsWith('react-dom/') ||
+        id === '@centui/core' ||
+        id.startsWith('@centui/core/'),
     },
   },
 })

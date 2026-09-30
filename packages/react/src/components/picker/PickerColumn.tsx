@@ -338,7 +338,9 @@ export const CuPickerColumn = forwardRef<PickerColumnExposed, PickerColumnProps>
 
     const getColumnValues = (): PickerColumnItem[] =>
       columnValuesRef.current.map(
-        (item, index) => item[activedIndexsRef.current[index]],
+        // v2 契约：未显式设置默认值时活动下标取 0（首项），
+        // 否则无 default 的列在 confirm 时返回 undefined
+        (item, index) => item[activedIndexsRef.current[index] ?? 0],
       )
 
     useImperativeHandle(ref, () => ({
@@ -350,7 +352,7 @@ export const CuPickerColumn = forwardRef<PickerColumnExposed, PickerColumnProps>
       },
       getColumnValue,
       getColumnValues,
-      getColumnIndex: (index = 0) => activedIndexsRef.current[index],
+      getColumnIndex: (index = 0) => activedIndexsRef.current[index] ?? 0,
       getColumnIndexs: () => activedIndexsRef.current,
       getColumnIndexByDefault,
       setColumnValues: (index: number, values: PickerColumnItem[], callback?: () => void) => {

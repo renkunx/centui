@@ -53,10 +53,12 @@ export function CuStepper({
   onIncrease,
   onDecrease,
 }: StepperProps) {
-  const [isMin, setIsMin] = useState(false)
-  const [isMax, setIsMax] = useState(false)
   const [, setIsEditing] = useState(false)
   const [currentNum, setCurrentNum] = useState(0)
+  // 边界态派生自 currentNum 与 min/max（避免 effect 闭包读到旧值：
+  // min/max 收敛 effect 挂载期间曾用首渲染 currentNum=0 误钳初始值）
+  const isMin = currentNum <= Number(min)
+  const isMax = currentNum >= Number(max)
   // 外部 value → 内部 currentNum 的同步（编辑中忽略，与 v2 一致）
   const editingRef = useRef(false)
   const mountedRef = useRef(false)
@@ -67,10 +69,6 @@ export function CuStepper({
   }
   const getCurrentNum = (val: number | string): number =>
     Math.max(Math.min(Number(max), formatNum(val)), Number(min))
-  const checkStatus = (num: number) => {
-    setIsMin(num <= Number(min))
-    setIsMax(num >= Number(max))
-  }
   const checkMinMax = () => {
     if (Number(min) > Number(max)) {
       warn('[cu-react-stepper] minNum is larger than maxNum')
@@ -80,7 +78,6 @@ export function CuStepper({
 
   // 统一入口：更新 currentNum 并派发 change/increase/decrease（对齐 v2 currentNum watcher）
   const applyCurrentNum = (next: number, oldVal: number) => {
-    checkStatus(next)
     if (next !== Number(value)) {
       onChange?.(next)
     }
@@ -96,9 +93,7 @@ export function CuStepper({
   // 初始化与外部 value 同步
   useEffect(() => {
     checkMinMax()
-    const init = getCurrentNum(Number(value) || Number(defaultValue))
-    setCurrentNum(init)
-    checkStatus(init)
+    setCurrentNum(getCurrentNum(Number(value) || Number(defaultValue)))
   }, [])
 
   useEffect(() => {
@@ -110,24 +105,16 @@ export function CuStepper({
     if (editingRef.current) {
       return
     }
-    const next = getCurrentNum(value)
-    checkStatus(next)
-    setCurrentNum(next)
+    setCurrentNum(getCurrentNum(value))
   }, [value])
 
   // min/max 变化收敛（与 v2 watch 一致：直接取边界值）
   useEffect(() => {
-    if (currentNum < Number(min)) {
-      setCurrentNum(Number(min))
-      checkStatus(Number(min))
-    }
+    setCurrentNum(prev => (prev < Number(min) ? Number(min) : prev))
   }, [min])
 
   useEffect(() => {
-    if (currentNum > Number(max)) {
-      setCurrentNum(Number(max))
-      checkStatus(Number(max))
-    }
+    setCurrentNum(prev => (prev > Number(max) ? Number(max) : prev))
   }, [max])
 
   const reduce = () => {
@@ -155,7 +142,6 @@ export function CuStepper({
     }
     editingRef.current = true
     setCurrentNum(formatted)
-    checkStatus(formatted)
   }
 
   const onFocus = () => {
@@ -168,7 +154,6 @@ export function CuStepper({
     setIsEditing(false)
     const clamped = getCurrentNum(currentNum)
     setCurrentNum(clamped)
-    checkStatus(clamped)
     if (clamped !== Number(value)) {
       onChange?.(clamped)
     }
