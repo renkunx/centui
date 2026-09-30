@@ -53,6 +53,8 @@ const props = withDefaults(
     title?: string
     name?: string | number
     placeholder?: string
+    modelValue?: string
+    /** v2 兼容：value 与 v-model 等价，modelValue 优先 */
     value?: string
     maxLength?: string | number
     maxHeight?: string | number
@@ -69,6 +71,7 @@ const props = withDefaults(
     title: '',
     name: () => `textarea-item-${Math.floor(Math.random() * 10000)}`,
     placeholder: '',
+    modelValue: '',
     value: '',
     maxLength: '',
     maxHeight: '',
@@ -94,7 +97,7 @@ const emit = defineEmits<{
 }>()
 
 const maxHeightInner = ref<string | number>(props.maxHeight)
-const inputValue = ref(props.value)
+const inputValue = ref(props.modelValue || props.value)
 const isInputFocus = ref(false)
 const textarea = ref<HTMLTextAreaElement>()
 
@@ -103,7 +106,8 @@ const errorInfo = computed(() => props.error)
 const isInputEmpty = computed(() => !inputValue.value.length)
 
 watch(
-  () => props.value,
+  // v3 v-model 走 modelValue；未传时回退 v2 的 value
+  () => (props.modelValue !== '' ? props.modelValue : props.value),
   (val) => {
     inputValue.value = val
     nextTick(() => {

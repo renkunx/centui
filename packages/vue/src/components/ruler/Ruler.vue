@@ -19,6 +19,8 @@ defineOptions({ name: 'cu-ruler' })
 
 const props = withDefaults(
   defineProps<{
+    modelValue?: number
+    /** v2 兼容：value 与 v-model 等价，modelValue 优先 */
     value?: number
     scope?: Array<number>
     step?: number
@@ -30,6 +32,7 @@ const props = withDefaults(
     stepTextRender?: (step: number) => string | number | undefined | null
   }>(),
   {
+    modelValue: 0,
     value: 0,
     scope: () => [0, 100],
     step: 10,
@@ -40,6 +43,9 @@ const props = withDefaults(
     stepTextRender: () => undefined,
   },
 )
+
+// v3 v-model 走 modelValue；未传时回退 v2 的 value（默认 0 视为未传）
+const rulerValue = computed(() => (props.modelValue || props.value))
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: number): void
@@ -94,7 +100,8 @@ const blankRight = computed(
 const isStepTextBottom = computed(() => props.stepTextPosition === 'bottom')
 
 watch(
-  () => props.value,
+  // v3 v-model 走 modelValue；未传时回退 v2 的 value
+  () => rulerValue.value,
   () => {
     if (isScrolling.value) {
       return
@@ -166,12 +173,12 @@ function initX() {
   const [min] = props.scope
   x.value = canvasWidth.value - Math.ceil((realMin.value - min) / props.unit) * BLANK
 
-  if (props.value <= realMin.value) {
+  if (rulerValue.value <= realMin.value) {
     return 0
-  } else if (props.value >= realMax.value) {
+  } else if (rulerValue.value >= realMax.value) {
     return unitCount.value * BLANK
   } else {
-    return Math.ceil((props.value - realMin.value) / props.unit) * BLANK
+    return Math.ceil((rulerValue.value - realMin.value) / props.unit) * BLANK
   }
 }
 

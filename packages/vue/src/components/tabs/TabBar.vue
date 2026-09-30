@@ -58,13 +58,15 @@ export interface TabBarItem {
 
 const props = withDefaults(
   defineProps<{
+    modelValue?: string | number
+    /** v2 兼容：value 与 v-model 等价，modelValue 优先 */
     value?: string | number
     items?: TabBarItem[]
     hasInk?: boolean
     inkLength?: number | string
     immediate?: boolean
   }>(),
-  { value: '', items: () => [], hasInk: true, inkLength: '25', immediate: false },
+  { modelValue: '', value: '', items: () => [], hasInk: true, inkLength: '25', immediate: false },
 )
 
 const emit = defineEmits<{
@@ -108,7 +110,8 @@ const currentTab = computed(() => {
 })
 
 watch(
-  () => props.value,
+  // v3 v-model 走 modelValue；未传时回退 v2 的 value
+  () => (props.modelValue !== '' ? props.modelValue : props.value),
   (val) => {
     if (val !== currentName.value) {
       currentName.value = val
