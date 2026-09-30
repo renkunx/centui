@@ -7,5 +7,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@centui/golden"]
+  "ignore": ["@centui/golden", "@centui/e2e"]
 }
