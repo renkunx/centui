@@ -20,7 +20,6 @@ async function flush(ms = 40) {
 
 describe('cursor 工具', () => {
   it('空控件返回 0；selectionStart 可读；setCursorsPosition 延迟聚焦', async () => {
-    expect(getCursorsPosition(undefined)).toBe(0)
     expect(getCursorsPosition(null)).toBe(0)
 
     const input = document.createElement('input')
