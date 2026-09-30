@@ -82,6 +82,12 @@ export class Scroller {
   private _isDragging = false
   private _isDecelerating: number | false = false
   private _isAnimating: number | false = false
+  /**
+   * v2 契约字段：v2 scroller 声明了该字段但从不置真（gesturing 归入 dragging）。
+   * Picker 确认守卫以 `!== false` 判断滚动状态，缺失此字段会让守卫恒真、
+   * 吞掉全部确认回调，故必须保留声明。
+   */
+  private _isGesturing = false
   private _clientLeft = 0
   private _clientTop = 0
   private _clientWidth = 0
