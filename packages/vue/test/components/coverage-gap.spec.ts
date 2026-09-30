@@ -610,7 +610,7 @@ describe('CuDropMenu 交互分支', () => {
     // 禁用项：onBarItemClick 守卫返回，不打开
     await w.findAll('.bar-item')[2].trigger('click')
     await settle(400)
-    expect(w.find('.cu-popup-box').element.style.display).toBe('none')
+    expect((w.find('.cu-popup-box').element as HTMLElement).style.display).toBe('none')
   })
 
   it('选择列表项回填 bar 文案并 emit change', async () => {
@@ -740,7 +740,7 @@ describe('CuDatePicker 事件透传', () => {
     const onConfirm = vi.fn()
     const onCancel = vi.fn()
     const w = mount(CuDatePicker, {
-      props: { modelValue: true, type: 'yyyy-MM-dd', onConfirm, onCancel },
+      props: { modelValue: true, type: 'date', onConfirm, onCancel },
     })
     await vi.advanceTimersByTimeAsync(10)
     const picker = w.findComponent({ name: 'cu-picker' })

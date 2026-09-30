@@ -260,14 +260,10 @@ describe('CuLicensePlate 键盘分支', () => {
     const onConfirm = vi.fn()
     const onDelete = vi.fn()
     const onEnter = vi.fn()
+    void onDelete
+    void onEnter
     const { container } = render(
-      <CuLicensePlate
-        value=""
-        modeShow="division"
-        onConfirm={onConfirm}
-        onDelete={onDelete}
-        onEnter={onEnter}
-      />,
+      <CuLicensePlate defaultValue="" modeShow="division" onConfirm={onConfirm} />,
     )
     await flush(20)
     const board = container.querySelector('.cu-mixed-key-board')
@@ -288,7 +284,7 @@ describe('CuDatePicker 事件透传', () => {
     const { container } = render(
       <CuDatePicker
         value
-        type="yyyy-MM-dd"
+        type="date"
         onConfirm={onConfirm}
         onCancel={onCancel}
         onShow={onShow}
