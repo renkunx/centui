@@ -64,6 +64,14 @@ async function processCss(css, fromPath, toPath) {
 async function main() {
   mkdirSync(join(DIST, 'es'), { recursive: true })
 
+  // 组件作用域重置（.cu-* 子树内补齐 v2 全局 reset 的等价效果）
+  const scopedResetCss = await processCss(
+    await compileStylus(readFileSync(join(SRC, 'scoped-reset.styl'), 'utf8'), 'scoped-reset.styl'),
+    join(SRC, 'scoped-reset.styl'),
+    join(DIST, 'scoped-reset.css'),
+  )
+  writeFileSync(join(DIST, 'scoped-reset.css'), scopedResetCss)
+
   // 全局基础样式
   const globalCss = await processCss(
     await compileStylus(readFileSync(join(SRC, 'global.styl'), 'utf8'), 'global.styl'),
@@ -93,8 +101,9 @@ async function main() {
     }
   }
 
-  writeFileSync(join(DIST, 'index.css'), bundles.join(''))
-  console.log(`Built ${files.length - failed}/${files.length} component styles + global.css + index.css`)
+  // index.css 顶部插入作用域重置（对齐 v2 视觉，见 scoped-reset.styl 头注释）
+  writeFileSync(join(DIST, 'index.css'), scopedResetCss + bundles.join(''))
+  console.log(`Built ${files.length - failed}/${files.length} component styles + global.css + scoped-reset.css + index.css`)
   if (failed > 0) {
     process.exit(1)
   }

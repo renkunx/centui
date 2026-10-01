@@ -1,0 +1,55 @@
+/**
+ * 组件作用域重置（scoped reset）
+ *
+ * v2 的视觉依赖发布产物自带的全局 reset（ul/li/p/h 等浏览器默认样式清零）；
+ * v3 为零污染不再发布全局 reset（index.css 为纯组件样式），组件子树因此会
+ * 露出浏览器默认样式——如数字键盘列表的圆点"黑点"、p/h2 默认边距等。
+ *
+ * 此文件在 .cu-* 组件子树内应用与 v2 全局 reset 等价的重置，
+ * 只影响组件内部，不污染宿主页面。置于 index.css 顶部，
+ * 组件自身样式随后加载、可正常覆盖。
+ */
+
+[class^='cu-'],
+[class*=' cu-']
+  font-family font-family-normal
+  -webkit-tap-highlight-color transparent
+
+[class^='cu-'] ul,
+[class*=' cu-'] ul,
+[class^='cu-'] ol,
+[class*=' cu-'] ol,
+[class^='cu-'] li,
+[class*=' cu-'] li
+  margin 0
+  padding 0
+  list-style none
+
+[class^='cu-'] p,
+[class*=' cu-'] p,
+[class^='cu-'] h1,
+[class*=' cu-'] h1,
+[class^='cu-'] h2,
+[class*=' cu-'] h2,
+[class^='cu-'] h3,
+[class*=' cu-'] h3,
+[class^='cu-'] h4,
+[class*=' cu-'] h4,
+[class^='cu-'] h5,
+[class*=' cu-'] h5,
+[class^='cu-'] h6,
+[class*=' cu-'] h6,
+[class^='cu-'] dl,
+[class*=' cu-'] dl,
+[class^='cu-'] dt,
+[class*=' cu-'] dt,
+[class^='cu-'] dd,
+[class*=' cu-'] dd,
+[class^='cu-'] figure,
+[class*=' cu-'] figure,
+[class^='cu-'] blockquote,
+[class*=' cu-'] blockquote,
+[class^='cu-'] pre,
+[class*=' cu-'] pre
+  margin 0
+  padding 0
