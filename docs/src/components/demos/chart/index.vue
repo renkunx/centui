@@ -2,14 +2,25 @@
 import { CuChart } from 'centui'
 import DemoCanvas from '../../DemoCanvas.vue'
 
-const scenes = ['折线图', '区域图']
-const code = `<CuChart :labels="labels" :datasets="datasets" :size="[480, 270]" />`
+const scenes = ['折线图', '区域图', '多折线', '渐变折线']
+const code = `<CuChart :labels="labels" :datasets="datasets" :size="[480, 270]" />
+<CuChart :datasets="[{ theme: 'region', ... }]" />
+<CuChart :datasets="[{ theme: 'heat', ... }]" />`
 const labels = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
 const lineData = [{ color: '#5b8ff9', width: 1, values: [120, 350, 420, 260, 180, 300, 450] }]
 const regionData = [
   { color: '#fa8919', theme: 'region', width: 1, values: [100, 200, 150, 300] },
   { color: '#5b8ff9', values: [80, 150, 220, 180] },
 ]
+const multiData = [
+  { color: '#5b8ff9', width: 1, values: [120, 350, 420, 260, 180, 300, 450] },
+  { color: '#fa8919', width: 1, values: [450, 300, 180, 260, 420, 350, 120] },
+  { color: '#28aa91', width: 1, values: [80, 150, 200, 320, 380, 300, 260] },
+]
+const heatData = [
+  { color: '#5e64ff', width: 1, theme: 'heat', values: [8, 15, 20, 23, 20, 30, 32, 38, 36, 40, 50, 55, 52] },
+]
+const heatLabels = ['周一', '周二', '周三', '周四', '周五', '周六', '周日', '周一', '周二', '周三', '周四', '周五', '周六']
 </script>
 
 <template>
@@ -22,6 +33,24 @@ const regionData = [
     <template #scene-1>
       <div class="chart-demo-box">
         <CuChart :labels="['1月', '2月', '3月', '4月']" :datasets="regionData" :size="[480, 270]" :max="300" :min="0" :lines="4" :step="75" />
+      </div>
+    </template>
+    <template #scene-2>
+      <div class="chart-demo-box">
+        <CuChart :labels="labels" :datasets="multiData" :size="[480, 270]" :max="500" :min="0" :lines="5" :step="100" />
+      </div>
+    </template>
+    <template #scene-3>
+      <div class="chart-demo-box">
+        <CuChart
+          :labels="heatLabels"
+          :datasets="heatData"
+          :size="[480, 270]"
+          :max="60"
+          :min="0"
+          :lines="5"
+          :step="10"
+          :format="(v: number) => v + '%'"/>
       </div>
     </template>
   </DemoCanvas>

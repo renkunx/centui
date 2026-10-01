@@ -501,3 +501,36 @@
   font-size: 20px;
   color: #666;
 }
+
+
+/* scroll-view 补充场景 */
+.scroll-demo-box--manual {
+  height: 240px;
+  border: 1px solid #e2e4e9;
+}
+
+.scroll-pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+}
+
+/* swiper 每屏多内容 */
+.swiper-demo-multi {
+  display: flex;
+  flex-wrap: wrap;
+  height: 180px;
+}
+
+.swiper-demo-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+  height: 90px;
+  font-size: 28px;
+  color: #fff;
+  background: #2f86f6;
+}

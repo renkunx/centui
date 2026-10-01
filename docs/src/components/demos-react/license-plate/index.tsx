@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { CuLicensePlate } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
-const scenes = ['车牌输入']
+const scenes = ['车牌输入', '半弹层版']
 const code = `<CuLicensePlate defaultValue={dv} onConfirm={onConfirm} />`
 
 export default function LicensePlateDemo() {

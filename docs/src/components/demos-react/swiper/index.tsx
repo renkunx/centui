@@ -1,7 +1,7 @@
 import { CuSwiper, CuSwiperItem } from '@centui/react'
 import DemoCanvasReact from '../../DemoCanvasReact'
 
-const scenes = ['自动轮播', '手动滑动', '竖向滑动', '淡入淡出', '无指示器']
+const scenes = ['自动轮播', '手动滑动', '竖向滑动', '淡入淡出', '无指示器', '每屏多内容']
 const code = `<CuSwiper autoplay={3000}>
   <CuSwiperItem>轮播 1</CuSwiperItem>
   <CuSwiperItem>轮播 2</CuSwiperItem>
@@ -33,7 +33,24 @@ export default function SwiperDemo() {
         if (active === 1) return <div className="swiper-demo-box"><CuSwiper autoplay={0}>{slides('拖我试试')}</CuSwiper></div>
         if (active === 2) return <div className="swiper-demo-box"><CuSwiper transition="slideY" autoplay={3000}>{slides('竖向')}</CuSwiper></div>
         if (active === 3) return <div className="swiper-demo-box"><CuSwiper transition="fade" autoplay={3000}>{slides('淡入淡出')}</CuSwiper></div>
-        return <div className="swiper-demo-box"><CuSwiper autoplay={3000} hasDots={false}>{slides('无指示器')}</CuSwiper></div>
+        if (active === 4) return <div className="swiper-demo-box"><CuSwiper autoplay={3000} hasDots={false}>{slides('无指示器')}</CuSwiper></div>
+        return (
+          <div style={{ width: '100%' }}>
+            <div className="swiper-demo-box">
+              <CuSwiper autoplay={0}>
+                {Array.from({ length: 2 }, (_, p) => (
+                  <CuSwiperItem key={p}>
+                    <div className="swiper-demo-multi">
+                      {Array.from({ length: 4 }, (_, c) => (
+                        <div key={c} className="swiper-demo-cell">{p * 4 + c + 1}</div>
+                      ))}
+                    </div>
+                  </CuSwiperItem>
+                ))}
+              </CuSwiper>
+            </div>
+          </div>
+        )
       }}
     </DemoCanvasReact>
   )
