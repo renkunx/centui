@@ -24,7 +24,7 @@ const heatLabels = ['周一', '周二', '周三', '周四', '周五', '周六', 
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="chart-demo-box">
         <CuChart :labels="labels" :datasets="lineData" :size="[480, 270]" :max="500" :min="0" :lines="5" :step="100" />

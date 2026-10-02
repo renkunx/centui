@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuAmount :value="1234.125" :precision="3" />
     </template>

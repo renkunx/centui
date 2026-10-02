@@ -19,7 +19,7 @@ export default function TransitionDemo() {
   }
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => (
         <div className="transition-demo">
           <button className="transition-demo-btn" onClick={() => toggle(active)}>

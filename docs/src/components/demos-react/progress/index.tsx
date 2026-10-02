@@ -7,7 +7,7 @@ const code = `<CuProgress size={100} value={0.2} width={5}>20%</CuProgress>
 
 export default function ProgressDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

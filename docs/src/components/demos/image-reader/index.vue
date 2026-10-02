@@ -15,7 +15,7 @@ function onError(name: string, d: { code: string; msg: string }) {
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="image-reader-demo">
         <div class="image-reader-demo-box">

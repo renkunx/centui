@@ -13,7 +13,7 @@ const many = ref('p1')
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuTabs v-model="current">
         <CuTabPane label="标签一" name="a">

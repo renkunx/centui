@@ -25,7 +25,7 @@ function onNumberDelete() {
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div style="width: 100%">
         <CuButton @click="show1 = !show1">{{ show1 ? '收起键盘' : '唤起键盘，有小数点' }}</CuButton>

@@ -20,7 +20,7 @@ const showE = ref(false)
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuButton @click="showA = true">无需确认</CuButton>
       <CuSelector v-model="showA" :data="data" title="无需确认" />

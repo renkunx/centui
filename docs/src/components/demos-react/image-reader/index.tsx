@@ -9,7 +9,7 @@ export default function ImageReaderDemo() {
   const [msg, setMsg] = useState('')
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {() => (
         <div className="image-reader-demo">
           <div className="image-reader-demo-box">

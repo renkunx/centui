@@ -13,7 +13,7 @@ const show2 = ref(false)
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="landscape-demo">
         <CuButton type="primary" inline round @click="show1 = true">打开横屏弹层</CuButton>

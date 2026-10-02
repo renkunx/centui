@@ -22,7 +22,7 @@ const code = `<CuRadioList :options="options" v-model="value" />
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuRadioList :options="options" v-model="value" />
       <div class="rd-note">当前选择：{{ value }}</div>

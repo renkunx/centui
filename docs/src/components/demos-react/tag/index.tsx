@@ -8,7 +8,7 @@ const code = `<CuTag size="small" shape="circle" type="fill" fillColor="#FC7353"
 
 export default function TagDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

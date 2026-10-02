@@ -19,7 +19,7 @@ const colors = ['gray', 'orange', 'blue', 'green', 'red']
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="icon-demo-grid">
         <div v-for="icon in iconList" :key="icon" class="icon-demo-item">

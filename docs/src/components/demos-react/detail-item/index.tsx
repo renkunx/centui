@@ -7,7 +7,7 @@ const code = `<CuDetailItem title="标题" content="内容" />
 
 export default function DetailItemDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0) return <CuDetailItem title="标题" content="内容内容内容" />
         if (active === 1) return <CuDetailItem title="标题" content="加粗内容" bold />

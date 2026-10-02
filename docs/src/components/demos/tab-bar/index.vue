@@ -29,7 +29,7 @@ function onTabChange(item: { label?: string }) {
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuTabBar v-model="current1" :items="two" />
     </template>

@@ -9,7 +9,7 @@ export default function CheckBaseDemo() {
   const [checked, setChecked] = useState<string | number | boolean>('a')
   const [radio, setRadio] = useState<string | number | boolean>('a')
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active =>
         active === 0 ? (
           <div style={{ display: 'flex', gap: 12 }}>

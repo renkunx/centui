@@ -13,7 +13,7 @@ const ok = ref(true)
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="cell-pad">
         <CuCellItem title="姓名" brief="张三" />

@@ -9,7 +9,7 @@ const buttons = [{ text: '重新加载' }, { text: '返回', plain: false }]
 
 export default function ResultPageDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => (
         <div className="result-page-demo-box">
           {active === 0 && <CuResultPage type="empty" />}

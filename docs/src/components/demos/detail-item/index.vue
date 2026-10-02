@@ -8,7 +8,7 @@ const code = `<CuDetailItem title="标题" content="内容" />
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuDetailItem title="标题" content="内容内容内容" />
     </template>

@@ -7,7 +7,7 @@ const code = `<CuCellItem title="标题" brief="描述" addon="内容" arrow />
 
 export default function CellItemDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active =>
         active === 0 ? (
           <div style={{ background: '#fff' }}>

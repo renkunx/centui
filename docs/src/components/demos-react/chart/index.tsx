@@ -23,7 +23,7 @@ const heatLabels = ['周一', '周二', '周三', '周四', '周五', '周六', 
 
 export default function ChartDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

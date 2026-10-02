@@ -26,7 +26,7 @@ export default function TabPickerDemo() {
   const [result, setResult] = useState('')
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {() => (
         <div className="tab-picker-demo">
           <CuButton type="primary" inline round onClick={() => setShow(true)}>

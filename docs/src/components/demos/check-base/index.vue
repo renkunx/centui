@@ -13,7 +13,7 @@ const code = `<CuCheckBox v-model="checked" label="默认选中" />
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="ck-row"><CuCheckBox v-model="checked" label="默认选中" /></div>
       <div class="ck-row"><CuCheckBox v-model="unchecked" label="默认未选" /></div>

@@ -9,7 +9,7 @@ const code = `<CuBill title="借款电子凭证" no="12345689" water-mark="centu
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuBill title="借款电子凭证" no="12345689" water-mark="centui">
         <CuFieldItem title="借款金额" content="¥30,000" />

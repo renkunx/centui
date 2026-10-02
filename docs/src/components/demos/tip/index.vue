@@ -10,7 +10,7 @@ const code = `<CuTip content="不错哟" placement="top">
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuTip content="不错哟" placement="top">
         <CuButton type="default">点击我</CuButton>

@@ -83,6 +83,9 @@
   transform-origin: top left;
   /* transformed 元素作为 fixed 弹层的 containing block（弹层定位以屏幕为准） */
   background: #f7f8fa;
+  /* 内容超屏时在屏幕内滚动 */
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* 底部场景条 */

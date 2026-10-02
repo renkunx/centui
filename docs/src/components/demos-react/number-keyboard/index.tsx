@@ -21,7 +21,7 @@ export default function NumberKeyboardDemo() {
   const onDelete = () => setNumber(prev => prev.slice(0, -1))
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

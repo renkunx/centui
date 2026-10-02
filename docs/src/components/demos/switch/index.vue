@@ -12,7 +12,7 @@ const offDisabled = ref(false)
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0><CuSwitch v-model="on" /></template>
     <template #scene-1><CuSwitch v-model="off" /></template>
     <template #scene-2><CuSwitch v-model="onDisabled" disabled /></template>

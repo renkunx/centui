@@ -8,7 +8,7 @@ const code = `<CuButton type="primary" round>主要按钮</CuButton>
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuButton type="default">默认按钮</CuButton>
     </template>

@@ -9,7 +9,7 @@ export default function LicensePlateDemo() {
   const [result, setResult] = useState('')
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {() => (
         <div className="license-plate-demo">
           <CuLicensePlate defaultValue="浙AD12345" onConfirm={v => setResult(v)} />

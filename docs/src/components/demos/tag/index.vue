@@ -9,7 +9,7 @@ const code = `<CuTag size="small" shape="circle" type="fill" fill-color="#FC7353
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap">
         <CuTag size="tiny" shape="circle" type="fill" fill-color="#FC7353" font-color="#000" />

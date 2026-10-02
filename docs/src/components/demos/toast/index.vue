@@ -27,7 +27,7 @@ function showContinuous() {
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuButton @click="Toast.info('一段文字')">纯文字</CuButton>
     </template>

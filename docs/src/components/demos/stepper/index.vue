@@ -13,7 +13,7 @@ const value2 = ref(3)
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuField><CuFieldItem title="禁用"><CuStepper disabled /></CuFieldItem></CuField>
     </template>

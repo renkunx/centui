@@ -11,7 +11,7 @@ export default function RulerDemo() {
   const [value2, setValue2] = useState(100)
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

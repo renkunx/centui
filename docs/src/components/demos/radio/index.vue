@@ -26,7 +26,7 @@ const reasons = [
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div style="display: flex; flex-direction: column; gap: 16px">
         <CuRadio name="0" v-model="checked" label="单选项1" />

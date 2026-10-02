@@ -12,7 +12,7 @@ const code = `<CuWaterMark content="内部资料" :opacity="0.08">
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuWaterMark class="water-mark-demo-box" content="INTERNAL" :opacity="0.15">
         <p class="water-mark-demo-content">页面业务内容</p>

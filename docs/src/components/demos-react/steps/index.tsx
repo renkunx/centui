@@ -17,7 +17,7 @@ export default function StepsDemo() {
   const [currentStep, setCurrentStep] = useState(0)
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0) return <CuSteps steps={steps} />
         if (active === 1) return <CuSteps steps={stepsNonInt} current={1.2} />

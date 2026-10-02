@@ -13,7 +13,7 @@ export default function InputItemDemo() {
   const [phone, setPhone] = useState('13012345678')
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

@@ -18,7 +18,7 @@ const colors = ['gray', 'orange', 'blue', 'green', 'red']
 
 export default function IconDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

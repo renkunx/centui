@@ -25,7 +25,7 @@ export default function CheckDemo() {
   const toggleAll = () => setCheckListFav(checkListFav.length ? [] : fruits.map(f => f.value))
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

@@ -8,7 +8,7 @@ const code = `<CuBill title="借款电子凭证" no="12345689" waterMark="centui
 
 export default function BillDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

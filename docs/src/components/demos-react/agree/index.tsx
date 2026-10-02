@@ -17,7 +17,7 @@ export default function AgreeDemo() {
   const [c5, setC5] = useState(false)
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         const body = (html: boolean) =>
           html ? <span dangerouslySetInnerHTML={{ __html: textLink }} /> : <>{text}</>

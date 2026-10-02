@@ -13,7 +13,7 @@ const phone = ref('13012345678')
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuField>
         <CuInputItem title="普通文本" placeholder="普通文本" />

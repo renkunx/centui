@@ -15,7 +15,7 @@ export default function AmountDemo() {
   }, [])
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0) return <CuAmount value={1234.125} precision={3} />
         if (active === 1) return <CuAmount value={v} precision={2} transition />

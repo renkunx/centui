@@ -26,7 +26,7 @@ export default function TabBarDemo() {
   const [msg, setMsg] = useState('')
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0) return <CuTabBar value={current1} onChange={t => setCurrent1(Number(t.name))} items={two} />
         if (active === 1) return <CuTabBar value={current2} onChange={t => setCurrent2(Number(t.name))} items={five} maxLength={5} />

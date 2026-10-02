@@ -8,7 +8,7 @@ const code = `<CuProgress :size="100" :value="0.2" :width="5">20%</CuProgress>
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div style="display: flex; gap: 40px; align-items: center; justify-content: center; padding: 30px 0">
         <CuProgress :size="100" :value="0.2" :width="5">20%</CuProgress>

@@ -30,7 +30,7 @@ function onChange(payload: { values: Array<string | number> }) {
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="tab-picker-demo">
         <CuButton type="primary" inline round @click="show = true">打开联动选择</CuButton>

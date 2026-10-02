@@ -30,6 +30,8 @@ export interface CaptchaProps {
   type?: string
   inputType?: string
   disableSend?: boolean
+  /** 透传内部 MdDialog 的 appendTo（弹层留在组件树内时传 false） */
+  appendTo?: HTMLElement | null | false
   children?: ReactNode
   onChange?: (value: boolean) => void
   onShow?: () => void
@@ -63,6 +65,7 @@ export const CuCaptcha = forwardRef<
     type = 'dialog',
     inputType = 'tel',
     disableSend = false,
+    appendTo: appendToProp,
     children,
     onChange,
     onShow,
@@ -287,7 +290,7 @@ export const CuCaptcha = forwardRef<
       <CuDialog
         value={value}
         closable
-        appendTo={false}
+        appendTo={appendToProp === undefined ? false : appendToProp}
         position="center"
         onChange={(v) => {
           onChange?.(v)

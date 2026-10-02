@@ -13,7 +13,7 @@ export default function TabsDemo() {
   const [many, setMany] = useState('p1')
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

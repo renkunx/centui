@@ -27,7 +27,7 @@ function onSelect(i: number) {
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="transition-demo">
         <button class="transition-demo-btn" @click="toggle(0)">播放淡入淡出</button>

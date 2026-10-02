@@ -13,7 +13,7 @@ export default function ToastDemo() {
   const [squareShow, setSquareShow] = useState(false)
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return <CuButton onClick={() => Toast.info('一段文字')}>纯文字</CuButton>

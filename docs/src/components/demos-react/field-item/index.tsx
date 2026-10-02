@@ -6,7 +6,7 @@ const code = `<CuFieldItem title="标题" addon="内容" arrow />`
 
 export default function FieldItemDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active =>
         active === 0 ? (
           <div style={{ background: '#fff', minWidth: 320 }}>

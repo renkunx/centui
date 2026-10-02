@@ -8,7 +8,7 @@ const code = `<CuActivityIndicator type="roller" />
 
 export default function ActivityIndicatorDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => (
         <div style={{ minHeight: 80, display: 'flex', alignItems: 'center', gap: 24 }}>
           <CuActivityIndicator

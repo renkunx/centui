@@ -14,7 +14,7 @@ const code4 = ref('')
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuCodebox v-model="code1" :maxlength="4" :autofocus="false" />
     </template>

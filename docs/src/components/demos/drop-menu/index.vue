@@ -28,7 +28,7 @@ function onChange(barItem: { text?: string }, listItem: { text?: string }) {
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuDropMenu :data="data0" :default-value="['2']" @change="onChange" />
     </template>

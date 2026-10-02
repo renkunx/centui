@@ -10,7 +10,7 @@ const code = `<CuNoticeBar>为了确保您的资金安全，请设置支付密�
 
 export default function NoticeBarDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return <CuNoticeBar>为了确保您的资金安全，请设置支付密码</CuNoticeBar>

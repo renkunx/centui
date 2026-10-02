@@ -10,7 +10,7 @@ const code = `<CuActivityIndicator type="roller" />
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="ai-row">
         <CuActivityIndicator type="roller" />

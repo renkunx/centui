@@ -10,7 +10,7 @@ const buttons = [{ text: '重新加载' }, { text: '返回', plain: false }]
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="result-page-demo-box">
         <CuResultPage type="empty" />

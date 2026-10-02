@@ -13,7 +13,7 @@ export default function ImageViewerDemo() {
   const [show, setShow] = useState(false)
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {() => (
         <div className="viewer-demo">
           <CuButton type="primary" inline round onClick={() => setShow(true)}>

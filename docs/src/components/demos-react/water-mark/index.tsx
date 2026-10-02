@@ -11,7 +11,7 @@ const code = `<CuWaterMark content="INTERNAL" opacity={0.08}>
 
 export default function WaterMarkDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

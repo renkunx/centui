@@ -13,7 +13,7 @@ const imgs = [
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="viewer-demo">
         <CuButton type="primary" inline round @click="show = true">查看图片</CuButton>

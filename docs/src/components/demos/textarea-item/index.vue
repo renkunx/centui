@@ -14,7 +14,7 @@ const disabled = ref('禁用内容')
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuTextareaItem v-model="basic" title="标题" placeholder="请输入简介" />
     </template>

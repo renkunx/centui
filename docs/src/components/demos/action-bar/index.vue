@@ -11,7 +11,7 @@ const disabled = [{ text: '禁用按钮', disabled: true }]
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="action-bar-demo-box"><CuActionBar :actions="single" /></div>
     </template>

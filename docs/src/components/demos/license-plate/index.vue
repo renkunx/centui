@@ -12,7 +12,7 @@ function onConfirm(value: string) {
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="license-plate-demo">
         <CuLicensePlate :default-value="'浙AD12345'" @confirm="onConfirm" />

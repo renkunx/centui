@@ -14,7 +14,7 @@ export default function CodeboxDemo() {
   const [code4, setCode4] = useState('')
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0) return <CuCodebox value={code1} onChange={setCode1} maxlength={4} />
         if (active === 1) return <CuCodebox value={code2} onChange={setCode2} maxlength={6} mask />

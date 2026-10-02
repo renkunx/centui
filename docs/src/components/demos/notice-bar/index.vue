@@ -11,7 +11,7 @@ const code = `<CuNoticeBar>为了确保您的资金安全，请设置支付密�
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuNoticeBar>为了确保您的资金安全，请设置支付密码</CuNoticeBar>
     </template>

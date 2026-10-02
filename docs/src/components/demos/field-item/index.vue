@@ -10,7 +10,7 @@ const code = `<CuFieldItem title="姓名" content="张三" arrow />
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="fi-list">
         <CuFieldItem title="姓名" content="张三" />

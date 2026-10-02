@@ -7,7 +7,7 @@ const code = `<CuButton type="primary" round>主要按钮</CuButton>
 
 export default function ButtonDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0) return <CuButton>默认按钮</CuButton>
         if (active === 1) return <CuButton type="primary">主要按钮</CuButton>

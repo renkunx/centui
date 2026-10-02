@@ -15,7 +15,7 @@ const code = `<CuField title="个人信息">
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <div class="fld-list">
         <CuField title="个人信息">

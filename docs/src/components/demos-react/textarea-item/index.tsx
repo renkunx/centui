@@ -14,7 +14,7 @@ export default function TextareaItemDemo() {
   const [disabled] = useState('禁用内容')
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return <CuTextareaItem value={basic} onChange={setBasic} title="标题" placeholder="请输入简介" />

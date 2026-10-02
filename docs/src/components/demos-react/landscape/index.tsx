@@ -13,7 +13,7 @@ export default function LandscapeDemo() {
   const [show2, setShow2] = useState(false)
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

@@ -25,7 +25,7 @@ export default function DropMenuDemo() {
   const [result, setResult] = useState('')
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         const d = [data0, data1, data2, data3][active]
         const dv = active === 0 ? ['2'] : active === 1 ? ['2', '4'] : undefined

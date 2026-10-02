@@ -24,7 +24,7 @@ function slides(prefix: string) {
 export default function SwiperDemo() {
   return (
     <DemoCanvasReact
-      mode="stage"
+     
       scenes={scenes}
       code={code}
     >

@@ -13,7 +13,7 @@ export default function SkeletonDemo() {
   const [loading] = useState(true)
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0) return <CuSkeleton title loading={loading} />
         if (active === 1) return <CuSkeleton avatar title loading={loading} />

@@ -13,7 +13,7 @@ export default function StepperDemo() {
   const [value2, setValue2] = useState(3)
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return <CuField><CuFieldItem title="禁用"><CuStepper disabled /></CuFieldItem></CuField>

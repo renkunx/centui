@@ -16,7 +16,7 @@ const swiperRef = ref<{ goto: (i: number) => void } | null>(null)
 </script>
 
 <template>
-  <DemoCanvas mode="stage" :scenes="scenes" :code="code">
+  <DemoCanvas :scenes="scenes" :code="code">
     <template #scene-0>
       <CuSwiper class="swiper-demo-box" :autoplay="3000">
         <CuSwiperItem v-for="(c, i) in colors" :key="i">

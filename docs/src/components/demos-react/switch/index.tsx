@@ -12,7 +12,7 @@ export default function SwitchDemo() {
   const [offDisabled] = useState(false)
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0) return <CuSwitch value={on} onChange={setOn} />
         if (active === 1) return <CuSwitch value={off} onChange={setOff} />

@@ -13,7 +13,7 @@ export default function CaptchaDemo() {
   const [showDialog, setShowDialog] = useState(false)
 
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0)
           return (

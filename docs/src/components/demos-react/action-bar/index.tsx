@@ -11,7 +11,7 @@ const relative = { position: 'relative' as const }
 
 export default function ActionBarDemo() {
   return (
-    <DemoCanvasReact mode="stage" scenes={scenes} code={code}>
+    <DemoCanvasReact scenes={scenes} code={code}>
       {active => {
         if (active === 0) return <CuActionBar actions={single} style={relative} />
         if (active === 1) return <CuActionBar actions={double} style={relative} />
