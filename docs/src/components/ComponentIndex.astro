@@ -7,7 +7,10 @@ interface Props {
 }
 const { locale } = Astro.props
 const isZh = locale === 'zh-CN'
-const linkPrefix = isZh ? '/components' : '/en/components'
+// BASE_URL 含部署 base（本地 '/'，GitHub Pages '/centui'，可能带或不带尾斜杠），
+// 硬编码绝对路径会导致 Pages 子路径 404
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+const linkPrefix = `${base}/components`
 ---
 
 {
