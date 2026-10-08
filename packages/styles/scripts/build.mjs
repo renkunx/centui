@@ -64,18 +64,29 @@ async function processCss(css, fromPath, toPath) {
 async function main() {
   mkdirSync(join(DIST, 'es'), { recursive: true })
 
+  // v2 内嵌字体（DIDIFD-Medium 数字子集）
+  const fontsPath = join(SRC, 'fonts.styl')
+  const fontsCss = await processCss(
+    await compileStylus(readFileSync(fontsPath, 'utf8'), fontsPath),
+    fontsPath,
+    join(DIST, 'fonts.css'),
+  )
+  writeFileSync(join(DIST, 'fonts.css'), fontsCss)
+
   // 组件作用域重置（.cu-* 子树内补齐 v2 全局 reset 的等价效果）
+  const scopedResetPath = join(SRC, 'scoped-reset.styl')
   const scopedResetCss = await processCss(
-    await compileStylus(readFileSync(join(SRC, 'scoped-reset.styl'), 'utf8'), 'scoped-reset.styl'),
-    join(SRC, 'scoped-reset.styl'),
+    await compileStylus(readFileSync(scopedResetPath, 'utf8'), scopedResetPath),
+    scopedResetPath,
     join(DIST, 'scoped-reset.css'),
   )
   writeFileSync(join(DIST, 'scoped-reset.css'), scopedResetCss)
 
   // 全局基础样式
+  const globalPath = join(SRC, 'global.styl')
   const globalCss = await processCss(
-    await compileStylus(readFileSync(join(SRC, 'global.styl'), 'utf8'), 'global.styl'),
-    join(SRC, 'global.styl'),
+    await compileStylus(readFileSync(globalPath, 'utf8'), globalPath),
+    globalPath,
     join(DIST, 'global.css'),
   )
   writeFileSync(join(DIST, 'global.css'), globalCss)
@@ -90,9 +101,10 @@ async function main() {
 
   for (const file of files) {
     const name = file.replace(/\.styl$/, '')
-    const source = readFileSync(join(SRC, 'components', file), 'utf8')
+    const srcPath = join(SRC, 'components', file)
+    const source = readFileSync(srcPath, 'utf8')
     try {
-      const css = await processCss(await compileStylus(source, file), join(SRC, 'components', file), join(DIST, 'es', `${name}.css`))
+      const css = await processCss(await compileStylus(source, srcPath), srcPath, join(DIST, 'es', `${name}.css`))
       writeFileSync(join(DIST, 'es', `${name}.css`), css)
       bundles.push(css)
     } catch (err) {
@@ -101,9 +113,9 @@ async function main() {
     }
   }
 
-  // index.css 顶部插入作用域重置（对齐 v2 视觉，见 scoped-reset.styl 头注释）
-  writeFileSync(join(DIST, 'index.css'), scopedResetCss + bundles.join(''))
-  console.log(`Built ${files.length - failed}/${files.length} component styles + global.css + scoped-reset.css + index.css`)
+  // index.css 顶部插入字体声明 + 作用域重置（对齐 v2 主产物行为，见各文件头注释）
+  writeFileSync(join(DIST, 'index.css'), fontsCss + scopedResetCss + bundles.join(''))
+  console.log(`Built ${files.length - failed}/${files.length} component styles + global.css + fonts.css + scoped-reset.css + index.css`)
   if (failed > 0) {
     process.exit(1)
   }
