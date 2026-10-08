@@ -3,108 +3,103 @@
   "props": [
     {
       "name": "autoplay",
-      "type": "number",
+      "desc": "自动切换间隔时长(毫秒), 禁用可设置为0",
+      "type": "Number",
       "default": "3000",
-      "desc": "自动切换间隔（ms），0 表示不自动切换",
       "required": false
     },
     {
       "name": "transition",
-      "type": "string",
-      "default": "'slide'",
-      "desc": "切换效果：slide / slideY / fade",
+      "desc": "面板切换动画效果",
+      "type": "String",
+      "default": "slide",
       "required": false
     },
     {
-      "name": "transitionDuration",
-      "type": "number",
+      "name": "transition-duration",
+      "desc": "面板切换动画时长",
+      "type": "Number",
       "default": "250",
-      "desc": "切换动画时长（ms）",
       "required": false
     },
     {
-      "name": "defaultIndex",
-      "type": "number",
+      "name": "default-index",
+      "desc": "第一屏面板索引值",
+      "type": "Number",
       "default": "0",
-      "desc": "初始展示索引",
       "required": false
     },
     {
-      "name": "hasDots",
-      "type": "boolean",
+      "name": "has-dots",
+      "desc": "\b控制面板指示点",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否显示指示器",
       "required": false
     },
     {
-      "name": "isLoop",
-      "type": "boolean",
+      "name": "is-prevent",
+      "desc": "阻止默认的事件，如页面滚动事件",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否循环播放",
       "required": false
     },
     {
-      "name": "isPrevent",
-      "type": "boolean",
+      "name": "is-loop",
+      "desc": "循环播放",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否阻止默认事件",
       "required": false
     },
     {
       "name": "dragable",
-      "type": "boolean",
+      "desc": "禁用触摸滑动",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否可拖拽",
       "required": false
     },
     {
-      "name": "useNativeDriver",
-      "type": "boolean",
+      "name": "use-native-driver",
+      "desc": "开启3D加速",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否使用原生驱动（translate3d）",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "beforeChange",
-      "desc": "切换前触发，参数 (fromIndex, toIndex)"
+      "name": "@beforeChange(from, to)",
+      "desc": "轮播器将要切换前的事件"
     },
     {
-      "name": "afterChange",
-      "desc": "切换后触发，参数 (fromIndex, toIndex)"
+      "name": "@afterChange(from, to)",
+      "desc": "轮播器切换完成时的事件"
     }
   ],
-  "slots": [
-    {
-      "name": "default",
-      "desc": "轮播内容，子元素为 CuSwiperItem"
-    }
-  ],
+  "slots": [],
   "methods": [
     {
-      "name": "next()",
-      "desc": "切换到下一页"
-    },
-    {
-      "name": "prev()",
-      "desc": "切换到上一页"
-    },
-    {
-      "name": "goto(index)",
-      "desc": "切换到指定展示索引"
-    },
-    {
-      "name": "getIndex()",
-      "desc": "获取当前展示索引"
-    },
-    {
-      "name": "play(duration)",
-      "desc": "开始自动播放"
+      "name": "play(autoplay)",
+      "desc": "打开自动切换"
     },
     {
       "name": "stop()",
-      "desc": "停止自动播放"
+      "desc": "停止自动切换"
+    },
+    {
+      "name": "prev()",
+      "desc": "前一个item"
+    },
+    {
+      "name": "next()",
+      "desc": "后一个item"
+    },
+    {
+      "name": "goto(index)",
+      "desc": "切换到某一个index"
+    },
+    {
+      "name": "getIndex()",
+      "desc": "获取当前显示的index"
     }
   ]
 }

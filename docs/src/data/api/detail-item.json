@@ -3,31 +3,26 @@
   "props": [
     {
       "name": "title",
-      "type": "string",
-      "default": "''",
       "desc": "标题",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
       "name": "content",
-      "type": "string | number",
-      "default": "''",
-      "desc": "内容",
+      "desc": "描述内容",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
       "name": "bold",
-      "type": "boolean",
+      "desc": "是否加粗显示",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否加粗",
       "required": false
     }
   ],
   "events": [],
-  "slots": [
-    {
-      "name": "default",
-      "desc": "内容插槽，覆盖 content"
-    }
-  ]
+  "slots": []
 }

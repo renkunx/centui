@@ -2,102 +2,138 @@
   "component": "cashier",
   "props": [
     {
-      "name": "modelValue / value",
-      "type": "boolean",
+      "name": "v-model",
+      "desc": "收银台是否显示",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否显示",
       "required": false
     },
     {
       "name": "channels",
-      "type": "Array<{text, desc?, img?, icon?, disabled?}>",
+      "desc": "支付渠道数据源",
+      "type": "Array",
       "default": "[]",
-      "desc": "支付渠道",
       "required": false
     },
     {
-      "name": "channelLimit",
-      "type": "number",
+      "name": "channel-limit",
+      "desc": "支付渠道超出限制数目时展示更多支付渠道按钮",
+      "type": "Number",
       "default": "2",
-      "desc": "直展渠道数上限",
       "required": false
     },
     {
-      "name": "defaultIndex",
-      "type": "number",
+      "name": "default-index",
+      "desc": "默认选中支付渠道索引",
+      "type": "Number",
       "default": "0",
-      "desc": "默认选中渠道",
       "required": false
     },
     {
-      "name": "paymentTitle / paymentAmount / paymentDescribe",
-      "type": "string",
+      "name": "title",
+      "desc": "收银台弹窗标题",
+      "type": "String",
+      "default": "支付",
+      "required": false
+    },
+    {
+      "name": "large-radius  (2.4.0+)",
+      "desc": "选择器标题栏大圆角模式",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "payment-title",
+      "desc": "支付金额标题",
+      "type": "String",
+      "default": "支付金额(元)",
+      "required": false
+    },
+    {
+      "name": "payment-amount",
+      "desc": "支付金额",
+      "type": "String",
+      "default": "0.00",
+      "required": false
+    },
+    {
+      "name": "payment-describe",
+      "desc": "支付金额说明",
+      "type": "String",
       "default": "-",
-      "desc": "支付金额区文案",
       "required": false
     },
     {
-      "name": "payButtonText / payButtonDisabled",
-      "type": "string / boolean",
-      "default": "-",
-      "desc": "支付按钮",
+      "name": "pay-button-text",
+      "desc": "确认支付按钮文案",
+      "type": "String",
+      "default": "确认支付",
       "required": false
     },
     {
-      "name": "moreButtonText",
-      "type": "string",
-      "default": "'更多支付方式'",
-      "desc": "更多按钮文案",
+      "name": "pay-button-disabled",
+      "desc": "禁用支付按钮",
+      "type": "Boolean",
+      "default": "false",
       "required": false
     },
     {
-      "name": "title / describe",
-      "type": "string",
-      "default": "-",
-      "desc": "标题/描述",
+      "name": "more-button-text",
+      "desc": "更多支付渠道按钮文案",
+      "type": "String",
+      "default": "更多支付方式",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "update:modelValue",
-      "desc": "显隐变化时触发"
+      "name": "@select(item: {text, value})",
+      "desc": "支付渠道选中事件"
     },
     {
-      "name": "select",
-      "desc": "选中渠道时触发"
+      "name": "@pay(item: {text, value})",
+      "desc": "支付渠道确认并发起支付事件"
     },
     {
-      "name": "pay",
-      "desc": "点击支付按钮时触发"
+      "name": "@cancel()",
+      "desc": "取消支付事件"
     },
     {
-      "name": "show / hide / cancel",
-      "desc": "显示/隐藏/取消时触发"
+      "name": "@show()",
+      "desc": "收银台弹窗展示事件"
+    },
+    {
+      "name": "@hide()",
+      "desc": "收银台弹窗隐藏事件"
     }
   ],
   "slots": [
     {
-      "name": "header / footer",
-      "desc": "顶部/底部插槽（作用域 scene）"
+      "name": "header",
+      "desc": "头部内容scoped插槽"
+    },
+    {
+      "name": "footer",
+      "desc": "底部内容scoped插槽"
     },
     {
       "name": "channel",
-      "desc": "渠道区附加内容"
+      "desc": "支付渠道区域插槽，可用于添加支付渠道特殊操作，如添加银行卡"
     },
     {
       "name": "payButton",
-      "desc": "自定义支付按钮"
+      "desc": "发起支付插槽"
     },
     {
       "name": "scene",
-      "desc": "custom 场景内容"
+      "desc": "自定义场景插槽，使用next('custom')打开"
     }
   ],
   "methods": [
     {
       "name": "next(scene, option)",
-      "desc": "切换场景：choose/captcha/loading/success/fail/custom"
+      "desc": "进入收银台下一步"
     }
   ]
 }

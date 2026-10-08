@@ -2,117 +2,195 @@
   "component": "scroll-view",
   "props": [
     {
-      "name": "scrollingX",
-      "type": "boolean",
+      "name": "scrolling-x",
+      "desc": "水平滚动",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否允许横向滚动",
       "required": false
     },
     {
-      "name": "scrollingY",
-      "type": "boolean",
+      "name": "scrolling-y",
+      "desc": "垂直滚动",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否允许纵向滚动",
       "required": false
     },
     {
       "name": "bouncing",
-      "type": "boolean",
+      "desc": "可回弹",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否回弹",
       "required": false
     },
     {
-      "name": "autoReflow",
-      "type": "boolean",
+      "name": "auto-reflow",
+      "desc": "内容发生变化时自动重置滚动区域尺寸",
+      "type": "Boolean",
       "default": "false",
-      "desc": "内容变化时是否自动重置滚动区域",
       "required": false
     },
     {
-      "name": "manualInit",
-      "type": "boolean",
+      "name": "manual-init",
+      "desc": "手动初始化",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否手动初始化滚动区域",
       "required": false
     },
     {
-      "name": "endReachedThreshold",
-      "type": "number",
+      "name": "end-reached-threshold",
+      "desc": "触发到达底部的提前量",
+      "type": "Number",
       "default": "0",
-      "desc": "触发到达底部的阈值（px）",
       "required": false
     },
     {
-      "name": "immediateCheckEndReaching",
-      "type": "boolean",
+      "name": "immediate-check-end-reaching  (2.1.0+)",
+      "desc": "初始化时立即触发是否到达底部检查",
+      "type": "Boolean",
       "default": "false",
-      "desc": "初始化后立即检查是否已到达底部",
       "required": false
     },
     {
-      "name": "touchAngle",
-      "type": "number",
+      "name": "touch-angle  (2.1.0+)",
+      "desc": "触发滚动的角度范围",
+      "type": "Number",
       "default": "45",
-      "desc": "滚动角度阈值，防止误滚动",
       "required": false
     },
     {
-      "name": "isPrevent",
-      "type": "boolean",
+      "name": "is-prevent  (2.3.0+)",
+      "desc": "阻止浏览器默认滚动",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否阻止默认事件",
+      "required": false
+    },
+    {
+      "name": "scroll-top",
+      "desc": "距离顶部距离",
+      "type": "Number",
+      "default": "0",
+      "required": false
+    },
+    {
+      "name": "is-refresh-active",
+      "desc": "\b释放可刷新状态",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "is-refreshing",
+      "desc": "刷新中状态",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "refresh-text",
+      "desc": "待刷新文案",
+      "type": "String",
+      "default": "下拉刷新",
+      "required": false
+    },
+    {
+      "name": "refresh-active-text",
+      "desc": "释放可刷新文案",
+      "type": "String",
+      "default": "释放刷新",
+      "required": false
+    },
+    {
+      "name": "refreshing-text",
+      "desc": "刷新中文案",
+      "type": "String",
+      "default": "刷新中...",
+      "required": false
+    },
+    {
+      "name": "roller-color  (2.2.0+)",
+      "desc": "进度条颜色",
+      "type": "String",
+      "default": "#2F86F6",
+      "required": false
+    },
+    {
+      "name": "is-finished",
+      "desc": "全部已加载",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "loading-text",
+      "desc": "加载中文案",
+      "type": "String",
+      "default": "更多加载中...",
+      "required": false
+    },
+    {
+      "name": "finished-text",
+      "desc": "全部已加载文案",
+      "type": "String",
+      "default": "全部已加载",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "refreshActive",
-      "desc": "下拉刷新区域被激活时触发"
+      "name": "@scroll({scrollLeft, scrollTop})",
+      "desc": "滚动事件"
     },
     {
-      "name": "refreshing",
-      "desc": "下拉刷新触发时调用"
+      "name": "@refreshActive()",
+      "desc": "释放可刷新事件"
     },
     {
-      "name": "endReached",
-      "desc": "滚动到底部时触发"
+      "name": "@refreshing()",
+      "desc": "刷新中事件"
     },
     {
-      "name": "scroll",
-      "desc": "滚动时触发，参数 (scrollLeft, scrollTop)"
+      "name": "@end-reached()",
+      "desc": "滚动触底事件"
     }
   ],
   "slots": [
     {
+      "name": "default",
+      "desc": "滚动区域内容插槽，当内容发生变化是，需要调用reflowScroller重置滚动区域，参考reflowScroller"
+    },
+    {
       "name": "refresh",
-      "desc": "下拉刷新区域，作用域参数 scrollTop / isRefreshing / isRefreshActive"
+      "desc": "下拉刷新组件插槽，可如下使用slot-scoped获取相关滚动状态（不兼容slot-scoped时滚动状态也可通过事件中动态设置）"
     },
     {
       "name": "more",
-      "desc": "加载更多区域，作用域参数 isEndReaching"
+      "desc": "加载更多组件插槽"
     },
     {
       "name": "header",
-      "desc": "头部区域"
+      "desc": "吸顶区域插槽"
     },
     {
       "name": "footer",
-      "desc": "底部区域"
+      "desc": "吸底区域插槽"
     }
   ],
   "methods": [
     {
       "name": "init()",
-      "desc": "手动初始化滚动区域（配合 manual-init）"
+      "desc": "初始化滚动区域，当manual-init设置为true时使用"
     },
     {
-      "name": "scrollTo(left, top, animate)",
-      "desc": "滚动到指定位置"
+      "name": "reflowScroller()",
+      "desc": "重置滚动区域，一般滚动区域中的内容发生变化之后需调用"
     },
     {
-      "name": "reflowScroller(force)",
-      "desc": "重置滚动区域尺寸"
+      "name": "scrollTo(left, top, animate = false)",
+      "desc": "滚动至指定位置"
+    },
+    {
+      "name": "getOffsets(): {left: number, top: number}",
+      "desc": "获取滚动位置  (2.5.4+)"
     },
     {
       "name": "triggerRefresh()",
@@ -120,11 +198,11 @@
     },
     {
       "name": "finishRefresh()",
-      "desc": "结束下拉刷新"
+      "desc": "停止下拉刷新"
     },
     {
       "name": "finishLoadMore()",
-      "desc": "结束加载更多"
+      "desc": "停止加载更多"
     }
   ]
 }

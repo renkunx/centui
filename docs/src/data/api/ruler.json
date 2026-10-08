@@ -2,66 +2,66 @@
   "component": "ruler",
   "props": [
     {
-      "name": "modelValue / value",
-      "type": "number",
+      "name": "v-model",
+      "desc": "双向绑定的值",
+      "type": "Number",
       "default": "0",
-      "desc": "当前值",
       "required": false
     },
     {
       "name": "scope",
-      "type": "number[]",
+      "desc": "刻度尺范围",
+      "type": "Number[]",
       "default": "[0, 100]",
-      "desc": "可选值范围",
       "required": false
     },
     {
       "name": "step",
-      "type": "number",
+      "desc": "刻度尺每一大格步数",
+      "type": "Number",
       "default": "10",
-      "desc": "刻度步长（有数字标注的刻度间隔）",
       "required": false
     },
     {
       "name": "unit",
-      "type": "number",
+      "desc": "刻度尺每一小格步数",
+      "type": "Number",
       "default": "1",
-      "desc": "刻度单位（最小刻度间隔）",
       "required": false
     },
     {
       "name": "min",
-      "type": "number",
+      "desc": "最小可滑动位置",
+      "type": "Number",
       "default": "0",
-      "desc": "最小可用值（边界外刻度置灰）",
       "required": false
     },
     {
       "name": "max",
-      "type": "number",
+      "desc": "最大可滑动位置",
+      "type": "Number",
       "default": "100",
-      "desc": "最大可用值",
       "required": false
     },
     {
-      "name": "stepTextPosition",
-      "type": "string",
+      "name": "stepTextPosition (2.2.1+)",
+      "desc": "Step标志位置",
+      "type": "String",
       "default": "'top'",
-      "desc": "刻度文案位置：top / bottom",
       "required": false
     },
     {
-      "name": "stepTextRender",
-      "type": "(step) => string",
-      "default": "-",
-      "desc": "自定义刻度文案",
+      "name": "stepTextRender (2.2.1+)",
+      "desc": "自定义step文案",
+      "type": "Function",
+      "default": "noop",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "update:modelValue / onChange",
-      "desc": "值变化时触发"
+      "name": "@change(currentValue)",
+      "desc": "值发生变化事件"
     }
   ],
   "slots": []

@@ -3,37 +3,100 @@
   "props": [
     {
       "name": "type",
-      "type": "string",
-      "default": "'empty'",
-      "desc": "类型：empty / network / lost（决定默认图与文案）",
+      "desc": "页面类别",
+      "type": "String",
+      "default": "empty",
       "required": false
     },
     {
-      "name": "imgUrl",
-      "type": "string",
-      "default": "''",
-      "desc": "自定义图片链接",
+      "name": "img-url",
+      "desc": "图片链接",
+      "type": "String",
+      "default": "空信息图片",
       "required": false
     },
     {
       "name": "text",
-      "type": "string",
-      "default": "''",
       "desc": "主文案",
+      "type": "String",
+      "default": "暂无信息",
       "required": false
     },
     {
       "name": "subtext",
-      "type": "string",
-      "default": "''",
       "desc": "副文案",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
       "name": "buttons",
-      "type": "Array<{text, type?, plain?, handler?}>",
-      "default": "[]",
-      "desc": "按钮组",
+      "desc": "按钮列表",
+      "type": "Array",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "text",
+      "desc": "按钮文字",
+      "type": "String",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "type",
+      "desc": "按钮样式类别",
+      "type": "String",
+      "default": "default",
+      "required": false
+    },
+    {
+      "name": "handler",
+      "desc": "\b点击操作",
+      "type": "Function",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "plain  (2.5.0+)",
+      "desc": "朴素",
+      "type": "Boolean",
+      "default": "最后一个按钮为false，其它为true",
+      "required": false
+    },
+    {
+      "name": "round  (2.5.0+)",
+      "desc": "圆角",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "icon  (2.5.0+)",
+      "desc": "按钮图标",
+      "type": "String",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "iconSvg  (2.5.0+)",
+      "desc": "按钮svg图标",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "inactive  (2.5.0+)",
+      "desc": "未激活",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "loading  (2.5.0+)",
+      "desc": "加载中状态",
+      "type": "Boolean",
+      "default": "false",
       "required": false
     }
   ],

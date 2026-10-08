@@ -3,22 +3,92 @@
   "props": [
     {
       "name": "actions",
-      "type": "Array<{text, type?, plain?, disabled?, onClick?}>",
-      "default": "[]",
-      "desc": "按钮组，最多展示两个",
+      "desc": "按钮组",
+      "type": "Array\\",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "text",
+      "desc": "文案",
+      "type": "String",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "desc": "禁用",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "onClick",
+      "desc": "点击回调",
+      "type": "Function(action: ActionOptions)",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "type  (2.5.0+)",
+      "desc": "类型",
+      "type": "String",
+      "default": "disabled为true时为disabled，否则为primary",
+      "required": false
+    },
+    {
+      "name": "plain  (2.5.0+)",
+      "desc": "朴素",
+      "type": "Boolean",
+      "default": "最后一个按钮为false，其它为true",
+      "required": false
+    },
+    {
+      "name": "round  (2.5.0+)",
+      "desc": "圆角",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "icon  (2.5.0+)",
+      "desc": "按钮图标",
+      "type": "String",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "iconSvg  (2.5.0+)",
+      "desc": "按钮svg图标",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "inactive  (2.5.0+)",
+      "desc": "未激活",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "loading  (2.5.0+)",
+      "desc": "加载中状态",
+      "type": "Boolean",
+      "default": "false",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "click",
-      "desc": "按钮点击后触发，参数 (event, action)"
+      "name": "@click(event, action)",
+      "desc": "按钮点击事件"
     }
   ],
   "slots": [
     {
       "name": "default",
-      "desc": "左侧文本区域"
+      "desc": "左侧文案内容"
     }
   ]
 }

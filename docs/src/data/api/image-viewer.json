@@ -2,43 +2,34 @@
   "component": "image-viewer",
   "props": [
     {
-      "name": "modelValue / value",
-      "type": "boolean",
+      "name": "v-model",
+      "desc": "是否显示查看器",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否显示",
       "required": false
     },
     {
       "name": "list",
-      "type": "Array<string | {url, alt, cls}>",
+      "desc": "展示图片列表",
+      "type": "Array",
       "default": "[]",
-      "desc": "图片列表",
       "required": false
     },
     {
-      "name": "initialIndex",
-      "type": "number",
+      "name": "initial-index",
+      "desc": "初始索引值",
+      "type": "Number",
       "default": "0",
-      "desc": "初始索引",
       "required": false
     },
     {
-      "name": "hasDots",
-      "type": "boolean",
+      "name": "has-dots",
+      "desc": "是否展示图片索引值",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否显示索引",
       "required": false
     }
   ],
-  "events": [
-    {
-      "name": "update:modelValue",
-      "desc": "关闭时触发"
-    },
-    {
-      "name": "change",
-      "desc": "切换图片时触发，参数 (fromIndex, toIndex)"
-    }
-  ],
+  "events": [],
   "slots": []
 }

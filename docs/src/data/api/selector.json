@@ -2,109 +2,159 @@
   "component": "selector",
   "props": [
     {
-      "name": "modelValue / value",
-      "type": "boolean",
+      "name": "v-model",
+      "desc": "选择器是否可见",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否显示",
       "required": false
     },
     {
       "name": "data",
-      "type": "Array<{value, text, ...}>",
+      "desc": "数据源",
+      "type": "Array",
       "default": "[]",
-      "desc": "选项数据源",
       "required": false
     },
     {
-      "name": "defaultValue",
-      "type": "string | number | Array",
-      "default": "''",
-      "desc": "默认选中值",
+      "name": "default-value  (2.3.0+)",
+      "desc": "选择器初始选中项的值",
+      "type": "any",
+      "default": "-",
       "required": false
     },
     {
       "name": "title",
-      "type": "string",
-      "default": "''",
-      "desc": "标题",
+      "desc": "选择器标题",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
       "name": "describe",
-      "type": "string",
-      "default": "''",
-      "desc": "描述文案",
-      "required": false
-    },
-    {
-      "name": "okText",
-      "type": "string",
-      "default": "''",
-      "desc": "确认按钮文案（为空则选中即关闭）",
-      "required": false
-    },
-    {
-      "name": "cancelText",
-      "type": "string",
+      "desc": "选择器描述",
+      "type": "String",
       "default": "-",
-      "desc": "取消按钮文案",
       "required": false
     },
     {
-      "name": "multi",
-      "type": "boolean",
+      "name": "ok-text",
+      "desc": "选择器确认文案",
+      "type": "String",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "cancel-text",
+      "desc": "选择器取消文案",
+      "type": "String",
+      "default": "取消",
+      "required": false
+    },
+    {
+      "name": "large-radius  (2.4.0+)",
+      "desc": "选择器标题栏大圆角模式",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否多选",
       "required": false
     },
     {
-      "name": "maskClosable",
-      "type": "boolean",
+      "name": "hide-title-bar  (2.4.0+)",
+      "desc": "隐藏选择器标题栏",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "mask-closable",
+      "desc": "点击蒙层是否可关闭弹出层",
+      "type": "Boolean",
       "default": "true",
-      "desc": "点击遮罩是否关闭",
       "required": false
     },
     {
-      "name": "hideTitleBar",
-      "type": "boolean",
+      "name": "is-check",
+      "desc": "是否有check图标",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否隐藏标题栏",
       "required": false
     },
     {
-      "name": "maxHeight / minHeight",
-      "type": "string | number",
-      "default": "'auto'",
-      "desc": "内容区高度限制",
+      "name": "max-height",
+      "desc": "选择器内容区域最高高度, 超出后可滚动",
+      "type": "Number/String",
+      "default": "auto",
+      "required": false
+    },
+    {
+      "name": "min-height",
+      "desc": "选择器内容区域最小高度, 超出后可滚动",
+      "type": "Number/String",
+      "default": "auto",
+      "required": false
+    },
+    {
+      "name": "icon",
+      "desc": "选中项的图标",
+      "type": "String",
+      "default": "checked",
+      "required": false
+    },
+    {
+      "name": "icon-inverse",
+      "desc": "非选中项的图标",
+      "type": "String",
+      "default": "check",
+      "required": false
+    },
+    {
+      "name": "icon-disabled",
+      "desc": "禁用项的图标",
+      "type": "String",
+      "default": "check-disabled",
+      "required": false
+    },
+    {
+      "name": "icon-size",
+      "desc": "图标大小",
+      "type": "String",
+      "default": "lg",
+      "required": false
+    },
+    {
+      "name": "icon-svg",
+      "desc": "使用svg图标",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "icon-position",
+      "desc": "图标位置",
+      "type": "String",
+      "default": "right",
+      "required": false
+    },
+    {
+      "name": "multi (2.3.0+)",
+      "desc": "支持多选",
+      "type": "Boolean",
+      "default": "false",
       "required": false
     }
   ],
-  "events": [
-    {
-      "name": "update:modelValue",
-      "desc": "显隐状态变化时触发"
-    },
-    {
-      "name": "choose",
-      "desc": "选中某项时触发，参数为选中项"
-    },
-    {
-      "name": "confirm",
-      "desc": "确认时触发（okText 存在或多选）"
-    },
-    {
-      "name": "cancel / show / hide",
-      "desc": "取消/显示/隐藏时触发"
-    }
-  ],
+  "events": [],
   "slots": [
     {
       "name": "default",
-      "desc": "选项内容插槽，作用域参数 option / index / selected"
+      "desc": "html"
     },
     {
-      "name": "header / footer",
-      "desc": "列表头部/底部插槽"
+      "name": "header",
+      "desc": "顶部插槽  (2.4.0+)"
+    },
+    {
+      "name": "footer",
+      "desc": "底部插槽  (2.4.0+)"
     }
   ]
 }

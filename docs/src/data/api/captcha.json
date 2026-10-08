@@ -2,135 +2,137 @@
   "component": "captcha",
   "props": [
     {
-      "name": "modelValue / value",
-      "type": "boolean",
+      "name": "v-model",
+      "desc": "验证码窗口是否显示",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否显示",
       "required": false
     },
     {
-      "name": "title",
-      "type": "string",
-      "default": "-",
-      "desc": "标题",
-      "required": false
-    },
-    {
-      "name": "subtitle",
-      "type": "string",
-      "default": "-",
-      "desc": "副标题（半屏模式描述）",
-      "required": false
-    },
-    {
-      "name": "brief",
-      "type": "string",
-      "default": "''",
-      "desc": "提示文案",
+      "name": "is-view",
+      "desc": "是否内嵌在页面内展示，否则以弹层形式",
+      "type": "Boolean",
+      "default": "false",
       "required": false
     },
     {
       "name": "maxlength",
-      "type": "number | string",
+      "desc": "字符最大输入长度, 若为-1则不限制输入长度",
+      "type": "Number",
       "default": "4",
-      "desc": "验证码位数",
       "required": false
     },
     {
       "name": "mask",
-      "type": "boolean",
+      "desc": "是否掩码",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否掩码显示",
       "required": false
     },
     {
       "name": "system",
-      "type": "boolean",
+      "desc": "是否使用系统默认键盘",
+      "type": "Boolean",
       "default": "false",
-      "desc": "使用系统键盘",
       "required": false
     },
     {
-      "name": "autoSend",
-      "type": "boolean",
+      "name": "auto-send  (2.5.8+)",
+      "desc": "第一次展示时是否触发send事件，否则需手动点击发送按钮",
+      "type": "Boolean",
       "default": "true",
-      "desc": "初始化后自动触发发送",
       "required": false
     },
     {
-      "name": "autoCountdown",
-      "type": "boolean",
+      "name": "auto-countdown",
+      "desc": "手动点击发送按钮后是否自动开始倒计时，否则需手动调用countdown",
+      "type": "Boolean",
       "default": "true",
-      "desc": "发送后自动倒计时",
+      "required": false
+    },
+    {
+      "name": "title",
+      "desc": "标题",
+      "type": "String",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "brief",
+      "desc": "描述",
+      "type": "String",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "append-to",
+      "desc": "挂载节点",
+      "type": "HTMLElement",
+      "default": "document.body",
       "required": false
     },
     {
       "name": "count",
-      "type": "number",
+      "desc": "倒计时时长, 设置为0的时候不显示倒计时按钮",
+      "type": "Number",
       "default": "60",
-      "desc": "倒计时秒数",
       "required": false
     },
     {
-      "name": "countNormalText",
-      "type": "string",
-      "default": "'发送验证码'",
-      "desc": "重发按钮文案",
+      "name": "count-normal-text",
+      "desc": "发送验证码正常状态文字",
+      "type": "String",
+      "default": "发送验证码",
       "required": false
     },
     {
-      "name": "countActiveText",
-      "type": "string",
-      "default": "'{$1}s 后重发'",
-      "desc": "倒计时文案（{$1}为秒）",
-      "required": false
-    },
-    {
-      "name": "isView",
-      "type": "boolean",
-      "default": "false",
-      "desc": "内联展示",
+      "name": "count-active-text",
+      "desc": "发送验证码及倒计时按钮文案配置项",
+      "type": "String",
+      "default": "{$1}秒后重发",
       "required": false
     },
     {
       "name": "type",
-      "type": "string",
-      "default": "'dialog'",
-      "desc": "形态：inline / halfScreen / dialog",
+      "desc": "验证码组件模式类型",
+      "type": "String",
+      "default": "dialog",
       "required": false
     },
     {
-      "name": "disableSend",
-      "type": "boolean",
+      "name": "disable-send",
+      "desc": "发送验证码按钮是否禁用",
+      "type": "Boolean",
       "default": "false",
-      "desc": "禁用重发按钮",
+      "required": false
+    },
+    {
+      "name": "subtitle",
+      "desc": "副标题",
+      "type": "String",
+      "default": "''",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "update:modelValue",
-      "desc": "显隐变化时触发"
+      "name": "@show()",
+      "desc": "验证码组件显示事件"
     },
     {
-      "name": "show / hide",
-      "desc": "显示/隐藏时触发"
+      "name": "@hide()",
+      "desc": "验证码组件隐藏事件"
     },
     {
-      "name": "submit",
-      "desc": "验证码输满时触发，参数为码值"
+      "name": "@send(countdown)",
+      "desc": "发送验证码事件, 第一次打开时或点击重发按钮后触发并开始倒计时，如果auto-countdown为false需手动调用countdown开始倒计时"
     },
     {
-      "name": "send",
-      "desc": "重发时触发，参数为 countdown 函数"
+      "name": "@submit(code)",
+      "desc": "用户提交输入内容事件"
     }
   ],
-  "slots": [
-    {
-      "name": "default",
-      "desc": "提示内容"
-    }
-  ],
+  "slots": [],
   "methods": [
     {
       "name": "countdown()",
@@ -141,12 +143,8 @@
       "desc": "重置倒计时"
     },
     {
-      "name": "setError(msg)",
-      "desc": "设置错误提示"
-    },
-    {
-      "name": "close()",
-      "desc": "关闭验证码弹层"
+      "name": "setError(message)",
+      "desc": "设置报错信息并显示"
     }
   ]
 }

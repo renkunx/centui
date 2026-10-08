@@ -2,61 +2,52 @@
   "component": "tab-bar",
   "props": [
     {
-      "name": "modelValue / value",
-      "type": "string | number",
-      "default": "''",
-      "desc": "当前选中项 name（v-model，value 为 v2 兼容写法）",
+      "name": "v-model",
+      "desc": "双向绑定的标签对象name",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
       "name": "items",
-      "type": "Array<{name, label?, disabled?}>",
-      "default": "[]",
-      "desc": "标签项数据",
+      "desc": "标签标题数组",
+      "type": "Array",
+      "default": "-",
       "required": false
     },
     {
-      "name": "hasInk",
-      "type": "boolean",
+      "name": "has-ink",
+      "desc": "是否显示下划线",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否显示下划墨条",
       "required": false
     },
     {
-      "name": "inkLength",
-      "type": "number | string",
-      "default": "25",
-      "desc": "墨条长度（px）",
+      "name": "ink-length",
+      "desc": "下划线宽度",
+      "type": "Number",
+      "default": "100",
       "required": false
     },
     {
       "name": "immediate",
-      "type": "boolean",
+      "desc": "初始化后立即就触发一次change事件",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否在挂载后立即计算墨条位置",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "change",
-      "desc": "选中项变化时触发（item, index, prevIndex）"
-    },
-    {
-      "name": "update:modelValue / input",
-      "desc": "选中项变化时同步 v-model"
+      "name": "@change(item, index, prevIndex)",
+      "desc": "标签索引发生变化事件"
     }
   ],
+  "slots": [],
   "methods": [
     {
       "name": "reflow()",
-      "desc": "重新计算墨条位置（容器尺寸变化后调用）"
-    }
-  ],
-  "slots": [
-    {
-      "name": "item",
-      "desc": "自定义标签项内容（作用域：item/items/index/currentName）"
+      "desc": "重新计算样式布局"
     }
   ]
 }

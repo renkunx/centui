@@ -2,62 +2,50 @@
   "component": "landscape",
   "props": [
     {
-      "name": "modelValue / value",
-      "type": "boolean",
+      "name": "v-model",
+      "desc": "是否展示",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否显示",
       "required": false
     },
     {
-      "name": "scroll",
-      "type": "boolean",
-      "default": "false",
-      "desc": "内容是否滚动",
-      "required": false
-    },
-    {
-      "name": "fullScreen",
-      "type": "boolean",
-      "default": "false",
-      "desc": "是否全屏",
-      "required": false
-    },
-    {
-      "name": "hasMask",
-      "type": "boolean",
+      "name": "has-mask",
+      "desc": "是否有蒙层",
+      "type": "Boolean",
       "default": "true",
-      "desc": "是否显示遮罩",
       "required": false
     },
     {
-      "name": "maskClosable",
-      "type": "boolean",
+      "name": "mask-closable",
+      "desc": "是否可以通过点击蒙层关闭",
+      "type": "Boolean",
       "default": "false",
-      "desc": "点击遮罩是否关闭",
+      "required": false
+    },
+    {
+      "name": "full-screen",
+      "desc": "是否全屏",
+      "type": "Boolean",
+      "default": "false",
       "required": false
     },
     {
       "name": "transition",
-      "type": "string",
-      "default": "-",
-      "desc": "过渡动画（默认按 fullScreen 区分 cu-fade / cu-punch）",
+      "desc": "弹出层过渡动画",
+      "type": "String",
+      "default": "full-screen为true时，默认值md-fade；否则默认为md-punch",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "update:modelValue",
-      "desc": "关闭时触发"
+      "name": "@show()",
+      "desc": "弹出层展示事件"
     },
     {
-      "name": "show / hide",
-      "desc": "显示/隐藏后触发"
+      "name": "@hide()",
+      "desc": "弹出层隐藏事件"
     }
   ],
-  "slots": [
-    {
-      "name": "default",
-      "desc": "横屏内容"
-    }
-  ]
+  "slots": []
 }

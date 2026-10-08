@@ -2,24 +2,24 @@
   "component": "bill",
   "props": [
     {
-      "name": "title",
-      "type": "string",
-      "default": "''",
-      "desc": "账单标题",
+      "name": "name",
+      "desc": "票据抬头",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
       "name": "no",
-      "type": "string | number",
-      "default": "''",
-      "desc": "账单编号",
+      "desc": "票据编号",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
-      "name": "waterMark",
-      "type": "string",
-      "default": "''",
-      "desc": "水印文字（canvas）",
+      "name": "water-mark",
+      "desc": "水印内容",
+      "type": "String",
+      "default": "-",
       "required": false
     }
   ],
@@ -27,19 +27,19 @@
   "slots": [
     {
       "name": "default",
-      "desc": "账单内容"
+      "desc": "默认内容插槽"
     },
     {
       "name": "header",
-      "desc": "自定义头部（覆盖 title/no）"
+      "desc": "头部内容插槽"
     },
     {
       "name": "footer",
-      "desc": "底部插槽"
+      "desc": "底部内容插槽"
     },
     {
-      "name": "watermark",
-      "desc": "自定义水印插槽"
+      "name": "watermask",
+      "desc": "水印内容scoped插槽"
     }
   ]
 }

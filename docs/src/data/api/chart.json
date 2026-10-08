@@ -2,59 +2,66 @@
   "component": "chart",
   "props": [
     {
-      "name": "labels",
-      "type": "string[]",
-      "default": "[]",
-      "desc": "横轴标签",
-      "required": false
-    },
-    {
-      "name": "datasets",
-      "type": "Array<{values, color?, width?, theme?}>",
-      "default": "[]",
-      "desc": "数据集，theme 支持 region/heat",
-      "required": false
-    },
-    {
       "name": "size",
-      "type": "[number|string, number|string]",
+      "desc": "图表绘制区域大小, 元素可为带单位字符串或者纯数字(默认为px)",
+      "type": "Array",
       "default": "[480, 320]",
-      "desc": "画布尺寸（支持 rem）",
       "required": false
     },
     {
-      "name": "max / min",
+      "name": "max",
+      "desc": "纵坐标最大值",
       "type": "number",
-      "default": "自动推导",
-      "desc": "纵轴极值",
+      "default": "若不填则会自动计算数据中最大值",
+      "required": false
+    },
+    {
+      "name": "min",
+      "desc": "纵坐标最表最小值, 建议设置为0",
+      "type": "number",
+      "default": "若为空则会自动计算数据中最小值",
       "required": false
     },
     {
       "name": "lines",
+      "desc": "纵坐标最多画几条线",
       "type": "number",
       "default": "5",
-      "desc": "横向网格线数",
       "required": false
     },
     {
       "name": "step",
+      "desc": "纵坐标递减的单位值",
       "type": "number",
-      "default": "自动推导",
-      "desc": "刻度步长",
-      "required": false
-    },
-    {
-      "name": "shift",
-      "type": "number",
-      "default": "0.6",
-      "desc": "左侧留白（单位 em）",
+      "default": "若为空则根据lines, max, min自动计算平均值",
       "required": false
     },
     {
       "name": "format",
-      "type": "(val) => string",
+      "desc": "纵坐标标签格式化函数",
+      "type": "Function",
+      "default": "val => val",
+      "required": false
+    },
+    {
+      "name": "labels",
+      "desc": "横坐标的标签",
+      "type": "Array",
       "default": "-",
-      "desc": "纵轴文案格式化",
+      "required": false
+    },
+    {
+      "name": "datasets",
+      "desc": "数据值, 格式参考下面的说明",
+      "type": "Array",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "shift",
+      "desc": "纵坐标偏移量",
+      "type": "Number",
+      "default": "0.6",
       "required": false
     }
   ],

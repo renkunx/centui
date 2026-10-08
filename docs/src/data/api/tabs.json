@@ -2,54 +2,52 @@
   "component": "tabs",
   "props": [
     {
-      "name": "modelValue / value",
-      "type": "string",
+      "name": "v-model",
+      "desc": "双向绑定的标签对象name",
+      "type": "String",
       "default": "-",
-      "desc": "当前标签名",
-      "required": false
-    },
-    {
-      "name": "hasInk",
-      "type": "boolean",
-      "default": "true",
-      "desc": "是否显示墨条",
-      "required": false
-    },
-    {
-      "name": "inkLength",
-      "type": "number",
-      "default": "25",
-      "desc": "墨条长度（百分比或像素）",
       "required": false
     },
     {
       "name": "immediate",
-      "type": "boolean",
+      "desc": "初始化后立即就触发一次change事件",
+      "type": "Boolean",
       "default": "false",
-      "desc": "初始化后立即触发 change",
+      "required": false
+    },
+    {
+      "name": "name",
+      "desc": "唯一键名",
+      "type": "String",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "label",
+      "desc": "菜单标题",
+      "type": "String",
+      "default": "-",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "desc": "是否禁用",
+      "type": "Boolean",
+      "default": "false",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "update:modelValue",
-      "desc": "标签切换时触发"
-    },
-    {
-      "name": "change",
-      "desc": "标签切换时触发，参数为当前 TabPane"
+      "name": "@change(tab)",
+      "desc": "当用户选择标签触发"
     }
   ],
-  "slots": [
-    {
-      "name": "default",
-      "desc": "CuTabPane 子组件列表"
-    }
-  ],
+  "slots": [],
   "methods": [
     {
       "name": "reflowTabBar()",
-      "desc": "重新计算标签栏布局"
+      "desc": "重新计算TabBar样式布局"
     }
   ]
 }

@@ -3,59 +3,59 @@
   "props": [
     {
       "name": "name",
-      "type": "string",
-      "default": "随机",
-      "desc": "表单控件名",
+      "desc": "标识",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
       "name": "size",
-      "type": "string | number",
-      "default": "0",
-      "desc": "单张体积限制（KB）",
+      "desc": "图片尺寸限制",
+      "type": "String/Number",
+      "default": "-",
       "required": false
     },
     {
       "name": "mime",
-      "type": "string[]",
-      "default": "[]",
-      "desc": "支持的图片类型",
+      "desc": "支持图片类型",
+      "type": "Array",
+      "default": "*",
       "required": false
     },
     {
-      "name": "isCameraOnly",
-      "type": "boolean",
+      "name": "is-camera-only",
+      "desc": "是否只支持拍照",
+      "type": "Boolean",
       "default": "false",
-      "desc": "仅允许拍照",
       "required": false
     },
     {
-      "name": "isMultiple",
-      "type": "boolean",
+      "name": "is-multiple",
+      "desc": "是否支持选择多张",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否多选",
       "required": false
     },
     {
       "name": "amount",
-      "type": "number",
-      "default": "0",
-      "desc": "张数上限",
+      "desc": "选择多张",
+      "type": "Number",
+      "default": "-",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "select",
-      "desc": "选择文件后触发，参数 (name, {files})"
+      "name": "@select(name, { files })",
+      "desc": "图片选择完成事件，还未开始读取"
     },
     {
-      "name": "complete",
-      "desc": "读取完成触发，参数 (name, {blob, dataUrl, file})"
+      "name": "@complete(name, { dataUrl, blob, file })",
+      "desc": "图片选择读取完成事件"
     },
     {
-      "name": "error",
-      "desc": "出错触发，参数 (name, {code, msg})"
+      "name": "@error(name, { code, msg })",
+      "desc": "图片选择读取失败事件"
     }
   ],
   "slots": []

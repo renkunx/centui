@@ -3,60 +3,40 @@
   "props": [
     {
       "name": "steps",
-      "type": "Array<{name, text?}>",
-      "default": "[]",
-      "desc": "步骤数据",
+      "desc": "步骤信息数组",
+      "type": "Array",
+      "default": "-",
       "required": false
     },
     {
       "name": "current",
-      "type": "number",
+      "desc": "当前步骤/进度",
+      "type": "Number",
       "default": "0",
-      "desc": "当前步骤，支持小数表示进行中",
       "required": false
     },
     {
       "name": "direction",
-      "type": "string",
-      "default": "'horizontal'",
-      "desc": "方向：horizontal / vertical",
+      "desc": "展示方向",
+      "type": "String",
+      "default": "horizontal",
       "required": false
     },
     {
       "name": "transition",
-      "type": "boolean",
+      "desc": "进度变化动效",
+      "type": "Boolean",
       "default": "false",
-      "desc": "进度条是否使用过渡动画",
       "required": false
     },
     {
-      "name": "verticalAdaptive",
-      "type": "boolean",
+      "name": "vertical-adaptive",
+      "desc": "步骤高度自适应",
+      "type": "Boolean",
       "default": "false",
-      "desc": "纵向模式下高度自适应",
-      "required": false
-    },
-    {
-      "name": "custom",
-      "type": "boolean",
-      "default": "false",
-      "desc": "完全自定义渲染",
       "required": false
     }
   ],
   "events": [],
-  "slots": [
-    {
-      "name": "icon",
-      "desc": "统一自定义图标，作用域参数 index / currentIndex"
-    },
-    {
-      "name": "reached / current / unreached",
-      "desc": "按状态自定义图标"
-    },
-    {
-      "name": "content",
-      "desc": "自定义文本，作用域参数 index / step"
-    }
-  ]
+  "slots": []
 }

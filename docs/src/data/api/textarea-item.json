@@ -2,122 +2,123 @@
   "component": "textarea-item",
   "props": [
     {
-      "name": "modelValue / value",
-      "type": "string",
-      "default": "''",
-      "desc": "输入值",
-      "required": false
-    },
-    {
       "name": "title",
-      "type": "string",
-      "default": "''",
       "desc": "标题",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
       "name": "placeholder",
-      "type": "string",
-      "default": "''",
       "desc": "占位符",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
-      "name": "maxLength",
-      "type": "string | number",
-      "default": "''",
-      "desc": "最大长度",
+      "name": "v-model",
+      "desc": "输入内容",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
-      "name": "solid",
-      "type": "boolean",
-      "default": "true",
-      "desc": "标题宽度自适应",
-      "required": false
-    },
-    {
-      "name": "readonly",
-      "type": "boolean",
-      "default": "false",
-      "desc": "是否只读",
-      "required": false
-    },
-    {
-      "name": "disabled",
-      "type": "boolean",
-      "default": "false",
-      "desc": "是否禁用",
-      "required": false
-    },
-    {
-      "name": "clearable",
-      "type": "boolean",
-      "default": "false",
-      "desc": "是否可清除",
-      "required": false
-    },
-    {
-      "name": "rows",
-      "type": "string | number",
-      "default": "'3'",
-      "desc": "行数",
+      "name": "max-length",
+      "desc": "可输入的字符长度",
+      "type": "String/Number",
+      "default": "-",
       "required": false
     },
     {
       "name": "autosize",
-      "type": "boolean",
+      "desc": "是否可自动适应高度",
+      "type": "Boolean",
       "default": "false",
-      "desc": "是否自动增高",
+      "required": false
+    },
+    {
+      "name": "max-height",
+      "desc": "在autosize=true的情况, 文本域最长的高度",
+      "type": "String/Number",
+      "default": "'40'",
+      "required": false
+    },
+    {
+      "name": "solid",
+      "desc": "title的宽度是否固定",
+      "type": "Boolean",
+      "default": "true",
+      "required": false
+    },
+    {
+      "name": "readonly",
+      "desc": "是否只读",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "disabled",
+      "desc": "是否禁用",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "clearable  (2.5.3+)",
+      "desc": "是否有删除图标",
+      "type": "Boolean",
+      "default": "false",
+      "required": false
+    },
+    {
+      "name": "rows",
+      "desc": "开始显示的行数",
+      "type": "String/Number",
+      "default": "'3'",
       "required": false
     },
     {
       "name": "error",
-      "type": "string",
-      "default": "''",
-      "desc": "错误提示",
+      "desc": "是否显示错误, 如果有内容就认定是出错, 并显示出来",
+      "type": "String",
+      "default": "-",
       "required": false
     },
     {
-      "name": "formation",
-      "type": "(name, value, pos) => {value, range}",
+      "name": "formation  (2.5.13+)",
+      "desc": "表单文本格式化回调方法",
+      "type": "Function(name, curValue, curPos): {value: curValue, range: curPos}",
       "default": "-",
-      "desc": "自定义格式化",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "update:modelValue / onChange",
-      "desc": "值变化时触发"
+      "name": "@focus(name)",
+      "desc": "文本域获得焦点事件"
     },
     {
-      "name": "focus / blur",
-      "desc": "聚焦/失焦时触发"
+      "name": "@blur(name)",
+      "desc": "文本域失去焦点事件"
+    },
+    {
+      "name": "@change(name, value)",
+      "desc": "文本域值变化事件"
+    },
+    {
+      "name": "@keyup(name, event)",
+      "desc": "文本域按键按下事件"
+    },
+    {
+      "name": "@keydown(name, event)",
+      "desc": "文本域按键释放事件"
     }
   ],
   "slots": [
     {
       "name": "footer",
-      "desc": "底部插槽"
-    },
-    {
-      "name": "right",
-      "desc": "右侧插槽"
-    }
-  ],
-  "methods": [
-    {
-      "name": "focus() / blur()",
-      "desc": "聚焦/失焦"
-    },
-    {
-      "name": "getValue()",
-      "desc": "获取当前值"
-    },
-    {
-      "name": "resizeTextarea()",
-      "desc": "重新计算高度（autosize）"
+      "desc": "文本域在分隔线上面部分的slot"
     }
   ]
 }

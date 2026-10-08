@@ -3,43 +3,49 @@
   "props": [
     {
       "name": "data",
-      "type": "Array<{text, options, disabled?}>",
+      "desc": "数据源",
+      "type": "Array",
       "default": "[]",
-      "desc": "菜单栏数据源",
       "required": false
     },
     {
-      "name": "defaultValue",
-      "type": "Array<string | number>",
+      "name": "default-value",
+      "desc": "初始值",
+      "type": "Array",
       "default": "[]",
-      "desc": "默认选中值（按栏索引）",
+      "required": false
+    },
+    {
+      "name": "option-render",
+      "desc": "返回各选项渲染内容",
+      "type": "Function({text, disabled, ...}):String",
+      "default": "-",
       "required": false
     }
   ],
   "events": [
     {
-      "name": "change",
-      "desc": "选中列表项时触发，参数 (barItem, listItem)"
+      "name": "@change(barItem, listItem)",
+      "desc": "选中某项事件"
     },
     {
-      "name": "show / hide",
-      "desc": "展开/收起时触发"
-    }
-  ],
-  "slots": [
+      "name": "@show()",
+      "desc": "下拉菜单展示事件"
+    },
     {
-      "name": "default",
-      "desc": "选项内容插槽，作用域参数 option"
+      "name": "@hide()",
+      "desc": "下拉菜单隐藏事件"
     }
   ],
+  "slots": [],
   "methods": [
     {
-      "name": "getSelectedValues()",
-      "desc": "获取全部选中项"
+      "name": "getSelectedValue(index): listItem",
+      "desc": "获取某菜单项选中值"
     },
     {
-      "name": "getSelectedValue(index)",
-      "desc": "获取指定栏选中项"
+      "name": "getSelectedValues(): listItems",
+      "desc": "获取所有菜单项选中值"
     }
   ]
 }
