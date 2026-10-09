@@ -32,6 +32,7 @@ readonly GPR_SCOPE='@renkunx'
 cleanup() {
   restore_npmrc
   restore_package_jsons
+  rm -f mirror-versions.json
   return 0
 }
 trap cleanup EXIT
@@ -44,12 +45,15 @@ dist_tag_of() {
 }
 
 write_npmrc() { # $1 = registry, $2 = 持 token 的环境变量名
-  local host="${1#https://}"
+  # token 值在写入时展开，不依赖 CLI 的 ${VAR} 展开（pnpm 10 支持不一致，
+  # 曾导致 GPR 镜像 401 authentication token not provided）
+  local host="${1#https://}" tok
+  tok="${!2}"
   cat >.npmrc <<EOF
 registry=$1
 @centui:registry=$1
 ${GPR_SCOPE}:registry=$1
-//$host/:_authToken=\${$2}
+//$host/:_authToken=${tok}
 always-auth=true
 EOF
 }
@@ -63,14 +67,45 @@ restore_npmrc() {
 #（含 dependencies/devDependencies 键）；仅作用于临时 manifest，发布后还原 ----
 mirror_package_jsons() {
   local dir
+  node -e '
+    const fs = require("fs");
+    const map = {};
+    for (const d of process.argv.slice(1)) {
+      const p = JSON.parse(fs.readFileSync(`${d}/package.json`, "utf8"));
+      map[p.name] = p.version;
+    }
+    fs.writeFileSync("mirror-versions.json", JSON.stringify(map));
+  ' "${PACKAGE_DIRS[@]}"
   for dir in "${PACKAGE_DIRS[@]}"; do
     cp "$dir/package.json" "$dir/package.json.mirror-bak"
     node -e '
       const fs = require("fs");
       const f = process.argv[1];
-      let s = fs.readFileSync(f, "utf8").replaceAll("@centui/", "@renkunx/");
-      const p = JSON.parse(s);
-      if (p.name === "centui") p.name = "@renkunx/centui";
+      const verOf = JSON.parse(fs.readFileSync("mirror-versions.json", "utf8"));
+      const p = JSON.parse(fs.readFileSync(f, "utf8"));
+      const rename = (n) =>
+        n === "centui" ? "@renkunx/centui"
+        : n.startsWith("@centui/") ? `@renkunx/${n.slice("@centui/".length)}`
+        : n;
+      for (const sect of ["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"]) {
+        const deps = p[sect];
+        if (!deps) continue;
+        const out = {};
+        for (const [k, v] of Object.entries(deps)) {
+          if (typeof v === "string" && v.startsWith("workspace:")) {
+            const spec = v.slice("workspace:".length);
+            const base = verOf[k];
+            out[rename(k)] = base == null ? v
+              : spec === "*" ? base
+              : spec === "^" || spec === "~" ? spec + base
+              : spec;
+          } else {
+            out[rename(k)] = v;
+          }
+        }
+        p[sect] = out;
+      }
+      p.name = rename(p.name);
       fs.writeFileSync(f, JSON.stringify(p, null, 2) + "\n");
     ' "$dir/package.json"
   done
@@ -117,7 +152,7 @@ publish_lenient() { # $1 = registry, $2 = token env var
     echo "🚀 $name@$version → $1 (tag: $(dist_tag_of "$version"))"
     if (
       cd "$dir" &&
-        pnpm publish --access public --no-git-checks --tag "$(dist_tag_of "$version")"
+        npm publish --access public --tag "$(dist_tag_of "$version")"
     ); then
       continue
     fi
