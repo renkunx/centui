@@ -30,7 +30,7 @@ jobs:
       contents: write # 推 tag、创建 GitHub Release 与 Version Packages PR
       pull-requests: write # 创建/更新 Version Packages PR
       packages: write # 发布 GitHub Packages
-      idToken: write # npm OIDC trusted publishing（pnpm 10 自动探测）
+      id-token: write # npm OIDC trusted publishing（pnpm 10 自动探测）
     steps:
       - uses: actions/checkout@v4
         with:
