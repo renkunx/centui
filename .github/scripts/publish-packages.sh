@@ -162,6 +162,9 @@ push_tags() { # 只推本 run 新打的 tag（--tags 会重复推已存在 tag �
 publish_lenient() { # $1 = registry, $2 = token env var
   local dir name version failed=0
   write_npmrc "$1" "$2"
+  # npm 的 project-root 检测在最近的 package.json（即 packages/*）处停止，
+  # 不会读仓库根 .npmrc → 必须显式指定 userconfig，否则回退默认 registry npmjs.org
+  local npmrc="$PWD/.npmrc"
   for dir in "${PACKAGE_DIRS[@]}"; do
     name=$(name_of "$dir")
     version=$(version_of "$dir")
@@ -172,7 +175,7 @@ publish_lenient() { # $1 = registry, $2 = token env var
     echo "🚀 $name@$version → $1 (tag: $(dist_tag_of "$version"))"
     if (
       cd "$dir" &&
-        npm publish --access public --tag "$(dist_tag_of "$version")"
+        NPM_CONFIG_USERCONFIG="$npmrc" npm publish --access public --tag "$(dist_tag_of "$version")"
     ); then
       continue
     fi
