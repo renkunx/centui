@@ -137,13 +137,24 @@ publish_strict() { # $1 = registry, $2 = token env var；任何失败中断脚�
     # 自定义 publish 脚本下 changesets/action 不会推 tag，这里自管：
     # 幂等打 tag（已存在则跳过），脚本末尾统一推送
     if [[ "$1" == "$NPM_REGISTRY" ]]; then
-      git tag "${name}@${version}" 2>/dev/null         && echo "🏷  ${name}@${version}"         || echo "⏭  tag ${name}@${version} 已存在"
+      if git tag "${name}@${version}" 2>/dev/null; then
+        TAGS_THIS_RUN+=("${name}@${version}")
+        echo "🏷  ${name}@${version}"
+      else
+        echo "⏭  tag ${name}@${version} 已存在"
+      fi
     fi
   done
 }
 
-push_tags() {
-  git push origin --tags
+TAGS_THIS_RUN=()
+
+push_tags() { # 只推本 run 新打的 tag（--tags 会重复推已存在 tag 而失败）
+  local t
+  for t in "${TAGS_THIS_RUN[@]:-}"; do
+    [[ -n "$t" ]] && git push origin "refs/tags/$t"
+  done
+  return 0
 }
 
 # lenient：单包失败只输出 warning，保证脚本整体退出 0，
