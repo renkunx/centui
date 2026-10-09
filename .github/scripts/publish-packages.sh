@@ -134,7 +134,16 @@ publish_strict() { # $1 = registry, $2 = token env var；任何失败中断脚�
       cd "$dir" &&
         pnpm publish --access public --no-git-checks --tag "$(dist_tag_of "$version")"
     )
+    # 自定义 publish 脚本下 changesets/action 不会推 tag，这里自管：
+    # 幂等打 tag（已存在则跳过），脚本末尾统一推送
+    if [[ "$1" == "$NPM_REGISTRY" ]]; then
+      git tag "${name}@${version}" 2>/dev/null         && echo "🏷  ${name}@${version}"         || echo "⏭  tag ${name}@${version} 已存在"
+    fi
   done
+}
+
+push_tags() {
+  git push origin --tags
 }
 
 # lenient：单包失败只输出 warning，保证脚本整体退出 0，
@@ -171,6 +180,7 @@ if [[ -z "${NPM_TOKEN:-}" ]]; then
 else
   echo '==> [1/2] 发布到 npmjs.com'
   publish_strict "$NPM_REGISTRY" NPM_TOKEN
+  push_tags
 
   echo '==> [2/2] 发布 GPR 镜像（'"${GPR_SCOPE}"'/*，内置 GITHUB_TOKEN）'
   mirror_package_jsons
