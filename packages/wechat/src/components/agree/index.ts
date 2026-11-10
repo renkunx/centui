@@ -49,7 +49,8 @@ CuComponent({
       this.setData({innerValue: v})
     },
     iconType(iconType: string) {
-      this.setData(iconNames(iconType))
+      const names = iconNames(iconType)
+      this.setData({checkedName: names.checked, uncheckedName: names.unchecked})
     },
     'innerValue, disabled'(innerValue: boolean) {
       const colors = iconColors(innerValue, AGREE_FILL)
@@ -59,10 +60,14 @@ CuComponent({
 
   lifetimes: {
     attached() {
+      const names = iconNames(this.data.iconType)
+      const colors = iconColors(this.data.value, AGREE_FILL)
       this.setData({
         innerValue: this.data.value,
-        ...iconNames(this.data.iconType),
-        ...iconColors(this.data.value, AGREE_FILL),
+        checkedName: names.checked,
+        uncheckedName: names.unchecked,
+        checkedColor: colors.checked,
+        uncheckedColor: colors.unchecked,
       })
     },
   },
