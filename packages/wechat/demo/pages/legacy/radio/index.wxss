@@ -1,0 +1,6 @@
+@import "../legacy.wxss";
+
+.radio-field {
+  margin-bottom: 40px;
+}
+

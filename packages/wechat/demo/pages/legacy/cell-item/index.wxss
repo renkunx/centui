@@ -1,0 +1,17 @@
+@import "../legacy.wxss";
+
+.holder {
+  display: block;
+  width: 48px;
+  height: 48px;
+  background-color: #e6e6e6;
+}
+
+.holder {
+  display: block;
+  width: 88px;
+  height: 88px;
+  border-radius: 44px;
+  background-color: #e6e6e6;
+}
+

@@ -1,0 +1,12 @@
+@import "../legacy.wxss";
+
+.md-example-child-tag {
+  display: flex;
+  align-items: center;
+  padding: v-gap-md h-gap-lg;
+  background: color-bg-base;
+}
+.md-example-child-tag .md-tag {
+  margin-right: h-gap-sm;
+}
+

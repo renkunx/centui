@@ -1,0 +1,95 @@
+<view class="legacy-wrapper md-example image-reader">
+  <view class="legacy-section">
+    <view class="legacy-title">图片选择</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-reader md-example-child-reader-0">
+    <ul class="image-reader-list">
+      <li
+        class="image-reader-item"
+        v-for="(img, index) in imageList['reader0']"
+        key="{{index}}"
+        style="{{{
+          'backgroundImage': `url(${img})`,
+          'backgroundPosition': 'center center',
+          'backgroundRepeat': 'no-repeat',
+          'backgroundSize': 'cover'
+        }}}">
+        <cu-tag
+          class="image-reader-item-del"
+          size="small"
+          shape="quarter"
+          fill-color="#111A34"
+          type="fill"
+          font-color="#fff"
+          @click.native="onDeleteImage('reader0', index)"
+        >
+          <cu-icon name="close"></cu-icon>
+        </cu-tag>
+      </li>
+      <li class="image-reader-item add">
+        <cu-image-reader
+          name="reader0"
+          bind:select="onReaderSelect"
+          bind:complete="onReaderComplete"
+          bind:error="onReaderError"
+          is-multiple
+        ></cu-image-reader>
+        <cu-icon name="camera" size="md" color="#CCC"></cu-icon>
+        <view class="legacy-p">添加图片</view>
+      </li>
+    </ul>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">图片选择并轴向修正，压缩处理</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-reader md-example-child-reader-1">
+    <ul class="image-reader-list">
+      <li
+        class="image-reader-item"
+        v-for="(img, index) in imageList['reader1']"
+        key="{{index}}"
+        style="{{{
+          'backgroundImage': `url(${img})`,
+          'backgroundPosition': 'center center',
+          'backgroundRepeat': 'no-repeat',
+          'backgroundSize': 'cover'
+        }}}">
+        <cu-tag
+          class="image-reader-item-del"
+          size="small"
+          shape="quarter"
+          fill-color="#111A34"
+          type="fill"
+          font-color="#fff"
+          @click.native="onDeleteImage('reader1', index)"
+        >
+          <cu-icon name="close"></cu-icon>
+        </cu-tag>
+      </li>
+      <li class="image-reader-item add">
+        <cu-image-reader
+          name="reader1"
+          bind:select="onReaderSelect"
+          bind:complete="onReaderComplete"
+          bind:error="onReaderError"
+          is-multiple
+        ></cu-image-reader>
+        <cu-icon name="camera" size="md" color="#CCC"></cu-icon>
+        <view class="legacy-p">添加图片</view>
+      </li>
+    </ul>
+  </view>
+
+    </view>
+  </view>
+</view>
+<!--
+TODO 修整清单（image-reader）：
+  - v-for 需复核 wx:for/wx:key 改写
+  - v-for 需复核 wx:for/wx:key 改写
+-->

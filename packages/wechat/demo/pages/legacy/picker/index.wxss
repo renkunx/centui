@@ -1,0 +1,6 @@
+@import "../legacy.wxss";
+
+.md-example.picker .md-example-title a {
+  font-size: 20px !important;
+}
+

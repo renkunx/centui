@@ -1,0 +1,114 @@
+<view class="legacy-wrapper md-example number-keyboard">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-number-keyboard md-example-child-number-keyboard-0">
+    <cu-button bind:tap="toggleKeyboard(0)">{{ isKeyBoardShow[0] ? '收起键盘' : '唤起键盘，有小数点' }}</cu-button>
+    <cu-number-keyboard
+      v-model="isKeyBoardShow[0]"
+      bind:enter="onNumberEnter"
+      bind:delete="onNumberDelete"
+    ></cu-number-keyboard>
+
+    <cu-button bind:tap="toggleKeyboard(1)">{{ isKeyBoardShow[1] ? '收起键盘' : '唤起键盘，无小数点' }}</cu-button>
+    <cu-number-keyboard
+      v-model="isKeyBoardShow[1]"
+      hide-dot
+      bind:enter="onNumberEnter"
+      bind:delete="onNumberDelete"
+    ></cu-number-keyboard>
+
+    <cu-button bind:tap="toggleKeyboard(2)">{{ isKeyBoardShow[2] ? '收起键盘' : '唤起键盘，替换键值' }}</cu-button>
+    <cu-number-keyboard
+      v-model="isKeyBoardShow[2]"
+      text-render="{{keyFormatter}}"
+      bind:enter="onNumberEnter"
+      bind:delete="onNumberDelete"
+    ></cu-number-keyboard>
+
+    <cu-button bind:tap="toggleKeyboard(3)">{{ isKeyBoardShow[3] ? '收起键盘' : '唤起键盘，00 按键' }}</cu-button>
+    <cu-number-keyboard
+      v-model="isKeyBoardShow[3]"
+      duplicate-zero="{{true}}"
+      text-render="{{keyFormatter1}}"
+      bind:enter="onNumberEnter"
+      bind:delete="onNumberDelete"
+    ></cu-number-keyboard>
+    <view class="md-example-display" wx:if="{{isKeyBoardShow" v-text="number"></view>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">简单类型</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-number-keyboard md-example-child-number-keyboard-1">
+    <cu-button bind:tap="isKeyBoardShow = !isKeyBoardShow">{{ isKeyBoardShow ? '收起键盘' : '唤起键盘' }}</cu-button>
+    <cu-number-keyboard
+      value="{{isKeyBoardShow}}" bind:change="noop"
+      type="simple"
+      bind:enter="onNumberEnter"
+      bind:delete="onNumberDelete"
+    ></cu-number-keyboard>
+    <view class="md-example-display" wx:if="{{isKeyBoardShow" v-text="number"></view>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">数字键乱序</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-number-keyboard md-example-child-number-keyboard-2">
+    <cu-button bind:tap="isKeyBoardShow = !isKeyBoardShow">{{ isKeyBoardShow ? '收起键盘' : '唤起键盘' }}</cu-button>
+    <cu-number-keyboard
+      value="{{isKeyBoardShow}}" bind:change="noop"
+      ok-text="支付"
+      disorder
+      bind:enter="onNumberEnter"
+      bind:delete="onNumberDelete"
+    ></cu-number-keyboard>
+    <view class="md-example-display" wx:if="{{isKeyBoardShow" v-text="number"></view>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">插槽</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-number-keyboard md-example-child-number-keyboard-3">
+    <cu-button bind:tap="isKeyBoardShow = !isKeyBoardShow">{{ isKeyBoardShow ? '收起键盘' : '唤起键盘' }}</cu-button>
+    <cu-number-keyboard
+      value="{{isKeyBoardShow}}" bind:change="noop"
+      ok-text="支付"
+      disorder
+    >
+      <view class="legacy-p" class="number-keyboard-header">
+        <cu-icon name="security"></cu-icon>&nbsp;安全支付
+      </view>
+    </cu-number-keyboard>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">禁用键盘</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-number-keyboard md-example-child-number-keyboard-1">
+    <cu-button bind:tap="isKeyBoardShow = !isKeyBoardShow">{{ isKeyBoardShow ? '收起键盘' : '唤起键盘' }}</cu-button>
+    <cu-number-keyboard
+      value="{{isKeyBoardShow}}" bind:change="noop"
+      disabled
+      bind:enter="onNumberEnter"
+      bind:delete="onNumberDelete"
+    ></cu-number-keyboard>
+    <view class="md-example-display" wx:if="{{isKeyBoardShow" v-text="number"></view>
+  </view>
+
+    </view>
+  </view>
+</view>

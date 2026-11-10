@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "cu-field": "../../../../dist/components/field/index",
+    "cu-input-item": "../../../../dist/components/input-item/index",
+    "cu-field-item": "../../../../dist/components/field-item/index",
+    "cu-switch": "../../../../dist/components/switch/index",
+    "cu-button": "../../../../dist/components/button/index",
+    "cu-captcha": "../../../../dist/components/captcha/index",
+    "cu-dialog": "../../../../dist/components/dialog/index"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "cu-button": "../../../../dist/components/button/index",
+    "cu-popup": "../../../../dist/components/popup/index"
+  }
+}

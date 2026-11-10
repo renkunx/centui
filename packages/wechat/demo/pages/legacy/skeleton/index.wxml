@@ -1,0 +1,45 @@
+<view class="legacy-wrapper md-example skeleton">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-skeleton md-example-child-skeleton-0">
+    <cu-skeleton title loading="{{loading}}">
+    </cu-skeleton>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">组合骨架</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-skeleton md-example-child-skeleton-1">
+    <cu-skeleton avatar title>
+    </cu-skeleton>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">加载正文 <a href="javascript:window.startLoading()">开始加载</a></view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-skeleton md-example-child-skeleton-2">
+    <cu-field>
+      <cu-skeleton avatar title loading="{{loading}}" row="{{2}}" class="skeleton-item">
+        <cu-cell-item title="交通银行" brief="展示摘要描述" addon="附加文案" arrow>
+          <text class="holder" slot="left"></text>
+        </cu-cell-item>
+      </cu-skeleton>
+      <cu-skeleton avatar title loading="{{loading}}" row="{{2}}" class="skeleton-item">
+        <cu-cell-item title="招商银行" brief="展示摘要描述" addon="附加文案" arrow>
+          <text class="holder" slot="left"></text>
+        </cu-cell-item>
+      </cu-skeleton>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+</view>

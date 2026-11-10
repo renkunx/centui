@@ -1,0 +1,82 @@
+<view class="legacy-wrapper md-example date-picker">
+  <view class="legacy-section">
+    <view class="legacy-title">日期选择</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-date-picker md-example-child-date-picker-0">
+    <cu-date-picker
+      ref="datePicker"
+      today-text="今天"
+      min-date="{{minDate}}"
+      max-date="{{maxDate}}"
+      default-date="{{currentDate}}"
+      is-view
+      bind:initialed="onDatePickerInitialed"
+    ></cu-date-picker>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">时间选择</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-date-picker md-example-child-date-picker-1">
+    <cu-date-picker
+      type="time"
+      unit-text="{{['', '', '', '\'', '\'\'']}}"
+      minute-step="{{1}}"
+      is-view
+    ></cu-date-picker>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">日期时间选择 <a href="javascript:window.triggerDatePicker0()">getFormatDate()</a></view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-date-picker md-example-child-date-picker-2">
+    <cu-date-picker
+      ref="datePicker"
+      type="datetime"
+      default-date="{{currentDate}}"
+      is-view
+      keep-index
+    ></cu-date-picker>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">自定义类型和选项文案值</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-date-picker md-example-child-date-picker-3">
+    <cu-field>
+      <cu-field-item
+        name="name"
+        title="出险时间"
+        arrow="arrow"
+        align="right"
+        content="{{datePickerValue}}"
+        @click.native="isDatePickerShow = true">
+      </cu-field-item>
+    </cu-field>
+    <cu-date-picker
+      ref="datePicker"
+      value="{{isDatePickerShow}}" bind:change="noop"
+      type="custom"
+      title="选择出险时间"
+      large-radius
+      text-render="{{textRender}}"
+      custom-types="{{['yyyy', 'MM','dd', 'hh', 'mm']}}"
+      default-date="{{currentDate}}"
+      bind:change="onDatePickerChange"
+      bind:confirm="onDatePickerConfirm"
+    ></cu-date-picker>
+  </view>
+
+    </view>
+  </view>
+</view>

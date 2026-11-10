@@ -1,0 +1,39 @@
+@import "../legacy.wxss";
+
+.md-example-child-input-item-1 .md-field {
+  padding-bottom: 40px;
+}
+
+.md-example-child-input-item-3 .md-field {
+  padding-bottom: 20px;
+}
+.md-example-child-input-item-3 .md-field .md-field-title .value {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.md-example-child-input-item-3 .md-field .md-field-title .value .field-operator {
+  display: flex;
+  align-items: center;
+}
+.md-example-child-input-item-3 .md-field .md-field-item-content::before {
+  background-color: #c5cad5;
+}
+.md-example-child-input-item-3 .md-field .input-operator {
+  font-size: 28px;
+  color: #5878b4;
+}
+
+.md-example-child-input-item-2 .md-number-keyboard .md-popup-box {
+  max-width: 720px;
+}
+
+.md-example-child-input-item-5 .error {
+  float: left;
+  width: 100%;
+}
+.md-example-child-input-item-5 .error .error-action {
+  float: right;
+  color: #5878b4;
+}
+

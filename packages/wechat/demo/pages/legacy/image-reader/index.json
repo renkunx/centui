@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cu-tag": "../../../../dist/components/tag/index",
+    "cu-icon": "../../../../dist/components/icon/index",
+    "cu-image-reader": "../../../../dist/components/image-reader/index"
+  }
+}

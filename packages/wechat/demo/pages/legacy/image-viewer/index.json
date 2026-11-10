@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "cu-image-viewer": "../../../../dist/components/image-viewer/index"
+  }
+}

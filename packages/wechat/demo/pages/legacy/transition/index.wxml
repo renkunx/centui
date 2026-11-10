@@ -1,0 +1,130 @@
+<view class="legacy-wrapper md-example transition">
+  <view class="legacy-section">
+    <view class="legacy-title">动画</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-transition md-example-child-transition-1">
+    <cu-button bind:tap="showPopUp(0)">Fade</cu-button>
+    <cu-popup
+      v-model="isPopupShow[0]"
+      transition="md-fade"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Fade
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp(1)">Fade Up</cu-button>
+    <cu-popup
+      v-model="isPopupShow[1]"
+      transition="md-fade-up"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Fade Up
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp(2)">Fade Down</cu-button>
+    <cu-popup
+      v-model="isPopupShow[2]"
+      transition="md-fade-down"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Fade Down
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp(3)">Fade Left</cu-button>
+    <cu-popup
+      v-model="isPopupShow[3]"
+      transition="md-fade-left"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Fade Left
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp(4)">Fade Right</cu-button>
+    <cu-popup
+      v-model="isPopupShow[4]"
+      transition="md-fade-right"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Fade Right
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp(5)">Bounce</cu-button>
+    <cu-popup
+      v-model="isPopupShow[5]"
+      transition="md-bounce"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Bounce
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp(6)">Punch</cu-button>
+    <cu-popup
+      v-model="isPopupShow[6]"
+      transition="md-punch"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Punch
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp(7)">Zoom</cu-button>
+    <cu-popup
+      v-model="isPopupShow[7]"
+      transition="md-zoom"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Zoom
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp(8)">Slide Up</cu-button>
+    <cu-popup
+      v-model="isPopupShow[8]"
+      transition="md-slide-up"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Slide Up
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp(9)">Slide Down</cu-button>
+    <cu-popup
+      v-model="isPopupShow[9]"
+      transition="md-slide-down"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Slide Down
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp(10)">Slide Left</cu-button>
+    <cu-popup
+      v-model="isPopupShow[10]"
+      transition="md-slide-left"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Slide Left
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp(11)">Slide Right</cu-button>
+    <cu-popup
+      v-model="isPopupShow[11]"
+      transition="md-slide-right"
+    >
+      <view class="md-example-popup md-example-popup-center">
+        Slide Right
+      </view>
+    </cu-popup>
+  </view>
+
+    </view>
+  </view>
+</view>

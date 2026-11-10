@@ -1,0 +1,194 @@
+<view class="legacy-wrapper md-example steps">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-steps md-example-child-steps-0">
+    <cu-steps steps="{{steps}}"></cu-steps>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">进度非整数</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-steps md-example-child-steps-1">
+    <cu-steps steps="{{steps}}" current="{{1.2}}"></cu-steps>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">自定义步骤图标</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-steps md-example-child-steps-2">
+    <cu-steps
+      steps="{{steps}}"
+      current="{{2}}"
+    >
+      <template slot="icon" slot-scope="props">
+        <b wx:if="{{props.index === props.currentIndex">{{ props.index }}</b>
+        <text v-else>{{ props.index }}</text>
+      </template>
+    </cu-steps>
+    <cu-steps
+      steps="{{steps}}"
+      current="{{2}}"
+    >
+      <template slot="reached" slot-scope="props">
+        <!-- props.index -->
+        <cu-icon name="checked" wx:if="{{props.index === 1"></cu-icon>
+        <view class="step-node-default" v-else>
+          <view class="step-node-default-icon" style="width: 6px;height: 6px;border-radius: 50%;"></view>
+        </view>
+      </template>
+      <template slot="current">
+        <cu-icon name="location"></cu-icon>
+      </template>
+      <template slot="unreached">
+        <cu-icon name="time"></cu-icon>
+      </template>
+    </cu-steps>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">指定当前步骤</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-steps md-example-child-steps-3">
+    <cu-steps
+      steps="{{steps}}"
+      current="{{2}}"
+    >
+    </cu-steps>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">进度变化动效 <a href="javascript:window.triggerSteps0()">current = 2</a></view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-steps md-example-child-steps-4">
+    <cu-steps
+      steps="{{steps}}"
+      current="{{currentStep}}"
+      transition
+    >
+    </cu-steps>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">利用current类增加自定义样式</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-steps md-example-child-steps-5">
+    <cu-steps
+      steps="{{steps}}"
+      current="{{currentStep}}"
+    >
+    </cu-steps>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">完成全部步骤</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-steps md-example-child-steps-6">
+    <cu-steps
+      steps="{{steps}}"
+      current="{{currentStep}}"
+    >
+    </cu-steps>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">纵向展示</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-steps md-example-child-steps-7">
+    <cu-steps
+      direction="vertical"
+      steps="{{steps}}"
+      current="{{1}}"
+      vertical-adaptive
+    >
+    </cu-steps>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">自定义内容</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-steps md-example-child-steps-8">
+    <cu-steps
+      direction="vertical"
+      steps="{{steps0}}"
+      current="{{0.5}}"
+    >
+      <template slot="reached">
+        <cu-icon name="checked"></cu-icon>
+      </template>
+      <view
+        class="custom-content"
+        slot="content"
+        slot-scope="{ index, step }"
+      >
+        <template wx:if="{{index === 0">
+          <view class="legacy-p" class="name active" v-text="step.name"></view>
+          <view class="legacy-p" class="amount">
+            <cu-amount value="{{+step.amount}}"></cu-amount>元
+          </view>
+          <view class="legacy-p" class="desc" v-html="step.text"></view>
+        </template>
+        <template v-else>
+          <view class="legacy-p" class="name" v-text="step.name"></view>
+        </template>
+      </view>
+    </cu-steps>
+    <cu-steps
+      direction="vertical"
+      steps="{{steps1}}"
+      current="{{1}}"
+    >
+      <template slot="current">
+        <cu-icon name="checked"></cu-icon>
+      </template>
+      <view
+        class="custom-content"
+        slot="content"
+        slot-scope="{ index, step }"
+      >
+        <template wx:if="{{index === 1">
+          <view class="legacy-p" class="name active" v-text="step.name"></view>
+          <view class="legacy-p" class="amount">
+            <cu-amount value="{{+step.amount}}"></cu-amount>元
+          </view>
+        </template>
+        <template v-else>
+          <view class="legacy-p" class="name" v-text="step.name"></view>
+        </template>
+      </view>
+    </cu-steps>
+  </view>
+
+    </view>
+  </view>
+</view>
+<!--
+TODO 修整清单（steps）：
+  - 存在 v-else/v-html 需人工核对
+  - 存在 v-else/v-html 需人工核对
+-->

@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "cu-codebox": "../../../../dist/components/codebox/index"
+  }
+}

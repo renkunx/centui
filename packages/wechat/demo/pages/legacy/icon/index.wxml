@@ -1,0 +1,99 @@
+<view class="legacy-wrapper md-example icon">
+  <view class="legacy-section">
+    <view class="legacy-title">字体图标 & SVG 图标</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-icon md-example-child-icon-0">
+    <view
+      class="md-example-item"
+      wx:for="{{iconList}}" wx:for-item="icon"
+      key="{{icon}}"
+    >
+      <cu-icon
+        name="{{icon.split('/')[0]}}"
+        size="lg"
+        svg="{{false}}"
+      ></cu-icon>
+      <view class="legacy-p">{{ icon }}</view>
+    </view>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">SVG 图标</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-icon md-example-child-icon-1">
+    <view class="md-example-item-s">
+      <cu-icon name="spinner" size="lg" style="-webkit-filter:invert(1)"></cu-icon>
+      <view class="legacy-p">spinner</view>
+    </view>
+    <view class="md-example-item-s">
+      <cu-icon name="success-color" size="lg"></cu-icon>
+      <view class="legacy-p">success-color</view>
+    </view>
+    <view class="md-example-item-s">
+      <cu-icon name="warn-color" size="lg"></cu-icon>
+      <view class="legacy-p">warn-color</view>
+    </view>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">大小</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-icon md-example-child-icon-2">
+    <view class="md-example-item-s">
+      <cu-icon name="location" svg="{{false}}" size="xs"></cu-icon>
+      <view class="legacy-p">xs</view>
+    </view>
+    <view class="md-example-item-s">
+      <cu-icon name="location" svg="{{false}}" size="sm"></cu-icon>
+      <view class="legacy-p">sm</view>
+    </view>
+    <view class="md-example-item-s">
+      <cu-icon name="location" svg="{{false}}" size="md"></cu-icon>
+      <view class="legacy-p">md</view>
+    </view>
+    <view class="md-example-item-s">
+      <cu-icon name="location" svg="{{false}}" size="lg"></cu-icon>
+      <view class="legacy-p">lg</view>
+    </view>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">颜色</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-icon md-example-child-icon-3">
+    <view class="md-example-item-s">
+      <cu-icon name="security" svg="{{false}}" color="gray"></cu-icon>
+      <view class="legacy-p">gray</view>
+    </view>
+    <view class="md-example-item-s">
+      <cu-icon name="security" svg="{{false}}" color="orange"></cu-icon>
+      <view class="legacy-p">orange</view>
+    </view>
+    <view class="md-example-item-s">
+      <cu-icon name="security" svg="{{false}}" color="blue"></cu-icon>
+      <view class="legacy-p">blue</view>
+    </view>
+    <view class="md-example-item-s">
+      <cu-icon name="security" svg="{{false}}" color="purple"></cu-icon>
+      <view class="legacy-p">purple</view>
+    </view>
+  </view>
+
+    </view>
+  </view>
+</view>
+<!--
+TODO 修整清单（icon）：
+  - wxml 方法调用表达式需改写：{{icon.split('/')[0]}}
+  - v-for 需复核 wx:for/wx:key 改写
+-->

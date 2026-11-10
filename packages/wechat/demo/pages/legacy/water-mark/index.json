@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "cu-water-mark": "../../../../dist/components/water-mark/index"
+  }
+}

@@ -1,0 +1,17 @@
+<view class="catalog">
+  <view wx:for="{{groups}}" wx:key="category" class="catalog-group">
+    <view class="catalog-group-title">{{item.text}}</view>
+    <view
+      wx:for="{{item.items}}"
+      wx:for-item="comp"
+      wx:key="dir"
+      class="catalog-item"
+      data-dir="{{comp.dir}}"
+      bind:tap="goDemo"
+      hover-class="catalog-item-hover"
+    >
+      <text>{{comp.text}}</text>
+      <text class="catalog-dir">{{comp.dir}}</text>
+    </view>
+  </view>
+</view>

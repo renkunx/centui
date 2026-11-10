@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "cu-radio": "../../../../dist/components/radio/index",
+    "cu-field": "../../../../dist/components/field/index",
+    "cu-field-item": "../../../../dist/components/field-item/index",
+    "cu-radio-list": "../../../../dist/components/radio-list/index",
+    "cu-radio-group": "../../../../dist/components/radio-group/index",
+    "cu-radio-box": "../../../../dist/components/radio-box/index"
+  }
+}

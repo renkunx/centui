@@ -1,0 +1,15 @@
+/* legacy/components/tip/demo 对译（生成器产物，TODO 见 wxml 尾注释） */
+Page({
+  data: {},
+  onShow(name) {
+      Toast({
+        content: `显示了${name}`,
+      })
+    },
+  onHide(name) {
+      Toast({
+        content: `隐藏了${name}`,
+      })
+    },
+  noop() {},
+})

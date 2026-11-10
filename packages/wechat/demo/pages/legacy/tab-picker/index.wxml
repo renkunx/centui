@@ -1,0 +1,33 @@
+<view class="legacy-wrapper md-example tab-picker">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tab-picker md-example-child-tab-picker-0">
+    <cu-field title="地址">
+      <cu-field-item
+        title="联系地址"
+        arrow="arrow-right"
+        bind:tap="show = !show"
+        placeholder="请选择联系地址"
+        content="{{addressStr}}"
+        solid
+      />
+    </cu-field>
+    <cu-tab-picker
+      title="请选择"
+      describe="请选择您所在的省份、城市、区县"
+      large-radius
+      data="{{data}}"
+      value="{{show}}" bind:change="noop"
+      bind:change="handleChange"
+    />
+  </view>
+
+    </view>
+  </view>
+</view>
+<!--
+TODO 修整清单（tab-picker）：
+  - demo0.vue: 定义对象求值失败（data is not defined），data/methods 未搬运
+-->

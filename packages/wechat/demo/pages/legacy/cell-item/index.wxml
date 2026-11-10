@@ -1,0 +1,65 @@
+<view class="legacy-wrapper md-example cell-item">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-cell-item md-example-child-cell-item-0">
+    <cu-field>
+      <cu-cell-item title="普通条目" />
+      <cu-cell-item title="动作条目" arrow bind:tap="onClick" />
+      <cu-cell-item title="禁用条目" disabled no-border/>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">单行列表</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-cell-item md-example-child-cell-item-1">
+    <cu-field>
+      <cu-cell-item title="余额" addon="可用8000.34" arrow />
+      <cu-cell-item title="余额" addon="可用8000.34" />
+      <cu-cell-item title="使用余额">
+        <cu-switch slot="right" value="{{open}}" bind:change="noop" />
+      </cu-cell-item>
+      <cu-cell-item title="使用余额" disabled>
+        <cu-switch slot="right" value="{{true}}" disabled/>
+      </cu-cell-item>
+      <cu-cell-item title="余额" addon="可用8000.34" arrow no-border>
+        <view class="holder" slot="left"></view>
+      </cu-cell-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">多行列表</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-cell-item md-example-child-cell-item-2">
+    <cu-field>
+      <cu-cell-item title="交通银行(尾号3089)" brief="展示摘要描述" />
+      <cu-cell-item title="招商银行(尾号2342)" brief="展示摘要描述">
+        <cu-switch value="{{open}}" bind:change="noop" slot="right" />
+      </cu-cell-item>
+      <cu-cell-item title="交通银行(尾号3089)" brief="展示摘要描述" addon="附加文案" arrow />
+      <cu-cell-item title="交通银行" brief="展示摘要描述" addon="附加文案" arrow>
+        <text class="holder" slot="left"></text>
+      </cu-cell-item>
+      <cu-cell-item title="招商银行" brief="展示摘要描述" addon="禁用的项目" disabled arrow>
+        <text class="holder" slot="left"></text>
+      </cu-cell-item>
+      <cu-cell-item title="Mand Mobile" brief="A mobile UI toolkit" arrow>
+        <view class="legacy-p" slot="children" style="font-size:0.24rem;color:#858B9C;">
+          面向金融场景的Vue移动端UI组件库，丰富、灵活、实用，快速搭建优质的金融类产品，让复杂的金融场景变简单。基于「合理、好用」设计价值观，从交互操作、视觉抽象、图形可视等角度共同解决问题。
+        </view>
+      </cu-cell-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+</view>

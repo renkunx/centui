@@ -1,0 +1,232 @@
+<view class="legacy-wrapper md-example input-item">
+  <view class="legacy-section">
+    <view class="legacy-title">普通输入框</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-input-item-0">
+    <cu-field>
+      <cu-input-item
+        ref="input0"
+        title="普通文本"
+        placeholder="普通文本"
+        is-amount
+        maxlength="{{5}}"
+      ></cu-input-item>
+      <cu-input-item
+        ref="input1"
+        title="禁用表单"
+        value="禁用表单"
+        disabled
+      ></cu-input-item>
+      <cu-input-item
+        ref="input12"
+        title="只读表单"
+        value="只读表单"
+        readonly
+      ></cu-input-item>
+      <cu-input-item
+        ref="input13"
+        title="高亮表单"
+        placeholder="高亮表单"
+        is-highlight
+      ></cu-input-item>
+      <cu-input-item
+        ref="input3"
+        title="文本居中"
+        placeholder="文本居中"
+        align="center"
+      ></cu-input-item>
+      <cu-input-item
+        ref="input4"
+        title="文本居右"
+        placeholder="文本居右"
+        align="right"
+      ></cu-input-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">标题浮动输入框</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-input-item-1">
+    <cu-field>
+      <cu-input-item
+        ref="name"
+        preview-type="text"
+        value="张**"
+        title="真实姓名"
+        placeholder="投保人姓名"
+        is-title-latent
+      ></cu-input-item>
+      <cu-input-item
+        ref="id"
+        type="bankCard"
+        preview-type="text"
+        value="6222 **** **** 1234"
+        title="银行卡号"
+        placeholder="投保人银行卡号"
+        is-title-latent
+        is-virtual-keyboard
+        ></cu-input-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">业务场景输入框</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-input-item-2">
+    <cu-field>
+      <cu-input-item
+        title="银行卡"
+        type="bankCard"
+        placeholder="bankCard xxxx xxxx xxxx xxxx"
+      ></cu-input-item>
+      <cu-input-item
+        title="手机号"
+        type="phone"
+        value="{{phone}}" bind:change="noop"
+        placeholder="phone xxx xxxx xxxx"
+      ></cu-input-item>
+      <cu-input-item
+        title="金额"
+        type="money"
+        value="{{money}}" bind:change="noop"
+        bind:keydown="onInputKeydown"
+        bind:change="onInputChange"
+        placeholder="money xx, xxx.xxxx"
+      ></cu-input-item>
+      <cu-input-item
+        title="数字"
+        type="digit"
+        value="{{digit}}" bind:change="noop"
+        placeholder="digit 0123456789"
+      ></cu-input-item>
+      <cu-input-item
+        title="密码"
+        type="password"
+        placeholder="password *********"
+      ></cu-input-item>
+      <cu-input-item
+        title="邮箱"
+        type="email"
+        placeholder="其他标准 html input 类型"
+      ></cu-input-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">大尺寸金融表单</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-input-item-3">
+    <cu-field title="转出金额(元)">
+      <view
+        class="field-operator"
+        slot="action"
+        bind:tap="onClick"
+      >
+        <cu-icon name="info"></cu-icon>
+      </view>
+      <cu-input-item
+        type="money"
+        value="{{value}}" bind:change="noop"
+        brief="理财提示文案，字符超出10个自动变小"
+        placeholder="最多30万元"
+        size="{{size}}"
+        is-amount
+        is-highlight
+      >
+        <view class="input-operator" slot="right" bind:tap="takeAll">全部取出</view>
+      </cu-input-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">表单控件</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-input-item-4">
+    <cu-field>
+      <cu-input-item
+        ref="input9"
+        title="清空按钮"
+        placeholder="normal text"
+        clearable
+      ></cu-input-item>
+
+      <cu-input-item
+        ref="input10"
+        title="金融键盘"
+        placeholder="financial number keyboard"
+        is-virtual-keyboard
+        clearable
+        bind:focus="onFakeInputFocus"
+        bind:blur="onFakeInputBlur"
+      ></cu-input-item>
+
+      <cu-input-item
+        ref="input11"
+        title="自定义键盘"
+        placeholder="custom number keyboard"
+        is-virtual-keyboard
+        virtual-keyboard-vm="myNumberKeyBoard"
+        clearable
+      ></cu-input-item>
+      <cu-number-keyboard type="simple" ref="myNumberKeyBoard"></cu-number-keyboard>
+
+      <cu-input-item
+        ref="input11"
+        placeholder="left/right slots"
+      >
+        <cu-icon name="bank-zs" slot="left" svg></cu-icon>
+        <cu-icon name="info" slot="right" @click.native="onClick"></cu-icon>
+      </cu-input-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">错误提示</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-input-item-5">
+    <cu-field>
+      <cu-input-item
+        type="phone"
+        title="手机号码"
+        value="1999999999999"
+        error="手机号码无效"
+        clearable
+      ></cu-input-item>
+      <cu-input-item
+        type="bankCard"
+        title="储蓄卡号"
+        value="{{bankCardNo}}" bind:change="noop"
+        clearable
+        bind:blur="checkBankCard"
+      >
+        <view class="legacy-p"
+          wx:if="{{isError"
+          class="error"
+          slot="error"
+        >
+          不支持当前银行<text class="error-action" bind:tap="bankCardTip">查看支持银行</text>
+        </view>
+      </cu-input-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+</view>

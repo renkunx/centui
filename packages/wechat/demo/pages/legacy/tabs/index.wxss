@@ -1,0 +1,22 @@
+@import "../legacy.wxss";
+
+.md-example-child-tabs .content {
+  margin: 12px 0;
+  font-size: 28px;
+  background: #fff;
+  padding: 20px;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+.md-example-child-tabs .md-tabs-content {
+  min-height: 200px;
+  background: #fff;
+}
+
+.md-example-child-tabs .md-tab-content {
+  background: #fff;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+}
+

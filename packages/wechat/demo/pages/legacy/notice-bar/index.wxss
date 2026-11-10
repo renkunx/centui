@@ -1,0 +1,9 @@
+@import "../legacy.wxss";
+
+.md-example-child-notice-bar-4 {
+  flex-direction: column;
+}
+.md-example-child-notice-bar-4 .md-notice-bar {
+  width: 100%;
+}
+

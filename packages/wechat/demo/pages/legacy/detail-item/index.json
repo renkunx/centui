@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "cu-field": "../../../../dist/components/field/index",
+    "cu-detail-item": "../../../../dist/components/detail-item/index"
+  }
+}

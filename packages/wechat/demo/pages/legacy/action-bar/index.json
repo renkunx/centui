@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "cu-action-bar": "../../../../dist/components/action-bar/index"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cu-license-plate": "../../../../dist/components/license-plate/index",
+    "cu-field": "../../../../dist/components/field/index",
+    "cu-detail-item": "../../../../dist/components/detail-item/index"
+  }
+}

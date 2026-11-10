@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cu-date-picker": "../../../../dist/components/date-picker/index",
+    "cu-field": "../../../../dist/components/field/index",
+    "cu-field-item": "../../../../dist/components/field-item/index"
+  }
+}

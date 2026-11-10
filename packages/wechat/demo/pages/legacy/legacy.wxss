@@ -1,0 +1,26 @@
+/* legacy mand-mobile v2 示例页框架样式（examples/App.vue .md-example-* 移植，px→rpx 恒等） */
+.legacy-wrapper {
+  padding: 20rpx;
+  overflow: hidden;
+}
+
+.legacy-section {
+  overflow: hidden;
+  margin-bottom: 30rpx;
+  color: var(--color-text-base);
+}
+
+.legacy-title {
+  display: block;
+  font-size: var(--font-body-normal);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-base);
+}
+
+.legacy-content {
+  display: block;
+  position: relative;
+  margin-top: 20rpx;
+  box-sizing: border-box;
+  font-size: var(--font-body-normal);
+}

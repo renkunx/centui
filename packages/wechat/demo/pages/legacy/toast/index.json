@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cu-button": "../../../../dist/components/button/index",
+    "cu-toast": "../../../../dist/components/toast/index",
+    "cu-activity-indicator": "../../../../dist/components/activity-indicator/index"
+  }
+}

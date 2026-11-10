@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "cu-activity-indicator": "../../../../dist/components/activity-indicator/index",
+    "cu-button": "../../../../dist/components/button/index"
+  }
+}

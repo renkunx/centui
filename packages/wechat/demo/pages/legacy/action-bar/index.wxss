@@ -1,0 +1,17 @@
+@import "../legacy.wxss";
+
+.price {
+  font-weight: 500;
+  font-size: 48px;
+  color: #ff823a;
+}
+.price small {
+  margin-left: 10px;
+  font-size: 32px;
+  color: #858b9c;
+}
+
+.md-example.action-bar .md-example-section .md-action-bar {
+  position: relative !important;
+}
+

@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "cu-drop-menu": "../../../../dist/components/drop-menu/index"
+  }
+}

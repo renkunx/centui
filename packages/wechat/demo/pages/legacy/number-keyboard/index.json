@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cu-button": "../../../../dist/components/button/index",
+    "cu-number-keyboard": "../../../../dist/components/number-keyboard/index",
+    "cu-icon": "../../../../dist/components/icon/index"
+  }
+}

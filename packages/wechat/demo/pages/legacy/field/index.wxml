@@ -1,0 +1,24 @@
+<view class="legacy-wrapper md-example field">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-field md-example-child-field-0">
+    <cu-field title="区域标题" brief="区域描述性文本，可根据具体场景配置">
+      <view class="action-container" slot="action" bind:tap="onClick">
+        操作 <cu-icon name="rectangle"></cu-icon>
+      </view>
+      <view class="legacy-p" slot="footer">区域页脚区域内容插槽</view>
+      <cu-field-item solid title="标题区域" placeholder="提示文本" />
+      <cu-field-item solid title="标题区域" content="内容文本" addon="次要信息" />
+      <cu-field-item solid title="附加内容" content="正文内容">
+        <view class="legacy-p" slot="children">这是子内容区域</view>
+      </cu-field-item>
+      <cu-field-item solid title="动作条目" arrow bind:tap="onClick" />
+      <cu-field-item solid title="禁用条目" content="内容禁用状态" arrow disabled />
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+</view>

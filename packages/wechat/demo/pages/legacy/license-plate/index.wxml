@@ -1,0 +1,35 @@
+<view class="legacy-wrapper md-example license-plate">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view>
+    <cu-license-plate defaultValue="{{defaultValue}}"></cu-license-plate>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">半弹层版</view>
+    <view class="legacy-content">
+
+  <view>
+    <!-- 投保人车牌号 -->
+    <cu-field title="车辆信息">
+      <view bind:tap="changeNumber">
+        <cu-detail-item title="车牌号码">
+          {{ licensePlate }}
+        </cu-detail-item>
+      </view>
+    </cu-field>
+    <cu-license-plate
+      modeShow="{{popUp}}"
+      showPopUp="{{showPopUp}}"
+      bind:hide="hide"
+      bind:confirm="confirm"
+    ></cu-license-plate>
+  </view>
+
+    </view>
+  </view>
+</view>

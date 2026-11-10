@@ -1,0 +1,29 @@
+@import "../legacy.wxss";
+
+.md-tip-4 .md-tip-bg {
+  background-color: #ffebdf;
+}
+.md-tip-4 .md-tip-bg:after {
+  border-width: 10px 11px 0 11px;
+  border-color: #ffebdf transparent transparent transparent;
+}
+.md-tip-4 .md-tip-content {
+  padding-left: 80px;
+  color: #c37447;
+}
+.md-tip-4 .md-tip-content .md-icon-security {
+  position: absolute;
+  left: 32px;
+  width: 64px !important;
+  height: 64px !important;
+}
+.md-tip-4 .md-tip-bg {
+  box-shadow: none;
+  opacity: 1;
+}
+
+.md-example-child-tip {
+  display: flex;
+  justify-content: center;
+}
+

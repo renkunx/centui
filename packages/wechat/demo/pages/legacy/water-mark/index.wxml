@@ -1,0 +1,57 @@
+<view class="legacy-wrapper md-example water-mark">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-water-mark-0">
+    <cu-water-mark
+      class="text-container"
+      content="MAND MOBILE"
+      spacing="10vw"
+    >
+      <view class="legacy-p" class="text">
+        每个人都有属于自己的一片森林，也许我们从来不曾去过，但它一直在那里，总会在那里。迷失的人迷失了，相逢的人会再相逢。
+      </view>
+      <view class="legacy-p" class="text">
+        希望你可以记住我，记住我这样活过，这样在你身边待过。
+      </view>
+      <view class="legacy-p" class="text">
+        少年时我们追求激情，成熟后却迷恋平庸。在我们寻找、伤害、背离之后，还能一如既往地相信爱情，这是一种勇气。
+      </view>
+    </cu-water-mark>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">使用插槽</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-water-mark-0">
+    <cu-water-mark
+      class="text-container"
+      spacing="10vw"
+    >
+      <view class="legacy-p" class="text">
+        通过<b>作用域插槽</b>的坐标属性(coord)可以对水印行列进行定制
+      </view>
+      <view class="legacy-p" class="text">
+        通过<b>作用域插槽</b>的坐标属性(coord)可以对水印行列进行定制
+      </view>
+      <view class="legacy-p" class="text">
+        通过<b>作用域插槽</b>的坐标属性(coord)可以对水印行列进行定制
+      </view>
+      <view slot="watermark" slot-scope="props">
+        <text wx:if="{{props.coord.row % 2 "> 奇数行</text>
+        <text v-else>偶数行</text>
+      </view>
+    </cu-water-mark>
+	</view>
+
+    </view>
+  </view>
+</view>
+<!--
+TODO 修整清单（water-mark）：
+  - 存在 v-else/v-html 需人工核对
+-->

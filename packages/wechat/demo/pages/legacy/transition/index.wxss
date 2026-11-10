@@ -1,0 +1,23 @@
+@import "../legacy.wxss";
+
+.md-example-child-transition-1 {
+  float: left;
+  width: 100%;
+}
+.md-example-child-transition-1 .md-button {
+  margin-bottom: 20px;
+}
+.md-example-child-transition-1 .md-example-popup {
+  position: relative;
+  font-size: 28px;
+  font-family: 'Helvetica Neue';
+  font-weight: 500;
+  box-sizing: border-box;
+  text-align: center;
+  background-color: #fff;
+}
+.md-example-child-transition-1 .md-example-popup-center {
+  padding: 50px;
+  border-radius: radius-normal;
+}
+

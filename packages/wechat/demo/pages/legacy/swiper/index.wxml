@@ -1,0 +1,99 @@
+<view class="legacy-wrapper md-example swiper">
+  <view class="legacy-section">
+    <view class="legacy-title">横向轮播 <a href="javascript:window.triggerSwiper0()">Goto 2</a><a href="javascript:window.triggerSwiper1()">Play</a><a href="javascript:window.triggerSwiper2()">Stop</a></view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-swiper md-example-child-swiper-0">
+    <cu-swiper
+      bind:before-change="beforeChange"
+      bind:after-change="afterChange"
+      ref="swiper"
+      is-prevent="{{false}}"
+      useNative-driver="{{false}}"
+    >
+      <cu-swiper-item key="{{$index}}" v-for="(item, $index) in simple">
+        <view
+          class="banner-item"
+          style="{{{'background': `${item.color}`}}}">{{item.text}}</view>
+      </cu-swiper-item>
+    </cu-swiper>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">纵向轮播</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-swiper md-example-child-swiper-1">
+    <cu-swiper
+      bind:before-change="beforeChange"
+      bind:after-change="afterChange"
+      default-index="{{1}}"
+      dragable="{{false}}"
+      autoplay="{{5000}}"
+      transition="slideY">
+      <cu-swiper-item key="{{$index}}" v-for="(item, $index) in simple">
+        <a href="javascript:void(0)"
+          class="banner-item"
+          style="{{{'background': `${item.color}`}}}">{{item.text}}</a>
+      </cu-swiper-item>
+    </cu-swiper>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">渐隐轮播 <a href="javascript:window.triggerSwiper3()">Goto 2</a></view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-swiper md-example-child-swiper-2">
+    <cu-swiper
+      bind:before-change="beforeChange"
+      bind:after-change="afterChange"
+      autoplay="{{5000}}"
+      transition="fade"
+      ref="swiper">
+      <cu-swiper-item key="{{$index}}" v-for="(item, $index) in simple">
+        <a href="javascript:void(0)"
+          class="banner-item"
+          style="{{{'background': `${item.color}`}}}">{{item.text}}</a>
+      </cu-swiper-item>
+    </cu-swiper>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">每屏多内容 <a href="javascript:window.triggerSwiper4()">Goto 2</a></view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-swiper md-example-child-swiper-3">
+    <cu-swiper
+      bind:before-change="beforeChange"
+      bind:after-change="afterChange"
+      ref="swiper">
+      <cu-swiper-item key="{{$index}}" v-for="(item, $index) in mulit">
+        <ul>
+          <li key="{{$index1}}" v-for="(sub, $index1) in item">
+            <a href="javascript:void(0)" class="banner-item" style="{{{'background': `${sub.color}`}}}">{{sub.text}}</a>
+          </li>
+        </ul>
+      </cu-swiper-item>
+    </cu-swiper>
+  </view>
+
+    </view>
+  </view>
+</view>
+<!--
+TODO 修整清单（swiper）：
+  - demo0.vue: 定义对象求值失败（simple is not defined），data/methods 未搬运
+  - v-for 需复核 wx:for/wx:key 改写
+  - demo1.vue: 定义对象求值失败（simple is not defined），data/methods 未搬运
+  - v-for 需复核 wx:for/wx:key 改写
+  - demo2.vue: 定义对象求值失败（simple is not defined），data/methods 未搬运
+  - v-for 需复核 wx:for/wx:key 改写
+  - demo3.vue: 定义对象求值失败（mulit is not defined），data/methods 未搬运
+  - v-for 需复核 wx:for/wx:key 改写
+-->

@@ -1,0 +1,164 @@
+<view class="legacy-wrapper md-example captcha">
+  <view class="legacy-section">
+    <view class="legacy-title">自定义</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-captcha">
+    <cu-field title="文案">
+      <cu-input-item
+        title="标题"
+        value="{{title}}" bind:change="noop"
+      ></cu-input-item>
+      <cu-input-item
+        title="插槽内容"
+        value="{{content}}" bind:change="noop"
+      ></cu-input-item>
+      <cu-input-item
+        title="短信验证码"
+        value="1234"
+        readonly
+      ></cu-input-item>
+    </cu-field>
+
+    <cu-field title="配置">
+
+      <cu-field-item
+        title="限制验证码长度"
+        customized
+        align="right">
+        <cu-switch value="{{limit}}" bind:change="noop"></cu-switch>
+      </cu-field-item>
+
+      <cu-input-item
+        title="验证码长度"
+        type="tel"
+        value="{{maxlength}}" bind:change="noop"
+      ></cu-input-item>
+
+      <cu-field-item
+        title="采用掩码"
+        customized
+        align="right">
+        <cu-switch value="{{mask}}" bind:change="noop"></cu-switch>
+      </cu-field-item>
+
+      <cu-field-item
+        title="使用系统键盘"
+        customized
+        align="right">
+        <cu-switch value="{{system}}" bind:change="noop"></cu-switch>
+      </cu-field-item>
+
+    </cu-field>
+    <cu-button bind:tap="next">确定</cu-button>
+
+    <cu-captcha
+      ref="captcha"
+      value="{{show}}" bind:change="noop"
+      title="{{title}}"
+      maxlength="{{limit ? parseFloat(maxlength) : -1}}"
+      system="{{system}}"
+      mask="{{mask}}"
+      appendTo="{{appendTo}}"
+      bind:submit="submit"
+      bind:show="onShow"
+      bind:hide="onHide"
+      bind:send="onSend"
+    >
+      {{content}}
+    </cu-captcha>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">内联</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-captcha-1">
+    <cu-captcha
+      maxlength="{{4}}"
+      isView="{{true}}"
+      brief="最新验证码依然有效，请勿重发"
+    >
+      验证码已发送至186****5407
+    </cu-captcha>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">半屏自定义</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-captcha">
+    <cu-field title="文案">
+      <cu-input-item title="标题" value="{{title}}" bind:change="noop"></cu-input-item>
+      <cu-input-item title="插槽内容" value="{{content}}" bind:change="noop"></cu-input-item>
+      <cu-input-item title="短信验证码" value="1234" readonly></cu-input-item>
+    </cu-field>
+
+    <cu-field title="配置">
+      <cu-field-item title="发送N次后禁用发送按钮" customized align="right">
+        <cu-input-item value="{{useSendTimes}}" bind:change="noop"></cu-input-item>
+      </cu-field-item>
+
+      <cu-field-item title="限制验证码长度" customized align="right">
+        <cu-switch value="{{limit}}" bind:change="noop"></cu-switch>
+      </cu-field-item>
+
+      <cu-input-item
+        title="验证码长度"
+        type="tel"
+        value="{{maxlength}}" bind:change="noop"
+      ></cu-input-item>
+
+      <cu-field-item title="采用掩码" customized align="right">
+        <cu-switch value="{{mask}}" bind:change="noop"></cu-switch>
+      </cu-field-item>
+
+      <cu-field-item title="使用系统键盘" customized align="right">
+        <cu-switch value="{{system}}" bind:change="noop"></cu-switch>
+      </cu-field-item>
+    </cu-field>
+    <cu-button bind:tap="next">确定</cu-button>
+
+    <cu-captcha
+      ref="captcha"
+      value="{{show}}" bind:change="noop"
+      title="{{title}}"
+      subtitle="{{subtitle}}"
+      maxlength="{{limit ? parseFloat(maxlength) : -1}}"
+      system="{{system}}"
+      mask="{{mask}}"
+      appendTo="{{appendTo}}"
+      type="{{halfScreen}}"
+      countNormalText="{{countNormalText}}"
+      disableSend="{{disableSend}}"
+      bind:submit="submit"
+      bind:show="onShow"
+      bind:hide="onHide"
+      bind:send="onSend"
+    >
+      <view class="soltDiv">
+        验证码已发送至 <text class="phone">186****5407</text><text class="hint" bind:tap="hintHandle">收不到验证码？</text>
+      </view>
+    </cu-captcha>
+    <cu-dialog
+      title="收不到短信验证码？"
+      closable="{{true}}"
+      v-model="dialogConfig.open"
+      btns="{{dialogConfig.btns}}"
+    >
+      人生的刺，就在这里，留恋着不肯快走的，偏是你所不留恋的东西。
+    </cu-dialog>
+  </view>
+
+    </view>
+  </view>
+</view>
+<!--
+TODO 修整清单（captcha）：
+  - wxml 方法调用表达式需改写：{{limit ? parseFloat(maxlength) : -1}}
+  - wxml 方法调用表达式需改写：{{limit ? parseFloat(maxlength) : -1}}
+-->

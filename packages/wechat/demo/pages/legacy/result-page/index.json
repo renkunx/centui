@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "cu-result-page": "../../../../dist/components/result-page/index"
+  }
+}

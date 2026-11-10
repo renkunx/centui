@@ -1,0 +1,14 @@
+@import "../legacy.wxss";
+
+.md-example.agree .md-example-child {
+  padding: v-gap-md h-gap-lg;
+  font-size: font-minor-large;
+  background: color-bg-base;
+}
+.md-example.agree .md-example-child .md-agree-content {
+  color: #858b9c;
+}
+.md-example.agree .md-example-child .md-agree-content a {
+  color: #5878b4;
+}
+

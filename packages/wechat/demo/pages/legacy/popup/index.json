@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "cu-button": "../../../../dist/components/button/index",
+    "cu-popup": "../../../../dist/components/popup/index",
+    "cu-popup-title-bar": "../../../../dist/components/popup-title-bar/index",
+    "cu-icon": "../../../../dist/components/icon/index",
+    "cu-scroll-view": "../../../../dist/components/scroll-view/index"
+  }
+}

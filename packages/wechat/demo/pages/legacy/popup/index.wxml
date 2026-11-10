@@ -1,0 +1,149 @@
+<view class="legacy-wrapper md-example popup">
+  <view class="legacy-section">
+    <view class="legacy-title">不同位置</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-popup md-example-child-popup-0">
+    <cu-button bind:tap="showPopUp('center')">屏幕中弹出</cu-button>
+    <cu-popup v-model="isPopupShow.center">
+      <view class="md-example-popup md-example-popup-center">
+        Popup Center
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp('bottom')">底部弹出</cu-button>
+    <cu-popup
+      v-model="isPopupShow.bottom"
+      position="bottom"
+    >
+      <cu-popup-title-bar
+        title="Popup Title"
+        describe="Popup Description"
+        ok-text="ok"
+        cancel-text="cancel"
+        large-radius
+        bind:confirm="hidePopUp('bottom')"
+        bind:cancel="hidePopUp('bottom')"
+      ></cu-popup-title-bar>
+      <view class="md-example-popup md-example-popup-bottom">
+        Popup Bottom
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp('top')">顶部弹出</cu-button>
+    <cu-popup
+      v-model="isPopupShow.top"
+      hasMask="{{false}}"
+      position="top"
+    >
+      <view class="md-example-popup md-example-popup-top">
+        Popup Top
+        <cu-icon
+          name="close"
+          @click.native="hidePopUp('top')"
+        ></cu-icon>
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp('left')">左侧弹出</cu-button>
+    <cu-popup
+      v-model="isPopupShow.left"
+      position="left"
+    >
+      <view class="md-example-popup md-example-popup-left">
+        Popup Left
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp('right')">右侧弹出</cu-button>
+    <cu-popup
+      v-model="isPopupShow.right"
+      position="right"
+    >
+      <view class="md-example-popup md-example-popup-right">
+        Popup Right
+      </view>
+    </cu-popup>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">其他配置</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-popup md-example-child-popup-2">
+    <cu-button bind:tap="showPopUp('align')">标题居左</cu-button>
+    <cu-popup
+      class="inner-popup"
+      v-model="isPopupShow.align"
+      position="bottom"
+    >
+      <cu-popup-title-bar
+        only-close
+        large-radius
+        title="标题"
+        describe="title & description align left"
+        title-align="left"
+        bind:cancel="hidePopUp('align')"
+      ></cu-popup-title-bar>
+      <view class="md-example-popup md-example-popup-align">
+        <cu-scroll-view scrolling-x="{{false}}">
+          <view class="legacy-p">Scroll View</view>
+        </cu-scroll-view>
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp('top')">无遮罩层</cu-button>
+    <cu-popup
+      v-model="isPopupShow.top"
+      hasMask="{{false}}"
+      position="top"
+    >
+      <view class="md-example-popup md-example-popup-top">
+        Popup Top
+        <cu-icon
+          name="close"
+          @click.native="hidePopUp('top')"
+        ></cu-icon>
+      </view>
+    </cu-popup>
+
+    <cu-button bind:tap="showPopUp('mask')">禁用遮罩层点击</cu-button>
+    <cu-popup
+      v-model="isPopupShow.mask"
+      position="bottom"
+      mask-closable="{{false}}"
+    >
+      <cu-popup-title-bar
+        only-close
+        large-radius
+        bind:confirm="hidePopUp('mask')"
+        bind:cancel="hidePopUp('mask')"
+      ></cu-popup-title-bar>
+      <view class="md-example-popup md-example-popup-bottom">
+        <view class="legacy-p">Recording</view>
+        <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
+        <svg width="55" height="80" viewBox="0 0 55 80" xmlns="http://www.w3.org/2000/svg" fill="#2f86f6">
+          <g transform="matrix(1 0 0 -1 0 80)">
+            <rect width="10" height="20" rx="3">
+              <animate attributeName="height" begin="0s" dur="4.3s" values="20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20" calcMode="linear" repeatCount="indefinite" />
+            </rect>
+            <rect x="15" width="10" height="80" rx="3">
+              <animate attributeName="height" begin="0s" dur="2s" values="80;55;33;5;75;23;73;33;12;14;60;80" calcMode="linear" repeatCount="indefinite" />
+            </rect>
+            <rect x="30" width="10" height="50" rx="3">
+              <animate attributeName="height" begin="0s" dur="1.4s" values="50;34;78;23;56;23;34;76;80;54;21;50" calcMode="linear" repeatCount="indefinite" />
+            </rect>
+            <rect x="45" width="10" height="30" rx="3">
+              <animate attributeName="height" begin="0s" dur="2s" values="30;45;13;80;56;72;45;76;34;23;67;30" calcMode="linear" repeatCount="indefinite" />
+            </rect>
+          </g>
+        </svg>
+      </view>
+    </cu-popup>
+  </view>
+
+    </view>
+  </view>
+</view>

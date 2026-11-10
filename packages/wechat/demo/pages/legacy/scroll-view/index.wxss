@@ -1,0 +1,125 @@
+@import "../legacy.wxss";
+
+.md-example-child-scroll-view-0 {
+  height: 400px;
+  background: #fff;
+}
+.md-example-child-scroll-view-0 .scroll-view-item {
+  padding: 30px 0;
+  text-align: center;
+  font-size: 28px;
+  font-family: 'Helvetica Neue';
+  border-bottom: 0.5px solid #efefef;
+}
+
+.md-example-child-scroll-view-1 {
+  height: 100px;
+  background: #fff;
+}
+.md-example-child-scroll-view-1 .md-scroll-view {
+  display: flex;
+  align-items: center;
+}
+.md-example-child-scroll-view-1 .md-scroll-view .scroll-view-list {
+  display: flex;
+  width: 1000px;
+}
+.md-example-child-scroll-view-1 .md-scroll-view .scroll-view-list .scroll-view-item {
+  flex: 1;
+  text-align: center;
+  font-size: 28px;
+  font-family: 'Helvetica Neue';
+  border-right: 0.5px solid #efefef;
+}
+
+.md-example-child-scroll-view-2 {
+  height: 800px;
+  background: #fff;
+}
+.md-example-child-scroll-view-2 .scroll-view-item {
+  padding: 30px 0;
+  text-align: center;
+  font-size: 28px;
+  font-family: 'Helvetica Neue';
+  border-bottom: 0.5px solid #efefef;
+}
+
+.md-example-child-scroll-view-3 {
+  height: 800px;
+  background: #fff;
+}
+.md-example-child-scroll-view-3 .scroll-view-item {
+  padding: 30px 0;
+  text-align: center;
+  font-size: 32px;
+  font-family: 'Helvetica Neue';
+  border-bottom: 0.5px solid #efefef;
+}
+
+.md-example-child-scroll-view-4 {
+  position: relative;
+  height: 800px;
+  background: #fff;
+}
+.md-example-child-scroll-view-4 .scroll-view-striky-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+.md-example-child-scroll-view-4 .scroll-view-category-title,
+.md-example-child-scroll-view-4 .scroll-view-striky-title {
+  padding: 10px 0;
+  text-align: center;
+  font-size: 32px;
+  font-family: 'Helvetica Neue';
+  background-color: #f0f0f0;
+}
+.md-example-child-scroll-view-4 .scroll-view-item {
+  padding: 30px 0;
+  text-align: center;
+  font-size: 32px;
+  border-bottom: 0.5px solid #efefef;
+}
+
+.md-example-child-scroll-view-5 {
+  position: relative;
+  height: 800px;
+  background: #fff;
+}
+.md-example-child-scroll-view-5 .md-tab-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  box-shadow: 0 2px 8px #f0f0f0;
+}
+.md-example-child-scroll-view-5 .scroll-view-with-tab-bar > .scroll-view-container {
+  padding-top: 100px;
+}
+.md-example-child-scroll-view-5 .scroll-view-with-tab-bar .scroll-view-item {
+  padding: 30px 0;
+  text-align: center;
+  font-size: 32px;
+  border-bottom: 0.5px solid #efefef;
+}
+
+.md-example-child-scroll-view-6 {
+  background: #fff;
+}
+.md-example-child-scroll-view-6 .content {
+  height: 800px;
+}
+.md-example-child-scroll-view-6 .md-tab-bar {
+  box-shadow: 0 2px 8px #f0f0f0;
+}
+.md-example-child-scroll-view-6 .scroll-view-item {
+  padding: 30px 0;
+  text-align: center;
+  font-size: 32px;
+  font-family: 'Helvetica Neue';
+  border-bottom: 0.5px solid #efefef;
+}
+

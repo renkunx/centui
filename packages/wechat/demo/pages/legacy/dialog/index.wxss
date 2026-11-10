@@ -1,0 +1,11 @@
+@import "../legacy.wxss";
+
+.dialog-banner img {
+  display: block;
+  width: 100%;
+}
+
+.md-example-child-dialog .md-button {
+  margin-bottom: 20px;
+}
+

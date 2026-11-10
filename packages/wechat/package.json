@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@vitest/coverage-istanbul": "^5.1.0",
     "autoprefixer": "^10.4.20",
     "cssnano": "^9.9.0",
     "esbuild": "^0.25.0",

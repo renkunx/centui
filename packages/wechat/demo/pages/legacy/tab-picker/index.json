@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cu-field": "../../../../dist/components/field/index",
+    "cu-field-item": "../../../../dist/components/field-item/index",
+    "cu-tab-picker": "../../../../dist/components/tab-picker/index"
+  }
+}

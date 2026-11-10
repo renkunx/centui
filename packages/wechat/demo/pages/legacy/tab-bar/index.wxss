@@ -1,0 +1,25 @@
+@import "../legacy.wxss";
+
+.md-example-child-tab-bar-4 .custom-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex: 1;
+}
+.md-example-child-tab-bar-4 .custom-item .text {
+  font-size: 20px;
+}
+
+.md-example-child-tab-bar-6 .md-swiper {
+  background: #fff;
+}
+.md-example-child-tab-bar-6 .md-swiper .md-swiper-item {
+  padding: 20px;
+  box-sizing: border-box;
+  font-size: 24px;
+  line-height: 1.5;
+  color: #666;
+}
+
