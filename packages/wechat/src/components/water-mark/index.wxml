@@ -1,0 +1,39 @@
+<view class="cu-water-mark">
+  <view class="water-mark-container">
+    <slot></slot>
+  </view>
+  <view wx:if="{{hasWatermark}}" class="water-mark-list">
+    <view class="water-mark-list-wrapper" style="{{wrapperStyle}}">
+      <canvas
+        wx:if="{{content}}"
+        type="2d"
+        id="cv"
+        class="water-mark-canvas"
+        style="{{canvasStyle}}"
+      ></canvas>
+      <block wx:elif="{{hasWatermarkSlot}}">
+        <view
+          wx:for="{{tiling.lineStyles}}"
+          wx:for-index="lineIndex"
+          wx:key="index"
+          class="water-mark-line"
+          style="{{item}}"
+        >
+          <view
+            wx:for="{{itemIndexes}}"
+            wx:for-item="cell"
+            wx:for-index="cellIndex"
+            wx:key="*this"
+            class="water-mark-item"
+            style="{{tiling.itemStyles[lineIndex]}}"
+          >
+            <slot name="watermark" />
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <view wx:else class="water-mark-slot-probe">
+    <slot name="watermark" />
+  </view>
+</view>

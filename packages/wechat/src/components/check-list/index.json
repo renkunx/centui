@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "styleIsolation": "shared",
+  "usingComponents": {
+    "cu-check-group": "../check-group/index",
+    "cu-cell-item": "../cell-item/index",
+    "cu-check": "../check/index"
+  }
+}

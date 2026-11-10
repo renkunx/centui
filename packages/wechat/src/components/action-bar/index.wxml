@@ -1,0 +1,22 @@
+<view class="cu-action-bar">
+  <view class="cu-action-bar-container">
+    <view wx:if="{{hasText}}" class="cu-action-bar-text">
+      <slot><view id="cu-ab-text-probe"></view></slot>
+    </view>
+    <view class="cu-action-bar-group">
+      <view wx:for="{{buttons}}" wx:key="index" class="cu-action-bar-button">
+        <cu-button
+          type="{{item.type}}"
+          plain="{{item.plain}}"
+          round="{{item.round}}"
+          inactive="{{item.inactive}}"
+          loading="{{item.loading}}"
+          icon="{{item.icon}}"
+          icon-svg="{{item.iconSvg}}"
+          data-index="{{index}}"
+          bind:click="onBtnClick"
+        >{{item.text}}</cu-button>
+      </view>
+    </view>
+  </view>
+</view>

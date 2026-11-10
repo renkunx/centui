@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "styleIsolation": "shared",
+  "usingComponents": {
+    "cu-tag": "../tag/index",
+    "cu-icon": "../icon/index"
+  }
+}

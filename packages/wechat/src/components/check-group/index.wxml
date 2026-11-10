@@ -1,0 +1,3 @@
+<view class="cu-check-group" aria-role="group">
+  <slot></slot>
+</view>

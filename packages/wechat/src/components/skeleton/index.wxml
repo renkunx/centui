@@ -1,0 +1,18 @@
+<view wx:if="{{loading}}" class="cu-skeleton">
+  <view
+    wx:if="{{avatar}}"
+    class="cu-skeleton-avatar {{avatarSize === 'lg' ? 'cu-skeleton-avatar-large' : ''}} {{avatarSize === 'sm' ? 'cu-skeleton-avatar-small' : ''}}"
+  ></view>
+  <view class="cu-skeleton-content">
+    <view wx:if="{{title}}" class="cu-skeleton-title" style="width: {{titleStyle}}"></view>
+    <view
+      wx:for="{{rows}}"
+      wx:key="*this"
+      class="cu-skeleton-row"
+      style="width: {{rowStyles[index]}}"
+    ></view>
+  </view>
+</view>
+<view wx:else>
+  <slot></slot>
+</view>

@@ -1,0 +1,17 @@
+<view
+  wx:if="{{isShown}}"
+  class="cu-popup {{position}} {{hasMask ? 'with-mask' : ''}} {{largeRadius ? 'large-radius' : ''}}"
+>
+  <block wx:if="{{hasMask}}">
+    <view
+      wx:if="{{preventScroll}}"
+      class="cu-popup-mask {{maskCls}}"
+      catch:tap="onMaskTap"
+      catch:touchmove="noop"
+    ></view>
+    <view wx:else class="cu-popup-mask {{maskCls}}" catch:tap="onMaskTap"></view>
+  </block>
+  <view class="cu-popup-box {{transitionName}} {{boxCls}}">
+    <slot></slot>
+  </view>
+</view>

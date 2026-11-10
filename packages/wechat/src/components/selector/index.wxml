@@ -1,0 +1,93 @@
+<view class="cu-selector {{isCheck ? 'is-check' : 'is-normal'}}">
+  <cu-popup
+    show="{{selectorShow}}"
+    position="bottom"
+    mask-closable="{{maskClosable}}"
+    bind:change="onPopupChange"
+    bind:show="onPopupShow"
+    bind:hide="onPopupHide"
+    bind:maskClick="onPopupMaskClick"
+  >
+    <cu-popup-title-bar
+      wx:if="{{!hideTitleBar || isNeedConfirm}}"
+      title="{{title}}"
+      describe="{{describe}}"
+      ok-text="{{okText}}"
+      cancel-text="{{actualCancelText}}"
+      large-radius="{{largeRadius}}"
+      only-close="{{onlyClose}}"
+      bind:confirm="onSelectorConfirm"
+      bind:cancel="onSelectorCancel"
+    ></cu-popup-title-bar>
+    <view class="cu-selector-container">
+      <scroll-view
+        scroll-y
+        class="cu-selector-scroll"
+        style="max-height: {{maxHeight}}; min-height: {{minHeight}};"
+      >
+        <slot name="header"></slot>
+        <block wx:if="{{!multi}}">
+          <view
+            wx:for="{{cells}}"
+            wx:key="no"
+            class="cu-cell-item cu-radio-item {{item.selected ? 'is-selected' : ''}} {{item.disabled ? 'is-disabled' : ''}}"
+            data-index="{{index}}"
+            bind:tap="onOptionTap"
+          >
+            <view class="cu-cell-item-body {{item.brief ? 'multilines' : ''}}">
+              <view wx:if="{{item.side === 'left'}}" class="cu-cell-item-left">
+                <view class="cu-radio {{item.selected ? 'is-checked' : ''}} {{item.disabled ? 'is-disabled' : ''}}">
+                  <view class="cu-radio-icon">
+                    <cu-icon name="{{item.icon}}" size="{{iconSize}}"></cu-icon>
+                  </view>
+                </view>
+              </view>
+              <view class="cu-cell-item-content">
+                <view class="cu-cell-item-title">{{item.title}}</view>
+                <view wx:if="{{item.brief}}" class="cu-cell-item-brief">{{item.brief}}</view>
+              </view>
+              <view wx:if="{{item.side === 'right'}}" class="cu-cell-item-right">
+                <view class="cu-radio {{item.selected ? 'is-checked' : ''}} {{item.disabled ? 'is-disabled' : ''}}">
+                  <view class="cu-radio-icon">
+                    <cu-icon name="{{item.icon}}" size="{{iconSize}}"></cu-icon>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+        <block wx:else>
+          <view
+            wx:for="{{cells}}"
+            wx:key="no"
+            class="cu-cell-item cu-check-item {{item.checked ? 'is-checked' : ''}} {{item.disabled ? 'is-disabled' : ''}}"
+            data-index="{{index}}"
+            bind:tap="onOptionMultiTap"
+          >
+            <view class="cu-cell-item-body {{item.brief ? 'multilines' : ''}}">
+              <view wx:if="{{item.side === 'left'}}" class="cu-cell-item-left">
+                <view class="cu-check {{item.checked ? 'is-checked' : ''}} {{item.disabled ? 'is-disabled' : ''}}">
+                  <view class="cu-check-icon">
+                    <cu-icon name="{{item.icon}}" size="{{iconSize}}"></cu-icon>
+                  </view>
+                </view>
+              </view>
+              <view class="cu-cell-item-content">
+                <view class="cu-cell-item-title">{{item.title}}</view>
+                <view wx:if="{{item.brief}}" class="cu-cell-item-brief">{{item.brief}}</view>
+              </view>
+              <view wx:if="{{item.side === 'right'}}" class="cu-cell-item-right">
+                <view class="cu-check {{item.checked ? 'is-checked' : ''}} {{item.disabled ? 'is-disabled' : ''}}">
+                  <view class="cu-check-icon">
+                    <cu-icon name="{{item.icon}}" size="{{iconSize}}"></cu-icon>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+        <slot name="footer"></slot>
+      </scroll-view>
+    </view>
+  </cu-popup>
+</view>

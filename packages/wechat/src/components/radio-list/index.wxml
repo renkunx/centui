@@ -1,0 +1,39 @@
+<view class="cu-radio-list {{alignCenter ? 'is-align-center' : ''}}">
+  <block wx:for="{{cells}}" wx:key="no">
+    <view
+      class="cu-cell-item cu-radio-item {{item.selected && !inputSelected ? 'is-selected' : ''}} {{item.disabled ? 'is-disabled' : ''}} {{item.noBorder ? 'no-border' : ''}}"
+      data-index="{{index}}"
+      bind:tap="onCellTap"
+    >
+      <view class="cu-cell-item-body {{item.brief ? 'multilines' : ''}}">
+        <view wx:if="{{item.showIcon && item.side === 'left'}}" class="cu-cell-item-left">
+          <view class="cu-radio {{item.checked ? 'is-checked' : ''}} {{item.disabled ? 'is-disabled' : ''}}">
+            <view class="cu-radio-icon">
+              <cu-icon name="{{item.icon}}" size="{{iconSize}}"></cu-icon>
+            </view>
+          </view>
+        </view>
+        <view wx:if="{{item.title || item.brief}}" class="cu-cell-item-content">
+          <view class="cu-cell-item-title">{{item.title}}</view>
+          <view wx:if="{{item.brief}}" class="cu-cell-item-brief">{{item.brief}}</view>
+        </view>
+        <view wx:if="{{item.showIcon && item.side === 'right'}}" class="cu-cell-item-right">
+          <view class="cu-radio {{item.checked ? 'is-checked' : ''}} {{item.disabled ? 'is-disabled' : ''}}">
+            <view class="cu-radio-icon">
+              <cu-icon name="{{item.icon}}" size="{{iconSize}}"></cu-icon>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <cu-input-item
+    wx:if="{{hasInput}}"
+    class="cu-radio-item {{inputSelected ? 'is-selected' : ''}}"
+    title="{{inputLabel}}"
+    placeholder="{{inputPlaceholder}}"
+    value="{{inputValue}}"
+    bind:change="onInputChange"
+    bind:focus="onInputFocus"
+  ></cu-input-item>
+</view>

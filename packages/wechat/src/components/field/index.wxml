@@ -1,0 +1,18 @@
+<view class="cu-field {{plain ? 'is-plain' : ''}} {{disabled ? 'is-disabled' : ''}}">
+  <view wx:if="{{showHeader}}" class="cu-field-header">
+    <view class="cu-field-heading">
+      <view wx:if="{{title}}" class="cu-field-title">{{title}}</view>
+      <view wx:if="{{brief}}" class="cu-field-brief">{{brief}}</view>
+      <slot name="header"></slot>
+    </view>
+    <view class="cu-field-action">
+      <slot name="action"></slot>
+    </view>
+  </view>
+  <view class="cu-field-content">
+    <slot></slot>
+  </view>
+  <view wx:if="{{showFooter}}" class="cu-field-footer">
+    <slot name="footer"></slot>
+  </view>
+</view>

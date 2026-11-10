@@ -1,0 +1,177 @@
+<view class="cu-cashier">
+  <cu-popup
+    show="{{innerShow}}"
+    position="bottom"
+    mask-closable="{{false}}"
+    prevent-scroll="{{true}}"
+    bind:change="onPopupChange"
+    bind:show="onPopupShow"
+    bind:hide="onPopupHide"
+  >
+    <cu-popup-title-bar
+      title="{{title}}"
+      describe="{{describe}}"
+      large-radius="{{largeRadius}}"
+      only-close="{{true}}"
+      bind:cancel="onPopupCancel"
+    ></cu-popup-title-bar>
+    <view class="cu-cashier-container">
+      <slot name="header"></slot>
+
+      <!-- 选择支付渠道 -->
+      <view wx:if="{{scene === 'choose'}}" class="cu-cashier-block cu-cashier-choose">
+        <view class="cu-cashier-channel">
+          <view class="choose-text">
+            <rich-text wx:if="{{paymentTitle}}" class="choose-title" nodes="{{paymentTitle}}"></rich-text>
+            <rich-text wx:if="{{paymentAmount}}" class="choose-number" nodes="{{paymentAmount}}"></rich-text>
+            <rich-text wx:if="{{paymentDescribe}}" class="choose-describe" nodes="{{paymentDescribe}}"></rich-text>
+          </view>
+          <view class="choose-channel {{isChannelActive ? 'active' : ''}}">
+            <slot name="channel"></slot>
+            <view wx:if="{{isChannelShow || isSingle}}" class="choose-channel-list">
+              <view
+                wx:for="{{channelViews}}"
+                wx:key="index"
+                class="cu-cashier-channel-item {{index === defaultIndex ? 'default' : ''}}"
+                data-index="{{index}}"
+                bind:tap="onChannelItemClick"
+              >
+                <view wx:if="{{item.icon}}" class="item-icon {{item.icon}}">
+                  <cu-icon name="{{item.icon}}" size="lg"></cu-icon>
+                </view>
+                <image wx:elif="{{item.img}}" class="item-image" src="{{item.img}}" mode="aspectFit" />
+                <view class="item-label">
+                  <view class="title">
+                    <rich-text nodes="{{item.text}}"></rich-text>
+                    <rich-text
+                      wx:if="{{item.actionText}}"
+                      class="title-active"
+                      nodes="{{item.actionText}}"
+                      catch:tap="onChannelActionTap"
+                      data-index="{{index}}"
+                    ></rich-text>
+                  </view>
+                  <rich-text wx:if="{{item.desc}}" class="desc" nodes="{{item.desc}}"></rich-text>
+                </view>
+                <view class="item-check-icon">
+                  <cu-icon name="{{item.checkIcon}}"></cu-icon>
+                </view>
+              </view>
+            </view>
+            <view wx:elif="{{defaultChannelView}}" class="choose-channel-list">
+              <view
+                class="cu-cashier-channel-item default"
+                data-index="{{defaultIndex}}"
+                bind:tap="onChannelItemClick"
+              >
+                <view wx:if="{{defaultChannelView.icon}}" class="item-icon {{defaultChannelView.icon}}">
+                  <cu-icon name="{{defaultChannelView.icon}}" size="lg"></cu-icon>
+                </view>
+                <image wx:elif="{{defaultChannelView.img}}" class="item-image" src="{{defaultChannelView.img}}" mode="aspectFit" />
+                <view class="item-label">
+                  <view class="title">
+                    <rich-text nodes="{{defaultChannelView.text}}"></rich-text>
+                    <rich-text
+                      wx:if="{{defaultChannelView.actionText}}"
+                      class="title-active"
+                      nodes="{{defaultChannelView.actionText}}"
+                      catch:tap="onChannelActionTap"
+                      data-index="{{defaultIndex}}"
+                    ></rich-text>
+                  </view>
+                  <rich-text wx:if="{{defaultChannelView.desc}}" class="desc" nodes="{{defaultChannelView.desc}}"></rich-text>
+                </view>
+                <view class="item-check-icon">
+                  <cu-icon name="{{defaultChannelView.checkIcon}}"></cu-icon>
+                </view>
+              </view>
+            </view>
+            <view
+              wx:if="{{!isSingle}}"
+              class="choose-channel-more {{isChannelActive ? 'disabled' : ''}}"
+              bind:tap="onChannelMoreClick"
+            >
+              <rich-text nodes="{{moreButtonText}}"></rich-text>
+            </view>
+          </view>
+          <view class="cu-cashier-block-btn">
+            <cu-button
+              class="cu-cashier-pay-button"
+              type="{{payButtonDisabled ? 'disabled' : 'primary'}}"
+              bind:click="onChannelBtnClick"
+            >
+              <slot name="payButton"></slot>{{payButtonText}}
+            </cu-button>
+          </view>
+        </view>
+      </view>
+
+      <!-- 验证码 -->
+      <view wx:elif="{{scene === 'captcha'}}" class="cu-cashier-block cu-cashier-captcha">
+        <cu-captcha
+          is-view="{{true}}"
+          maxlength="{{sceneOption.captcha.maxlength}}"
+          count="{{sceneOption.captcha.count}}"
+          count-normal-text="{{sceneOption.captcha.countNormalText}}"
+          count-active-text="{{sceneOption.captcha.countActiveText}}"
+          auto-countdown="{{sceneOption.captcha.autoCountdown}}"
+          brief="{{sceneOption.captcha.brief}}"
+          bind:send="onSceneSend"
+          bind:submit="onSceneSubmit"
+        >
+          <view>{{sceneOption.captcha.text}}</view>
+        </cu-captcha>
+      </view>
+
+      <!-- 加载中 / 成功 -->
+      <view
+        wx:elif="{{scene === 'loading' || scene === 'success'}}"
+        class="cu-cashier-block {{scene === 'loading' ? 'cu-cashier-loading' : 'cu-cashier-success'}}"
+      >
+        <view class="cu-cashier-block-icon">
+          <cu-activity-indicator type="roller" size="{{100}}" is-success="{{scene === 'success'}}"></cu-activity-indicator>
+        </view>
+        <view class="cu-cashier-block-text">{{scene === 'success' ? sceneOption.success.text : sceneOption.loading.text}}</view>
+        <block wx:if="{{scene === 'success'}}">
+          <view class="cu-cashier-block-btn">
+            <cu-button
+              wx:for="{{successActions}}"
+              wx:key="index"
+              type="{{index === successActions.length - 1 ? 'primary' : 'default'}}"
+              inline="{{successActions.length > 1}}"
+              data-scene="success"
+              data-index="{{index}}"
+              bind:click="onSceneActionTap"
+            >{{item.buttonText}}</cu-button>
+          </view>
+        </block>
+      </view>
+
+      <!-- 失败 -->
+      <view wx:elif="{{scene === 'fail'}}" class="cu-cashier-block cu-cashier-fail">
+        <view class="cu-cashier-block-icon">
+          <cu-icon name="warn-color"></cu-icon>
+        </view>
+        <view class="cu-cashier-block-text">{{sceneOption.fail.text}}</view>
+        <view class="cu-cashier-block-btn">
+          <cu-button
+            wx:for="{{failActions}}"
+            wx:key="index"
+            type="{{index === failActions.length - 1 ? 'primary' : 'default'}}"
+            inline="{{failActions.length > 1}}"
+            data-scene="fail"
+            data-index="{{index}}"
+            bind:click="onSceneActionTap"
+          >{{item.buttonText}}</cu-button>
+        </view>
+      </view>
+
+      <!-- 自定义 -->
+      <view wx:elif="{{scene === 'custom'}}" class="cu-cashier-block cu-cashier-custom">
+        <slot name="scene"></slot>
+      </view>
+
+      <slot name="footer"></slot>
+    </view>
+  </cu-popup>
+</view>

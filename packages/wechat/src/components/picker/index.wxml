@@ -1,0 +1,74 @@
+<view class="cu-picker {{isView ? '' : 'with-popup'}}">
+  <template name="picker-columns">
+    <view class="cu-picker-column" style="height: {{columnHeight}}rpx">
+      <view class="cu-picker-column-container">
+        <view class="cu-picker-column-masker top" style="height: {{maskerHeight}}rpx"></view>
+        <view class="cu-picker-column-masker bottom" style="height: {{maskerHeight}}rpx"></view>
+        <view class="cu-picker-column-list">
+          <block wx:for="{{columns}}" wx:for-item="col" wx:for-index="ci" wx:key="no">
+            <view class="cu-picker-column-item">
+              <view
+                class="column-list"
+                style="padding-top: {{maskerHeight}}rpx; transform: translate3d(0, -{{col.offset}}rpx, 0)"
+              >
+                <view
+                  wx:for="{{col.items}}"
+                  wx:for-item="it"
+                  wx:for-index="ii"
+                  wx:key="no"
+                  class="column-item {{ii === col.activeIndex ? 'active' : ''}} {{it.disabled ? 'disabled' : ''}}"
+                  style="height: {{lineHeight}}rpx; line-height: {{lineHeight}}rpx"
+                  >{{it.text || it.label}}</view
+                >
+              </view>
+            </view>
+          </block>
+        </view>
+        <view class="cu-picker-column-hooks">
+          <view
+            wx:for="{{columns}}"
+            wx:for-item="col"
+            wx:key="no"
+            class="cu-picker-column-hook"
+            data-column="{{col.no}}"
+            catch:touchstart="onColumnTouchStart"
+            catch:touchmove="onColumnTouchMove"
+            catch:touchend="onColumnTouchEnd"
+            catch:touchcancel="onColumnTouchEnd"
+          ></view>
+        </view>
+      </view>
+    </view>
+  </template>
+
+  <!-- isView：列区域直接内联（对齐 Vue isView 分支） -->
+  <block wx:if="{{isView}}">
+    <template is="picker-columns" data="{{columns, lineHeight, maskerHeight, columnHeight}}"></template>
+  </block>
+
+  <!-- 弹层模式（对齐 Vue popup 分支） -->
+  <cu-popup
+    wx:else
+    class="inner-popup"
+    show="{{pickerShow}}"
+    position="bottom"
+    mask-closable="{{maskClosable}}"
+    prevent-scroll="{{true}}"
+    bind:change="onPopupChange"
+    bind:beforeShow="onPopupBeforeShow"
+    bind:show="onPopupShow"
+    bind:hide="onPopupHide"
+    bind:maskClick="onPopupMaskClick"
+  >
+    <cu-popup-title-bar
+      title="{{title}}"
+      describe="{{describe}}"
+      ok-text="{{actualOkText}}"
+      cancel-text="{{actualCancelText}}"
+      large-radius="{{largeRadius}}"
+      bind:confirm="onPickerConfirm"
+      bind:cancel="onPickerCancel"
+    ></cu-popup-title-bar>
+    <template is="picker-columns" data="{{columns, lineHeight, maskerHeight, columnHeight}}"></template>
+  </cu-popup>
+</view>

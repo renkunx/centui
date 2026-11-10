@@ -1,0 +1,42 @@
+<view class="cu-activity-indicator {{type}}">
+  <view class="indicator-container {{vertical ? 'vertical' : ''}}">
+    <view class="indicator-loading">
+      <block wx:if="{{isSuccess && type === 'roller'}}">
+        <view class="cu-activity-indicator-rolling-success">
+          <view style="{{successBoxStyle}}">
+            <view style="{{successDiscStyle}}"></view>
+            <view style="{{successBar0Style}}"></view>
+            <view style="{{successBar1Style}}"></view>
+          </view>
+        </view>
+      </block>
+      <block wx:elif="{{type === 'roller'}}">
+        <view class="cu-activity-indicator-rolling">
+          <view class="rolling-container">
+            <view class="cu-activity-indicator-svg" style="{{rollerBoxStyle}}">
+              <view style="{{rollerTrackStyle}}"></view>
+              <view wx:if="{{hasFill}}" style="{{rollerFillStyle}}"></view>
+              <view style="{{rollerArcStyle}}"></view>
+            </view>
+            <view class="content"><slot name="center"></slot></view>
+          </view>
+        </view>
+      </block>
+      <block wx:elif="{{type === 'spinner'}}">
+        <view class="cu-activity-indicator-spinning {{spinnerDark ? 'dark' : ''}}">
+          <view class="cu-activity-indicator-svg" style="{{spinnerStyle}}"></view>
+        </view>
+      </block>
+      <block wx:elif="{{type === 'carousel'}}">
+        <view class="cu-activity-indicator-carousel">
+          <view class="carouseling" style="{{carouselBoxStyle}}">
+            <view wx:for="{{carouselDots}}" wx:key="*this" style="{{item}}"></view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view wx:if="{{hasText}}" class="cu-activity-indicator-text indicator-text" style="{{textStyle}}">
+      <slot><view id="cu-ai-text-probe"></view></slot>
+    </view>
+  </view>
+</view>

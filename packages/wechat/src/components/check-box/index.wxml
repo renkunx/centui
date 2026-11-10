@@ -1,0 +1,14 @@
+<cu-check-base-box
+  cu-class="cu-check-box"
+  role="checkbox"
+  label="{{label}}"
+  is-checked="{{isChecked}}"
+  disabled="{{disabled}}"
+  icon-position="{{iconPosition}}"
+  bind:tap="onBaseTap"
+>
+  <view wx:if="{{label || hasDefault}}" class="cu-check-box-content">
+    <slot></slot>
+    <block wx:if="{{!hasDefault}}">{{label}}</block>
+  </view>
+</cu-check-base-box>

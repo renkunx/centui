@@ -1,0 +1,7 @@
+/* 展示宿主：引入设计令牌与全局 shim，页面本身不写组件样式 */
+@import "dist/styles/tokens.wxss";
+@import "dist/styles/global.wxss";
+
+page {
+  background: #f4f6f8;
+}

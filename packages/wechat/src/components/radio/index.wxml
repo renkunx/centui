@@ -1,0 +1,15 @@
+<view
+  class="cu-radio {{disabled ? 'is-disabled' : ''}} {{isChecked ? 'is-checked' : ''}} {{inline ? 'is-inline' : ''}}"
+  aria-role="radio"
+  aria-checked="{{isChecked}}"
+  aria-disabled="{{disabled}}"
+  bind:tap="onTap"
+>
+  <view class="cu-radio-icon">
+    <cu-icon name="{{currentIcon}}" size="{{size}}"></cu-icon>
+  </view>
+  <view wx:if="{{label || hasDefault}}" class="cu-radio-label">
+    <slot></slot>
+    <block wx:if="{{!hasDefault}}">{{label}}</block>
+  </view>
+</view>

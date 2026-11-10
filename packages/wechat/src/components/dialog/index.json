@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "styleIsolation": "shared",
+  "usingComponents": {
+    "cu-popup": "../popup/index",
+    "cu-icon": "../icon/index",
+    "cu-activity-indicator": "../activity-indicator/index"
+  }
+}

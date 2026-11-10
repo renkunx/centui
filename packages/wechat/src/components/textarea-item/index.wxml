@@ -1,0 +1,38 @@
+<view class="{{rootClass}}">
+  <view class="cu-field-item-content">
+    <label wx:if="{{title}}" class="cu-field-item-title">{{title}}</label>
+    <view class="cu-field-item-control">
+      <textarea
+        class="cu-textarea-item__textarea"
+        value="{{current}}"
+        placeholder="{{placeholder}}"
+        placeholder-style="color: var(--textarea-item-placeholder-color); font-weight: var(--textarea-item-placeholder-weight)"
+        disabled="{{isDisabled}}"
+        maxlength="{{nativeMaxlength}}"
+        auto-height="{{autosize}}"
+        style="{{heightStyle}}{{maxHeightStyle}}"
+        focus="{{focusAttr}}"
+        bindinput="onInput"
+        bindfocus="onFocus"
+        bindblur="onBlur"
+      ></textarea>
+      <slot name="footer"></slot>
+    </view>
+    <view wx:if="{{showRight}}" class="cu-field-item-right">
+      <view
+        wx:if="{{clearable && !isDisabled && !readonly}}"
+        hidden="{{isInputEmpty || !isInputFocus}}"
+        class="cu-textarea-item__clear"
+        catch:tap="onClearTap"
+      >
+        <cu-icon name="clear"></cu-icon>
+      </view>
+      <slot name="right"></slot>
+    </view>
+  </view>
+  <view wx:if="{{errorInfo}}" class="cu-field-item-children">
+    <view class="cu-textarea-item-msg">
+      <view>{{errorInfo}}</view>
+    </view>
+  </view>
+</view>

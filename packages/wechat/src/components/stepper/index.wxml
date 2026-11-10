@@ -1,0 +1,24 @@
+<view class="cu-stepper {{disabled ? 'disabled' : ''}}">
+  <view
+    class="cu-stepper-button cu-stepper-button-reduce {{isMin ? 'disabled' : ''}}"
+    aria-role="button"
+    aria-label="减少"
+    bind:tap="onReduce"
+  ></view>
+  <view class="cu-stepper-number">
+    <input
+      type="{{isInteger ? 'number' : 'digit'}}"
+      value="{{inputText}}"
+      disabled="{{disabled}}"
+      bindinput="onInput"
+      bindfocus="onFocus"
+      bindblur="onBlur"
+    />
+  </view>
+  <view
+    class="cu-stepper-button cu-stepper-button-add {{isMax ? 'disabled' : ''}}"
+    aria-role="button"
+    aria-label="增加"
+    bind:tap="onAdd"
+  ></view>
+</view>

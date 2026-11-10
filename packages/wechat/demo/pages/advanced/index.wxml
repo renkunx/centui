@@ -1,0 +1,8 @@
+<view class="demo">
+  <view class="demo-section">
+    <view class="demo-title">最小化验证</view>
+    <cu-button inline size="small" bind:click="showTip">Tip</cu-button>
+  </view>
+  <cu-tip id="cu-tip"></cu-tip>
+  <cu-toast id="cu-toast"></cu-toast>
+</view>

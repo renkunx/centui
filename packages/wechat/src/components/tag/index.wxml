@@ -1,0 +1,20 @@
+<view class="cu-tag">
+  <block wx:if="{{shape === 'quarter'}}">
+    <view class="{{computedClass}}">
+      <view class="quarter-content"><slot></slot></view>
+      <view class="quarter-bg" style="{{colorStyle}}"></view>
+    </view>
+  </block>
+  <block wx:elif="{{shape === 'coupon'}}">
+    <view class="{{computedClass}}">
+      <view class="coupon-container" style="{{colorStyle}}">
+        <view class="left-coupon" style="{{leftCouponStyle}}"></view>
+        <slot></slot>
+        <view class="right-coupon" style="{{rightCouponStyle}}"></view>
+      </view>
+    </view>
+  </block>
+  <view wx:else id="cu-tag-el" class="{{computedClass}}" style="{{colorStyle}};{{sizeStyle}}">
+    <slot></slot>
+  </view>
+</view>

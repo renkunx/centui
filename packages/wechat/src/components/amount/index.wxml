@@ -1,0 +1,1 @@
+<view class="cu-amount {{isCapital ? '' : 'numerical'}}">{{text}}</view>

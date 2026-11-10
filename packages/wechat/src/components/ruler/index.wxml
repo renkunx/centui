@@ -1,0 +1,12 @@
+<view
+  class="cu-ruler"
+  bind:touchstart="onTouchStart"
+  catch:touchmove="onTouchMove"
+  bind:touchend="onTouchEnd"
+  bind:touchcancel="onTouchEnd"
+>
+  <!-- canvas 内联高度 60px 维持 Vue 实际渲染尺寸（见文件头差异 1） -->
+  <canvas type="2d" class="cu-ruler-canvas" style="height: 60px;"></canvas>
+  <view class="cu-ruler-cursor {{isStepTextBottom ? 'cu-ruler-cursor-bottom' : ''}}"></view>
+  <view class="cu-ruler-arrow"></view>
+</view>

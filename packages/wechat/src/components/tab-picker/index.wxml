@@ -1,0 +1,73 @@
+<view class="cu-tab-picker">
+  <cu-popup
+    show="{{pickerShow}}"
+    position="bottom"
+    mask-closable="{{maskClosable}}"
+    prevent-scroll="{{true}}"
+    bind:change="onPopupChange"
+    bind:show="onPopupShow"
+    bind:hide="onPopupHide"
+    bind:maskClick="onCancel"
+  >
+    <cu-popup-title-bar
+      title="{{title}}"
+      describe="{{describe}}"
+      large-radius="{{largeRadius}}"
+      only-close="{{true}}"
+      bind:cancel="onCancel"
+    ></cu-popup-title-bar>
+    <view class="cu-tab-picker-content">
+      <!-- 自绘 tab 条（tab-bar.styl 类名经 DEP 编入本组件 wxss） -->
+      <view class="cu-tab-bar">
+        <view class="cu-tab-bar-inner">
+          <scroll-view
+            class="cu-tab-picker-tab-scroll"
+            scroll-x
+            scroll-into-view="{{tabIntoView}}"
+            scroll-with-animation
+            enhanced="{{true}}"
+            show-scrollbar="{{false}}"
+          >
+            <view class="cu-tab-bar-list">
+              <view
+                wx:for="{{panes}}"
+                wx:key="no"
+                id="tp-tab-{{index}}"
+                class="cu-tab-bar-item {{index === currentIndex ? 'is-active' : ''}}"
+                data-index="{{index}}"
+                bind:tap="onTabTap"
+                >{{item.label}}</view
+              >
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+      <!-- 内容区：仅渲染当前面板选项（Vue 版为全部 panes 挂载 + active 显隐，视觉等价） -->
+      <view class="cu-tabs-content">
+        <scroll-view
+          class="cu-tab-picker-pane-scroll"
+          scroll-y
+          scroll-top="{{paneScrollTop}}"
+          enhanced="{{true}}"
+          show-scrollbar="{{false}}"
+        >
+          <view class="cu-tab-pane">
+            <view
+              wx:for="{{cells}}"
+              wx:key="no"
+              class="cu-cell-item cu-radio-item {{item.selected ? 'is-selected' : ''}} {{item.disabled ? 'is-disabled' : ''}}"
+              data-index="{{index}}"
+              bind:tap="onOptionTap"
+            >
+              <view class="cu-cell-item-body">
+                <view class="cu-cell-item-content">
+                  <view class="cu-cell-item-title">{{item.title}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+  </cu-popup>
+</view>

@@ -34,3 +34,4 @@ coverage/
 
 .vitest/
 test-results/
+project.private.config.json

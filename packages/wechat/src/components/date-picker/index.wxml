@@ -1,0 +1,24 @@
+<view class="cu-date-picker {{type}}">
+  <cu-picker
+    id="dp-picker"
+    show="{{show}}"
+    is-view="{{isView}}"
+    title="{{title}}"
+    describe="{{describe}}"
+    ok-text="{{okText}}"
+    cancel-text="{{cancelText}}"
+    mask-closable="{{maskClosable}}"
+    line-height="{{lineHeight}}"
+    keep-index="{{keepIndex}}"
+    large-radius="{{largeRadius}}"
+    data="{{pickerData}}"
+    cols="{{pickerData.length}}"
+    default-value="{{pickerDefaults}}"
+    bind:initialed="onPickerInitialed"
+    bind:change="onPickerChange"
+    bind:confirm="onPickerConfirm"
+    bind:cancel="onPickerCancel"
+    bind:show="onPickerShow"
+    bind:hide="onPickerHide"
+  ></cu-picker>
+</view>

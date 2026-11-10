@@ -1,0 +1,34 @@
+<view class="cu-slider {{disabled ? 'is-disabled' : ''}}">
+  <view class="cu-slider-bar" style="{{barStyle}}"></view>
+  <view
+    class="cu-slider-handle {{range ? 'is-lower' : ''}} {{isDragging && !isDragingUpper ? 'is-active' : ''}}"
+    data-hint="{{hint}}"
+    data-upper="{{false}}"
+    style="left: {{lowerPos}}%;"
+    catch:touchstart="onHandleTouchStart"
+    catch:touchmove="onHandleTouchMove"
+    catch:touchend="onHandleTouchEnd"
+    catch:touchcancel="onHandleTouchEnd"
+  >
+    <view
+      class="cu-slider-handle-btn"
+      style="width: 40rpx; height: 40rpx; border-radius: 50%; background-color: var(--slider-handle-bg); box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2); transition: transform 200ms; {{isDragging && !isDragingUpper ? 'transform: scale(1.3);' : ''}}"
+    ></view>
+  </view>
+  <view
+    wx:if="{{range}}"
+    class="cu-slider-handle is-higher {{isDragging && isDragingUpper ? 'is-active' : ''}}"
+    data-hint="{{hint}}"
+    data-upper="{{true}}"
+    style="left: {{upperPos}}%;"
+    catch:touchstart="onHandleTouchStart"
+    catch:touchmove="onHandleTouchMove"
+    catch:touchend="onHandleTouchEnd"
+    catch:touchcancel="onHandleTouchEnd"
+  >
+    <view
+      class="cu-slider-handle-btn"
+      style="width: 40rpx; height: 40rpx; border-radius: 50%; background-color: var(--slider-handle-bg); box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2); transition: transform 200ms; {{isDragging && isDragingUpper ? 'transform: scale(1.3);' : ''}}"
+    ></view>
+  </view>
+</view>

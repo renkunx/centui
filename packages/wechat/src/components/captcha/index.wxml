@@ -1,0 +1,119 @@
+<view class="cu-captcha">
+  <template name="captcha-footer">
+    <view class="cu-captcha-footer {{halfStyle ? 'halfStyle' : ''}}">
+      <view wx:if="{{errorMsg}}" class="cu-captcha-error">{{errorMsg}}</view>
+      <view wx:else class="cu-captcha-brief">{{brief}}</view>
+      <button
+        wx:if="{{count}}"
+        class="cu-captcha-btn {{disableSend ? 'is-disabled-send' : ''}}"
+        disabled="{{isCounting}}"
+        catch:tap="onResend"
+      >{{countBtnText}}</button>
+    </view>
+  </template>
+
+  <!-- 内联模式（isView || type=inline） -->
+  <block wx:if="{{isInline}}">
+    <view class="cu-captcha-content">
+      <view wx:if="{{title}}" class="cu-captcha-title">{{title}}</view>
+      <view class="cu-captcha-message">
+        <slot></slot>
+      </view>
+    </view>
+    <cu-codebox
+      id="cu-captcha-codebox"
+      value="{{code}}"
+      maxlength="{{maxlength}}"
+      system="{{system}}"
+      mask="{{mask}}"
+      closable="{{false}}"
+      is-view="{{true}}"
+      justify="{{true}}"
+      autofocus="{{false}}"
+      input-type="{{inputType}}"
+      bind:change="onCodeChange"
+      bind:submit="onSubmit"
+    >
+      <template is="captcha-footer" data="{{errorMsg: errorMsg, brief: brief, count: count, isCounting: isCounting, countBtnText: countBtnText, disableSend: disableSend, halfStyle: false}}"></template>
+    </cu-codebox>
+  </block>
+
+  <!-- 半屏弹层模式 -->
+  <block wx:if="{{type === 'halfScreen'}}">
+    <cu-popup
+      show="{{innerShow}}"
+      has-mask="{{true}}"
+      position="bottom"
+      mask-closable="{{false}}"
+      bind:change="onPopupChange"
+      bind:show="onPopupShow"
+      bind:hide="onPopupHide"
+    >
+      <view class="cu-captcha-half-container">
+        <cu-popup-title-bar
+          only-close="{{true}}"
+          large-radius="{{true}}"
+          title="{{title}}"
+          describe="{{subtitle}}"
+          title-align="left"
+          bind:cancel="close"
+        ></cu-popup-title-bar>
+        <view class="cu-captcha-half-content">
+          <slot></slot>
+        </view>
+        <cu-codebox
+          id="cu-captcha-codebox"
+          value="{{code}}"
+          maxlength="{{maxlength}}"
+          system="{{system}}"
+          mask="{{mask}}"
+          disabled="{{disableSend}}"
+          closable="{{false}}"
+          is-view="{{true}}"
+          justify="{{true}}"
+          autofocus="{{false}}"
+          input-type="{{inputType}}"
+          is-error-style="{{isShowErrorStyle}}"
+          bind:change="onCodeChange"
+          bind:submit="onSubmit"
+        >
+          <template is="captcha-footer" data="{{errorMsg: errorMsg, brief: brief, count: count, isCounting: isCounting, countBtnText: countBtnText, disableSend: disableSend, halfStyle: isKeyboard}}"></template>
+        </cu-codebox>
+      </view>
+    </cu-popup>
+  </block>
+
+  <!-- 对话框模式 -->
+  <block wx:if="{{type === 'dialog'}}">
+    <cu-dialog
+      show="{{innerShow}}"
+      closable="{{true}}"
+      bind:change="onPopupChange"
+      bind:show="onPopupShow"
+      bind:hide="onPopupHide"
+    >
+      <view class="cu-captcha-content">
+        <view wx:if="{{title}}" class="cu-captcha-title">{{title}}</view>
+        <view class="cu-captcha-message">
+          <slot></slot>
+        </view>
+      </view>
+      <cu-codebox
+        id="cu-captcha-codebox"
+        value="{{code}}"
+        maxlength="{{maxlength}}"
+        system="{{system}}"
+        mask="{{mask}}"
+        closable="{{false}}"
+        is-view="{{true}}"
+        justify="{{true}}"
+        autofocus="{{false}}"
+        input-type="{{inputType}}"
+        bind:change="onCodeChange"
+        bind:submit="onSubmit"
+      >
+        <template is="captcha-footer" data="{{errorMsg: errorMsg, brief: brief, count: count, isCounting: isCounting, countBtnText: countBtnText, disableSend: disableSend, halfStyle: false}}"></template>
+      </cu-codebox>
+    </cu-dialog>
+  </block>
+</view>

@@ -1,0 +1,7 @@
+<view class="cu-detail-item {{bold ? 'is-bold' : ''}}">
+  <view class="cu-detail-title">{{title}}</view>
+  <view class="cu-detail-content">
+    <view id="cu-detail-slot-probe" class="cu-detail-slot"><slot></slot></view>
+    <text wx:if="{{!hasSlot}}" class="cu-detail-fallback">{{content}}</text>
+  </view>
+</view>

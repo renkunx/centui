@@ -1,0 +1,23 @@
+<view wx:if="{{isViewerShow}}" class="cu-image-viewer" bind:tap="onViewerClick">
+  <view class="viewer-container">
+    <swiper
+      class="viewer-items"
+      autoplay="{{false}}"
+      current="{{currentImgIndex}}"
+      bindchange="onSwiperChange"
+    >
+      <swiper-item wx:for="{{imgs}}" wx:key="index" class="viewer-item-wrap">
+        <view class="item">
+          <image
+            wx:if="{{item.url}}"
+            class="viewer-img"
+            src="{{item.url}}"
+            mode="widthFix"
+            style="width:100%"
+           />
+        </view>
+      </swiper-item>
+    </swiper>
+    <view wx:if="{{hasDots}}" class="viewer-index">{{currentImgIndex + 1}}/{{imgs.length}}</view>
+  </view>
+</view>

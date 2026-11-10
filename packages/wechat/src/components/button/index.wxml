@@ -1,0 +1,16 @@
+<button
+  class="cu-button {{type}} {{inactive ? 'inactive' : 'active'}} {{inline ? 'inline' : 'block'}} {{round ? 'round' : ''}} {{plain ? 'plain' : ''}} {{size === 'small' ? 'small' : ''}}"
+  disabled="{{disabled}}"
+  hover-class="none"
+  bind:tap="onTap"
+>
+  <view class="cu-button-inner">
+    <view wx:if="{{loading}}" class="cu-button-loading">
+      <cu-activity-indicator type="roller" size="{{35}}"></cu-activity-indicator>
+    </view>
+    <cu-icon wx:elif="{{icon}}" name="{{icon}}"></cu-icon>
+    <view class="cu-button-content">
+      <slot></slot>
+    </view>
+  </view>
+</button>

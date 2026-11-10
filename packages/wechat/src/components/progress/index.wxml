@@ -1,0 +1,13 @@
+<cu-activity-indicator
+  type="roller"
+  size="{{size}}"
+  width="{{width}}"
+  color="{{color}}"
+  border-color="{{borderColor}}"
+  fill="{{fill}}"
+  linecap="{{linecap}}"
+  rotate="{{rotate}}"
+  process="{{formatValue}}"
+>
+  <slot slot="center"></slot>
+</cu-activity-indicator>

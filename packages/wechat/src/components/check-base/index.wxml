@@ -1,0 +1,12 @@
+<view
+  class="cu-class cu-check-base-box {{iconPosition}} {{isChecked ? 'is-checked' : ''}} {{disabled ? 'is-disabled' : ''}}"
+  aria-role="{{role}}"
+  aria-checked="{{isChecked}}"
+  aria-disabled="{{disabled}}"
+  bind:tap="onRootTap"
+>
+  <slot></slot>
+  <cu-tag wx:if="{{isChecked}}" size="tiny" shape="quarter" type="fill">
+    <cu-icon name="right" size="xs" color="var(--color-text-base-inverse)"></cu-icon>
+  </cu-tag>
+</view>

@@ -37,6 +37,7 @@
 | [`@centui/react`](https://www.npmjs.org/package/@centui/react) | React 18 component library (same components & styles) |
 | [`@centui/styles`](https://www.npmjs.org/package/@centui/styles) | Design tokens & component styles (Stylus sources + compiled CSS), shared by both frameworks |
 | [`@centui/core`](https://www.npmjs.org/package/@centui/core) | Framework-agnostic core: scroller engine, i18n, utils |
+| [`@centui/wechat`](https://www.npmjs.org/package/@centui/wechat) | WeChat mini-program components (same components, tokens & behavior; 750rpx design basis) |
 
 ## Install
 
@@ -49,6 +50,10 @@ npm install centui @centui/styles
 # React
 npm install @centui/react @centui/styles
 ```
+
+> `centui` / `@centui/react` declare `@centui/styles` as a peer dependency — keep the
+> styles package installed alongside (any `>=0.2.0` works today, but always use the
+> pairing published in the same release for token/CSS parity).
 
 ## Usage
 

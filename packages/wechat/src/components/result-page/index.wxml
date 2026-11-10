@@ -1,0 +1,29 @@
+<view class="cu-result">
+  <view class="cu-result-image">
+    <image
+      class="{{imgClass}}"
+      src="{{imgUrlView}}"
+      mode="widthFix"
+      style="{{imageViewStyle}}"
+    />
+  </view>
+  <view wx:if="{{textView}}" class="cu-result-text">{{textView}}</view>
+  <view wx:if="{{subtextView}}" class="cu-result-subtext">{{subtextView}}</view>
+  <view wx:if="{{buttonsView.length}}" class="cu-result-buttons">
+    <cu-button
+      wx:for="{{buttonsView}}"
+      wx:key="index"
+      type="{{item.type}}"
+      plain="{{item.plain}}"
+      round="{{item.round}}"
+      inactive="{{item.inactive}}"
+      loading="{{item.loading}}"
+      icon="{{item.icon}}"
+      size="small"
+      inline
+      data-index="{{index}}"
+      bind:click="onButtonTap"
+    >{{item.text}}</cu-button>
+  </view>
+  <slot />
+</view>

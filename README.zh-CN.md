@@ -37,6 +37,7 @@
 | [`@centui/react`](https://www.npmjs.org/package/@centui/react) | React 18 组件库（与 Vue 版同名组件、同份样式） |
 | [`@centui/styles`](https://www.npmjs.org/package/@centui/styles) | 设计令牌与组件样式（Stylus 源码 + 编译产物），双框架共享 |
 | [`@centui/core`](https://www.npmjs.org/package/@centui/core) | 跨框架核心：滚动引擎、i18n、工具库 |
+| [`@centui/wechat`](https://www.npmjs.org/package/@centui/wechat) | 微信小程序组件库（同名组件、同套令牌与行为；750rpx 设计基准） |
 
 ## 安装
 
@@ -49,6 +50,9 @@ npm install centui @centui/styles
 # React
 npm install @centui/react @centui/styles
 ```
+
+> `centui` / `@centui/react` 以 peer dependency 声明 `@centui/styles`——请保持两者同时安装；
+> 当前任意 `>=0.2.0` 均可运行，但建议始终使用同一发布批次中的版本配对，以保证令牌与 CSS 一致。
 
 ## 使用
 

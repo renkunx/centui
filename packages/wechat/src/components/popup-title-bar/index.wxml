@@ -1,0 +1,37 @@
+<view
+  class="cu-popup-title-bar title-align-{{titleAlign}} {{describe ? 'large' : ''}} {{largeRadius ? 'large-radius' : ''}}"
+  style="{{barStyle}}"
+  catch:touchmove="noop"
+>
+  <!-- Cancel -->
+  <block wx:if="{{!onlyClose}}">
+    <view wx:if="{{cancelText}}" class="title-bar-left cu-popup-cancel" style="{{leftStyle}}" bind:tap="onCancel">
+      <rich-text nodes="{{cancelText}}"></rich-text>
+    </view>
+    <view wx:else class="title-bar-left cu-popup-cancel" style="{{leftStyle}}" bind:tap="onCancel">
+      <slot name="cancel"></slot>
+    </view>
+  </block>
+
+  <!-- Title -->
+  <view wx:if="{{title}}" class="title-bar-title" style="{{titleWrapStyle}}">
+    <rich-text class="title" style="{{titleStyle}}" nodes="{{title}}"></rich-text>
+    <rich-text wx:if="{{describe}}" class="describe" style="{{describeStyle}}" nodes="{{describe}}"></rich-text>
+  </view>
+  <view wx:else class="title-bar-title" style="{{titleWrapStyle}}">
+    <slot name="title"></slot>
+  </view>
+
+  <!-- Ok -->
+  <block wx:if="{{!onlyClose}}">
+    <view wx:if="{{okText}}" class="title-bar-right cu-popup-confirm" style="{{rightStyle}}" bind:tap="onConfirm">
+      <rich-text nodes="{{okText}}"></rich-text>
+    </view>
+    <view wx:else class="title-bar-right cu-popup-confirm" style="{{rightStyle}}" bind:tap="onConfirm">
+      <slot name="confirm"></slot>
+    </view>
+  </block>
+  <view wx:if="{{onlyClose}}" class="title-bar-right cu-popup-close" style="{{closeStyle}}" bind:tap="onCancel">
+    <cu-icon name="close" size="lg"></cu-icon>
+  </view>
+</view>

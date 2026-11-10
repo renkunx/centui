@@ -1,0 +1,149 @@
+<view class="demo">
+  <!-- Form（表单） -->
+  <view class="demo-section">
+    <view class="demo-title">Form（表单）</view>
+    <cu-field title="转账信息">
+      <cu-input-item
+        title="卡号"
+        type="bankCard"
+        placeholder="请输入银行卡号"
+        value="{{inputValue}}"
+        bind:change="onInputChange"
+      ></cu-input-item>
+      <cu-field-item title="收款人" solid>张三</cu-field-item>
+      <cu-field-item title="备注">
+        <cu-stepper value="{{stepperValue}}" min="{{0}}" max="{{9}}" bind:change="onStepperChange"></cu-stepper>
+      </cu-field-item>
+      <cu-field-item title="自动扣款" solid>
+        <cu-switch value="{{switchValue}}" bind:change="onSwitchChange"></cu-switch>
+      </cu-field-item>
+      <cu-field-item title="额度" solid>
+        <view class="demo-slider-box">
+          <cu-slider value="{{sliderValue}}" bind:change="onSliderChange"></cu-slider>
+        </view>
+      </cu-field-item>
+    </cu-field>
+    <view class="demo-block">
+      <cu-textarea-item title="备注" placeholder="请输入备注信息" maxlength="{{100}}" clearable></cu-textarea-item>
+    </view>
+  </view>
+
+  <!-- 数据展示 -->
+  <view class="demo-section">
+    <view class="demo-title">Display（数据展示）</view>
+    <view class="demo-block">
+      <cu-amount value="{{amount}}"></cu-amount>
+    </view>
+    <view class="demo-block">
+      <cu-detail-item title="交易状态">等待付款</cu-detail-item>
+      <cu-cell-item title="账户余额" addon="¥ 8,642.00" arrow solid></cu-cell-item>
+      <cu-cell-item title="交易记录" addon="查看全部" arrow brief="近 30 天" solid></cu-cell-item>
+    </view>
+    <view class="demo-block demo-row">
+      <cu-tag>精选</cu-tag>
+      <cu-tag shape="circle">可选</cu-tag>
+      <cu-tag size="small">小型</cu-tag>
+      <cu-tag size="tiny">tiny</cu-tag>
+    </view>
+    <view class="demo-block demo-row">
+      <cu-activity-indicator type="roller" size="{{24}}"></cu-activity-indicator>
+      <cu-activity-indicator type="spinner" size="{{24}}"></cu-activity-indicator>
+      <view class="demo-progress">
+        <cu-progress value="{{70}}"></cu-progress>
+      </view>
+    </view>
+    <view class="demo-block">
+      <cu-steps steps="{{stepsList}}" current="{{2}}"></cu-steps>
+    </view>
+    <view class="demo-block">
+      <cu-skeleton loading="{{true}}" rows="{{2}}"></cu-skeleton>
+    </view>
+  </view>
+
+  <!-- 选择 -->
+  <view class="demo-section">
+    <view class="demo-title">Choice（选择）</view>
+    <view class="demo-block">
+      <cu-check-group value="{{checkValue}}" bind:change="onCheckChange">
+        <cu-check name="a" label="支付宝"></cu-check>
+        <cu-check name="b" label="微信支付"></cu-check>
+        <cu-check name="c" label="云闪付" disabled></cu-check>
+      </cu-check-group>
+    </view>
+    <view class="demo-block demo-row">
+      <cu-radio-group value="{{radioValue}}" bind:change="onRadioChange">
+        <cu-radio name="a" label="日切" inline></cu-radio>
+        <cu-radio name="b" label="月切" inline></cu-radio>
+      </cu-radio-group>
+    </view>
+    <view class="demo-block">
+      <cu-agree value="{{agreeValue}}" bind:change="onAgreeChange">
+        本人已阅读并同意 <text class="demo-link">《服务协议》</text>
+      </cu-agree>
+    </view>
+  </view>
+
+  <!-- 反馈 -->
+  <view class="demo-section">
+    <view class="demo-title">Feedback（反馈）</view>
+    <view class="demo-block">
+      <cu-notice-bar>该笔交易将在 30 分钟后自动关闭，请及时付款。</cu-notice-bar>
+    </view>
+    <view class="demo-block demo-row demo-wrap">
+      <cu-button inline size="small" bind:click="showToast">Toast</cu-button>
+      <cu-button inline size="small" bind:click="showToastLoading">Loading</cu-button>
+      <cu-button inline size="small" type="primary" bind:click="showDialog">Dialog</cu-button>
+      <cu-button inline size="small" type="warning" bind:click="showSucceed">Succeed</cu-button>
+      <cu-button inline size="small" bind:click="showActionSheet">ActionSheet</cu-button>
+      <cu-button inline size="small" bind:click="showPicker">Picker</cu-button>
+      <cu-button inline size="small" bind:click="showPopup">Popup</cu-button>
+    </view>
+  </view>
+
+  <!-- 导航容器 -->
+  <view class="demo-section">
+    <view class="demo-title">Navigation（导航）</view>
+    <view class="demo-block">
+      <cu-tabs value="{{tabsValue}}" bind:change="onTabsChange">
+        <cu-tab-pane name="0" label="持仓">持仓内容</cu-tab-pane>
+        <cu-tab-pane name="1" label="委托">委托内容</cu-tab-pane>
+        <cu-tab-pane name="2" label="成交">成交内容</cu-tab-pane>
+      </cu-tabs>
+    </view>
+    <view class="demo-block">
+      <cu-swiper autoplay="{{4000}}" bind:change="onSwiperChange">
+        <cu-swiper-item wx:for="{{swiperImages}}" wx:key="*this">
+          <image class="demo-swiper-img" src="{{item}}" mode="aspectFill"></image>
+        </cu-swiper-item>
+      </cu-swiper>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="demo-action-bar">
+    <cu-action-bar actions="{{barActions}}" bind:click="onBarClick">
+      <view class="demo-bar-amount">合计 <text class="demo-bar-amount-num">¥ 1,280.00</text></view>
+    </cu-action-bar>
+  </view>
+
+  <!-- 弹层容器 -->
+  <cu-picker
+    show="{{pickerShow}}"
+    title="单列选择器"
+    data="{{pickerColumns}}"
+    cols="{{1}}"
+    defaultValue="{{pickerValue}}"
+    bind:confirm="onPickerConfirm"
+    bind:cancel="onPickerCancel"
+  ></cu-picker>
+  <cu-popup show="{{popupShow}}" position="bottom" bind:change="onPopupChange">
+    <view class="demo-popup-content">
+      <view class="demo-popup-title">底部弹层</view>
+      <view class="demo-popup-text">position="bottom" + 默认 slide-up 过渡</view>
+      <cu-button type="primary" block bind:click="closePopup">关闭</cu-button>
+    </view>
+  </cu-popup>
+  <cu-dialog id="cu-dialog"></cu-dialog>
+  <cu-action-sheet id="cu-action-sheet"></cu-action-sheet>
+  <cu-toast id="cu-toast"></cu-toast>
+</view>

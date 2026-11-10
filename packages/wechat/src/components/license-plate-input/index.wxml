@@ -1,0 +1,17 @@
+<view class="cu-license-plate-input">
+  <view
+    wx:for="{{items}}"
+    wx:key="index"
+    class="cu-license-plate-input-item {{item.active ? 'active' : ''}} {{item.animation ? 'animation' : ''}}"
+    data-index="{{index}}"
+    bind:tap="onItemTap"
+  >
+    <!-- 非新能源键位 -->
+    <view wx:if="{{!item.isNewEnergy}}" class="cu-license-plate-input-item_content">{{item.value}}</view>
+    <!-- 新能源键位 -->
+    <view wx:else class="cu-license-plate-input-item_content">
+      <view wx:if="{{item.value && item.value !== ' '}}">{{item.value}}</view>
+      <view wx:else class="emptyValue"></view>
+    </view>
+  </view>
+</view>
