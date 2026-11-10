@@ -39,6 +39,13 @@ CuComponent({
   },
 
   lifetimes: {
+    attached() {
+      // properties 初始值不触发 observers（真机语义）：actions 首帧兜底派生
+      const actions = this.data.actions
+      if (Array.isArray(actions) && actions.length && !this.data.buttons.length) {
+        this.setData({buttons: toButtonVMs(actions)})
+      }
+    },
     ready() {
       // 插槽探针：兜底节点存在 = 默认插槽为空 → 收起文本区（对齐 Vue hasSlots）
       const query = this.createSelectorQuery()

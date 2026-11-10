@@ -27,3 +27,82 @@ describe('agree/logic', () => {
     })
   })
 })
+
+/**
+ * 组件层（index.ts）：value/iconType/innerValue observers、attached 首帧派生、
+ * onChange 受控协议（乐观更新 + change 事件）。
+ */
+import {loadComponent, mountDef} from '../helpers/weapp'
+
+const comp = await loadComponent(() => import('../../src/components/agree/index'))
+
+describe('agree 组件', () => {
+  it('attached：初始 value 派生 innerValue 与着色（innerValue observer 级联）', () => {
+    const inst = mountDef(comp.def, {props: {value: true, iconType: 'square'}})
+    inst.attached()
+    expect(inst.data.innerValue).toBe(true)
+    // 图标名/着色均写入 wxml 绑定的键（checkedName/uncheckedName/checkedColor/uncheckedColor）
+    expect(inst.data.checkedName).toBe('square-checked')
+    expect(inst.data.uncheckedName).toBe('square-check')
+    expect(inst.data.checkedColor).toBe('var(--agree-fill)')
+    expect(inst.data.uncheckedColor).toBe('var(--agree-fill)')
+
+    // 未勾选：checked 图标透明
+    const off = mountDef(comp.def)
+    off.attached()
+    expect(off.data.innerValue).toBe(false)
+    expect(off.data.checkedName).toBe('checked')
+    expect(off.data.checkedColor).toBe('transparent')
+  })
+
+  it('value observer：外部回写同步 innerValue', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({value: true})
+    expect(inst.data.innerValue).toBe(true)
+    inst.setData({value: false})
+    expect(inst.data.innerValue).toBe(false)
+  })
+
+  it('iconType observer：写入 checkedName/uncheckedName（wxml 绑定键）', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({iconType: 'square'})
+    expect(inst.data.checkedName).toBe('square-checked')
+    expect(inst.data.uncheckedName).toBe('square-check')
+    inst.setData({iconType: 'circle'})
+    expect(inst.data.checkedName).toBe('checked')
+    expect(inst.data.uncheckedName).toBe('check')
+  })
+
+  it("'innerValue, disabled' observer：着色随勾选态变化", () => {
+    const inst = mountDef(comp.def)
+    inst.setData({innerValue: true})
+    expect(inst.data.checkedColor).toBe('var(--agree-fill)')
+    inst.setData({innerValue: false})
+    expect(inst.data.checkedColor).toBe('transparent')
+    // disabled 变更同样驱动着色重算
+    inst.setData({disabled: true})
+    expect(inst.data.uncheckedColor).toBe('var(--agree-fill)')
+  })
+
+  it('onChange：非受控乐观翻转 + change 事件 {value}；受控回写后以最终值为准', () => {
+    const inst = mountDef(comp.def)
+    inst.methods.onChange.call(inst)
+    expect(inst.data.innerValue).toBe(true)
+    expect(inst.eventsOf('change')[0].detail).toEqual({value: true})
+
+    // 受控方回写 value=true → value observer 同步 innerValue；再点击翻回 false
+    inst.setData({value: true})
+    expect(inst.data.innerValue).toBe(true)
+    inst.methods.onChange.call(inst)
+    expect(inst.data.innerValue).toBe(false)
+    expect(inst.eventsOf('change')[1].detail).toEqual({value: false})
+  })
+
+  it('onChange：disabled 直接返回（不翻转、不 emit）', () => {
+    const inst = mountDef(comp.def, {props: {disabled: true}})
+    inst.attached()
+    inst.methods.onChange.call(inst)
+    expect(inst.data.innerValue).toBe(false)
+    expect(inst.events).toEqual([])
+  })
+})
