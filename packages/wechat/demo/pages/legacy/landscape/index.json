@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "cu-button": "../../../../dist/components/button/index",
-    "cu-landscape": "../../../../dist/components/landscape/index"
+    "cu-landscape": "../../../../dist/components/landscape/index",
+    "cu-toast": "../../../../dist/components/toast/index"
   }
 }

@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "cu-action-bar": "../../../../dist/components/action-bar/index"
+    "cu-action-bar": "../../../../dist/components/action-bar/index",
+    "cu-toast": "../../../../dist/components/toast/index",
+    "cu-dialog": "../../../../dist/components/dialog/index"
   }
 }

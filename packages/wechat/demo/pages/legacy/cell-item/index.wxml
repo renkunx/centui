@@ -63,3 +63,4 @@
     </view>
   </view>
 </view>
+  <cu-dialog id="cu-dialog"></cu-dialog>
