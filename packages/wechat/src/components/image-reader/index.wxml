@@ -1,0 +1,6 @@
+<!--
+  透明拾取覆盖层：样式（position:absolute 铺满父容器、z-index 100）由
+  image-reader.styl 编译的 wxss 提供，与 Vue 版 <input type="file"> 覆盖层一致。
+  点击触发 wx.chooseMedia（须由用户手势发起，见 index.ts 头注释差异 1）。
+-->
+<view class="cu-image-reader" bind:tap="onChoose"></view>

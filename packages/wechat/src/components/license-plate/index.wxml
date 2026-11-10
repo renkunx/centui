@@ -1,0 +1,50 @@
+<view class="cu-license-plate">
+  <!-- 分离模式 -->
+  <block wx:if="{{modeShow === 'division'}}">
+    <view class="cu-license-plate-input-container division">
+      <cu-license-plate-input
+        key-array="{{keyArray}}"
+        selected-index="{{selectedIndex}}"
+        bind:keyMapping="onKeyMapping"
+      ></cu-license-plate-input>
+    </view>
+    <view wx:if="{{showDivisionKeyboard}}" class="cu-license-plate-keyboard-container division">
+      <cu-license-plate-keyboard
+        keyboard="{{keyboard}}"
+        bind:enter="onEnter"
+        bind:delete="onDelete"
+        bind:confirm="onConfirm"
+      ></cu-license-plate-keyboard>
+    </view>
+  </block>
+  <!-- 弹窗模式 -->
+  <block wx:if="{{modeShow === 'popUp'}}">
+    <cu-popup show="{{showPopUp}}" has-mask="{{true}}" position="bottom" mask-closable="{{false}}">
+      <cu-popup-title-bar
+        only-close="{{true}}"
+        large-radius="{{true}}"
+        title="{{title}}"
+        describe="{{subtitle}}"
+        title-align="left"
+        bind:cancel="onTitleBarCancel"
+      ></cu-popup-title-bar>
+      <view class="cu-popup-content">
+        <view class="cu-license-plate-input-container popUp">
+          <cu-license-plate-input
+            key-array="{{keyArray}}"
+            selected-index="{{selectedIndex}}"
+            bind:keyMapping="onKeyMapping"
+          ></cu-license-plate-input>
+        </view>
+        <view class="cu-license-plate-keyboard-container popUp">
+          <cu-license-plate-keyboard
+            keyboard="{{keyboard}}"
+            bind:enter="onEnter"
+            bind:delete="onDelete"
+            bind:confirm="onConfirm"
+          ></cu-license-plate-keyboard>
+        </view>
+      </view>
+    </cu-popup>
+  </block>
+</view>

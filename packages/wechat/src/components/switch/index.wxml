@@ -1,0 +1,7 @@
+<view
+  class="cu-switch {{disabled ? 'disabled' : ''}} {{current ? 'active' : ''}}"
+  aria-role="switch"
+  aria-checked="{{current}}"
+  aria-disabled="{{disabled}}"
+  bind:tap="onTap"
+></view>

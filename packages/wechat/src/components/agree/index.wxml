@@ -1,0 +1,13 @@
+<view class="cu-agree {{disabled ? 'disabled' : ''}}">
+  <view class="cu-agree-icon {{innerValue ? 'checked' : ''}}" bind:tap="onChange">
+    <view class="cu-agree-icon-container">
+      <slot name="icon">
+        <cu-icon name="{{checkedName}}" size="{{size}}" color="{{checkedColor}}"></cu-icon>
+        <cu-icon name="{{uncheckedName}}" size="{{size}}" color="{{uncheckedColor}}"></cu-icon>
+      </slot>
+    </view>
+  </view>
+  <view class="cu-agree-content">
+    <slot></slot>
+  </view>
+</view>

@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "styleIsolation": "shared",
+  "usingComponents": {
+    "cu-popup": "../popup/index",
+    "cu-popup-title-bar": "../popup-title-bar/index",
+    "cu-dialog": "../dialog/index",
+    "cu-codebox": "../codebox/index"
+  }
+}

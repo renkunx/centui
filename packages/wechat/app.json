@@ -1,0 +1,12 @@
+{
+  "pages": [
+    "demo/pages/index/index",
+    "demo/pages/advanced/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "CentUI WeChat Demo",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f4f6f8"
+  }
+}

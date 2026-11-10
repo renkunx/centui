@@ -1,0 +1,31 @@
+<view class="cu-action-sheet">
+  <cu-popup
+    class="inner-popup large-radius"
+    show="{{innerShow}}"
+    position="bottom"
+    prevent-scroll="{{true}}"
+    bind:change="onPopupChange"
+    bind:show="onPopupShow"
+    bind:hide="onPopupHide"
+  >
+    <view class="cu-action-sheet-content">
+      <view wx:if="{{title}}" class="cu-action-sheet-header">{{title}}</view>
+      <view class="cu-action-sheet-list">
+        <block wx:for="{{options}}" wx:key="index">
+          <view
+            class="cu-action-sheet-item {{index === clickIndex ? 'active' : ''}} {{invalidList.indexOf(index) > -1 ? 'disabled' : ''}}"
+            data-index="{{index}}"
+            catch:tap="onSelect"
+          >
+            <view class="cu-action-sheet-item-wrapper">
+              <view class="cu-action-sheet-item-section">
+                <rich-text nodes="{{item.text || item.label}}"></rich-text>
+              </view>
+            </view>
+          </view>
+        </block>
+        <view class="cu-action-sheet-cancel" catch:tap="onCancel">{{cancelTextResolved}}</view>
+      </view>
+    </view>
+  </cu-popup>
+</view>

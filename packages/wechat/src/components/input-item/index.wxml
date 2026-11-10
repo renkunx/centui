@@ -1,0 +1,76 @@
+<view class="{{rootClass}}">
+  <view class="cu-field-item-content">
+    <label wx:if="{{title}}" class="cu-field-item-title">{{title}}</label>
+    <view wx:if="{{showLeft}}" class="cu-field-item-left">
+      <slot name="left"></slot>
+    </view>
+    <view class="cu-field-item-control">
+      <input
+        wx:if="{{!isVirtualKeyboard}}"
+        class="cu-input-item-input"
+        type="{{inputType}}"
+        password="{{inputPassword}}"
+        value="{{inputText}}"
+        placeholder="{{inputPlaceholder}}"
+        placeholder-style="color: var(--input-item-placeholder); font-weight: var(--font-weight-normal)"
+        disabled="{{isDisabled}}"
+        maxlength="{{nativeMaxlength}}"
+        focus="{{focusAttr}}"
+        confirm-type="done"
+        bindinput="onInput"
+        bindfocus="onFocus"
+        bindblur="onBlur"
+        bindconfirm="onConfirm"
+        bindcompositionstart="onCompositionStart"
+        bindcompositionend="onCompositionEnd"
+      />
+      <view
+        wx:else
+        class="cu-input-item-fake {{isInputFocus ? 'is-focus' : ''}} {{!isInputEditing ? 'is-waiting' : ''}} {{isDisabled ? 'disabled' : ''}} {{readonly ? 'readonly' : ''}}"
+        bind:tap="onFakeInputClick"
+      >
+        <view class="cu-input-item-fake-value">{{inputValue}}</view>
+        <view
+          wx:if="{{inputValue === '' && inputPlaceholder !== ''}}"
+          class="cu-input-item-fake-placeholder"
+        >{{inputPlaceholder}}</view>
+      </view>
+    </view>
+    <view wx:if="{{showRight}}" class="cu-field-item-right">
+      <view
+        wx:if="{{showClear}}"
+        hidden="{{isInputEmpty || !isInputFocus}}"
+        class="cu-input-item-clear"
+        catch:tap="onClearTap"
+      >
+        <cu-icon name="clear"></cu-icon>
+      </view>
+      <slot name="right"></slot>
+    </view>
+  </view>
+  <view wx:if="{{showChildren}}" class="cu-field-item-children">
+    <view wx:if="{{showMsg}}" class="cu-input-item-msg">
+      <view wx:if="{{error !== ''}}">{{error}}</view>
+      <block wx:else>
+        <slot name="error"></slot>
+      </block>
+    </view>
+    <view wx:if="{{showBrief}}" class="cu-input-item-brief">
+      <view wx:if="{{brief !== ''}}">{{brief}}</view>
+      <block wx:else>
+        <slot name="brief"></slot>
+      </block>
+    </view>
+    <cu-number-keyboard
+      wx:if="{{isVirtualKeyboard && !virtualKeyboardVm}}"
+      class="cu-input-item-number-keyboard"
+      show="{{isInputFocus}}"
+      ok-text="{{virtualKeyboardOkText}}"
+      disorder="{{virtualKeyboardDisorder}}"
+      bind:change="onKeyboardVisibleChange"
+      bind:enter="onKeyboardEnter"
+      bind:delete="onKeyboardDelete"
+      bind:confirm="onKeyboardConfirm"
+    ></cu-number-keyboard>
+  </view>
+</view>

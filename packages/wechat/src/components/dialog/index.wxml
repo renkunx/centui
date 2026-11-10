@@ -1,0 +1,47 @@
+<view class="cu-dialog" role="dialog" aria-modal="true">
+  <cu-popup
+    show="{{innerShow}}"
+    has-mask="{{hasMask}}"
+    mask-closable="{{maskClosable}}"
+    position="center"
+    transition="{{transitionName}}"
+    prevent-scroll="{{preventScroll}}"
+    bind:change="onPopupChange"
+    bind:show="onPopupShow"
+    bind:hide="onPopupHide"
+  >
+    <view class="cu-dialog-content">
+      <slot name="header"></slot>
+      <view class="cu-dialog-body">
+        <view wx:if="{{closable}}" role="button" class="cu-dialog-close" bind:tap="onClose">
+          <cu-icon name="close"></cu-icon>
+        </view>
+        <view wx:if="{{icon}}" class="cu-dialog-icon">
+          <cu-icon name="{{icon}}"></cu-icon>
+        </view>
+        <view wx:if="{{title}}" class="cu-dialog-title">{{title}}</view>
+        <slot></slot>
+        <view wx:if="{{content}}" class="cu-dialog-text">
+          <rich-text nodes="{{content}}"></rich-text>
+        </view>
+      </view>
+      <view class="cu-dialog-actions {{layout === 'column' ? 'is-column' : ''}}">
+        <block wx:for="{{btnViews}}" wx:key="index">
+          <view
+            role="button"
+            class="cu-dialog-btn {{item.disabled ? 'disabled' : ''}} {{item.warning && !item.disabled ? 'warning' : ''}}"
+            data-index="{{index}}"
+            catch:tap="onClickBtn"
+            catch:touchmove="noop"
+          >
+            <view wx:if="{{item.loading}}" class="cu-dialog-btn-loading">
+              <cu-activity-indicator type="roller" size="{{32}}" color="{{btnColors[index]}}"></cu-activity-indicator>
+            </view>
+            <cu-icon wx:elif="{{item.icon}}" class="cu-dialog-btn-icon" name="{{item.icon}}" size="md"></cu-icon>
+            {{item.text}}
+          </view>
+        </block>
+      </view>
+    </view>
+  </cu-popup>
+</view>

@@ -1,0 +1,26 @@
+<view
+  class="cu-field-item {{solid ? 'is-solid' : ''}} {{fieldDisabled || disabled ? 'is-disabled' : ''}} {{alignRight ? 'is-align-right' : ''}} {{inputEnv}}"
+  bind:tap="onTap"
+>
+  <view class="cu-field-item-content">
+    <label wx:if="{{title}}" class="cu-field-item-title">{{title}}</label>
+    <view wx:if="{{showLeft}}" class="cu-field-item-left">
+      <slot name="left"></slot>
+    </view>
+    <view class="cu-field-item-control">
+      <slot></slot>
+      <block wx:if="{{!hasDefault}}">
+        <view wx:if="{{content}}">{{content}}</view>
+        <view wx:elif="{{placeholder}}" class="cu-field-item-placeholder">{{placeholder}}</view>
+      </block>
+    </view>
+    <view wx:if="{{showRight}}" class="cu-field-item-right">
+      <slot name="right"></slot>
+      <view wx:if="{{addon && !rightFilled}}">{{addon}}</view>
+      <cu-icon wx:if="{{arrowName}}" name="{{arrowName}}" size="md"></cu-icon>
+    </view>
+  </view>
+  <view wx:if="{{showChildren}}" class="cu-field-item-children">
+    <slot name="children"></slot>
+  </view>
+</view>

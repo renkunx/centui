@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "styleIsolation": "apply-shared",
+  "usingComponents": {
+    "cu-icon": "../icon/index",
+    "cu-input-item": "../input-item/index"
+  }
+}

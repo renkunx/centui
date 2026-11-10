@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "styleIsolation": "apply-shared",
+  "usingComponents": {
+    "cu-popup": "../popup/index",
+    "cu-popup-title-bar": "../popup-title-bar/index",
+    "cu-icon": "../icon/index"
+  }
+}

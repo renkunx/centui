@@ -1,0 +1,23 @@
+<view
+  class="cu-cell-item {{disabled ? 'is-disabled' : ''}} {{noBorder ? 'no-border' : ''}}"
+  bind:tap="onTap"
+>
+  <view class="cu-cell-item-body {{brief ? 'multilines' : ''}}">
+    <view wx:if="{{showLeft}}" class="cu-cell-item-left">
+      <slot name="left"></slot>
+    </view>
+    <view wx:if="{{showContent}}" class="cu-cell-item-content">
+      <view wx:if="{{title}}" class="cu-cell-item-title">{{title}}</view>
+      <view wx:if="{{brief}}" class="cu-cell-item-brief">{{brief}}</view>
+      <slot></slot>
+    </view>
+    <view wx:if="{{showRight}}" class="cu-cell-item-right">
+      <slot name="right"></slot>
+      <view wx:if="{{addon && !rightFilled}}">{{addon}}</view>
+      <cu-icon wx:if="{{arrow}}" name="arrow" size="md"></cu-icon>
+    </view>
+  </view>
+  <view wx:if="{{showChildren}}" class="cu-cell-item-children">
+    <slot name="children"></slot>
+  </view>
+</view>

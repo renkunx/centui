@@ -1,0 +1,2 @@
+<!-- Canvas 2D 折线图：坐标换算在 logic.ts，绘制在 index.ts（见头注释差异 1/2/3） -->
+<canvas type="2d" id="cv" class="cu-chart" style="{{canvasStyle}}"></canvas>

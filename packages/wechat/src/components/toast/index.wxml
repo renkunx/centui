@@ -1,0 +1,16 @@
+<view class="cu-toast {{position}}">
+  <cu-popup
+    show="{{visible}}"
+    has-mask="{{hasMask}}"
+    mask-closable="{{false}}"
+    position="center"
+    bind:show="onPopupShow"
+    bind:hide="onPopupHide"
+  >
+    <slot></slot>
+    <view wx:if="{{content || icon}}" class="cu-toast-content {{square ? 'square' : ''}}">
+      <cu-icon wx:if="{{icon}}" name="{{icon}}" size="lg"></cu-icon>
+      <view wx:if="{{content}}" class="cu-toast-text">{{content}}</view>
+    </view>
+  </cu-popup>
+</view>

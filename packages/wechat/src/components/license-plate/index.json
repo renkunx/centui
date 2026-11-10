@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "styleIsolation": "shared",
+  "usingComponents": {
+    "cu-popup": "../popup/index",
+    "cu-popup-title-bar": "../popup-title-bar/index",
+    "cu-license-plate-input": "../license-plate-input/index",
+    "cu-license-plate-keyboard": "../license-plate-keyboard/index"
+  }
+}

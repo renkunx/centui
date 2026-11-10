@@ -1,0 +1,19 @@
+<view wx:if="{{isShow}}" class="{{barClass}}">
+  <view class="cu-notice-bar-left {{leftEmpty ? 'cu-notice-bar-empty' : ''}}">
+    <slot name="left">
+      <view wx:if="{{!icon}}" id="cu-nb-left-probe"></view>
+      <cu-icon wx:if="{{icon}}" name="{{icon}}"></cu-icon>
+    </slot>
+  </view>
+  <view class="cu-notice-bar-content {{multiRows ? 'cu-notice-bar-multi-content' : ''}}">
+    <view
+      class="cu-notice-bar-content-inner {{overflow && scrollable && !measuring ? 'cu-notice-bar-content-animate' : ''}}"
+      style="{{innerStyle}}"
+    ><slot></slot></view>
+  </view>
+  <view class="cu-notice-bar-right">
+    <slot name="right">
+      <cu-icon wx:if="{{mode || closable}}" name="{{rightIconName}}" bind:click="onClose"></cu-icon>
+    </slot>
+  </view>
+</view>

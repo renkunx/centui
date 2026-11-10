@@ -1,0 +1,53 @@
+<view class="cu-codebox-wrapper">
+  <view
+    class="cu-codebox {{disabled ? 'is-disabled' : ''}} {{justify ? 'is-justify' : ''}}"
+    bind:tap="onBoxTap"
+  >
+    <block wx:if="{{useBoxes}}">
+      <view
+        wx:for="{{boxes}}"
+        wx:key="no"
+        class="cu-codebox-box {{item.active ? 'is-active' : ''}} {{item.filled ? 'is-filled' : ''}} {{isErrorStyle ? 'is-error' : ''}}"
+      >
+        <block wx:if="{{item.char}}">
+          <view wx:if="{{mask}}" class="cu-codebox-dot"></view>
+          <view wx:else>{{item.char}}</view>
+        </block>
+        <view wx:if="{{item.active}}" class="cu-codebox-blink"></view>
+      </view>
+    </block>
+    <input
+      wx:else
+      class="cu-codebox-holder {{focused ? 'is-active' : ''}}"
+      type="{{inputTypeMp}}"
+      password="{{mask}}"
+      value="{{code}}"
+      disabled
+      maxlength="{{nativeMaxlength}}"
+    />
+    <slot></slot>
+  </view>
+  <input
+    wx:if="{{system}}"
+    class="cu-codebox-input"
+    type="{{inputTypeMp}}"
+    maxlength="{{nativeMaxlength}}"
+    value="{{code}}"
+    focus="{{focusSystem}}"
+    bindinput="onSystemInput"
+    bindfocus="onSystemFocus"
+    bindblur="onSystemBlur"
+  />
+  <cu-number-keyboard
+    wx:if="{{!system}}"
+    type="{{keyboardType}}"
+    ok-text="{{okText}}"
+    disorder="{{disorder}}"
+    is-view="{{isView}}"
+    show="{{focused}}"
+    bind:change="onKbVisibleChange"
+    bind:enter="onKbEnter"
+    bind:delete="onDelete"
+    bind:confirm="onConfirm"
+  ></cu-number-keyboard>
+</view>

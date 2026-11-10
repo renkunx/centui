@@ -1,0 +1,6 @@
+<view
+  wx:if="{{name}}"
+  class="cu-class cu-icon icon-font cu-icon-{{name}} {{size}}"
+  style="{{iconStyle}}"
+  bind:tap="onTap"
+></view>

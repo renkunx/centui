@@ -1,0 +1,113 @@
+/* 展示宿主页面骨架（非组件样式） */
+.demo {
+  padding-bottom: 140rpx;
+}
+
+.demo-section {
+  margin: 24rpx;
+  padding: 24rpx;
+  background: #fff;
+  border-radius: 16rpx;
+}
+
+.demo-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #01080f;
+  margin-bottom: 20rpx;
+}
+
+.demo-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-top: 20rpx;
+  flex-wrap: wrap;
+}
+
+.demo-between {
+  justify-content: space-between;
+}
+
+.demo-cell {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-top: 12rpx;
+}
+
+.demo-label {
+  font-size: 26rpx;
+  color: #666f83;
+  min-width: 80rpx;
+}
+
+.demo-inline {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.demo-swiper-img {
+  width: 100%;
+  height: 300rpx;
+}
+
+/* virtualHost 组件无宿主节点：组件 tag 上写 style 不生效，尺寸由 wrapper view 控制 */
+.demo-slider-box {
+  width: 400rpx;
+  display: block;
+}
+
+.demo-block {
+  margin-bottom: 24rpx;
+}
+
+.demo-progress {
+  width: 300rpx;
+}
+
+.demo-link {
+  color: var(--color-primary, #198cff);
+}
+
+.demo-action-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+
+.demo-bar-amount {
+  font-size: 26rpx;
+  color: #666f83;
+}
+
+.demo-bar-amount-num {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #01080f;
+}
+
+.demo-popup-content {
+  /* Popup 本体是裸容器（mand-mobile v2 语义，白底仅 inner-popup 变体提供），
+     页面级使用需自带背景 */
+  background: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+  padding: 40rpx 32rpx calc(40rpx + env(safe-area-inset-bottom));
+}
+
+.demo-popup-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #01080f;
+  margin-bottom: 12rpx;
+}
+
+.demo-popup-text {
+  font-size: 26rpx;
+  color: #666f83;
+  margin-bottom: 32rpx;
+}
+

@@ -1,0 +1,109 @@
+<view class="cu-number-keyboard {{isView ? 'in-view' : ''}}">
+  <block wx:if="{{isView}}">
+    <view class="cu-number-keyboard-slot">
+      <slot></slot>
+    </view>
+    <view class="cu-number-keyboard-container {{resolvedType}} {{disabled ? 'disabled' : ''}}" catch:touchmove="noop">
+      <view class="keyboard-number">
+        <view class="keyboard-number-list">
+          <block wx:for="{{numberKeys}}" wx:key="index">
+            <view
+              wx:if="{{item.kind === 'empty'}}"
+              class="keyboard-number-item {{item.cls}}"
+            ></view>
+            <view
+              wx:else
+              class="keyboard-number-item {{item.cls}} {{activeKey === index ? 'active' : ''}}"
+              aria-label="{{item.ariaLabel}}"
+              data-zone="number"
+              data-index="{{index}}"
+              bind:touchstart="onKeyTouchStart"
+              bind:touchend="onKeyTouchEnd"
+              bind:touchcancel="onKeyTouchEnd"
+              bind:touchmove="onKeyTouchEnd"
+              bind:tap="onKeyTap"
+            >
+              <text wx:if="{{item.value}}">{{item.value}}</text>
+            </view>
+          </block>
+        </view>
+      </view>
+      <view wx:if="{{resolvedType === 'professional'}}" class="keyboard-operate">
+        <view class="keyboard-operate-list">
+          <view
+            wx:for="{{operateKeys}}"
+            wx:key="index"
+            class="keyboard-operate-item {{item.cls}} {{activeOperate === index ? 'active' : ''}}"
+            aria-label="{{item.ariaLabel}}"
+            data-zone="operate"
+            data-index="{{index}}"
+            bind:touchstart="onKeyTouchStart"
+            bind:touchend="onKeyTouchEnd"
+            bind:touchcancel="onKeyTouchEnd"
+            bind:tap="onKeyTap"
+          >
+            <text wx:if="{{item.value}}">{{item.value}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <cu-popup
+      show="{{innerShow}}"
+      position="bottom"
+      has-mask="{{false}}"
+      bind:change="onPopupChange"
+      bind:show="onPopupShow"
+      bind:hide="onPopupHide"
+    >
+      <view class="cu-number-keyboard-slot">
+        <slot></slot>
+      </view>
+      <view class="cu-number-keyboard-container {{resolvedType}} {{disabled ? 'disabled' : ''}}" catch:touchmove="noop">
+        <view class="keyboard-number">
+          <view class="keyboard-number-list">
+            <block wx:for="{{numberKeys}}" wx:key="index">
+              <view
+                wx:if="{{item.kind === 'empty'}}"
+                class="keyboard-number-item {{item.cls}}"
+              ></view>
+              <view
+                wx:else
+                class="keyboard-number-item {{item.cls}} {{activeKey === index ? 'active' : ''}}"
+                aria-label="{{item.ariaLabel}}"
+                data-zone="number"
+                data-index="{{index}}"
+                bind:touchstart="onKeyTouchStart"
+                bind:touchend="onKeyTouchEnd"
+                bind:touchcancel="onKeyTouchEnd"
+                bind:touchmove="onKeyTouchEnd"
+                bind:tap="onKeyTap"
+              >
+                <text wx:if="{{item.value}}">{{item.value}}</text>
+              </view>
+            </block>
+          </view>
+        </view>
+        <view wx:if="{{resolvedType === 'professional'}}" class="keyboard-operate">
+          <view class="keyboard-operate-list">
+            <view
+              wx:for="{{operateKeys}}"
+              wx:key="index"
+              class="keyboard-operate-item {{item.cls}} {{activeOperate === index ? 'active' : ''}}"
+              aria-label="{{item.ariaLabel}}"
+              data-zone="operate"
+              data-index="{{index}}"
+              bind:touchstart="onKeyTouchStart"
+              bind:touchend="onKeyTouchEnd"
+              bind:touchcancel="onKeyTouchEnd"
+              bind:tap="onKeyTap"
+            >
+              <text wx:if="{{item.value}}">{{item.value}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </cu-popup>
+  </block>
+</view>

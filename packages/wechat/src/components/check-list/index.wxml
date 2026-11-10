@@ -1,0 +1,42 @@
+<view class="cu-check-list {{alignCenter ? 'is-align-center' : ''}}">
+  <cu-check-group value="{{value}}" bind:change="onGroupChange">
+    <block wx:for="{{cells}}" wx:key="no">
+      <cu-cell-item
+        title="{{item.title}}"
+        brief="{{item.brief}}"
+        disabled="{{item.disabled}}"
+        data-index="{{index}}"
+        bind:click="onOptionTap"
+      >
+        <view
+          wx:if="{{item.showIcon && item.side === 'left'}}"
+          slot="left"
+          class="cu-check-list-icon"
+        >
+          <cu-check
+            name="{{item.value}}"
+            disabled="{{item.disabled}}"
+            size="{{iconSize}}"
+            icon="{{icon}}"
+            icon-inverse="{{iconInverse}}"
+            icon-disabled="{{iconDisabled}}"
+          />
+        </view>
+        <view
+          wx:if="{{item.showIcon && item.side === 'right'}}"
+          slot="right"
+          class="cu-check-list-icon"
+        >
+          <cu-check
+            name="{{item.value}}"
+            disabled="{{item.disabled}}"
+            size="{{iconSize}}"
+            icon="{{icon}}"
+            icon-inverse="{{iconInverse}}"
+            icon-disabled="{{iconDisabled}}"
+          />
+        </view>
+      </cu-cell-item>
+    </block>
+  </cu-check-group>
+</view>

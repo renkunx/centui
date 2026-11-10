@@ -1,0 +1,40 @@
+<view class="cu-drop-menu">
+  <view class="cu-drop-menu-bar">
+    <view
+      wx:for="{{bars}}"
+      wx:key="no"
+      class="bar-item {{item.active ? 'active' : ''}} {{item.selected ? 'selected' : ''}} {{item.disabled ? 'disabled' : ''}}"
+      data-index="{{index}}"
+      bind:tap="onBarItemClick"
+    >
+      <text class="bar-item-text">{{item.text}}</text>
+    </view>
+  </view>
+  <cu-popup
+    show="{{isPopupShow}}"
+    position="top"
+    prevent-scroll="{{true}}"
+    bind:change="onPopupChange"
+    bind:show="onPopupShow"
+    bind:hide="onPopupHide"
+    bind:beforeHide="onPopupBeforeHide"
+  >
+    <view class="cu-drop-menu-list">
+      <view class="cu-radio-list is-align-center">
+        <view
+          wx:for="{{cells}}"
+          wx:key="no"
+          class="cu-cell-item cu-radio-item {{item.selected ? 'is-selected' : ''}}"
+          data-index="{{index}}"
+          bind:tap="onListItemClick"
+        >
+          <view class="cu-cell-item-body">
+            <view class="cu-cell-item-content">
+              <view class="cu-cell-item-title">{{item.title}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </cu-popup>
+</view>

@@ -1,0 +1,3 @@
+<view class="cu-radio-group" aria-role="radiogroup">
+  <slot></slot>
+</view>

@@ -1,0 +1,6 @@
+<view class="cu-swiper-item" style="{{boxStyle}}{{fadeStyle}}">
+  <slot></slot>
+  <view wx:if="{{copyStyle}}" class="cu-swiper-item cu-swiper-item-copy" style="{{copyStyle}}">
+    <slot></slot>
+  </view>
+</view>

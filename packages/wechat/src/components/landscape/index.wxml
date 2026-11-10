@@ -1,0 +1,23 @@
+<view class="cu-landscape {{fullScreen ? 'is-full' : ''}}">
+  <cu-popup
+    show="{{innerShow}}"
+    mask-closable="{{maskClosable}}"
+    prevent-scroll="{{true}}"
+    has-mask="{{!fullScreen && hasMask}}"
+    transition="{{actualTransition}}"
+    bind:change="onPopupChange"
+    bind:show="onPopupShow"
+    bind:hide="onPopupHide"
+  >
+    <view class="cu-landscape-body {{scroll ? 'scroll' : ''}}">
+      <scroll-view class="cu-landscape-content" scroll-y="{{true}}">
+        <slot></slot>
+      </scroll-view>
+      <cu-icon
+        name="{{closeIconName}}"
+        color="{{closeColorStyle}}"
+        bind:click="onClose"
+      ></cu-icon>
+    </view>
+  </cu-popup>
+</view>

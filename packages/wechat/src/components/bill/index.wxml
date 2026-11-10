@@ -1,0 +1,19 @@
+<view class="cu-bill">
+  <cu-water-mark content="{{waterMark}}">
+    <view class="cu-bill-header">
+      <slot name="header">
+        <view wx:if="{{title}}" class="cu-bill-title">{{title}}</view>
+        <view wx:if="{{no}}" class="cu-bill-no">{{noLabel}}</view>
+      </slot>
+    </view>
+    <view class="cu-bill-neck">
+      <view style="position: absolute; display: block; top: 50%; left: 10px; right: 10px; height: 1px; border-top: dashed 1px var(--color-border-element)"></view>
+    </view>
+    <view class="cu-bill-content">
+      <view class="cu-bill-detail">
+        <slot></slot>
+      </view>
+      <slot name="footer"></slot>
+    </view>
+  </cu-water-mark>
+</view>

@@ -1,0 +1,34 @@
+<view class="cu-scroll-view">
+  <view class="scroll-view-header"><slot name="header"></slot></view>
+  <scroll-view
+    class="scroll-view-container {{horizon ? 'horizon' : ''}}"
+    scroll-y="{{scrollingY}}"
+    scroll-x="{{scrollingX}}"
+    bind:scroll="onNativeScroll"
+    bind:touchstart="onTouchStart"
+    bind:touchmove="onTouchMove"
+    bind:touchend="onTouchEnd"
+    bind:touchcancel="onTouchEnd"
+  >
+    <view
+      class="scroll-view-refresh {{isRefreshing ? 'refreshing' : ''}} {{isRefreshActive ? 'refresh-active' : ''}}"
+      style="{{refreshStyle}}"
+    >
+      <block wx:if="{{defaultRefresher}}">
+        <cu-activity-indicator
+          type="roller"
+          width="{{10}}"
+          color="{{rollerColor}}"
+          process="{{isRefreshing ? -1 : refreshProcess}}"
+        ></cu-activity-indicator>
+        <view class="refresh-tip">{{refreshTip}}</view>
+      </block>
+      <slot name="refresh"></slot>
+    </view>
+    <slot></slot>
+    <view class="scroll-view-more {{isEndReachingStart || isEndReaching ? 'active' : ''}}">
+      <slot name="more"></slot>
+    </view>
+  </scroll-view>
+  <view class="scroll-view-footer"><slot name="footer"></slot></view>
+</view>

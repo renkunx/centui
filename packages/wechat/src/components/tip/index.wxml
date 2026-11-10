@@ -1,0 +1,16 @@
+<view class="cu-tip-root" bind:tap="onTriggerTap">
+  <slot></slot>
+  <view wx:if="{{visible}}" class="cu-tip-bubble" style="{{layerStyle}}">
+    <view class="cu-tip {{wrapperCls}}">
+      <view class="cu-tip-content">
+        <block wx:if="{{content || icon}}">
+          <cu-icon wx:if="{{icon}}" class="content-icon" name="{{icon}}"></cu-icon>
+          <view class="content-text">{{content}}</view>
+        </block>
+        <slot wx:else name="content"></slot>
+        <cu-icon wx:if="{{closable}}" name="close" size="md" bind:click="onClose"></cu-icon>
+      </view>
+      <view class="cu-tip-bg"></view>
+    </view>
+  </view>
+</view>

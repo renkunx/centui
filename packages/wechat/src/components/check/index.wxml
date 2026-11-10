@@ -1,0 +1,15 @@
+<view
+  class="cu-check {{disabled ? 'is-disabled' : ''}} {{isChecked ? 'is-checked' : ''}}"
+  aria-role="checkbox"
+  aria-checked="{{isChecked}}"
+  aria-disabled="{{disabled}}"
+  bind:tap="onTap"
+>
+  <view class="cu-check-icon">
+    <cu-icon name="{{currentIcon}}" size="{{size}}"></cu-icon>
+  </view>
+  <view wx:if="{{label || hasDefault}}" class="cu-check-label">
+    <slot></slot>
+    <block wx:if="{{!hasDefault}}">{{label}}</block>
+  </view>
+</view>

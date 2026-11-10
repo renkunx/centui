@@ -1,0 +1,38 @@
+<view class="cu-tabs">
+  <view class="cu-tab-bar">
+    <view class="cu-tab-bar-inner">
+      <view wx:if="{{scrollable && maskStartShown}}" class="cu-tab-bar-start"></view>
+      <view wx:if="{{scrollable && maskEndShown}}" class="cu-tab-bar-end"></view>
+      <scroll-view
+        class="cu-tab-bar-scroll"
+        scroll-x
+        scroll-left="{{scrollLeft}}"
+        scroll-with-animation
+        enhanced="{{true}}"
+        show-scrollbar="{{false}}"
+        bind:scroll="onBarScroll"
+      >
+        <view class="cu-tab-bar-scroll-content" style="{{contentWidth > 0 ? 'width: ' + contentWidth + 'px;' : ''}}">
+          <view class="cu-tab-bar-list">
+            <view
+              wx:for="{{items}}"
+              wx:key="no"
+              class="cu-tab-bar-item {{item.name === currentName ? 'is-active' : ''}} {{item.disabled ? 'is-disabled' : ''}} {{items.length > 5 && index === 0 ? 'more-than-five' : ''}}"
+              data-index="{{index}}"
+              bind:tap="onItemTap"
+              >{{item.label}}</view
+            >
+          </view>
+          <view
+            wx:if="{{hasInk}}"
+            class="cu-tab-bar-ink {{items[currentIndex] && items[currentIndex].disabled ? 'is-disabled' : ''}}"
+            style="{{inkStyle}}"
+          ></view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <view class="cu-tabs-content">
+    <slot></slot>
+  </view>
+</view>

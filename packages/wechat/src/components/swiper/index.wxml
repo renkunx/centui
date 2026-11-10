@@ -1,0 +1,20 @@
+<view
+  class="cu-swiper {{isVertical ? 'cu-swiper-vertical' : ''}} {{isFade ? 'cu-swiper-fade' : ''}} {{isInitial ? '' : 'disabled'}}"
+  bind:touchstart="onDragStart"
+  catch:touchmove="onDragMove"
+  bind:touchend="onDragEnd"
+  bind:touchcancel="onDragEnd"
+>
+  <view class="cu-swiper-box">
+    <view class="cu-swiper-container" style="transform: translate{{axis}}({{translate}}px)">
+      <slot></slot>
+    </view>
+  </view>
+  <view wx:if="{{indicatorCount > 1 && hasDots}}" class="cu-swiper-indicators {{isVertical ? 'disabled' : ''}}">
+    <view
+      wx:for="{{indicatorCount}}"
+      wx:key="*this"
+      class="cu-swiper-indicator {{index === currentIndex ? 'cu-swiper-indicator-active' : ''}}"
+    ></view>
+  </view>
+</view>

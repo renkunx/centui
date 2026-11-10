@@ -1,0 +1,27 @@
+<view class="cu-license-plate-keyboard">
+  <!-- 省份简写键盘（第一位） -->
+  <view wx:if="{{keyboard.keyboardType === 1}}" class="cu-shortcut-row">
+    <view
+      wx:for="{{keyboard.shortcuts}}"
+      wx:key="index"
+      class="cu-shortcut-row-item"
+      data-value="{{item}}"
+      bind:tap="onShortcutTap"
+    >{{item}}</view>
+  </view>
+  <!-- 字母数字混合键盘（第二位起） -->
+  <view wx:else class="cu-mixed-key-board">
+    <view
+      wx:for="{{keyboard.mixedKeyboard}}"
+      wx:key="index"
+      class="cu-mixed-key-board-item {{item.disabled ? 'disabled' : ''}}"
+    >
+      <block wx:if="{{item.type}}">
+        <view class="{{item.type}}" data-type="{{item.type}}" bind:tap="onFnTap">
+          <view wx:if="{{item.type === 'confirm' && item.text}}">{{item.text}}</view>
+        </view>
+      </block>
+      <view wx:else data-index="{{index}}" bind:tap="onValueTap">{{item.value}}</view>
+    </view>
+  </view>
+</view>

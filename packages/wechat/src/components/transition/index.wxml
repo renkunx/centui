@@ -1,0 +1,6 @@
+<!-- 显隐由 show 属性受控（Vue 版由子元素 v-if 触发，见 index.ts 头注释 ★）；
+     过渡类（cu- 前缀 + name 的 enter/enter-active/leave-to/leave-active 家族）
+     来自 transition.styl（本组件同名 styl 源编译） -->
+<view wx:if="{{isShown}}" class="{{cls}}">
+  <slot></slot>
+</view>
