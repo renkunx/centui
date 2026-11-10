@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import {
   formatNumberWithSeparator,
   numberToChineseCapital,
@@ -42,10 +42,10 @@ const props = withDefaults(
   },
 )
 
-const inBrowser = typeof window !== 'undefined'
-
 const displayValue = ref(0)
 const isMounted = ref(false)
+/** 进行中的 Animate 句柄：重入/卸载时 stop，避免多动画并行拉扯 displayValue */
+let animateId = 0
 
 const legalPrecision = computed(() => (props.precision > 0 ? props.precision : 0))
 
@@ -61,7 +61,9 @@ const capital = computed(() =>
 watch(
   () => props.value,
   (val, oldVal) => {
-    if (!inBrowser && !isMounted.value) {
+    // 首轮（setup 期）直接同步终值：服务端与客户端首帧渲染一致（SSR 水合不闪变），
+    // 后续变更才走动画
+    if (!isMounted.value) {
       displayValue.value = val
       return
     }
@@ -78,7 +80,18 @@ onMounted(() => {
   isMounted.value = true
 })
 
+onBeforeUnmount(() => {
+  if (animateId) {
+    Animate.stop(animateId)
+    animateId = 0
+  }
+})
+
 function animateDisplay(fromValue = 0, toValue = 0) {
+  if (animateId) {
+    Animate.stop(animateId)
+    animateId = 0
+  }
   const step = (percent: number) => {
     if (percent === 1) {
       displayValue.value = toValue
@@ -87,6 +100,8 @@ function animateDisplay(fromValue = 0, toValue = 0) {
     displayValue.value = fromValue + (toValue - fromValue) * percent
   }
   const verify = () => true
-  Animate.start(step, verify, () => {}, props.duration)
+  animateId = Animate.start(step, verify, () => {
+    animateId = 0
+  }, props.duration)
 }
 </script>

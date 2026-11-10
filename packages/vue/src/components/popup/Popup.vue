@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, provide, ref, watch, type Ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, provide, ref, watch, type Ref } from 'vue'
 
 defineOptions({ name: 'cu-popup' })
 
@@ -65,6 +65,9 @@ const isTestEnv = typeof process !== 'undefined' && process.env.MAND_ENV === 'te
 
 const root = ref<HTMLElement>()
 
+/** modelValue 快速连开时的 50ms 重试定时器（v2 行为），卸载时回收 */
+let showRetryTimer: ReturnType<typeof setTimeout> | null = null
+
 // controle popup mask & popup box
 const isPopupShow = ref(false)
 // controle popup box
@@ -97,7 +100,11 @@ watch(
   (val) => {
     if (val) {
       if (isAnimation.value) {
-        setTimeout(() => {
+        if (showRetryTimer) {
+          clearTimeout(showRetryTimer)
+        }
+        showRetryTimer = setTimeout(() => {
+          showRetryTimer = null
           showPopupBox()
         }, 50)
       } else {
@@ -120,6 +127,13 @@ watch(
 
 onMounted(() => {
   props.modelValue && showPopupBox()
+})
+
+onBeforeUnmount(() => {
+  if (showRetryTimer) {
+    clearTimeout(showRetryTimer)
+    showRetryTimer = null
+  }
 })
 
 function showPopupBox() {

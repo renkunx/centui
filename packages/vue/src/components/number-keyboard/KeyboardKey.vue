@@ -1,10 +1,11 @@
 <template>
-  <li v-if="noTouch" :class="[active ? 'active' : '']" @click="onFocus($event, 'click')">
+  <li v-if="noTouch" :class="[active ? 'active' : '']" :aria-label="ariaLabel" @click="onFocus($event, 'click')">
     <span v-text="value"></span>
   </li>
   <li
     v-else
     :class="[active ? 'active' : '']"
+    :aria-label="ariaLabel"
     @touchstart="onFocus($event, 'touch')"
     @touchmove="onBlur"
     @touchend="onBlur"
@@ -25,11 +26,14 @@ const props = withDefaults(
     value?: string | number
     noTouch?: boolean
     noPrevent?: boolean
+    /** 无障碍标签：功能键（删除/确认等）视觉为空 span，读屏不可见，须显式提供 */
+    ariaLabel?: string
   }>(),
   {
     value: '',
     noTouch: false,
     noPrevent: false,
+    ariaLabel: undefined,
   },
 )
 

@@ -21,8 +21,8 @@ withDefaults(
     isFinished?: boolean
   }>(),
   {
-    loadingText: () => t('md.scroll_view.more.loading'),
-    finishedText: () => t('md.scroll_view.more.allLoaded'),
+    loadingText: () => String(t('md.scroll_view.more.loading')),
+    finishedText: () => String(t('md.scroll_view.more.allLoaded')),
     isFinished: false,
   },
 )

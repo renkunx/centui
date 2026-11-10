@@ -1,6 +1,7 @@
 <template>
   <CuCheckBaseBox
     class="cu-radio-box"
+    role="radio"
     :label="label"
     :is-checked="isChecked"
     :disabled="disabled"

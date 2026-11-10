@@ -94,7 +94,6 @@
         :model-value="modelValue"
         :closable="true"
         :append-to="false"
-        position="center"
         @update:model-value="onPopupInput"
         @show="onShow"
         @hide="onHide"
@@ -175,8 +174,8 @@ const props = withDefaults(
     autoSend: true,
     autoCountdown: true,
     count: 60,
-    countNormalText: () => t('md.captcha.sendCaptcha'),
-    countActiveText: () => t('md.captcha.countdown'),
+    countNormalText: () => String(t('md.captcha.sendCaptcha')),
+    countActiveText: () => String(t('md.captcha.countdown')),
     isView: false,
     type: 'dialog',
     inputType: 'tel',
@@ -237,6 +236,11 @@ onMounted(() => {
 onBeforeUnmount(() => {
   if (isAndroidDevice() && props.type === 'halfScreen') {
     window.removeEventListener('resize', listenResize)
+  }
+  // 倒计时 interval 不随卸载自终止路径兜底：显式回收
+  if (counter) {
+    clearInterval(counter)
+    counter = null
   }
 })
 

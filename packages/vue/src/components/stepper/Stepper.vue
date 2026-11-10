@@ -3,6 +3,8 @@
     <div
       class="cu-stepper-button cu-stepper-button-reduce"
       :class="{ disabled: isMin }"
+      role="button"
+      :aria-label="reduceLabel"
       @click="reduce"
     ></div>
     <div class="cu-stepper-number">
@@ -19,6 +21,8 @@
     <div
       class="cu-stepper-button cu-stepper-button-add"
       :class="{ disabled: isMax }"
+      role="button"
+      :aria-label="addLabel"
       @click="add"
     ></div>
   </div>
@@ -92,6 +96,17 @@ const isMax = ref(false)
 const isEditing = ref(false)
 const currentNum = ref<number>(0)
 
+// a11y：操作钮为 div，补充 role/aria-label（core 词库暂无 stepper 词条，沿用库内既有硬编码中文默认值惯例）
+const reduceLabel = '减少'
+const addLabel = '增加'
+
+/**
+ * setup 期同步初始化（SSR 首帧即渲染真实值）：
+ * v2 在 mounted 才赋值导致服务端恒渲染 0、客户端水合后跳变。
+ * 必须在 watch(currentNum) 建立之前赋值，避免初始化触发一次多余的 emit。
+ */
+currentNum.value = getCurrentNum(props.modelValue || props.defaultValue)
+
 const contentLength = computed(() => {
   if (!props.modelValue) {
     return 2
@@ -140,6 +155,16 @@ watch(
 )
 
 watch(currentNum, (val, oldVal) => {
+  // emit 前先收敛到 [min, max]：越界值（键入中间态、min/max 动态收紧）不得外流。
+  // 收敛通过回写 currentNum 触发下一轮 watch 完成补发 update:modelValue。
+  // 注意退化区间（min > max，仅告警不纠正）时与 v2 的 last-writer 语义对齐：
+  // 以 max 收敛优先（Math.min 外层），watch(max) 收紧后的值保持可见。
+  const clamped = Math.min(Math.max(val, Number(props.min)), Number(props.max))
+  if (clamped !== val) {
+    currentNum.value = clamped
+    return
+  }
+
   checkStatus()
 
   if (val !== props.modelValue) {
@@ -160,7 +185,6 @@ watch(currentNum, (val, oldVal) => {
 onMounted(() => {
   // verify that the minimum value is less than the maximum value
   checkMinMax()
-  currentNum.value = getCurrentNum(props.modelValue || props.defaultValue)
   checkStatus()
 })
 

@@ -55,6 +55,27 @@ function create({
 
   const instance = { value: false, close: () => {} } as ActionSheetInstance
 
+  /** 是否执行过首次 mount（决定 close 走弹层关闭还是直接清理） */
+  let mounted = false
+  /** 容器是否已清理（onHide/close 兜底），保证清理幂等 */
+  let destroyed = false
+
+  const cleanup = () => {
+    if (destroyed) {
+      return
+    }
+    destroyed = true
+    render(null, container)
+    const parent = container.parentNode
+    if (parent) {
+      parent.removeChild(container)
+    }
+    const index = instances.indexOf(instance)
+    if (index >= 0) {
+      instances.splice(index, 1)
+    }
+  }
+
   const mount = () => {
     const vnode = createVNode(CuActionSheetComponent, {
       modelValue: instance.value,
@@ -72,24 +93,26 @@ function create({
       },
       onShow,
       onHide: () => {
-        const parent = container.parentNode
-        if (parent) {
-          parent.removeChild(container)
-        }
-        const index = instances.indexOf(instance)
-        if (index >= 0) {
-          instances.splice(index, 1)
-        }
-        render(null, container)
+        cleanup()
         onHide()
       },
       onSelected,
       onCancel,
     })
     render(vnode, container)
+    mounted = true
   }
 
   instance.close = () => {
+    if (destroyed) {
+      return
+    }
+    if (!mounted) {
+      // 从未显示过（value:false 创建后直接 close）：不会触发 hide 回调，
+      // 必须直接清理容器与登记，否则空容器与实例会永久滞留
+      cleanup()
+      return
+    }
     instance.value = false
     mount()
   }

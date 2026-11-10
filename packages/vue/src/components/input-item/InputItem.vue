@@ -38,6 +38,8 @@
         @keyup="onKeyup"
         @keydown="onKeydown"
         @input="onInput"
+        @compositionstart="onCompositionStart"
+        @compositionend="onCompositionEnd"
       />
     </template>
     <!-- Fake Input -->
@@ -106,6 +108,15 @@ import {
   trimValue,
   type FormattedValue,
 } from '@centui/core'
+
+/**
+ * 剥离空白与千分位逗号（等价 v2 的 trimValue(val, '\\s|,')）。
+ * 不再向 core.trimValue 传正则模式：core 现按字面量转义 gap，
+ * 组件侧统一改用显式字符类，避免跨包正则语义漂移。
+ */
+function stripSeparators(val: string): string {
+  return val.replace(/[\s,]/g, '')
+}
 import CuFieldItem from '../field-item/FieldItem.vue'
 import CuIcon from '../icon/Icon.vue'
 import CuNumberKeyboard from '../number-keyboard/NumberKeyboard.vue'
@@ -199,8 +210,11 @@ const inputNumberKeyboard = ref<
 const isInputFocus = ref(false)
 const isInputEditing = ref(false)
 const isPreview = ref(false)
+/** IME 组合期门闩：中文/日文输入法组字期间不做格式化回写，避免打断组词 */
+let isComposing = false
 
 let stopEditInputTimer: ReturnType<typeof setTimeout> | null = null
+let blurInputTimer: ReturnType<typeof setTimeout> | null = null
 
 const inputItemType = computed(() => (isPreview.value ? props.previewType : props.type) || 'text')
 const inputType = computed(() => {
@@ -242,7 +256,7 @@ watch(
   () => props.modelValue,
   (val) => {
     // Filter out two-way binding
-    if (val !== trimValue(inputValue.value, '\\s|,')) {
+    if (val !== stripSeparators(inputValue.value)) {
       inputValue.value = formateValue(subValue(`${val}`)).value
     }
   },
@@ -258,7 +272,7 @@ watch(
 
 watch(inputValue, (val) => {
   inputBindValue.value = val
-  const emitted = isInputFormative.value ? trimValue(val, '\\s|,') : val
+  const emitted = isInputFormative.value ? stripSeparators(val) : val
   if (emitted !== props.modelValue) {
     emit('update:modelValue', emitted)
     emit('change', name, emitted)
@@ -297,6 +311,11 @@ onBeforeUnmount(() => {
   if (stopEditInputTimer) {
     clearTimeout(stopEditInputTimer)
   }
+  if (blurInputTimer) {
+    clearTimeout(blurInputTimer)
+  }
+  // fake input 聚焦态下卸载时，回收挂在 document 上的 click 监听（见 focusFakeInput）
+  document.removeEventListener('click', blurFakeInput, false)
 })
 
 function formateValue(curValue: string, curPos = 0): FormattedValue {
@@ -424,6 +443,14 @@ function initNumberKeyBoard() {
 
 function onInput(event: Event) {
   const target = event.target as HTMLInputElement
+  // IME 组合期：仅同步原始文本（v-model 语义），不格式化、不回写、不移动光标，
+  // 否则 target.value 回写会打断中文/日文输入法的组词过程
+  if (isComposing) {
+    inputValue.value = target.value
+    inputBindValue.value = target.value
+    return
+  }
+
   const formated = formateValue(
     target.value,
     isInputFormative.value ? getCursorsPosition(target) : 0,
@@ -437,6 +464,16 @@ function onInput(event: Event) {
       setCursorsPosition(target, formated.range as number)
     })
   }
+}
+
+function onCompositionStart() {
+  isComposing = true
+}
+
+function onCompositionEnd(event: Event) {
+  isComposing = false
+  // 组合结束后按当前 input 值补一次常规格式化
+  onInput(event)
 }
 
 function onKeyup(event: KeyboardEvent) {
@@ -460,7 +497,11 @@ function onFocus() {
 }
 
 function onBlur() {
-  setTimeout(() => {
+  if (blurInputTimer) {
+    clearTimeout(blurInputTimer)
+  }
+  blurInputTimer = setTimeout(() => {
+    blurInputTimer = null
     isInputFocus.value = false
     emit('blur', name)
   }, 100)
@@ -484,7 +525,7 @@ function onNumberKeyBoardEnter(val: string | number) {
   }
   if (
     Number(inputMaxLength.value) > 0 &&
-    trimValue(inputValue.value, '\\s|,').length >= Number(inputMaxLength.value)
+    stripSeparators(inputValue.value).length >= Number(inputMaxLength.value)
   ) {
     return
   }

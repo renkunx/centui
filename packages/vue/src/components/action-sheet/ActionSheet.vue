@@ -35,7 +35,12 @@
 
 <script lang="ts">
 export interface ActionSheetOption {
+  /**
+   * 选项文案。经 v-html 渲染（v2 兼容行为，支持富文本）：
+   * 请勿传入不可信来源的字符串，XSS 责任在使用方。
+   */
   text?: string
+  /** @warning 同 text：经 v-html 渲染，勿传不可信内容 */
   label?: string
   disabled?: boolean
 }

@@ -5,6 +5,9 @@
       'is-disabled': disabled,
       'is-checked': isChecked,
     }"
+    role="checkbox"
+    :aria-checked="isChecked"
+    :aria-disabled="disabled"
     @click="onClick"
   >
     <div class="cu-check-icon">

@@ -129,9 +129,9 @@ Dialog.confirm = ({
   icon = '',
   iconSvg = true,
   content = '',
-  cancelText = t('md.dialog.cancel'),
+  cancelText = String(t('md.dialog.cancel')),
   cancelWarning = false,
-  confirmText = t('md.dialog.confirm'),
+  confirmText = String(t('md.dialog.confirm')),
   confirmWarning = false,
   closable = false,
   transition,
@@ -182,7 +182,7 @@ Dialog.alert = ({
   icon = '',
   iconSvg = true,
   content = '',
-  confirmText = t('md.dialog.confirm'),
+  confirmText = String(t('md.dialog.confirm')),
   closable = false,
   warning = false,
   transition,
@@ -219,16 +219,15 @@ Dialog.alert = ({
  * Dynamically create a succeed dialog
  */
 Dialog.succeed = (options: ConfirmOptions) => {
-  options.icon = 'success-color'
-  return Dialog.confirm(options)
+  // 浅拷贝：不污染调用方传入的 options 对象（v2 会直接改写入参）
+  return Dialog.confirm({ ...options, icon: 'success-color' })
 }
 
 /**
  * Dynamically create a failed dialog
  */
 Dialog.failed = (options: ConfirmOptions) => {
-  options.icon = 'warn-color'
-  return Dialog.confirm(options)
+  return Dialog.confirm({ ...options, icon: 'warn-color' })
 }
 
 /**

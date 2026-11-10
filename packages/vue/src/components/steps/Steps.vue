@@ -76,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, onUpdated, ref, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, onUpdated, ref, watch } from 'vue'
 import CuIcon from '../icon/Icon.vue'
 
 defineOptions({ name: 'cu-steps' })
@@ -105,16 +105,27 @@ const stepsSize = ref<number[]>([])
 const currentLength = ref(0)
 const duration = 0.3
 let timer: ReturnType<typeof setTimeout> | null = null
+/** doTransition 递归 setTimeout 链的全部句柄，卸载/重入时统一回收 */
+let walkTimers: ReturnType<typeof setTimeout>[] = []
+
+const clearWalkTimers = () => {
+  walkTimers.forEach(clearTimeout)
+  walkTimers = []
+}
 
 const barInnerStyle = (index: number) => {
-  const p = progress.value
+  const seg = progress.value[index]
+  // steps 运行时增长而 progress 尚未重算时，条目可能缺失——模板 v-if 已挡一层，此处兜底
+  if (!seg) {
+    return {}
+  }
   const transform =
     props.direction === 'horizontal'
-      ? `(${(p[index].len - 1) * 100}%, 0, 0)`
-      : `(0, ${(p[index].len - 1) * 100}%, 0)`
+      ? `(${(seg.len - 1) * 100}%, 0, 0)`
+      : `(0, ${(seg.len - 1) * 100}%, 0)`
   return {
     transform: `translate3d${transform}`,
-    transition: `all ${p[index].time}s linear`,
+    transition: `all ${seg.time}s linear`,
   }
 }
 
@@ -128,7 +139,9 @@ watch(
       if (timer) {
         clearTimeout(timer)
       }
+      clearWalkTimers()
       timer = setTimeout(() => {
+        timer = null
         doTransition(newProgress, isAdd, (len) => {
           if ((isAdd && len > currentLength.value) || (!isAdd && len < currentLength.value)) {
             currentLength.value = len
@@ -142,12 +155,28 @@ watch(
   },
 )
 
+// steps 运行时变化（增删步骤）后按当前进度重算 progress，保持条数一致
+watch(
+  () => props.steps.length,
+  () => {
+    progress.value = sliceProgress(currentLength.value)
+  },
+)
+
 // created 语义：初始化进度
 {
   const currentStep = formatValue(props.current)
   currentLength.value = currentStep
   progress.value = sliceProgress(currentStep)
 }
+
+onBeforeUnmount(() => {
+  if (timer) {
+    clearTimeout(timer)
+    timer = null
+  }
+  clearWalkTimers()
+})
 
 onMounted(() => {
   initStepSize()
@@ -251,10 +280,12 @@ function doTransition(
       } else {
         current -= progress.value[index].len - newProgress[index].len
       }
-      setTimeout(() => {
-        walk(isAdd ? index + 1 : index - 1)
-        step(current)
-      }, newProgress[index].time * 1000)
+      walkTimers.push(
+        setTimeout(() => {
+          walk(isAdd ? index + 1 : index - 1)
+          step(current)
+        }, newProgress[index].time * 1000),
+      )
     }
     progress.value[index] = newProgress[index]
   }

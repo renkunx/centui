@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue'
 import CuFieldItem from '../field-item/FieldItem.vue'
 import CuIcon from '../icon/Icon.vue'
 import { getCursorsPosition, setCursorsPosition } from '../input-item/cursor'
@@ -101,13 +101,25 @@ const inputValue = ref(props.modelValue || props.value)
 const isInputFocus = ref(false)
 const textarea = ref<HTMLTextAreaElement>()
 
+/**
+ * 判定外部绑定走 v3 v-model（modelValue）还是 v2 的 value prop：
+ * 仅当消费方确实传入了 modelValue/v-model 绑定时才以 modelValue 为准。
+ * 不能简单用 "modelValue !== ''" 判断——用户把 v-model 清成 '' 时若回退到陈旧的
+ * value prop，输入框将永远无法清空（缺陷场景）。
+ */
+const instance = getCurrentInstance()
+const usesModelValueBinding = (() => {
+  const vnodeProps = instance?.vnode.props as Record<string, unknown> | undefined
+  return !!vnodeProps && ('modelValue' in vnodeProps || 'onUpdate:modelValue' in vnodeProps)
+})()
+
 const isDisabled = computed(() => props.disabled)
 const errorInfo = computed(() => props.error)
 const isInputEmpty = computed(() => !inputValue.value.length)
 
 watch(
-  // v3 v-model 走 modelValue；未传时回退 v2 的 value
-  () => (props.modelValue !== '' ? props.modelValue : props.value),
+  // v3 v-model 走 modelValue；消费方未绑定 modelValue 时回退 v2 的 value
+  () => (usesModelValueBinding ? props.modelValue : props.value),
   (val) => {
     inputValue.value = val
     nextTick(() => {
@@ -199,8 +211,9 @@ function calcTextareaHeight(el: HTMLTextAreaElement) {
 
 // MARK: public methods
 function resizeTextarea() {
-  if (props.autosize) {
-    calcTextareaHeight(textarea.value!)
+  // 判空守卫：expose 的公开方法可能在挂载前被调用，此时 textarea ref 尚不存在
+  if (props.autosize && textarea.value) {
+    calcTextareaHeight(textarea.value)
   }
 }
 

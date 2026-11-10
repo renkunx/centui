@@ -7,6 +7,7 @@
           :key="n - 1"
           class="keyboard-number-item"
           :value="keyNumberList[n - 1]"
+          :aria-label="String(keyNumberList[n - 1])"
           @press="onNumberKeyClick"
         ></CuKeyboardKey>
         <template v-if="type === 'professional'">
@@ -14,18 +15,21 @@
             v-if="!hideDot"
             class="keyboard-number-item"
             :value="duplicateZero ? zeroValue : dotText"
+            :aria-label="duplicateZero ? String(zeroValue) : '小数点'"
             @press="onNumberKeyClick"
           ></CuKeyboardKey>
           <CuKeyboardKey
             class="keyboard-number-item"
             :class="{ 'large-item': hideDot }"
             :value="duplicateZero ? duplicateZeroValue : keyNumberList[9]"
+            :aria-label="String(duplicateZero ? duplicateZeroValue : keyNumberList[9])"
             @press="onNumberKeyClick"
           ></CuKeyboardKey>
           <CuKeyboardKey
             v-if="duplicateZero"
             class="keyboard-number-item"
             :value="dotText"
+            aria-label="小数点"
             @press="onNumberKeyClick"
           ></CuKeyboardKey>
           <template v-if="!duplicateZero">
@@ -35,6 +39,7 @@
               class="keyboard-number-item slidedown"
               no-touch
               no-prevent
+              aria-label="收起键盘"
               @press="onSlideDoneClick"
             ></CuKeyboardKey>
           </template>
@@ -44,10 +49,12 @@
           <CuKeyboardKey
             class="keyboard-number-item"
             :value="keyNumberList[9]"
+            :aria-label="String(keyNumberList[9])"
             @press="onNumberKeyClick"
           ></CuKeyboardKey>
           <CuKeyboardKey
             class="keyboard-number-item no-bg delete"
+            aria-label="删除"
             @press="onDeleteClick"
           ></CuKeyboardKey>
         </template>
@@ -55,10 +62,15 @@
     </div>
     <div v-if="type === 'professional'" class="keyboard-operate">
       <ul class="keyboard-operate-list">
-        <CuKeyboardKey class="keyboard-operate-item delete" @press="onDeleteClick"></CuKeyboardKey>
+        <CuKeyboardKey
+          class="keyboard-operate-item delete"
+          aria-label="删除"
+          @press="onDeleteClick"
+        ></CuKeyboardKey>
         <CuKeyboardKey
           class="keyboard-operate-item confirm"
           :value="okText"
+          :aria-label="String(okText)"
           no-touch
           no-prevent
           @press="onConfirmeClick"
@@ -106,7 +118,8 @@ const emit = defineEmits<{
   (e: 'hide'): void
 }>()
 
-const okText = props.okText ?? t('md.number_keyboard.confirm')
+// computed 保证运行期替换 okText prop 后确认键文案同步（v2 为 data 快照）
+const okText = computed(() => props.okText ?? String(t('md.number_keyboard.confirm')))
 
 const keyNumberList = ref<Array<string | number>>([])
 

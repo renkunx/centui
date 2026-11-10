@@ -1,5 +1,5 @@
 <template>
-  <div class="cu-slider" :class="{ 'is-disabled': disabled }">
+  <div ref="root" class="cu-slider" :class="{ 'is-disabled': disabled }">
     <template v-if="range">
       <div class="cu-slider-bar" :style="barStyle"></div>
       <div
@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 
 defineOptions({ name: 'cu-slider' })
 
@@ -63,6 +63,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: number | Array<number>): void
 }>()
 
+const root = ref<HTMLElement>()
 const isDragging = ref(false)
 const isDragingUpper = ref(false)
 const values = ref<[number, number]>([props.min, props.max])
@@ -92,6 +93,11 @@ watch(
     }
   },
 )
+
+// 拖动中途卸载时回收 window 级监听器，避免泄漏
+onBeforeUnmount(() => {
+  stopDrag()
+})
 
 const lowerHandlePosition = computed(
   () => ((values.value[0] - props.min) / (props.max - props.min)) * 100,
@@ -178,7 +184,7 @@ function startLowerDrag(e: Event) {
   isDragingUpper.value = false
   isDragging.value = true
   window.addEventListener('mousemove', onDrag)
-  window.addEventListener('touchmove', onDrag)
+  window.addEventListener('touchmove', onDrag, { passive: false })
   window.addEventListener('mouseup', onUp)
   window.addEventListener('touchend', onUp)
 }
@@ -197,7 +203,7 @@ function startUpperDrag(e: Event) {
   isDragingUpper.value = true
   isDragging.value = true
   window.addEventListener('mousemove', onDrag)
-  window.addEventListener('touchmove', onDrag)
+  window.addEventListener('touchmove', onDrag, { passive: false })
   window.addEventListener('mouseup', onUp)
   window.addEventListener('touchend', onUp)
 }
@@ -214,9 +220,15 @@ function onDrag(e: Event) {
   const point = ('changedTouches' in e
     ? (e as TouchEvent).changedTouches[0]
     : (e as MouseEvent)) as MouseEvent
-  const el = document.querySelector<HTMLElement>('.cu-slider')
+  // 必须取本组件根元素的宽度（v2 语义 this.$el.offsetWidth）：
+  // document.querySelector 会命中文档里第一个 .cu-slider，多滑杆页面会互相串值
+  const el = root.value
+  const elWidth = el?.offsetWidth ?? 0
+  if (!el || elWidth === 0) {
+    return
+  }
   window.requestAnimationFrame(() => {
-    const diff = ((point.pageX - startDragMousePos) / el!.offsetWidth) * (props.max - props.min)
+    const diff = ((point.pageX - startDragMousePos) / elWidth) * (props.max - props.min)
     const nextVal = startVal + diff
     if (isDragging.value) {
       if (isDragingUpper.value) {

@@ -1,8 +1,9 @@
 <template>
   <div class="cu-activity-indicator-rolling-success">
     <CuRoller :size="size" :width="strokeWidth" fill="#FFF6F1" border-color="transparent">
-      <template v-if="isSuccess">
-        <g name="circle" slot="circle">
+      <!-- Vue 3 具名插槽：g 须置于 #circle 才能替换 Roller 内的默认动画圈（v2 的 slot="circle" 属性在 v3 失效） -->
+      <template v-if="isSuccess" #circle>
+        <g name="circle">
           <circle class="success" cx="50" cy="50" fill="#FFF6F1" stroke="none" r="40"></circle>
         </g>
       </template>

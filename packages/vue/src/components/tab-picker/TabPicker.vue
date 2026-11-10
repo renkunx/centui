@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useSlots } from 'vue'
+import { computed, ref, useSlots, watch } from 'vue'
 import { t } from '@centui/core'
 import CuPopup from '../popup/Popup.vue'
 import CuPopupTitleBar from '../popup/PopupTitleBar.vue'
@@ -88,7 +88,7 @@ const props = withDefaults(
     modelValue: false,
     data: () => ({}),
     defaultValue: () => [],
-    placeholder: () => t('md.tab_picker.choose'),
+    placeholder: () => String(t('md.tab_picker.choose')),
     title: '',
     describe: '',
     maskClosable: true,
@@ -156,17 +156,27 @@ const panes = computed(() => {
       target = undefined
     }
     result.push(pane)
-    // v2 契约：pane 推进时同步选中对应 tab
-    currentTab.value = pane.name
   }
 
   return result
 })
 
-// created 语义
-if (props.data) {
-  currentTab.value = props.data.name ?? ''
-}
+// v2 契约：pane 推进时同步选中最后一层面板对应的 tab（含 defaultValue 初始推进）。
+// （副作用原先写在 panes computed 内部——在 computed 求值期间写响应式状态是
+// Vue 反模式，会触发 dev 告警且易被未来重构放大为循环更新，现移至 watch。）
+watch(
+  panes,
+  (list) => {
+    const last = list[list.length - 1]
+    if (last && last.name) {
+      currentTab.value = last.name
+    }
+  },
+  { immediate: true },
+)
+
+// created 语义由上方 immediate watch 承担：初始即按 defaultValue 推进 currentTab
+// 至最深匹配面板（原实现依赖 panes computed 求值期的副作用）。
 
 function onPopupInput(val: boolean) {
   emit('update:modelValue', val)

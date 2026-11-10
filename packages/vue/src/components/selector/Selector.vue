@@ -165,7 +165,7 @@ const hasSlot = computed(() => {
   const fn = slots.default
   return !!fn && fn({ option: {}, index: -1, selected: false }).some((n) => n.type !== Comment)
 })
-const actualCancelText = computed(() => props.cancelText ?? (props.okText ? t('md.selector.cancel') : ''))
+const actualCancelText = computed(() => props.cancelText ?? (props.okText ? String(t('md.selector.cancel')) : ''))
 
 watch(
   () => props.modelValue,

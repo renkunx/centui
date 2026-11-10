@@ -121,6 +121,12 @@ let timer: ReturnType<typeof setInterval> | null = null
 let transitionEndHandler: (() => void) | null = null
 let resizeTimeout: ReturnType<typeof setTimeout> | null = null
 let touchAngle = 45
+/** 卸载标志：拦截卸载后仍被触发的防抖回调/延迟回调，杜绝重启 setInterval */
+let isUnmounted = false
+/** doTransition 的 10ms 延迟回调句柄，卸载时回收 */
+let transitionTimer: ReturnType<typeof setTimeout> | null = null
+/** fade 模式 opacity() 的 500ms after-change 延迟回调句柄 */
+let fadeTimer: ReturnType<typeof setTimeout> | null = null
 
 // Vue3 适配：$children → 注册制（opacity 模式需要取到子组件实例）
 const itemInstances: ComponentPublicInstanceLike[] = []
@@ -148,7 +154,15 @@ function unregisterItem(item: ComponentPublicInstanceLike) {
 }
 
 const debouncedReInit = debounce(() => {
+  // 组件可能已在防抖等待期内被卸载（item 增删后立刻切换路由等），
+  // 此时 reInitItems/play 会在游离 DOM 上重启 autoplay 定时器且永无人回收
+  if (isUnmounted) {
+    return
+  }
   nextTick(() => {
+    if (isUnmounted) {
+      return
+    }
     clearTimer()
     reInitItems()
     if (!isStoped.value) {
@@ -225,6 +239,16 @@ onDeactivated(() => {
 })
 
 onBeforeUnmount(() => {
+  isUnmounted = true
+  transitionEndHandler = null
+  if (transitionTimer) {
+    clearTimeout(transitionTimer)
+    transitionTimer = null
+  }
+  if (fadeTimer) {
+    clearTimeout(fadeTimer)
+    fadeTimer = null
+  }
   resizeLeaveBehavior()
 })
 
@@ -355,7 +379,14 @@ function opacity(animate = true, opacityVal?: number) {
   fromEl.style.transition = animate ? 'opacity 500ms ease' : ''
   toEl.style.opacity = '1'
   if (animate) {
-    setTimeout(() => {
+    if (fadeTimer) {
+      clearTimeout(fadeTimer)
+    }
+    fadeTimer = setTimeout(() => {
+      fadeTimer = null
+      if (isUnmounted) {
+        return
+      }
       emit('after-change', fromIndex.value, toIndex.value)
     }, 500)
   }
@@ -516,7 +547,14 @@ function doTransition(towards: 'prev' | 'next' | null, options?: { index: number
     return
   }
 
-  setTimeout(() => {
+  if (transitionTimer) {
+    clearTimeout(transitionTimer)
+  }
+  transitionTimer = setTimeout(() => {
+    transitionTimer = null
+    if (isUnmounted) {
+      return
+    }
     const isFirst = isFirstItem.value && props.isLoop
     const isLast = isLastItem.value && props.isLoop
     transitionEndHandler = () => {

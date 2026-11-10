@@ -60,6 +60,7 @@ import CuPopup from '../popup/Popup.vue'
 import CuPopupTitleBar from '../popup/PopupTitleBar.vue'
 import CuPickerColumn from './PickerColumn.vue'
 import type { PickerColumnItem, PickerColumnInstance } from './PickerColumn.vue'
+import type { Scroller as ScrollerType } from '@centui/core/web'
 
 defineOptions({ name: 'cu-picker' })
 
@@ -112,8 +113,8 @@ const emit = defineEmits<{
   (e: 'hide'): void
 }>()
 
-const okText = props.okText ?? t('md.picker.confirm')
-const cancelText = props.cancelText ?? t('md.picker.cancel')
+const okText = props.okText ?? String(t('md.picker.confirm'))
+const cancelText = props.cancelText ?? String(t('md.picker.cancel'))
 const lineHeight = props.lineHeight ?? 45
 
 const pickerColumn = ref<PickerColumnInstance>()
@@ -217,23 +218,37 @@ function getDefaultValue() {
   return oldActivedIndexs.value ? [] : props.defaultValue
 }
 
+/**
+ * 判断某列 scroller 是否仍在滚动/动画中。
+ * 优先调用 core 公开状态 API `isScrolling()`（可选调用，core 正在同步新增）；
+ * 回退读取内部动画状态字段（与既有行为逐字段一致）。
+ */
+function isColumnScrolling(scroller: ScrollerType): boolean {
+  const api = scroller as unknown as { isScrolling?: () => boolean }
+  if (typeof api.isScrolling === 'function') {
+    return api.isScrolling()
+  }
+  const internal = scroller as unknown as {
+    _isAnimating?: number | boolean
+    _isDecelerating?: number | boolean
+    _isDragging?: boolean
+    _isGesturing?: boolean
+  }
+  return (
+    internal._isAnimating !== false ||
+    internal._isDecelerating !== false ||
+    internal._isDragging !== false ||
+    internal._isGesturing !== false
+  )
+}
+
 function onPickerConfirm() {
   const col = column()
   if (!col) {
     return
   }
   const columnValues = col.getColumnValues()
-  let isScrolling = false
-  col.scrollers.forEach((scroller) => {
-    if (
-      (scroller as unknown as { _isAnimating?: boolean })._isAnimating !== false ||
-      (scroller as unknown as { _isDecelerating?: boolean })._isDecelerating !== false ||
-      (scroller as unknown as { _isDragging?: boolean })._isDragging !== false ||
-      (scroller as unknown as { _isGesturing?: boolean })._isGesturing !== false
-    ) {
-      isScrolling = true
-    }
-  })
+  const isScrolling = col.scrollers.some((scroller) => isColumnScrolling(scroller))
 
   if (!isScrolling) {
     isPickerShow.value = false

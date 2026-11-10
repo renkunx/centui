@@ -28,10 +28,19 @@ export function readGolden(component: string, scenario: string): string {
  * 9. input 的 name 属性：v2 基线采集时 randomId 产物为随机值（不可复现）→ 剥离
  * 0. 品牌前缀：rebrand 后 v3 输出 cu-，基线来自上游 mand-mobile@2.7.0 的 md- →
  *    统一映射回 md- 再比较（对基线幂等）
+ * 13. role/aria-* 属性：v3 评审决策新增的无障碍标注（dialog/switch/stepper/
+ *     number-keyboard/check/radio 等），为有意的 v3 增量、不属于 v2 渲染契约 →
+ *     对比时双向剥离；a11y 行为由 L2 组件测试单独断言
+ * 14. 无效的 position 透传属性：v2 captcha 曾向 dialog 透传 position="center"
+ *     （Dialog 无此 prop，落为 DOM 垃圾属性），v3 评审决策移除 → 对比时剥离
  */
 export function normalizeForCompare(html: string): string {
   return html
     .replace(/\bcu-/g, 'md-')
+    // 13/14. a11y 属性与无效 position 透传属性剥离（见文件头注释第 13、14 条）
+    .replace(/\s+aria-[a-z-]+="[^"]*"/g, '')
+    .replace(/\s+role="[^"]*"/g, '')
+    .replace(/\s+position="[^"]*"/g, '')
     .replace(/<!--.*?-->/g, '')
     .replace(/<\/?transition-stub[^>]*>/g, '')
     .replace(/\s*data-v-[0-9a-f]+=""/g, '')

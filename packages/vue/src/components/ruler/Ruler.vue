@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { Scroller } from '@centui/core/web'
 import { throttle } from '@centui/core'
 
@@ -262,6 +262,9 @@ function matchStepText(step: number) {
 }
 
 let touchDragging = false
+/** 当前拖动的 window 监听器句柄（onStop 内自摘除；卸载时由 destroyDrag 兜底回收） */
+let activeDragCleanup: (() => void) | null = null
+
 function startDrag(event: TouchEvent) {
   if (isDragging.value || touchDragging) {
     return
@@ -293,14 +296,33 @@ function startDrag(event: TouchEvent) {
 
     window.removeEventListener('touchmove', onDrag)
     window.removeEventListener('touchend', onStop)
+    activeDragCleanup = null
   }
-  window.addEventListener('touchmove', onDrag)
+  // window 级 touch 监听在 Chrome 下默认 passive，必须显式 { passive: false }
+  // 才能让 preventDefault 生效（拖动刻度时不滚动页面）
+  window.addEventListener('touchmove', onDrag, { passive: false })
   window.addEventListener('touchend', onStop)
+  activeDragCleanup = () => {
+    window.removeEventListener('touchmove', onDrag)
+    window.removeEventListener('touchend', onStop)
+  }
 }
 // 兼容 v2 stopDrag 命名（模板 touchend 未绑定，实际由 window 监听处理）
 const stopDrag = (event: TouchEvent) => {
   event.preventDefault()
 }
+
+onBeforeUnmount(() => {
+  // 拖动中途卸载：回收 window 监听并结束 scroller 手势，避免泄漏与卸载后驱动
+  activeDragCleanup?.()
+  activeDragCleanup = null
+  isDragging.value = false
+  touchDragging = false
+  if (isScrolling.value) {
+    scroller?.doTouchEnd(Date.now())
+  }
+  scroller = null
+})
 
 function updateValue() {
   if (!isInitialed.value) {

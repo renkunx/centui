@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onBeforeMount, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue'
 import { inArray, traverse, warn, type TraverseNode } from '@centui/core'
 import { getDpr, render, Scroller, type Scroller as ScrollerType } from '@centui/core/web'
 
@@ -98,6 +98,8 @@ const root = ref<HTMLElement>()
 const columnValues = ref<PickerColumnItem[][]>([])
 // 命令式实例表：不入响应式（ref 深解包会剥离 class 私有字段同一性）
 const scrollers: ScrollerType[] = []
+/** initialed 事件延迟派发定时器，卸载时回收 */
+let initialedTimer: ReturnType<typeof setTimeout> | null = null
 const scrollDirect = ref(1)
 const scrollPosition = ref(0)
 const activedIndexs = ref<number[]>([])
@@ -114,6 +116,11 @@ watch(
   () => props.data,
   (val) => {
     columnValues.value = [...val]
+    // 数据变化后按新内容刷新 scroller 尺寸并回位越界索引
+    // （级联场景由 Picker.refresh 重建，此处覆盖非级联的直接换 data）
+    nextTick(() => {
+      refreshScrollerDimensions()
+    })
   },
   { deep: true },
 )
@@ -121,6 +128,35 @@ watch(
 onBeforeMount(() => {
   columnValues.value = [...props.data]
 })
+
+onBeforeUnmount(() => {
+  if (initialedTimer) {
+    clearTimeout(initialedTimer)
+    initialedTimer = null
+  }
+  // 停掉所有列的滚动/动量动画，避免卸载后仍在游离 DOM 上推进
+  scrollers.forEach((scroller) => {
+    stopScroller(scroller)
+  })
+  scrollers.length = 0
+})
+
+/**
+ * 终止一个 scroller 的进行中动画。优先使用 core 未来补齐的公开 stop()；
+ * 当前版本以无动画 scrollTo 原位归位（内部会终止减速/动画）。
+ */
+function stopScroller(scroller: ScrollerType | undefined) {
+  if (!scroller) {
+    return
+  }
+  const stopFn = (scroller as unknown as { stop?: () => void }).stop
+  if (typeof stopFn === 'function') {
+    stopFn.call(scroller)
+    return
+  }
+  const values = scroller.getValues()
+  scroller.scrollTo(values.left, values.top, false, values.zoom)
+}
 
 function hooks(): HTMLElement[] {
   if (!root.value) {
@@ -142,7 +178,11 @@ function initColumnsScroller(startIndex = 0) {
     initColumnIndex()
     if (!isInitialed.value) {
       isInitialed.value = true
-      setTimeout(() => {
+      if (initialedTimer) {
+        clearTimeout(initialedTimer)
+      }
+      initialedTimer = setTimeout(() => {
+        initialedTimer = null
         emit('initialed')
       }, 0)
     }
@@ -164,6 +204,10 @@ function initSingleColumnScroller(container: HTMLElement, index: number) {
   }
 
   const rect = container.getBoundingClientRect()
+
+  // 重建前停掉旧实例的进行中动画，避免其回调继续驱动已废弃的 content 节点
+  stopScroller(scrollers[index])
+
   const scroller = new Scroller(
     (left, top) => {
       render(content, left, top)
@@ -476,6 +520,33 @@ function refresh(callback?: () => void, startIndex = 0) {
   nextTick(() => {
     initColumnsScroller(startIndex)
     callback && callback()
+  })
+}
+
+/**
+ * 按当前 DOM 内容刷新各列 scroller 尺寸（不重建实例、不重置索引），
+ * 用于 data 动态替换后内容高度变化的场景。
+ */
+function refreshScrollerDimensions() {
+  if (!root.value) {
+    return
+  }
+  const hookList = hooks()
+  const columns = root.value.querySelectorAll<HTMLElement>('.column-list')
+  hookList.forEach((container, index) => {
+    const scroller = scrollers[index]
+    const content = columns[index]
+    if (!scroller || !container || !content) {
+      return
+    }
+    scroller.setDimensions(
+      container.clientWidth,
+      container.clientHeight,
+      content.offsetWidth,
+      content.offsetHeight + style.value.maskerHeight,
+    )
+    // 活动索引超出新数据范围时回位
+    resetScrollingPosition(index)
   })
 }
 
