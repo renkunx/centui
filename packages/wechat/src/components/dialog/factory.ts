@@ -184,6 +184,7 @@ function confirm(context: Context, options: DialogConfirmOptions = {}): Promise<
   return generate(
     context,
     {
+      selector: options.selector,
       title,
       icon,
       iconSvg,
@@ -235,6 +236,7 @@ function alert(context: Context, options: DialogAlertOptions = {}): Promise<void
   return generate(
     context,
     {
+      selector: options.selector,
       title,
       icon,
       iconSvg,
