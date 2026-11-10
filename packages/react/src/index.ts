@@ -2,7 +2,8 @@
  * @centui/react 主入口。
  * 样式不内嵌：配合 @centui/styles 使用（与 Vue 包共享同一份 CSS）。
  */
-export const VERSION = '0.1.0'
+/** 包版本：构建时由 vite define 注入（见 vite.config.ts），测试环境回退 0.0.0 */
+export const VERSION: string = (globalThis as { __CENTUI_VERSION__?: string }).__CENTUI_VERSION__ ?? '0.0.0'
 
 export * from './components/icon/Icon'
 export * from './components/activity-indicator/ActivityIndicator'

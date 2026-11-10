@@ -53,6 +53,7 @@ export function CuCashierChannel({
   return (
     <div className="cu-cashier-channel">
       <div className="choose-text">
+      {/* v2 契约：文本走 v-html（dangerouslySetInnerHTML）。XSS 责任在调用方：仅传入可信内容，勿直接拼接用户输入。 */}
         {paymentTitle ? <p className="choose-title" dangerouslySetInnerHTML={{ __html: paymentTitle }} /> : null}
         {paymentAmount ? <p className="choose-number" dangerouslySetInnerHTML={{ __html: paymentAmount }} /> : null}
         {paymentDescribe ? <p className="choose-describe" dangerouslySetInnerHTML={{ __html: paymentDescribe }} /> : null}

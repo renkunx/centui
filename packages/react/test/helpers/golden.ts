@@ -28,6 +28,8 @@ export function readGolden(component: string, scenario: string): string {
  * 9. input 的 name 属性：v2 基线采集时 randomId 产物为随机值（不可复现）→ 剥离
  * 0. 品牌前缀：rebrand 后 v3 输出 cu-，基线来自上游 mand-mobile@2.7.0 的 md- →
  *    统一映射回 md- 再比较（对基线幂等）
+ * A. a11y 属性：role/aria-* 为 v3（React/Vue）相对 v2 的可访问性增强（与 Vue 版对齐），
+ *    v2 基线不含 → 双侧剥离后再比较（v2 自带的 role=button/tabpanel 同样双侧剥离，等价）
  */
 export function normalizeForCompare(html: string): string {
   return html
@@ -39,6 +41,8 @@ export function normalizeForCompare(html: string): string {
     .replace(/\s+/g, ' ')
     .replace(/>\s+/g, '>')
     .replace(/\s+</g, '<')
+    // A. a11y 增强（v3 相对 v2）：role/aria-* 双侧剥离
+    .replace(/\s*(?:role|aria-[a-z]+)="[^"]*"/g, '')
     .replace(/([:a-zA-Z-]+)="\1"/g, '$1=""')
     .replace(/([:a-zA-Z-]+)="true"/g, '$1=""')
     .replace(/\s*style=""/g, '')

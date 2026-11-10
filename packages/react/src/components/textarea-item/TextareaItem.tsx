@@ -72,6 +72,8 @@ export const CuTextareaItem = forwardRef<TextareaItemExposed, TextareaItemProps>
   const [inputValue, setInputValue] = useState(value)
   const [isInputFocus, setIsInputFocus] = useState(false)
   const maxHeightRef = useRef(maxHeight)
+  // v2 created 契约：name 只在创建时生成一次（渲染期随机会导致 formation(name) 不稳定）
+  const [resolvedName] = useState(name)
 
   const isInputEmpty = !inputValue.length
   const errorInfo = error
@@ -112,7 +114,7 @@ export const CuTextareaItem = forwardRef<TextareaItemExposed, TextareaItemProps>
   }))
 
   function formatValue(curValue: string, curPos = 0) {
-    const customValue = formation?.(name, curValue, curPos)
+    const customValue = formation?.(resolvedName, curValue, curPos)
     if (customValue) {
       return customValue
     }

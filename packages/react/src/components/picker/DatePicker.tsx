@@ -65,13 +65,6 @@ export const CuDatePicker = forwardRef<{ getFormatDate: (format?: string) => str
 ) {
   const pickerRef = useRef<{ refresh: () => void; getColumnValues: () => Array<PickerColumnItem | undefined>; getColumnIndex: (i?: number) => number | undefined } | null>(null)
 
-  const [columnData, setColumnData] = useState<DateColumnItem[][]>([])
-  const [columnDataDefault, setColumnDataDefault] = useState<Array<string | number>>([])
-  const columnDataGeneratorRef = useRef<DateColumnGenerator[]>([])
-  const oldColumnDataRef = useRef<DateColumnItem[][] | null>(null)
-  const dataRef = useRef(columnData)
-  dataRef.current = columnData
-
   const coreOptions = (): DatePickerColumnOptions => ({
     type,
     customTypes,
@@ -83,6 +76,16 @@ export const CuDatePicker = forwardRef<{ getFormatDate: (format?: string) => str
     todayText,
     textRender,
   })
+
+  // v2 created 契约：列数据在首帧渲染前生成（对齐 v2 与 Vue 实现的同步初始化，
+  // 亦避免依赖 effect 的首帧空列在渲染竞争中暴露）
+  const [initialColumns] = useState(() => buildDateColumns(coreOptions()))
+  const [columnData, setColumnData] = useState<DateColumnItem[][]>(initialColumns.columns)
+  const [columnDataDefault, setColumnDataDefault] = useState<Array<string | number>>(initialColumns.defaults)
+  const columnDataGeneratorRef = useRef<DateColumnGenerator[]>(initialColumns.generators)
+  const oldColumnDataRef = useRef<DateColumnItem[][] | null>(null)
+  const dataRef = useRef(columnData)
+  dataRef.current = columnData
 
   // 从 columnIndex 起按当前各列选中值重建后续列（v2 $_initColumnData）
   const initColumnData = (columnIndex: number, defaults: number[] = []) => {
@@ -118,9 +121,15 @@ export const CuDatePicker = forwardRef<{ getFormatDate: (format?: string) => str
     setTimeout(() => pickerRef.current?.refresh(), 0)
   }
 
+  const minTime = minDate?.getTime()
+  const maxTime = maxDate?.getTime()
+  const defaultTime = defaultDate?.getTime()
+
+  // effect 依赖用 getTime 等稳定值：父组件每渲染内联 new Date() 时不至于反复重建列
   useEffect(() => {
     initPickerColumn()
-  }, [type, minDate, maxDate, defaultDate, minuteStep])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type, minTime, maxTime, defaultTime, minuteStep])
 
   // 列联动：右列按左列选中项重建（v2 $_onPickerChange 契约）
   const handlePickerChange = (columnIndex: number, itemIndex: number, value: PickerColumnItem) => {
@@ -150,7 +159,16 @@ export const CuDatePicker = forwardRef<{ getFormatDate: (format?: string) => str
         onInitialed={onInitialed}
         onChange={handlePickerChange}
         onConfirm={onConfirm as ((values: Array<PickerColumnItem | undefined>) => void) | undefined}
-        onCancel={onCancel}
+        onCancel={() => {
+          onCancel?.()
+          // 恢复打开前的列数据快照（对齐 Vue 版 onPickerCancel：旧下标在旧数据上才指向正确项）
+          setTimeout(() => {
+            if (oldColumnDataRef.current) {
+              setColumnData([...oldColumnDataRef.current])
+              setTimeout(() => pickerRef.current?.refresh(), 0)
+            }
+          }, 0)
+        }}
         onShow={() => {
           oldColumnDataRef.current = [...dataRef.current]
           onShow?.()

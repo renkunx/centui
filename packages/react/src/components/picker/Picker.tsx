@@ -65,11 +65,12 @@ export const CuPicker = forwardRef<PickerExposed, PickerProps>(function CuPicker
 }: PickerProps,
   ref,
 ) {
-  const resolvedOkText = okText ?? t('md.picker.confirm')
-  const resolvedCancelText = cancelText ?? t('md.picker.cancel')
+  const resolvedOkText = okText ?? String(t('md.picker.confirm'))
+  const resolvedCancelText = cancelText ?? String(t('md.picker.cancel'))
 
   const columnRef = useRef<PickerColumnExposed>(null)
-  const [isPickerShow, setIsPickerShow] = useState(false)
+  // 初始态即持 value（挂载 value=true 时立即打开，v2 watch immediate 契约）
+  const [isPickerShow, setIsPickerShow] = useState(value)
   const isPickerFirstPopupRef = useRef(true)
   const oldActivedIndexsRef = useRef<number[] | null>(null)
 
@@ -105,8 +106,12 @@ export const CuPicker = forwardRef<PickerExposed, PickerProps>(function CuPicker
     }
   }, [isView])
 
+  // v2 契约（S3 修复）：受控 value 双向同步，外部置 false 也能关闭；
+  // 同时保留「打开快照」行为：非首次 value 变化后记录当前列下标
+  const prevValueRef = useRef(value)
   useEffect(() => {
-    if (value) {
+    if (prevValueRef.current !== value) {
+      prevValueRef.current = value
       setIsPickerShow(value)
     }
     if (isPickerFirstPopupRef.current) {
@@ -124,6 +129,7 @@ export const CuPicker = forwardRef<PickerExposed, PickerProps>(function CuPicker
       return
     }
     const columnValues = col.getColumnValues()
+    // v2 确认守卫：列还在滚动（动画/减速/拖拽）时不响应确认，避免返回滚动中途的脏值
     let isScrolling = false
     ;(col as unknown as { scrollers?: ScrollerAlias[] }).scrollers?.forEach(scroller => {
       if (

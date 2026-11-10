@@ -48,6 +48,8 @@ export const CuToast = forwardRef<ToastExposed, ToastProps>(function CuToast(
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const durationRef = useRef(duration)
   durationRef.current = duration
+  // v2 契约：onShow/onHide 仅在可见状态真实切换时触发（挂载不触发 onHide）
+  const prevVisibleRef = useRef(false)
 
   useImperativeHandle(
     ref,
@@ -88,6 +90,10 @@ export const CuToast = forwardRef<ToastExposed, ToastProps>(function CuToast(
   }, [visible])
 
   useEffect(() => {
+    if (prevVisibleRef.current === visible) {
+      return
+    }
+    prevVisibleRef.current = visible
     if (visible) {
       onShow?.()
     } else {
@@ -95,9 +101,21 @@ export const CuToast = forwardRef<ToastExposed, ToastProps>(function CuToast(
     }
   }, [visible])
 
+  // 卸载兜底：清理遗留计时器
+  useEffect(
+    () => () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+        timerRef.current = null
+      }
+    },
+    [],
+  )
+
   return (
     <div className={`cu-toast ${position}`}>
-      <CuPopup value={visible} hasMask={hasMask} maskClosable={false} onShow={onShow} onHide={onHide}>
+      {/* onShow/onHide 由上方 visible effect 单一来源驱动，避免与 Popup 过渡回调重复触发 */}
+      <CuPopup value={visible} hasMask={hasMask} maskClosable={false}>
         {children ? (
           <div className={`cu-toast-content${square ? ' square' : ''}`}>{children}</div>
         ) : (

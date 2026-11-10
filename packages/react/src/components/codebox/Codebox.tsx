@@ -154,11 +154,20 @@ export const CuCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function CuCod
     onSubmit?.(codeRef.current)
   }
 
+  // 双通道去重：React onChange 与 onInput 在真实输入中由同一 input 事件驱动会各触发一次，
+  // 输满位数的 onSubmit 以「最后已提交值」闩去重（修复：验证码提交双发）
+  const lastSubmittedRef = useRef('')
+
   const onNativeInput = (event: React.FormEvent<HTMLInputElement>) => {
     const inputValue = (event.target as HTMLInputElement).value
     if (maxLengthNum < 0 || inputValue.length <= maxLengthNum) {
       if (inputValue.length === maxLengthNum) {
-        onSubmit?.(inputValue)
+        if (lastSubmittedRef.current !== inputValue) {
+          lastSubmittedRef.current = inputValue
+          onSubmit?.(inputValue)
+        }
+      } else if (lastSubmittedRef.current !== '' && inputValue.length < lastSubmittedRef.current.length) {
+        lastSubmittedRef.current = ''
       }
       emitChange(inputValue)
     }
@@ -231,7 +240,7 @@ export const CuCodebox = forwardRef<CodeboxExposed, CodeboxProps>(function CuCod
           maxLength={maxLengthNum}
           className="cu-codebox-input"
           onInput={onNativeInput}
-          onChange={onNativeInput as never}
+          onChange={onNativeInput}
           onFocus={() => onFocus?.()}
           onBlur={() => {
             setFocused(false)

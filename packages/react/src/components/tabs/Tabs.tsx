@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { CuTabBar, type TabBarItem, type TabBarExposed } from './TabBar'
 import type { TabPaneRegistration } from './TabPane'
-import { TabsContext, type TabsContextValue } from './context'
+import { TabsContext, TabsStateContext, type TabsContextValue, type TabsStateValue } from './context'
 
 export interface TabsProps {
   value?: string
@@ -61,11 +61,20 @@ export const CuTabs = forwardRef<TabsExposed, TabsProps>(function CuTabs(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [panes.length])
 
-  const ctx: TabsContextValue = {
+  // context 拆分：注册方法恒定（ref 读取），状态按渲染值下发。
+  // 注意 Provider value 不能完全恒定——children 元素身份不变时 React 会
+  // 跳过子树重渲，状态 context 必须随渲染更新才能让 TabPane 感知切换。
+  const currentIndexRef = useRef(currentIndex)
+  currentIndexRef.current = currentIndex
+  const methodCtx = useRef<TabsContextValue>({
     registerPane: (pane) => {
       setPanes((prev) => {
-        if (prev.some((p) => p.name === pane.name)) {
-          return prev
+        const idx = prev.findIndex((p) => p.name === pane.name)
+        if (idx >= 0) {
+          // 同名 pane 重新注册（label/disabled 变更）→ 原位替换，修正注册信息滞留
+          const next = prev.slice()
+          next[idx] = pane
+          return next
         }
         return [...prev, pane]
       })
@@ -76,8 +85,13 @@ export const CuTabs = forwardRef<TabsExposed, TabsProps>(function CuTabs(
     getState: () => ({
       currentName: currentNameRef.current,
       prevIndex: prevIndex.current,
-      currentIndex,
+      currentIndex: currentIndexRef.current,
     }),
+  }).current
+  const stateCtx: TabsStateValue = {
+    currentName,
+    prevIndex: prevIndex.current,
+    currentIndex,
   }
 
   useImperativeHandle(ref, () => ({
@@ -85,23 +99,25 @@ export const CuTabs = forwardRef<TabsExposed, TabsProps>(function CuTabs(
   }))
 
   return (
-    <TabsContext.Provider value={ctx}>
-      <div className="cu-tabs">
-        <CuTabBar
-          ref={tabBarRef}
-          items={menus}
-          value={currentName}
-          hasInk={hasInk}
-          inkLength={inkLength}
-          immediate={immediate}
-          onChange={(tab, _index, prev) => {
-            prevIndex.current = prev
-            setCurrentName(tab.name as string)
-            onChange?.(tab)
-          }}
-        />
-        <div className="cu-tabs-content">{children}</div>
-      </div>
+    <TabsContext.Provider value={methodCtx}>
+      <TabsStateContext.Provider value={stateCtx}>
+        <div className="cu-tabs">
+          <CuTabBar
+            ref={tabBarRef}
+            items={menus}
+            value={currentName}
+            hasInk={hasInk}
+            inkLength={inkLength}
+            immediate={immediate}
+            onChange={(tab, _index, prev) => {
+              prevIndex.current = prev
+              setCurrentName(tab.name as string)
+              onChange?.(tab)
+            }}
+          />
+          <div className="cu-tabs-content">{children}</div>
+        </div>
+      </TabsStateContext.Provider>
     </TabsContext.Provider>
   )
 })

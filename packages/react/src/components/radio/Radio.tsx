@@ -45,6 +45,9 @@ export function CuRadio({
       ]
         .filter(Boolean)
         .join(' ')}
+      role="radio"
+      aria-checked={isChecked}
+      aria-disabled={disabled}
       onClick={onClick}
     >
       <div className="cu-radio-icon">
@@ -84,6 +87,7 @@ export function CuRadioBox({
       disabled={disabled}
       iconPosition={iconPosition}
       label={label}
+      role="radio"
       onClick={onClick}
     >
       {children ?? label}

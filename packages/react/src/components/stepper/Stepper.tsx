@@ -122,17 +122,13 @@ export function CuStepper({
       return
     }
     applyCurrentNum(subtr(currentNum, step), currentNum)
-    onChangeCommit()
   }
   const add = () => {
     if (disabled || isMax) {
       return
     }
     applyCurrentNum(accAdd(currentNum, step), currentNum)
-    onChangeCommit()
   }
-  // v2 契约：blur 时收敛到合法区间并退出编辑态
-  const onChangeCommit = () => {}
 
   const onInput = (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement
@@ -165,6 +161,8 @@ export function CuStepper({
     <div className={`cu-stepper${disabled ? ' disabled' : ''}`}>
       <div
         className={`cu-stepper-button cu-stepper-button-reduce${isMin ? ' disabled' : ''}`}
+        role="button"
+        aria-label="减少"
         onClick={reduce}
       ></div>
       <div className="cu-stepper-number">
@@ -180,6 +178,8 @@ export function CuStepper({
       </div>
       <div
         className={`cu-stepper-button cu-stepper-button-add${isMax ? ' disabled' : ''}`}
+        role="button"
+        aria-label="增加"
         onClick={add}
       ></div>
     </div>

@@ -51,7 +51,19 @@ function getSingleton(): ToastSingleton {
 /**
  * Toast factory
  */
-const Toast = (props: ToastProps = {}): ToastExposed => {
+interface ToastFactory {
+  (props?: ToastProps): ToastExposed
+  /** Hide toast */
+  hide: () => void
+  /** Destroy singleton: unmount root and remove container（SSR/HMR/测试清理用） */
+  destroy: () => void
+  info: ReturnType<typeof preset>
+  succeed: ReturnType<typeof preset>
+  failed: ReturnType<typeof preset>
+  loading: ReturnType<typeof preset>
+}
+
+const Toast = ((props: ToastProps = {}) => {
   const store = getSingleton()
   renderSingleton({
     content: '',
@@ -69,7 +81,7 @@ const Toast = (props: ToastProps = {}): ToastExposed => {
   }
   store.exposed.show()
   return store.exposed
-}
+}) as ToastFactory
 
 /**
  * Hide toast
@@ -78,6 +90,22 @@ Toast.hide = () => {
   if (singleton?.exposed?.visible) {
     singleton.exposed.hide()
   }
+}
+
+/**
+ * Destroy toast singleton: unmount root and remove container（SSR/HMR/测试清理用）
+ */
+Toast.destroy = () => {
+  const active = singleton
+  if (!active) {
+    return
+  }
+  singleton = null
+  // 延后一拍：避免调用方处于渲染/effect 上下文时同步 unmount 造成重入
+  setTimeout(() => {
+    active.root.unmount()
+    active.container.remove()
+  }, 0)
 }
 
 function preset(

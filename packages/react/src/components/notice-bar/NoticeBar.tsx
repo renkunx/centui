@@ -55,9 +55,9 @@ export function CuNoticeBar({
     if (!wrapEl || !contentEl) {
       return
     }
-    const paddingLeft =
-      window.getComputedStyle(contentEl, null).getPropertyValue('padding').split(' ')[3] || '0px'
-    const pad = +(paddingLeft.match(/\d+/g) as string[])[0]
+    // 直接读取 computed padding-left（简写解析 split(' ')[3] 对 "0px"/"0px 10px" 等取值脆弱）
+    const paddingLeft = window.getComputedStyle(contentEl, null).paddingLeft
+    const pad = Number.parseFloat(paddingLeft) || 0
     setOverflow(contentEl.scrollWidth - pad > Math.ceil(wrapEl.getBoundingClientRect().width))
   }, [scrollable])
 

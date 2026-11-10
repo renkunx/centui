@@ -36,6 +36,7 @@ export function CuCashierChannelItem({
       ) : null}
       <div className="item-label">
         <p className="title">
+      {/* v2 契约：文本走 v-html（dangerouslySetInnerHTML）。XSS 责任在调用方：仅传入可信内容，勿直接拼接用户输入。 */}
           <span dangerouslySetInnerHTML={{ __html: data.text ?? '' }} />
           {data.action ? (
             <span

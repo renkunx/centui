@@ -23,9 +23,12 @@ function computeMax(datasets: ChartDataset[], explicit?: number) {
   if (explicit !== undefined) {
     return explicit
   }
-  let max = Math.max(
-    ...datasets.map(d => Math.max(...d.values)),
-  )
+  const flatMax = datasets.flatMap(d => d.values)
+  // 空数据防护：Math.max() 无参返回 -Infinity，会把整张图写成 NaN
+  if (!flatMax.length) {
+    return 0
+  }
+  let max = Math.max(...flatMax)
   let multiple = 1
   while (max > 10) {
     multiple *= 10
@@ -38,9 +41,12 @@ function computeMin(datasets: ChartDataset[], explicit?: number) {
   if (explicit !== undefined) {
     return explicit
   }
-  let min = Math.min(
-    ...datasets.map(d => Math.min(...d.values)),
-  )
+  const flatMin = datasets.flatMap(d => d.values)
+  // 空数据防护：Math.min() 无参返回 Infinity
+  if (!flatMin.length) {
+    return 0
+  }
+  let min = Math.min(...flatMin)
   let multiple = 1
   while (min > 10) {
     multiple *= 10
@@ -84,7 +90,8 @@ export function CuChart({ labels = [], datasets = [], size = [480, 320], max, mi
   const innerWidth = width - offset.left - offset.right
   const innerHeight = height - offset.top - offset.bottom
 
-  const deltaX = innerWidth / (labels.length - 1)
+  // 单点/空标签防护：除零产生 Infinity 偏移
+  const deltaX = labels.length > 1 ? innerWidth / (labels.length - 1) : 0
   const xaxis = labels.map((label, index) => ({ offset: index * deltaX, label }))
 
   const yaxis: Array<{ offset: number; label: string | number }> = []

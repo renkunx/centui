@@ -17,6 +17,15 @@ import {
   type FormattedValue,
 } from '@centui/core'
 
+/**
+ * 剥离空白与千分位逗号（等价 v2 的 trimValue(val, '\\s|,')）。
+ * 不再向 core.trimValue 传正则模式：core 现按字面量转义 gap，
+ * 组件侧统一改用显式字符类，避免跨包正则语义漂移（对齐 Vue 实现）。
+ */
+function stripSeparators(val: string): string {
+  return val.replace(/[\s,]/g, '')
+}
+
 /** 输入光标位置读写（自 v2 cursor.js 迁移） */
 export function getCursorsPosition(ctrl: HTMLInputElement | null): number {
   if (!ctrl) {
@@ -133,6 +142,8 @@ export const CuInputItem = forwardRef<InputItemExposed, InputItemProps>(function
   const [isInputFocus, setIsInputFocus] = useState(false)
   const [isPreview, setIsPreview] = useState(!!previewType)
   const isEditingRef = useRef(false)
+  // isEditing 需要驱动 is-waiting 类，用 state 而非纯 ref（ref 变更不触发渲染，类会滞留）
+  const [isEditing, setIsEditing] = useState(false)
   const stopEditTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const keyboardInstanceRef = useRef<{ show: () => void; hide: () => void } | null>(null)
   const inputValueRef = useRef('')
@@ -208,6 +219,10 @@ export const CuInputItem = forwardRef<InputItemExposed, InputItemProps>(function
   const [inputValue, setInputValue] = useState(initialFormatted)
   const [inputBindValue, setInputBindValue] = useState(initialFormatted)
   inputValueRef.current = initialFormatted
+  // IME 合成门闩：合成期间不格式化、不上报（修复中文输入法下 formation 打断合成）
+  const composingRef = useRef(false)
+  // 挂载标记：首帧 change 仅在真实清洗（清洗后取值 ≠ 原始 value）时补发
+  const changeEffectMountedRef = useRef(false)
   const formateValue = useCallback(
     (curValue: string, curPos = 0): FormattedValue => {
       const oldValue = inputValueRef.current
@@ -265,30 +280,36 @@ export const CuInputItem = forwardRef<InputItemExposed, InputItemProps>(function
   )
 
   // （初始化合并进 useState 初始化器，见下）
-  // 初始化 + 外部 value 变化（去抖双向绑定回环）
+  // 外部 value 变化 → 重新格式化同步（去抖双向绑定回环）。
+  // 合并自原先两个重复的 [value] effect：二者行为一致，保留一个避免双份格式化与状态竞争
   useEffect(() => {
-    const formatted = formateValue(subValue(`${value}`)).value
+    const formatted = formateValueRef.current(subValue(`${value}`)).value
     inputValueRef.current = formatted
     setInputValue(formatted)
     setInputBindValue(formatted)
-  }, [value])
-
-
-  useEffect(() => {
-    if (value !== trimValue(inputValue, '\\s|,')) {
-      const formatted = formateValueRef.current(subValue(`${value}`)).value
-      setInputValue(formatted)
-      setInputBindValue(formatted)
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   // inputValue → 派发 change（与 v2 watcher 等价）
   useEffect(() => {
     setInputBindValue(inputValue)
-    const emitted = isInputFormative ? trimValue(inputValue, '\\s|,') : inputValue
+    const emitted = isInputFormative ? stripSeparators(inputValue) : inputValue
+    if (!changeEffectMountedRef.current) {
+      changeEffectMountedRef.current = true
+      // 挂载：仅当初始清洗真实改变了取值（超出格式化分隔符）才补发 change（v2 created 不 emit）
+      if (isInputFormative && emitted !== subValue(`${value}`)) {
+        onChange?.(emitted, name)
+      }
+      return
+    }
+    if (composingRef.current) {
+      // IME 合成中不上报，合成结束后由 onCompositionEnd 统一处理
+      return
+    }
     if (emitted !== value) {
       onChange?.(emitted, name)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue])
 
   // 虚拟键盘显隐联动
@@ -339,11 +360,13 @@ export const CuInputItem = forwardRef<InputItemExposed, InputItemProps>(function
 
   const startEditInput = () => {
     isEditingRef.current = true
+    setIsEditing(true)
     if (stopEditTimerRef.current) {
       clearTimeout(stopEditTimerRef.current)
     }
     stopEditTimerRef.current = setTimeout(() => {
       isEditingRef.current = false
+      setIsEditing(false)
     }, 500)
   }
 
@@ -379,12 +402,32 @@ export const CuInputItem = forwardRef<InputItemExposed, InputItemProps>(function
 
   const onNativeInput = (event: React.FormEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement
+    if (composingRef.current) {
+      // IME 合成中：受控值与 DOM 保持一致即可（不格式化、不上报），避免打断输入法
+      const raw = target.value
+      setInputValue(raw)
+      setInputBindValue(raw)
+      return
+    }
     const formatted = formateValue(target.value, isInputFormative ? getCursorsPosition(target) : 0)
     setInputValue(formatted.value)
     setInputBindValue(formatted.value)
     if (isInputFormative) {
       setTimeout(() => setCursorsPosition(target, formatted.range as number), 0)
     }
+  }
+
+  const onCompositionStart = () => {
+    composingRef.current = true
+  }
+
+  const onCompositionEnd = (event: React.CompositionEvent<HTMLInputElement>) => {
+    if (!composingRef.current) {
+      return
+    }
+    composingRef.current = false
+    // 合成结束：以最终文本走一次完整格式化并恢复光标
+    onNativeInput(event as unknown as React.FormEvent<HTMLInputElement>)
   }
 
   const handleKeyup = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -411,7 +454,7 @@ export const CuInputItem = forwardRef<InputItemExposed, InputItemProps>(function
     }
     if (
       Number(inputMaxLength) > 0 &&
-      trimValue(inputValue, '\\s|,').length >= Number(inputMaxLength)
+      stripSeparators(inputValue).length >= Number(inputMaxLength)
     ) {
       return
     }
@@ -535,11 +578,13 @@ export const CuInputItem = forwardRef<InputItemExposed, InputItemProps>(function
             onKeyUp={handleKeyup}
             onKeyDown={handleKeydown}
             onInput={onNativeInput}
+            onCompositionStart={onCompositionStart}
+            onCompositionEnd={onCompositionEnd}
           />
         ) : (
           <div
             className={`cu-input-item-fake${isInputFocus ? ' is-focus' : ''}${
-              !isEditingRef.current ? ' is-waiting' : ''
+              !isEditing ? ' is-waiting' : ''
             }${disabled ? ' disabled' : ''}${readonly ? ' readonly' : ''}`}
             onClick={onFakeInputClick}
           >
