@@ -175,7 +175,9 @@ function handleOutClick(e: MouseEvent) {
 
 function onInputChange(e: Event) {
   const value = (e.target as HTMLInputElement).value
-  if (maxLengthNum.value < 0 || value.length <= maxLengthNum.value) {
+  // maxlength <= 0 视为不限长（v2 仅负数不限，0 会被 Number(maxlength)>0 分支外的
+  // holder 路径渲染但键盘无法输入——统一为不限长语义）
+  if (maxLengthNum.value <= 0 || value.length <= maxLengthNum.value) {
     code.value = value
   }
 
@@ -192,7 +194,7 @@ function onSubmit(e: Event) {
 }
 
 function onEnter(val: string | number) {
-  if ((maxLengthNum.value < 0 || code.value.length < maxLengthNum.value) && val !== '.') {
+  if ((maxLengthNum.value <= 0 || code.value.length < maxLengthNum.value) && val !== '.') {
     code.value += val
   }
 

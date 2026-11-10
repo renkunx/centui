@@ -2,6 +2,9 @@
   <div
     class="cu-switch"
     :class="[disabled ? 'disabled' : '', modelValue ? 'active' : '']"
+    role="switch"
+    :aria-checked="modelValue"
+    :aria-disabled="disabled"
     @click="onChange($event)"
   ></div>
 </template>

@@ -6,6 +6,9 @@
       'is-checked': isChecked,
       'is-inline': inline,
     }"
+    role="radio"
+    :aria-checked="isChecked"
+    :aria-disabled="disabled"
     @click="onClick"
   >
     <div class="cu-radio-icon">

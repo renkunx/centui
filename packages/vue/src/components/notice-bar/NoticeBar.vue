@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUpdated, ref, useSlots } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, useSlots, watch } from 'vue'
 import CuIcon from '../icon/Icon.vue'
 
 defineOptions({ name: 'cu-notice-bar' })
@@ -81,8 +81,15 @@ const customLeft = computed(() => !!slots.left)
 const customRight = computed(() => !!slots.right)
 const rightIcon = computed(() => (props.mode === 'link' ? 'arrow' : 'close'))
 
+/** 自动关闭定时器：卸载/重启时回收 */
+let hideTimer: ReturnType<typeof setTimeout> | null = null
+
 function hide(time: number) {
-  setTimeout(() => {
+  if (hideTimer) {
+    clearTimeout(hideTimer)
+  }
+  hideTimer = setTimeout(() => {
+    hideTimer = null
     isShow.value = false
   }, time)
 }
@@ -98,6 +105,8 @@ function close() {
  * 计算 padding-left 对宽度的影响
  * 替换 clientWidth 为 getBoundingClientRect
  */
+let lastMeasure = ''
+
 function checkOverflow() {
   if (!props.scrollable) {
     return
@@ -113,7 +122,15 @@ function checkOverflow() {
     window.getComputedStyle(contentEl, null).getPropertyValue('padding').split(' ')[3] || '0px'
   const left = +(paddingLeft.match(/\d+/g) as string[])[0]
 
-  overflow.value = contentEl.scrollWidth - left > Math.ceil(wrapEl.getBoundingClientRect().width)
+  const next =
+    contentEl.scrollWidth - left > Math.ceil(wrapEl.getBoundingClientRect().width)
+  // 度量未变化时跳过赋值，避免无谓的响应式触发
+  const measure = `${contentEl.scrollWidth}|${left}|${next}`
+  if (measure === lastMeasure) {
+    return
+  }
+  lastMeasure = measure
+  overflow.value = next
 }
 
 onMounted(() => {
@@ -121,9 +138,35 @@ onMounted(() => {
     hide(props.time)
   }
   checkOverflow()
+  if (content.value && typeof MutationObserver !== 'undefined') {
+    contentObserver = new MutationObserver(() => checkOverflow())
+    contentObserver.observe(content.value, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    })
+  }
 })
 
-onUpdated(() => {
-  checkOverflow()
+onBeforeUnmount(() => {
+  if (hideTimer) {
+    clearTimeout(hideTimer)
+    hideTimer = null
+  }
+  contentObserver?.disconnect()
+  contentObserver = null
 })
+
+// 开关变化时重测溢出（post flush：DOM 更新后同步度量）
+watch(
+  () => [props.scrollable, props.multiRows],
+  () => {
+    checkOverflow()
+  },
+  { flush: 'post' },
+)
+
+// 插槽内容变化时重测溢出：以 MutationObserver 取代原先每次组件更新都
+// 全量重测的 onUpdated（度量去重后仅在真实变化时写响应式）
+let contentObserver: MutationObserver | null = null
 </script>

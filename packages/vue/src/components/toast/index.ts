@@ -40,6 +40,12 @@ let singleton: ToastSingleton | null = null
 function getVm(props: ToastProps): ToastVm {
   const parentNode = props.parentNode ?? document.body
   if (!singleton || singleton.container.parentNode !== parentNode) {
+    // 换挂载点时先卸载旧单例（loading 等无限时 toast 否则会把挂载组件永久留在游离 DOM）
+    if (singleton) {
+      render(null, singleton.container)
+      singleton.container.remove()
+      singleton = null
+    }
     const container = document.createElement('div')
     parentNode.appendChild(container)
     singleton = { container, vnode: createVNode(CuToast, {}), vm: null as never }

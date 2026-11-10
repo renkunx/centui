@@ -4,7 +4,8 @@
  * 样式不内嵌：请配合 @centui/styles 使用，按需引入
  * `@centui/styles/es/<component>.css` 或全量 `@centui/styles`。
  */
-export const VERSION = '3.0.0-alpha.0'
+/** 包版本：构建时由 vite define 注入（见 vite.config.ts），测试环境回退 0.0.0 */
+export const VERSION: string = (globalThis as { __CENTUI_VERSION__?: string }).__CENTUI_VERSION__ ?? '0.0.0'
 
 export * from './components/icon'
 export * from './components/activity-indicator'

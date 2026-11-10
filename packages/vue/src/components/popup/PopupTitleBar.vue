@@ -64,9 +64,13 @@ defineOptions({ name: 'cu-popup-title-bar' })
 
 const props = withDefaults(
   defineProps<{
+    /** @warning 经 v-html 渲染（v2 兼容）：勿传不可信内容，XSS 责任在使用方 */
     title?: string
+    /** @warning 同 title：经 v-html 渲染，勿传不可信内容 */
     describe?: string
+    /** @warning 同 title：经 v-html 渲染，勿传不可信内容 */
     okText?: string
+    /** @warning 同 title：经 v-html 渲染，勿传不可信内容 */
     cancelText?: string
     largeRadius?: boolean
     onlyClose?: boolean

@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, useSlots, Comment, Fragment } from 'vue'
+import { computed, onMounted, ref, useSlots, watch, Comment, Fragment } from 'vue'
 import { getDpr } from '@centui/core/web'
 
 defineOptions({ name: 'cu-water-mark' })
@@ -100,7 +100,7 @@ onMounted(() => {
   if (!props.content) {
     return
   }
-  // jsdom 无 canvas 实现，getContext 返回 null，跳过绘制
+  // jsdom 无 canvas 实现：getContext 返回 null，跳过绘制，仅保留交互骨架
   ctx = canvas.value?.getContext('2d') ?? null
   if (!ctx) {
     return
@@ -111,6 +111,20 @@ onMounted(() => {
   computedSpacing()
   draw()
 })
+
+// content 变更后重绘水印（原实现仅 onMounted 绘制一次，动态文案不生效）
+watch(
+  () => props.content,
+  (val, oldVal) => {
+    if (val === oldVal || !ctx) {
+      return
+    }
+    if (!val) {
+      return
+    }
+    redraw()
+  },
+)
 
 function initCanvas() {
   const el = mark.value
@@ -149,8 +163,10 @@ function draw() {
     return
   }
   const contentLength = props.content.length * FONT_SIZE * ratio
-  const xCount = Math.ceil((ctxWidth * ratio) / (contentLength + realSpacing))
-  const yCount = Math.ceil((ctxHeight * ratio) / (FONT_SIZE * ratio + realSpacing))
+  // ctxWidth/ctxHeight、contentLength、realSpacing 均为设备像素，
+  // 不再对 ctxWidth/ctxHeight 重复乘 ratio（v2 的双乘导致过度绘制）
+  const xCount = Math.ceil(ctxWidth / (contentLength + realSpacing))
+  const yCount = Math.ceil(ctxHeight / (FONT_SIZE * ratio + realSpacing))
   const fontSize = FONT_SIZE * ratio
 
   ctx.font = `${fontSize}px "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif`
@@ -166,5 +182,15 @@ function draw() {
     }
     ctxY += fontSize + realSpacing
   }
+}
+
+/** 清空画布后按当前 props 重绘（content 变更路径） */
+function redraw() {
+  const cv = canvas.value
+  if (!cv || !ctx) {
+    return
+  }
+  ctx.clearRect(0, 0, cv.width, cv.height)
+  draw()
 }
 </script>

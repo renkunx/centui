@@ -1,5 +1,5 @@
 <template>
-  <div ref="root" class="cu-dialog">
+  <div ref="root" class="cu-dialog" role="dialog" aria-modal="true">
     <CuPopup
       :model-value="modelValue"
       :has-mask="hasMask"
@@ -85,10 +85,15 @@ const props = withDefaults(
     icon?: string
     iconSvg?: boolean
     closable?: boolean
+    /** @warning 内容经 v-html 渲染（v2 兼容行为）：请勿传入不可信来源的字符串，XSS 责任在使用方 */
     content?: string
     btns?: DialogBtn[]
     /** row | column */
     layout?: string
+    /**
+     * 挂载目标。false 表示不搬运；注意本值在 setup 期一次性求值、运行期不响应变更
+     * （v2 同为初始化时决定挂载点）。v3 后续版本计划迁移至 Teleport。
+     */
     appendTo?: HTMLElement | null | false
     hasMask?: boolean
     maskClosable?: boolean

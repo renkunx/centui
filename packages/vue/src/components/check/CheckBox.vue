@@ -1,6 +1,7 @@
 <template>
   <CuCheckBaseBox
     class="cu-check-box"
+    role="checkbox"
     :label="label"
     :is-checked="isChecked"
     :disabled="disabled"

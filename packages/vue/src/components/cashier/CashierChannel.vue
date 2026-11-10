@@ -64,9 +64,13 @@ export interface CashierChannel {
 
 const props = withDefaults(
   defineProps<{
+    /** @warning 经 v-html 渲染（v2 兼容）：勿传不可信内容，XSS 责任在使用方 */
     paymentTitle?: string
+    /** @warning 同 paymentTitle：经 v-html 渲染，勿传不可信内容 */
     paymentAmount?: string
+    /** @warning 同 paymentTitle：经 v-html 渲染，勿传不可信内容 */
     paymentDescribe?: string
+    /** @warning 同 paymentTitle：经 v-html 渲染，勿传不可信内容 */
     moreButtonText?: string
     payButtonText?: string
     payButtonDisabled?: boolean

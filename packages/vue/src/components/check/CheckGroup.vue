@@ -1,5 +1,5 @@
 <template>
-  <div class="cu-check-group">
+  <div class="cu-check-group" role="group">
     <slot></slot>
   </div>
 </template>

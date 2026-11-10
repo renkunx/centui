@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, reactive, ref } from 'vue'
+import { computed, nextTick, onMounted, onUpdated, reactive, ref, watch } from 'vue'
 import { transformCamelCase } from '@centui/core'
 
 defineOptions({ name: 'cu-tag' })
@@ -99,16 +99,41 @@ const colorStyle = computed(() => {
   return style
 })
 
-onMounted(async () => {
+let lastCircleHeight = -1
+
+/** circle 形状按当前内容高度重算内边距/圆角（v2 仅 mounted 时算一次，内容变化后尺寸失真） */
+async function refreshCircleSize() {
   await nextTick()
-  if (props.shape === 'circle' && el.value) {
-    const radius = el.value.offsetHeight / 2
-    sizeStyle.paddingLeft = radius + 'px'
-    sizeStyle.paddingRight = radius + 'px'
-    sizeStyle.borderRadius = radius + 'px'
-    if (props.sharp) {
-      sizeStyle[transformCamelCase(`border-${props.sharp}-radius`)] = '0'
-    }
+  if (props.shape !== 'circle' || !el.value) {
+    return
   }
+  const height = el.value.offsetHeight
+  if (height === lastCircleHeight) {
+    return
+  }
+  lastCircleHeight = height
+  const radius = height / 2
+  sizeStyle.paddingLeft = radius + 'px'
+  sizeStyle.paddingRight = radius + 'px'
+  sizeStyle.borderRadius = radius + 'px'
+  if (props.sharp) {
+    sizeStyle[transformCamelCase(`border-${props.sharp}-radius`)] = '0'
+  }
+}
+
+onMounted(() => {
+  refreshCircleSize()
+})
+
+// 形状/切角/尺寸档位切换与内容高度变化（onUpdated 度量去重）时重算
+watch(
+  () => [props.shape, props.sharp, props.size],
+  () => {
+    lastCircleHeight = -1
+    refreshCircleSize()
+  },
+)
+onUpdated(() => {
+  refreshCircleSize()
 })
 </script>

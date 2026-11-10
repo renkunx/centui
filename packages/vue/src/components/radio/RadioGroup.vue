@@ -1,5 +1,5 @@
 <template>
-  <div class="cu-radio-group">
+  <div class="cu-radio-group" role="radiogroup">
     <slot></slot>
   </div>
 </template>

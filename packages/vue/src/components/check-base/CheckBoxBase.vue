@@ -8,6 +8,9 @@
         'is-checked': isChecked,
       },
     ]"
+    role="checkbox"
+    :aria-checked="isChecked"
+    :aria-disabled="disabled"
   >
     <slot></slot>
     <CuTag v-if="isChecked" size="tiny" shape="quarter" type="fill">

@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { Animate } from '@centui/core/web'
 import CuRolling from '../activity-indicator/Roller.vue'
 
@@ -52,15 +52,16 @@ const props = withDefaults(
   },
 )
 
-const inBrowser = typeof window !== 'undefined'
-
 const formatValue = ref(0)
 const isMounted = ref(false)
+/** 进行中的 Animate 句柄：重入/卸载时 stop */
+let animateId = 0
 
 watch(
   () => props.value,
   (val, oldVal) => {
-    if ((!inBrowser && !isMounted.value) || !props.transition) {
+    // 首轮（setup 期）直接同步终值：SSR 与客户端首帧一致，后续变更才动画
+    if (!isMounted.value || !props.transition) {
       formatValue.value = val
       return
     }
@@ -74,12 +75,25 @@ onMounted(() => {
   isMounted.value = true
 })
 
+onBeforeUnmount(() => {
+  if (animateId) {
+    Animate.stop(animateId)
+    animateId = 0
+  }
+})
+
 function animateDisplay(fromValue = 0, toValue = 0) {
+  if (animateId) {
+    Animate.stop(animateId)
+    animateId = 0
+  }
   const step = (percent: number) => {
     formatValue.value = fromValue + (toValue - fromValue) * percent
   }
 
   const verify = () => true
-  Animate.start(step, verify, () => {}, props.duration)
+  animateId = Animate.start(step, verify, () => {
+    animateId = 0
+  }, props.duration)
 }
 </script>
