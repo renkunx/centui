@@ -88,6 +88,12 @@ CuComponent({
   },
 
   observers: {
+    /** 外部更新 countNormalText 时，非倒计时态的按钮文案同步（demo2 首发后"重新发送"场景） */
+    'countNormalText, isCounting'(countNormalText: string, isCounting: boolean) {
+      if (!isCounting && this.data.countBtnText !== countNormalText) {
+        this.setData({countBtnText: countNormalText})
+      }
+    },
     show(val: boolean) {
       this.setData({innerShow: val})
       if (val) {

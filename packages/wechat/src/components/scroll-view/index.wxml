@@ -11,7 +11,7 @@
     bind:touchcancel="onTouchEnd"
   >
     <view
-      class="scroll-view-refresh {{isRefreshing ? 'refreshing' : ''}} {{isRefreshActive ? 'refresh-active' : ''}}"
+      class="cu-scroll-view-refresh scroll-view-refresh {{isRefreshing ? 'refreshing' : ''}} {{isRefreshActive ? 'refresh-active' : ''}}"
       style="{{refreshStyle}}"
     >
       <block wx:if="{{defaultRefresher}}">
