@@ -1,5 +1,7 @@
 /* legacy/components/input-item/demo 对译（生成器产物，TODO 见 wxml 尾注释） */
 const {Dialog} = require('../../../../dist/components/dialog/index')
+const {Toast} = require('../../../../dist/components/toast/index')
+
 Page({
   data: {
   "phone": "13321234431",

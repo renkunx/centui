@@ -71,12 +71,22 @@ export async function loadComponent<TExports = unknown>(
   return {def, exports}
 }
 
+/** boundingClientRect 探针结果（真实 rect 含 left/top/right/bottom 等数值字段） */
+export interface MountRect {
+  height?: number
+  width?: number
+  left?: number
+  top?: number
+  right?: number
+  bottom?: number
+}
+
 export interface MountOptions {
   props?: Record<string, unknown>
   /** selectComponent 桩（命令式 API / 父子组件场景） */
   selectComponent?: (selector: string) => any
   /** createSelectorQuery 的 boundingClientRect 结果表（key 为选择器；缺省 null） */
-  rects?: Record<string, {height?: number; width?: number} | null>
+  rects?: Record<string, MountRect | null>
   /** attached/ready 期间 wx.getDeviceInfo().platform 的取值（默认 devtools） */
   platform?: string
 }

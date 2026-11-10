@@ -117,7 +117,7 @@ describe('radio-group 分支补齐', () => {
   })
 
   it('linked：运行时上下文无 data 时按空串推送（防御分支）', () => {
-    const inst = mountGroup({value: 'a'})
+    mountGroup({value: 'a'})
     const relRadio = comp.def.relations!['../radio/index']
     const relBox = comp.def.relations!['../radio-box/index']
     const a = fakeChild('a')

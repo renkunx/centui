@@ -107,7 +107,7 @@ Page({
     const value = picker.getColumnValue(0)
     // legacy: delete value.children（直接改原节点）；为不污染共享的 district 数据，
     // 改为浅拷贝剔除 children，展示内容一致
-    const {children, ...rest} = value || {}
+    const {children: _children, ...rest} = value || {}
     this.dialogAlert({content: JSON.stringify(rest)})
   },
   getColumnIndex1() {

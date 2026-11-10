@@ -165,6 +165,9 @@ function makeCanvas(withCtx = true) {
     scale: vi.fn(),
     fillText: vi.fn(),
     clearRect: vi.fn(),
+    /** 组件绘制的状态字段（initCanvas 里写入，断言用） */
+    font: '',
+    fillStyle: '',
   }
   const node = {width: 0, height: 0, getContext: vi.fn(() => (withCtx ? ctx : null))}
   return {ctx, node}

@@ -3,7 +3,7 @@
  * 对照 Vue 版 TabPicker.vue 的 panes computed 与 onSelectPaneItem。
  */
 import {describe, it, expect} from 'vitest'
-import {buildPaneCells, buildPanes, spliceSelected, type TabPickerNode} from '../../src/components/tab-picker/logic'
+import {buildPaneCells, buildPanes, spliceSelected, type TabPickerNode, type TabPickerPane} from '../../src/components/tab-picker/logic'
 
 const tree: TabPickerNode = {
   name: 'level0',

@@ -168,7 +168,7 @@ describe('input-item/logic 发射值与 randomId', () => {
 
   it('randomId：测试环境空串（对齐 core 契约），运行时带 prefix', () => {
     expect(randomId('input-item')).toBe('')
-    const proc = process as unknown as {env: Record<string, string | undefined>}
+    const proc = (globalThis as unknown as {process: {env: Record<string, string | undefined>}}).process
     const prev = proc.env.VITEST
     delete proc.env.VITEST
     try {
@@ -179,7 +179,7 @@ describe('input-item/logic 发射值与 randomId', () => {
   })
 
   it('randomId：无 process 全局时直接生成（proc falsy 分支）', () => {
-    const g = globalThis as any
+    const g = globalThis as unknown as {process?: unknown}
     const desc = Object.getOwnPropertyDescriptor(g, 'process')
     const prev = g.process
     try {
@@ -267,7 +267,7 @@ describe('input-item 组件：生命周期与 env 探测', () => {
   })
 
   it('attached：getDeviceInfo 抛错 → is-browser（catch 分支）', () => {
-    const g = globalThis as any
+    const g = globalThis as unknown as {wx: {getDeviceInfo: () => {platform: string}}}
     const prev = g.wx.getDeviceInfo
     g.wx.getDeviceInfo = () => {
       throw new Error('boom')
@@ -610,7 +610,7 @@ describe('input-item 组件：observers 与派生量', () => {
   it('setFormation：注入自定义格式化（formation 优先），置空回落默认管线', () => {
     const inst = mountDef(comp.def, {props: {type: 'bankCard', name: 'card'}})
     inst.attached()
-    inst.methods.setFormation.call(inst, (name, curValue, curPos) => ({
+    inst.methods.setFormation.call(inst, (name: string | number, curValue: string, curPos: number) => ({
       value: `[${name}:${curValue}]`,
       range: curPos,
     }))

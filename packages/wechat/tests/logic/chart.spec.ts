@@ -309,7 +309,7 @@ afterEach(() => {
 
 describe('chart 组件 ready 初始化链', () => {
   it('token 查询 + canvas node + 首绘：backing store ×dpr、ctx.scale、网格/文本绘制', () => {
-    const {rects, calls, gradients} = DEFAULT_RECTS()
+    const {rects, calls} = DEFAULT_RECTS()
     ;(rects['.cu-chart'] as Record<string, unknown>) = {
       '--chart-line-color': '#abcdef',
       '--chart-text-color': '#123456',
@@ -513,7 +513,7 @@ describe('chart 绘制分支（__draw / __drawSeries / __makeGradient）', () =>
   })
 
   it('非法 color：hexToRgba null → addColorStop 回退原 color（|| 分支）', () => {
-    const {rects, calls, gradients} = DEFAULT_RECTS()
+    const {rects, gradients} = DEFAULT_RECTS()
     const inst = mountDef(comp.def, {
       props: {datasets: [{color: 'not-a-hex', theme: 'region', values: [0, 100]}]},
       rects: rects as never,

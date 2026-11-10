@@ -125,9 +125,15 @@ describe('amount/capital 模式（isCapital=true）', () => {
  * 组件层（index.ts）：首轮同步/动画分派（isMounted 状态机）、formatting observers、
  * ticker 动画推进/重入停止/detached 清理（fake timers + Date.now 同步推进）。
  */
-import {loadComponent, mountDef} from '../helpers/weapp'
+import {loadComponent, mountDef, type Mounted} from '../helpers/weapp'
+import type {TimerRegistry} from '../../src/shared/timer'
 
 const comp = await loadComponent(() => import('../../src/components/amount/index'))
+
+/** 组件内部 __amountState（对齐 index.ts 的 AmountState） */
+function stateOf(inst: Mounted): {timers: TimerRegistry; handle: number | null} {
+  return (inst as unknown as {__amountState: {timers: TimerRegistry; handle: number | null}}).__amountState
+}
 
 describe('amount 组件：显隐与首轮语义', () => {
   beforeEach(() => vi.useFakeTimers())
@@ -190,7 +196,7 @@ describe('amount 组件：动画', () => {
     expect(inst.data.displayValue).toBe(50)
     expect(inst.data.text).toBe('50.00')
     // 同步完成路径 onComplete 先于 handle 赋值执行（无害：句柄已 stopped）
-    expect((inst as any).__amountState.handle).not.toBeNull()
+    expect(stateOf(inst).handle).not.toBeNull()
     expect(() => inst.detached()).not.toThrow()
   })
 
@@ -202,7 +208,7 @@ describe('amount 组件：动画', () => {
     inst.setData({value: 200}) // 重入
     vi.advanceTimersByTime(2000)
     expect(inst.data.displayValue).toBe(200)
-    expect((inst as any).__amountState.handle).toBeNull()
+    expect(stateOf(inst).handle).toBeNull()
   })
 
   it('detached：动画句柄停止，推进不再更新 displayValue/text', () => {
@@ -213,7 +219,7 @@ describe('amount 组件：动画', () => {
     const frozen = inst.data.displayValue
     vi.advanceTimersByTime(2000)
     expect(inst.data.displayValue).toBe(frozen)
-    expect((inst as any).__amountState.handle).toBeNull()
+    expect(stateOf(inst).handle).toBeNull()
   })
 
   it('detached（无动画）：handle 为 null 分支安全', () => {

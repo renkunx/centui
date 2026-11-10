@@ -10,7 +10,19 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 import {loadComponent, mountDef, type Mounted} from '../helpers/weapp'
 
 const comp = await loadComponent(() => import('../../src/components/toast/index'))
-const {Toast} = comp.exports as {Toast: Record<string, unknown> & ((c: unknown, p?: Record<string, unknown>) => unknown)}
+
+/** 命令式工厂的结构化签名（对齐 src/components/toast/index.ts 的 Toast 附加方法） */
+interface ToastFactory {
+  (context: unknown, props?: Record<string, unknown>, selector?: string): unknown
+  hide(context: unknown, selector?: string): unknown
+  clear(context: unknown, selector?: string): unknown
+  info(context: unknown, content?: string, duration?: number, hasMask?: boolean, square?: boolean): unknown
+  succeed(context: unknown, content?: string, duration?: number, hasMask?: boolean, square?: boolean): unknown
+  failed(context: unknown, content?: string, duration?: number, hasMask?: boolean, square?: boolean): unknown
+  loading(context: unknown, content?: string, duration?: number, hasMask?: boolean, square?: boolean): unknown
+}
+
+const {Toast} = comp.exports as {Toast: ToastFactory}
 
 function makeToast(props: Record<string, unknown> = {}, timers = true): Mounted {
   const inst = mountDef(comp.def, {props})

@@ -191,7 +191,7 @@ describeInst('radio-list 组件实例', () => {
     const inst = mountDef(compList.def, {props: {options: OPTS}})
     inst.attached()
     inst.setData({isSlotScope: true, icon: ''})
-    let cells = inst.data.cells as Array<{showIcon: boolean}>
+    const cells = inst.data.cells as Array<{showIcon: boolean}>
     expect(cells.every((c) => !c.showIcon)).toBe(true)
 
     inst.setData({options: null})
