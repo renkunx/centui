@@ -44,4 +44,24 @@ export default tseslint.config(
       'react-hooks/exhaustive-deps': 'warn',
     },
   },
+  {
+    // 小程序展示宿主：CJS require 与 Page/wx/setTimeout 为小程序运行时全局
+    files: ['packages/wechat/demo/**/*.{js,ts}'],
+    languageOptions: {
+      globals: {
+        require: 'readonly',
+        module: 'writable',
+        Page: 'readonly',
+        App: 'readonly',
+        Component: 'readonly',
+        wx: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        getCurrentPages: 'readonly',
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
 )
