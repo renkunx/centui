@@ -326,8 +326,13 @@ CuComponent({
 
       let idx = clampIndex(indexOfOffset(offset, ih), items.length)
       if (isInvalidIndex(invalidIndex, columnIndex, idx)) {
-        idx = findValidIndex(items, invalidIndex, columnIndex, idx, s.dragDirection[columnIndex] ?? 1)
-        ticker.scrollTo(offsetOfIndex(idx, ih), true)
+        const corrected = findValidIndex(items, invalidIndex, columnIndex, idx, s.dragDirection[columnIndex] ?? 1)
+        // findValidIndex 原值返回（如全列 invalid）且 ticker 已在该偏移时跳过 scrollTo：
+        // 同位 scrollTo 会再次触发 onStop → __onColumnStop 无限递归（栈溢出）
+        if (corrected !== idx || offset !== offsetOfIndex(corrected, ih)) {
+          idx = corrected
+          ticker.scrollTo(offsetOfIndex(idx, ih), true)
+        }
         return
       }
 
