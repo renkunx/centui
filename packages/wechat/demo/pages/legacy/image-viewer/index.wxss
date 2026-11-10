@@ -4,11 +4,11 @@
   float: left;
   width: 100%;
 }
-.md-example-child-image-reader ul {
+.md-example-child-image-reader .img-list {
   float: left;
   width: 100%;
 }
-.md-example-child-image-reader ul li {
+.md-example-child-image-reader .img-item {
   position: relative;
   float: left;
   width: 22%;
@@ -20,7 +20,7 @@
   overflow: hidden;
   list-style: none;
 }
-.md-example-child-image-reader ul li .img {
+.md-example-child-image-reader .img-item .img {
   position: absolute;
   width: 100%;
   height: 100%;

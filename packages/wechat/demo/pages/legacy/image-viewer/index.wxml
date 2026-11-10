@@ -5,18 +5,20 @@
 
   <view class="md-example-child md-example-child-image-reader">
     <view>
-      <ul>
-        <template v-for="(item, index) in imgs">
-          <li bind:tap="showViewer(index, $event)" key="{{index}}">
-            <view class="img"
-              style="{{`background: url(${item}) center no-repeat;background-size:cover;`}}">
-            </view>
-          </li>
-        </template>
-      </ul>
+      <view class="img-list">
+        <view
+          class="img-item"
+          wx:for="{{imgs}}" wx:key="*this"
+          bind:tap="showViewer"
+          data-index="{{index}}"
+        >
+          <view class="img" style="background: url({{item}}) center no-repeat; background-size: cover;"></view>
+        </view>
+      </view>
     </view>
     <cu-image-viewer
-      value="{{isViewerShow}}" bind:change="noop"
+      show="{{isViewerShow}}"
+      bind:change="onViewerChange"
       list="{{imgs}}"
       has-dots="{{true}}"
       initial-index="{{viewerIndex}}">
@@ -27,6 +29,8 @@
   </view>
 </view>
 <!--
-TODO 修整清单（image-viewer）：
-  - v-for 需复核 wx:for/wx:key 改写
+  平台差异说明（对齐 legacy/components/image-viewer/demo/cases/demo0.vue）：
+  - template v-for + ul/li 缩略图改为 view.img-list/img-item（wx:key="*this"）
+  - @click="showViewer(index)" 改为 data-index + dataset
+  - v-model 改为 show 属性 + change 事件回写
 -->

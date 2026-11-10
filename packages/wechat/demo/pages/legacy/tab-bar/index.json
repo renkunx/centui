@@ -2,6 +2,9 @@
   "usingComponents": {
     "cu-icon": "../../../../dist/components/icon/index",
     "cu-swiper": "../../../../dist/components/swiper/index",
-    "cu-swiper-item": "../../../../dist/components/swiper-item/index"
+    "cu-swiper-item": "../../../../dist/components/swiper-item/index",
+    "cu-tabs": "../../../../dist/components/tabs/index",
+    "cu-tab-pane": "../../../../dist/components/tab-pane/index",
+    "cu-toast": "../../../../dist/components/toast/index"
   }
 }

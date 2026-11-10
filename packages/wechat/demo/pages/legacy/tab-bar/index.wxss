@@ -1,5 +1,11 @@
 @import "../legacy.wxss";
 
+/* demo4 自绘 tab 条（替代 md-tab-bar 自定义 item 插槽；md-tab-bar 外观：tab-bg/height/字号） */
+.md-example-child-tab-bar-4 .custom-tab-bar {
+  display: flex;
+  height: var(--tab-height);
+  background: var(--tab-bg);
+}
 .md-example-child-tab-bar-4 .custom-item {
   display: flex;
   flex-direction: column;
@@ -7,19 +13,24 @@
   justify-content: center;
   height: 100%;
   flex: 1;
+  color: var(--tab-text-color);
+  font-size: var(--tab-font-size);
+  font-weight: var(--tab-font-weight);
+}
+.md-example-child-tab-bar-4 .custom-item.is-active {
+  color: var(--tab-active-color);
 }
 .md-example-child-tab-bar-4 .custom-item .text {
   font-size: 20px;
 }
 
-.md-example-child-tab-bar-6 .md-swiper {
+.md-example-child-tab-bar-6 .cu-swiper {
   background: #fff;
 }
-.md-example-child-tab-bar-6 .md-swiper .md-swiper-item {
+.md-example-child-tab-bar-6 .cu-swiper .swiper-text {
   padding: 20px;
   box-sizing: border-box;
   font-size: 24px;
   line-height: 1.5;
   color: #666;
 }
-

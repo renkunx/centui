@@ -1,15 +1,15 @@
 <view class="legacy-wrapper md-example picker">
   <view class="legacy-section">
-    <view class="legacy-title">单列数据 <a href="javascript:window.PickerTrigger0()">getColumnValues</a><a href="javascript:window.PickerTrigger1()">getColumnIndexs</a><a href="javascript:window.PickerTrigger2()">setColumnValues</a></view>
+    <view class="legacy-title">单列数据 <text class="title-link" bind:tap="getColumnValues0">getColumnValues</text><text class="title-link" bind:tap="getColumnIndexs0">getColumnIndexs</text><text class="title-link" bind:tap="setColumnValues0">setColumnValues</text></view>
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-picker md-example-child-picker-0">
     <cu-picker
-      ref="picker"
+      id="pickerDemo0"
       data="{{pickerData}}"
       invalid-index="{{[[2, 3, 4]]}}"
-      bind:initialed="onPickerInitialed"
-      bind:change="onPickerConfirm"
+      bind:initialed="onPickerInitialed0"
+      bind:change="onPickerChange0"
       is-view
     ></cu-picker>
   </view>
@@ -17,20 +17,20 @@
     </view>
   </view>
   <view class="legacy-section">
-    <view class="legacy-title">联动数据 <a href="javascript:window.PickerTrigger3()">getColumnValue(0)</a><a href="javascript:window.PickerTrigger4()">getColumnIndex(0)</a><a href="javascript:window.PickerTrigger5()">changeDefaultValue</a></view>
+    <view class="legacy-title">联动数据 <text class="title-link" bind:tap="getColumnValue1">getColumnValue(0)</text><text class="title-link" bind:tap="getColumnIndex1">getColumnIndex(0)</text><text class="title-link" bind:tap="changeDefaultValue1">changeDefaultValue</text></view>
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-picker md-example-child-picker-1">
     <cu-picker
-      ref="picker"
-      data="{{pickerData}}"
+      id="pickerDemo1"
+      data="{{pickerDataDistrict}}"
       cols="{{3}}"
       default-index="{{pickerDefaultIndex}}"
       default-value="{{pickerDefaultValue}}"
       is-view
       is-cascade
-      bind:initialed="onPickerInitialed"
-      bind:change="onPickerConfirm"
+      bind:initialed="onPickerInitialed1"
+      bind:change="onPickerChange1"
     ></cu-picker>
   </view>
 
@@ -46,40 +46,47 @@
         title="起保年份"
         arrow="arrow"
         addon="{{pickerValue0}}"
-        bind:tap="isPickerShow0 = true">
+        bind:click="showPicker0">
       </cu-field-item>
       <cu-field-item
         title="省市区/县"
         arrow="arrow"
         addon="{{pickerValue1}}"
-        bind:tap="isPickerShow1 = true">
+        bind:click="showPicker1">
       </cu-field-item>
     </cu-field>
     <cu-picker
-      ref="picker0"
-      value="{{isPickerShow0}}" bind:change="noop"
+      id="picker0"
+      show="{{isPickerShow0}}"
+      bind:change="onPickerShowChange0"
       data="{{pickerData0}}"
       large-radius
-      bind:confirm="onPickerConfirm(0)"
+      bind:confirm="onPickerConfirm0"
       title="选择年份"
     ></cu-picker>
     <cu-picker
-      ref="picker1"
-      value="{{isPickerShow1}}" bind:change="noop"
+      id="picker1"
+      show="{{isPickerShow1}}"
+      bind:change="onPickerShowChange1"
       data="{{pickerData1}}"
       cols="{{3}}"
       is-cascade
       large-radius
       title="选择省市区/县"
-      bind:confirm="onPickerConfirm(1)"
+      bind:confirm="onPickerConfirm1"
     ></cu-picker>
   </view>
 
     </view>
   </view>
+  <cu-dialog id="cu-dialog" />
 </view>
 <!--
-TODO 修整清单（picker）：
-  - demo0.vue: 定义对象求值失败（simple is not defined），data/methods 未搬运
-  - demo2.vue: 定义对象求值失败（simple is not defined），data/methods 未搬运
+  平台差异说明（对齐 legacy/components/picker/demo/cases/demo0~2.vue）：
+  - 标题 javascript: 链接（getColumnValues 等 6 个）改为 title-link 按钮
+  - v-model 改为 show 属性 + change 事件回写；@confirm="onPickerConfirm(0/1)" 拆分为两个 handler
+  - Dialog.alert({content: pre 包裹的 JSON}) 改为页面放置 cu-dialog（id="cu-dialog"）+ show() 命令式调用
+  - demo0/demo1 的 data 名拆分为 pickerData（simple）/ pickerDataDistrict（district）
+  - setColumnValues 的第三参回调（vm.refresh）无平台等价物：组件内部已重建该列，选中归 0
+  - getColumnValue 的 delete value.children 改为浅拷贝剔除，避免污染共享 district 数据
 -->

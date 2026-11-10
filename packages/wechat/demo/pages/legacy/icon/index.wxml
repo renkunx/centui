@@ -6,15 +6,14 @@
   <view class="md-example-child md-example-child-icon md-example-child-icon-0">
     <view
       class="md-example-item"
-      wx:for="{{iconList}}" wx:for-item="icon"
-      key="{{icon}}"
+      wx:for="{{iconItems}}" wx:key="label"
     >
       <cu-icon
-        name="{{icon.split('/')[0]}}"
+        name="{{item.name}}"
         size="lg"
         svg="{{false}}"
       ></cu-icon>
-      <view class="legacy-p">{{ icon }}</view>
+      <view class="legacy-p">{{ item.label }}</view>
     </view>
   </view>
 
@@ -93,7 +92,7 @@
   </view>
 </view>
 <!--
-TODO 修整清单（icon）：
-  - wxml 方法调用表达式需改写：{{icon.split('/')[0]}}
-  - v-for 需复核 wx:for/wx:key 改写
+  平台差异说明（对齐 legacy/components/icon/demo/cases/demo0~3.vue）：
+  - {{icon.split('/')[0]}} 改为页面预拆分字段 iconItems[].name（label 保留原始带后缀文案）
+  - v-for 的 key 改为 wx:key="label"
 -->

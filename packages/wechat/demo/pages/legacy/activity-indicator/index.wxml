@@ -53,15 +53,15 @@
       size="{{15}}"
     ></cu-activity-indicator>
     <cu-button type="primary" bind:tap="createPay">
-      <cu-activity-indicator
-        wx:if="{{loading"
-        class="md-activity-indicator-css"
-        type="carousel"
-        size="{{15}}"
-        color="#fff"
-        text-color="#fff"
-      ></cu-activity-indicator>
-      <text v-else>确认支付</text>
+      <view wx:if="{{loading}}" class="md-activity-indicator-css">
+        <cu-activity-indicator
+          type="carousel"
+          size="{{15}}"
+          color="#fff"
+          text-color="#fff"
+        ></cu-activity-indicator>
+      </view>
+      <text wx:else>确认支付</text>
     </cu-button>
 	</view>
 
@@ -69,6 +69,7 @@
   </view>
 </view>
 <!--
-TODO 修整清单（activity-indicator）：
-  - 存在 v-else/v-html 需人工核对
+  平台差异说明（对齐 legacy/components/activity-indicator/demo/cases/demo0~2.vue）：
+  - v-if/v-else（loading 切换指示器与"确认支付"）改为 wx:if/wx:else，js 已有 createPay
+  - 组件为 virtualHost，class 落不到组件节点：指示器外包一层 view.md-activity-indicator-css 承接样式
 -->

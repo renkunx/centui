@@ -1,16 +1,17 @@
-/* legacy/components/activity-indicator/demo 对译（生成器产物，TODO 见 wxml 尾注释） */
+/* legacy/components/activity-indicator/demo 对译（TODO 已清零；差异见 wxml 尾注释） */
+
 Page({
   data: {
-  "loading": false
-},
+    loading: false,
+  },
+
   createPay() {
-      if (this.loading) {
-        return
-      }
-      this.loading = true
-      setTimeout(() => {
-        this.loading = false
-      }, 2000)
-    },
-  noop() {},
+    if (this.data.loading) {
+      return
+    }
+    this.setData({loading: true})
+    setTimeout(() => {
+      this.setData({loading: false})
+    }, 2000)
+  },
 })

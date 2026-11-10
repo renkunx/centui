@@ -9,13 +9,13 @@
       content="MAND MOBILE"
       spacing="10vw"
     >
-      <view class="legacy-p" class="text">
+      <view class="legacy-p text">
         每个人都有属于自己的一片森林，也许我们从来不曾去过，但它一直在那里，总会在那里。迷失的人迷失了，相逢的人会再相逢。
       </view>
-      <view class="legacy-p" class="text">
+      <view class="legacy-p text">
         希望你可以记住我，记住我这样活过，这样在你身边待过。
       </view>
-      <view class="legacy-p" class="text">
+      <view class="legacy-p text">
         少年时我们追求激情，成熟后却迷恋平庸。在我们寻找、伤害、背离之后，还能一如既往地相信爱情，这是一种勇气。
       </view>
     </cu-water-mark>
@@ -32,18 +32,17 @@
       class="text-container"
       spacing="10vw"
     >
-      <view class="legacy-p" class="text">
-        通过<b>作用域插槽</b>的坐标属性(coord)可以对水印行列进行定制
+      <view class="legacy-p text">
+        通过<text class="b">作用域插槽</text>的坐标属性(coord)可以对水印行列进行定制
       </view>
-      <view class="legacy-p" class="text">
-        通过<b>作用域插槽</b>的坐标属性(coord)可以对水印行列进行定制
+      <view class="legacy-p text">
+        通过<text class="b">作用域插槽</text>的坐标属性(coord)可以对水印行列进行定制
       </view>
-      <view class="legacy-p" class="text">
-        通过<b>作用域插槽</b>的坐标属性(coord)可以对水印行列进行定制
+      <view class="legacy-p text">
+        通过<text class="b">作用域插槽</text>的坐标属性(coord)可以对水印行列进行定制
       </view>
-      <view slot="watermark" slot-scope="props">
-        <text wx:if="{{props.coord.row % 2 "> 奇数行</text>
-        <text v-else>偶数行</text>
+      <view slot="watermark">
+        <text>偶数行</text>
       </view>
     </cu-water-mark>
 	</view>
@@ -52,6 +51,8 @@
   </view>
 </view>
 <!--
-TODO 修整清单（water-mark）：
-  - 存在 v-else/v-html 需人工核对
+  平台差异说明（对齐 legacy/components/water-mark/demo/cases/demo0、demo1.vue）：
+  - watermark 作用域插槽的 coord（row/col）无小程序等价物（组件差异声明：不注入 coord），
+    水印内容改为静态文本（奇偶行交替不可实现）
+  - 重复的 class 属性（class="legacy-p" class="text"）合并；b 标签改为 text.b 加粗
 -->

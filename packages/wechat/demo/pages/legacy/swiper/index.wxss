@@ -57,7 +57,7 @@
 .md-example-child-swiper-3 {
   height: 250px;
 }
-.md-example-child-swiper-3 li {
+.md-example-child-swiper-3 .mulit-item {
   list-style: none;
   float: left;
   width: 33%;
@@ -82,7 +82,7 @@
   width: 100%;
   margin-bottom: 20px;
 }
-.md-example.swiper .md-example-title a {
+.md-example.swiper .md-example-title .title-link {
   background: #3ca0e6;
   color: #fff;
   padding: 5px 10px;
@@ -91,3 +91,22 @@
   line-height: 28px;
 }
 
+
+/* examples/App.vue .md-example-describe / .md-example-title a 移植 */
+.legacy-describe {
+  display: block;
+  margin-top: 15rpx;
+  font-size: var(--font-minor-large);
+  font-weight: var(--font-weight-light);
+  color: var(--color-text-minor);
+}
+.legacy-title .title-link {
+  display: inline-block;
+  margin-right: 5rpx;
+  font-weight: var(--font-weight-light);
+  text-decoration: none;
+}
+
+.md-example-child-swiper-3 .mulit-list {
+  overflow: hidden;
+}

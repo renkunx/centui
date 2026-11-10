@@ -1,5 +1,88 @@
-/* legacy/components/tab-picker/demo 对译（生成器产物，TODO 见 wxml 尾注释） */
+/* legacy/components/tab-picker/demo 对译（TODO 已清零；差异见 wxml 尾注释） */
+
+// legacy/components/tab-picker/demo/data.json
+const data = {
+  name: 'province',
+  label: '请选择',
+  options: [
+    {
+      value: 'pk',
+      label: '北京市',
+      children: {
+        name: 'block',
+        label: '请选择',
+        options: [
+          {value: 'hd', label: '海淀区'},
+          {value: 'cp', label: '昌平区'},
+          {value: 'cy', label: '朝阳区'},
+        ],
+      },
+    },
+    {
+      value: 'sc',
+      label: '四川省',
+      children: {
+        name: 'city',
+        label: '请选择',
+        options: [
+          {
+            value: 'cd',
+            label: '成都市',
+            children: {
+              name: 'block',
+              label: '请选择',
+              options: [
+                {value: 'gx', label: '高新区'},
+                {value: 'qy', label: '青羊区'},
+              ],
+            },
+          },
+          {
+            value: 'my',
+            label: '绵阳市',
+            children: {
+              name: 'block',
+              label: '请选择',
+              options: [{value: 'jn', label: '金牛区'}],
+            },
+          },
+          {value: 'lz', label: '泸州市'},
+          {value: 'dy', label: '德阳市'},
+          {value: 'ms', label: '眉山市'},
+          {value: 'ls', label: '乐山市'},
+          {value: 'yb', label: '宜宾市'},
+          {value: 'ya', label: '雅安市'},
+          {value: 'zg', label: '自贡市'},
+          {value: 'pzh', label: '攀枝花市'},
+          {value: 'sn', label: '遂宁市'},
+          {value: 'nc', label: '南充市'},
+          {value: 'nj', label: '内江市'},
+          {value: 'dz', label: '达州市'},
+          {value: 'ga', label: '广安市'},
+        ],
+      },
+    },
+  ],
+}
+
 Page({
-  data: {},
-  noop() {},
+  data: {
+    show: false,
+    address: [],
+    addressStr: '',
+    data,
+  },
+
+  toggleShow() {
+    this.setData({show: !this.data.show})
+  },
+
+  handleChange(e) {
+    const options = (e.detail && e.detail.options) || []
+    // computed addressStr = address.map(item => item.label).join(' ')
+    this.setData({
+      address: options,
+      addressStr: options.map((item) => item.label).join(' '),
+    })
+  },
 })

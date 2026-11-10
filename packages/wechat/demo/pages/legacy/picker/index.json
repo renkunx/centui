@@ -2,6 +2,7 @@
   "usingComponents": {
     "cu-picker": "../../../../dist/components/picker/index",
     "cu-field": "../../../../dist/components/field/index",
-    "cu-field-item": "../../../../dist/components/field-item/index"
+    "cu-field-item": "../../../../dist/components/field-item/index",
+    "cu-dialog": "../../../../dist/components/dialog/index"
   }
 }

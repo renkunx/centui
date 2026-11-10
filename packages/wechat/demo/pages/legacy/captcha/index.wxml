@@ -7,11 +7,11 @@
     <cu-field title="文案">
       <cu-input-item
         title="标题"
-        value="{{title}}" bind:change="noop"
+        value="{{title0}}" bind:change="setTitle0"
       ></cu-input-item>
       <cu-input-item
         title="插槽内容"
-        value="{{content}}" bind:change="noop"
+        value="{{content0}}" bind:change="setContent0"
       ></cu-input-item>
       <cu-input-item
         title="短信验证码"
@@ -26,46 +26,46 @@
         title="限制验证码长度"
         customized
         align="right">
-        <cu-switch value="{{limit}}" bind:change="noop"></cu-switch>
+        <cu-switch value="{{limit0}}" bind:change="toggleLimit0"></cu-switch>
       </cu-field-item>
 
       <cu-input-item
         title="验证码长度"
         type="tel"
-        value="{{maxlength}}" bind:change="noop"
+        value="{{maxlength0}}" bind:change="setMaxlength0"
       ></cu-input-item>
 
       <cu-field-item
         title="采用掩码"
         customized
         align="right">
-        <cu-switch value="{{mask}}" bind:change="noop"></cu-switch>
+        <cu-switch value="{{mask0}}" bind:change="toggleMask0"></cu-switch>
       </cu-field-item>
 
       <cu-field-item
         title="使用系统键盘"
         customized
         align="right">
-        <cu-switch value="{{system}}" bind:change="noop"></cu-switch>
+        <cu-switch value="{{system0}}" bind:change="toggleSystem0"></cu-switch>
       </cu-field-item>
 
     </cu-field>
-    <cu-button bind:tap="next">确定</cu-button>
+    <cu-button bind:tap="next0">确定</cu-button>
 
     <cu-captcha
-      ref="captcha"
-      value="{{show}}" bind:change="noop"
-      title="{{title}}"
-      maxlength="{{limit ? parseFloat(maxlength) : -1}}"
-      system="{{system}}"
-      mask="{{mask}}"
-      appendTo="{{appendTo}}"
-      bind:submit="submit"
-      bind:show="onShow"
-      bind:hide="onHide"
-      bind:send="onSend"
+      id="captcha0"
+      show="{{show0}}"
+      bind:change="onCaptchaChange0"
+      title="{{title0}}"
+      maxlength="{{capMax0}}"
+      system="{{system0}}"
+      mask="{{mask0}}"
+      bind:submit="submit0"
+      bind:show="onShow0"
+      bind:hide="onHide0"
+      bind:send="onSend0"
     >
-      {{content}}
+      {{content0}}
     </cu-captcha>
 	</view>
 
@@ -78,7 +78,7 @@
   <view class="md-example-child md-example-child-captcha-1">
     <cu-captcha
       maxlength="{{4}}"
-      isView="{{true}}"
+      is-view="{{true}}"
       brief="最新验证码依然有效，请勿重发"
     >
       验证码已发送至186****5407
@@ -93,52 +93,52 @@
 
   <view class="md-example-child md-example-child-captcha">
     <cu-field title="文案">
-      <cu-input-item title="标题" value="{{title}}" bind:change="noop"></cu-input-item>
-      <cu-input-item title="插槽内容" value="{{content}}" bind:change="noop"></cu-input-item>
+      <cu-input-item title="标题" value="{{title2}}" bind:change="setTitle2"></cu-input-item>
+      <cu-input-item title="插槽内容" value="{{content2}}" bind:change="setContent2"></cu-input-item>
       <cu-input-item title="短信验证码" value="1234" readonly></cu-input-item>
     </cu-field>
 
     <cu-field title="配置">
       <cu-field-item title="发送N次后禁用发送按钮" customized align="right">
-        <cu-input-item value="{{useSendTimes}}" bind:change="noop"></cu-input-item>
+        <cu-input-item value="{{useSendTimes2}}" bind:change="setUseSendTimes2"></cu-input-item>
       </cu-field-item>
 
       <cu-field-item title="限制验证码长度" customized align="right">
-        <cu-switch value="{{limit}}" bind:change="noop"></cu-switch>
+        <cu-switch value="{{limit2}}" bind:change="toggleLimit2"></cu-switch>
       </cu-field-item>
 
       <cu-input-item
         title="验证码长度"
         type="tel"
-        value="{{maxlength}}" bind:change="noop"
+        value="{{maxlength2}}" bind:change="setMaxlength2"
       ></cu-input-item>
 
       <cu-field-item title="采用掩码" customized align="right">
-        <cu-switch value="{{mask}}" bind:change="noop"></cu-switch>
+        <cu-switch value="{{mask2}}" bind:change="toggleMask2"></cu-switch>
       </cu-field-item>
 
       <cu-field-item title="使用系统键盘" customized align="right">
-        <cu-switch value="{{system}}" bind:change="noop"></cu-switch>
+        <cu-switch value="{{system2}}" bind:change="toggleSystem2"></cu-switch>
       </cu-field-item>
     </cu-field>
-    <cu-button bind:tap="next">确定</cu-button>
+    <cu-button bind:tap="next2">确定</cu-button>
 
     <cu-captcha
-      ref="captcha"
-      value="{{show}}" bind:change="noop"
-      title="{{title}}"
-      subtitle="{{subtitle}}"
-      maxlength="{{limit ? parseFloat(maxlength) : -1}}"
-      system="{{system}}"
-      mask="{{mask}}"
-      appendTo="{{appendTo}}"
-      type="{{halfScreen}}"
-      countNormalText="{{countNormalText}}"
-      disableSend="{{disableSend}}"
-      bind:submit="submit"
-      bind:show="onShow"
-      bind:hide="onHide"
-      bind:send="onSend"
+      id="captcha2"
+      show="{{show2}}"
+      bind:change="onCaptchaChange2"
+      title="{{title2}}"
+      subtitle="{{subtitle2}}"
+      maxlength="{{capMax2}}"
+      system="{{system2}}"
+      mask="{{mask2}}"
+      type="halfScreen"
+      count-normal-text="{{countNormalText2}}"
+      disable-send="{{disableSend2}}"
+      bind:submit="submit2"
+      bind:show="onShow2"
+      bind:hide="onHide2"
+      bind:send="onSend2"
     >
       <view class="soltDiv">
         验证码已发送至 <text class="phone">186****5407</text><text class="hint" bind:tap="hintHandle">收不到验证码？</text>
@@ -147,8 +147,8 @@
     <cu-dialog
       title="收不到短信验证码？"
       closable="{{true}}"
-      v-model="dialogConfig.open"
-      btns="{{dialogConfig.btns}}"
+      show="{{dialogOpen}}"
+      btns="{{dialogBtns}}"
     >
       人生的刺，就在这里，留恋着不肯快走的，偏是你所不留恋的东西。
     </cu-dialog>
@@ -156,9 +156,15 @@
 
     </view>
   </view>
+  <cu-toast id="cu-toast" />
 </view>
 <!--
-TODO 修整清单（captcha）：
-  - wxml 方法调用表达式需改写：{{limit ? parseFloat(maxlength) : -1}}
-  - wxml 方法调用表达式需改写：{{limit ? parseFloat(maxlength) : -1}}
+  平台差异说明（对齐 legacy/components/captcha/demo/cases/demo0、demo2.vue）：
+  - v-model 均改为 value/show 属性 + change 事件回写（switch/input-item/captcha/dialog 同）
+  - :maxlength="limit ? parseFloat(maxlength) : -1" 改为页面 data 字段 capMax0/capMax2，随 limit/maxlength 变更重算
+  - appendTo 为 Web DOM 语义，小程序无挂点概念，未传（组件内嵌页面内）
+  - $refs.captcha.setError 改为 selectComponent('#captchaN').setError
+  - Toast({content}) 改为页面内 cu-toast 组件（id="cu-toast"）+ show({content, duration: 3000})
+  - dialogConfig.btns 的 handler 函数无法经 setData 传递；按钮无 handler 时组件自动关闭，行为等价
+  - demo0/demo2 同名文案字段拆分为 *0/*2，保持两个 case 独立语义
 -->

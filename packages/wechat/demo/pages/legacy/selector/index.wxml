@@ -7,20 +7,21 @@
     <cu-field>
       <cu-field-item
         title="普通模式"
-        content="{{selectorValue}}"
-        bind:tap="showSelector"
+        content="{{selectorValue0}}"
+        bind:click="showSelector0"
         arrow
         solid
       />
     </cu-field>
     <cu-selector
-      value="{{isSelectorShow}}" bind:change="noop"
+      show="{{isSelectorShow0}}"
+      bind:change="onSelectorShowChange0"
       default-value="2"
-      data="{{data[0]}}"
+      data="{{data0}}"
       max-height="320px"
       title="普通模式"
       large-radius
-      bind:choose="onSelectorChoose"
+      bind:choose="onSelectorChoose0"
     ></cu-selector>
   </view>
 
@@ -34,36 +35,25 @@
     <cu-field>
       <cu-field-item
         title="自定义"
-        content="{{selectorValue}}"
-        bind:tap="showSelector"
+        content="{{selectorValue1}}"
+        bind:click="showSelector1"
         arrow
         solid
       />
     </cu-field>
     <cu-selector
-      value="{{isSelectorShow}}" bind:change="noop"
-      data="{{data[0]}}"
+      show="{{isSelectorShow1}}"
+      bind:change="onSelectorShowChange1"
+      data="{{data1}}"
       hide-title-bar
       large-radius
       is-check
-      iconSize="lg"
-      bind:choose="onSelectorChoose"
+      icon-size="lg"
+      bind:choose="onSelectorChoose1"
     >
       <view class="selector-header" slot="header">
         Header Slot
       </view>
-      <template slot-scope="{ option, index, selected }">
-        <!-- <view class="md-selector-custom-brief">{{ option.text }}使用slot-scope</view> -->
-        <view class="selector-item-body" class="{{{disabled: option.disabled, selected}}}">
-          <view class="selector-item-left">
-            <text class="holder" v-text="option.value"></text>
-          </view>
-          <view class="selector-item-content">
-            <view class="legacy-p" class="selector-item-title" v-text="option.text"></view>
-            <view class="legacy-p" class="selector-item-brief" v-text="`${option.describe}-${index}`"></view>
-          </view>
-        </view>
-      </template>
       <view class="selector-footer" slot="footer">
         Footer Slot
       </view>
@@ -80,20 +70,21 @@
     <cu-field>
       <cu-field-item
         title="确认模式"
-        content="{{selectorValue}}"
-        bind:tap="showSelector"
+        content="{{selectorValue2}}"
+        bind:click="showSelector2"
         arrow
         solid
       />
     </cu-field>
     <cu-selector
-      value="{{isSelectorShow}}" bind:change="noop"
-      data="{{data[0]}}"
+      show="{{isSelectorShow2}}"
+      bind:change="onSelectorShowChange2"
+      data="{{data2}}"
       min-height="320px"
       title="确认模式"
-      okText="确认"
+      ok-text="确认"
       large-radius
-      bind:confirm="onSelectorConfirm"
+      bind:confirm="onSelectorConfirm2"
     ></cu-selector>
   </view>
 
@@ -107,20 +98,21 @@
     <cu-field>
       <cu-field-item
         title="Check模式"
-        content="{{selectorValue}}"
-        bind:tap="showSelector"
+        content="{{selectorValue3}}"
+        bind:click="showSelector3"
         arrow
       />
     </cu-field>
     <cu-selector
-      value="{{isSelectorShow}}" bind:change="noop"
-      data="{{data[0]}}"
+      show="{{isSelectorShow3}}"
+      bind:change="onSelectorShowChange3"
+      data="{{data3}}"
       title="Check模式"
       min-height="320px"
-      okText="确认"
-      cancelText="取消"
+      ok-text="确认"
+      cancel-text="取消"
       large-radius
-      bind:confirm="onSelectorConfirm"
+      bind:confirm="onSelectorConfirm3"
       is-check
     ></cu-selector>
   </view>
@@ -135,21 +127,22 @@
     <cu-field>
       <cu-field-item
         title="多选模式"
-        content="{{selectorValue.join(',')}}"
-        bind:tap="showSelector"
+        content="{{selectorValue4Str}}"
+        bind:click="showSelector4"
         arrow
       />
     </cu-field>
     <cu-selector
-      value="{{isSelectorShow}}" bind:change="noop"
-      data="{{data[0]}}"
-      defaultValue="{{selectorValue}}"
+      show="{{isSelectorShow4}}"
+      bind:change="onSelectorShowChange4"
+      data="{{data4}}"
+      default-value="{{selectorValue4}}"
       title="多选模式"
       min-height="320px"
-      okText="确定"
-      cancelText="取消"
+      ok-text="确定"
+      cancel-text="取消"
       large-radius
-      bind:confirm="onSelectorConfirm"
+      bind:confirm="onSelectorConfirm4"
       multi
     ></cu-selector>
   </view>
@@ -158,6 +151,10 @@
   </view>
 </view>
 <!--
-TODO 修整清单（selector）：
-  - wxml 方法调用表达式需改写：{{selectorValue.join(',')}}
+  平台差异说明（对齐 legacy/components/selector/demo/cases/demo0~4.vue）：
+  - {{selectorValue.join(',')}} 改为页面 data 字段 selectorValue4Str，confirm 处理器内 join
+  - v-model 均改为 show 属性 + change 事件回写；@click="showSelector" 改为 bind:click
+  - 五个 case 的 data/selectorValue 同名字段拆分为 *0~*4，保持各 case 独立数据
+  - demo1 的 slot-scope 自定义选项（holder+title+brief 结构）无小程序作用域插槽等价物，
+    改为组件内置 title+brief 渲染（brief = describe-序号），header/footer 插槽保留
 -->

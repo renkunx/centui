@@ -3,9 +3,10 @@
 .md-example-child-steps-5 {
   height: 140px;
 }
-.md-example-child-steps-5 .md-steps .icon.current::before {
+/* demo5：利用 current 类给当前步骤加下指三角（原 .icon.current::before，按本组件类名重定向） */
+.md-example-child-steps-5 .cu-steps .step-wrapper.current .icon-wrapper::before {
   content: '';
-  color: color-primary-tap;
+  color: #167de5;
   border-bottom: 10px solid;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
@@ -13,7 +14,7 @@
   top: 130px;
 }
 
-.md-example-child-steps-7 .md-steps {
+.md-example-child-steps-7 .cu-steps {
   height: 420px;
 }
 
@@ -29,7 +30,7 @@
   margin-top: 20px;
   color: #111a34;
 }
-.md-example-child-steps-8 .custom-content .amount .md-amount {
+.md-example-child-steps-8 .custom-content .amount .cu-amount {
   margin-right: 5px;
   font-size: 80px;
 }
@@ -41,6 +42,166 @@
 }
 
 .md-example-content {
-  background: color-bg-base;
+  background: var(--color-bg-base);
 }
 
+/* custom + 默认插槽整树渲染（demo2/demo8）的步骤树样式：自 legacy steps/index.vue stylus 移植 */
+.steps-tree {
+  display: flex;
+  justify-content: space-around;
+  font-size: 28rpx;
+}
+.steps-tree.horizontal {
+  align-items: center;
+  padding: 40rpx 100rpx 100rpx;
+}
+.steps-tree.horizontal .step-wrapper {
+  margin: 0 4rpx;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.steps-tree.horizontal .text-wrapper {
+  top: 100%;
+  padding-top: var(--steps-text-gap-horizontal);
+  text-align: center;
+}
+.steps-tree.horizontal .text-wrapper .name {
+  color: var(--steps-desc-color);
+}
+.steps-tree.vertical {
+  align-items: flex-start;
+  padding: 40rpx;
+  flex-direction: column;
+}
+.steps-tree.vertical .step-wrapper {
+  width: 100%;
+  margin: 4rpx 0;
+  align-items: stretch;
+}
+.steps-tree.vertical .step-wrapper .icon-wrapper {
+  position: relative;
+}
+.steps-tree.vertical .step-wrapper .text-wrapper {
+  left: var(--steps-icon-size);
+  padding-left: var(--steps-text-gap-vertical);
+}
+.steps-tree.vertical .step-wrapper .text-wrapper .name,
+.steps-tree.vertical .step-wrapper .text-wrapper .desc {
+  white-space: normal;
+}
+.steps-tree.vertical .step-wrapper .text-wrapper .name {
+  color: var(--steps-text-color);
+}
+.steps-tree.vertical .step-wrapper .text-wrapper .desc {
+  margin-top: 18rpx;
+  color: var(--steps-desc-color);
+}
+.steps-tree .step-wrapper {
+  display: flex;
+  position: relative;
+  min-width: var(--steps-icon-size);
+  min-height: var(--steps-icon-size);
+}
+.steps-tree .icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: var(--steps-icon-size);
+  min-height: var(--steps-icon-size);
+  color: var(--steps-color);
+}
+.steps-tree .step-wrapper.reached .icon-wrapper,
+.steps-tree .step-wrapper.current .icon-wrapper {
+  color: var(--steps-color-active);
+}
+.steps-tree .icon-wrapper .cu-icon {
+  width: var(--steps-icon-size);
+  height: var(--steps-icon-size);
+  font-size: var(--steps-icon-size);
+  line-height: var(--steps-icon-size);
+}
+.steps-tree .icon-wrapper .step-idx {
+  line-height: var(--steps-text-font-size);
+  font-size: var(--steps-text-font-size);
+}
+.steps-tree .icon-wrapper .step-idx.idx-current {
+  font-weight: bold;
+}
+.steps-tree .icon-wrapper .step-node-default {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: var(--steps-icon-size);
+  min-height: var(--steps-icon-size);
+}
+.steps-tree .icon-wrapper .step-node-default-icon {
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  background: var(--steps-color);
+}
+.steps-tree .step-wrapper.reached .step-node-default-icon,
+.steps-tree .step-wrapper.current .step-node-default-icon {
+  background: var(--steps-color-active);
+}
+.steps-tree .text-wrapper {
+  position: absolute;
+}
+.steps-tree .text-wrapper .name,
+.steps-tree .text-wrapper .desc {
+  white-space: nowrap;
+}
+.steps-tree .text-wrapper .name {
+  line-height: var(--steps-text-font-size);
+  font-size: var(--steps-text-font-size);
+}
+.steps-tree .text-wrapper .desc {
+  line-height: var(--steps-text-font-size);
+  font-size: var(--steps-desc-font-size);
+}
+.steps-tree .bar {
+  position: relative;
+  background-color: var(--steps-color);
+  overflow: hidden;
+}
+.steps-tree .bar .bar-inner {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  transition: all 1s linear;
+}
+.steps-tree .bar.horizontal-bar {
+  flex: 1;
+  height: var(--steps-border-size);
+}
+.steps-tree .bar.horizontal-bar .bar-inner {
+  width: 100%;
+  height: var(--steps-border-size);
+  background-color: var(--steps-color-active);
+}
+.steps-tree .bar.vertical-bar {
+  left: 16rpx;
+  width: var(--steps-border-size);
+  transform: translateX(-50%);
+}
+.steps-tree .bar.vertical-bar .bar-inner {
+  width: var(--steps-border-size);
+  height: 100%;
+  background-color: var(--steps-color-active);
+}
+.steps-tree .title-link,
+.legacy-title .title-link {
+  display: inline-block;
+  margin-right: 5rpx;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 5rpx 10rpx;
+  border-radius: var(--radius-normal);
+  font-size: var(--font-minor-large);
+  font-weight: var(--font-weight-light);
+  line-height: 28rpx;
+  text-decoration: none;
+}

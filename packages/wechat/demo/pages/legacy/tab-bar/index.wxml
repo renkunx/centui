@@ -4,10 +4,16 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-0">
-    <cu-tab-bar
-      value="{{current}}" bind:change="noop"
-      items="{{items}}"
-    />
+    <cu-tabs
+      value="{{current0}}"
+      bind:change="onChange0"
+    >
+      <cu-tab-pane
+        wx:for="{{items0}}" wx:key="name"
+        name="{{item.name}}"
+        label="{{item.label}}"
+      ></cu-tab-pane>
+    </cu-tabs>
   </view>
 
     </view>
@@ -17,11 +23,16 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-1">
-    <cu-tab-bar
-      value="{{current}}" bind:change="noop"
-      items="{{items}}"
-      maxLength="{{5}}"
-    />
+    <cu-tabs
+      value="{{current1}}"
+      bind:change="onChange1"
+    >
+      <cu-tab-pane
+        wx:for="{{items1}}" wx:key="name"
+        name="{{item.name}}"
+        label="{{item.label}}"
+      ></cu-tab-pane>
+    </cu-tabs>
   </view>
 
     </view>
@@ -31,11 +42,16 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-2">
-    <cu-tab-bar
-      value="{{current}}" bind:change="noop"
-      items="{{items}}"
-      maxLength="{{5}}"
-    />
+    <cu-tabs
+      value="{{current2}}"
+      bind:change="onChange2"
+    >
+      <cu-tab-pane
+        wx:for="{{items2}}" wx:key="name"
+        name="{{item.name}}"
+        label="{{item.label}}"
+      ></cu-tab-pane>
+    </cu-tabs>
   </view>
 
     </view>
@@ -45,11 +61,17 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-3">
-    <cu-tab-bar
-      value="{{current}}" bind:change="noop"
-      items="{{items}}"
-      hasInk="{{false}}"
-    />
+    <cu-tabs
+      value="{{current3}}"
+      has-ink="{{false}}"
+      bind:change="onChange3"
+    >
+      <cu-tab-pane
+        wx:for="{{items3}}" wx:key="name"
+        name="{{item.name}}"
+        label="{{item.label}}"
+      ></cu-tab-pane>
+    </cu-tabs>
   </view>
 
     </view>
@@ -59,22 +81,21 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-4">
-    <cu-tab-bar
-      value="{{current}}" bind:change="noop"
-      items="{{items}}"
-      has-ink="{{false}}"
-    >
-      <template slot="item" slot-scope="{ item }">
-        <view class="custom-item">
-          <view class="icon">
-            <cu-icon name="{{item.icon}}" />
-          </view>
-          <view class="text">
-            <text v-text="item.label"></text>
-          </view>
+    <view class="custom-tab-bar">
+      <view
+        wx:for="{{items4}}" wx:key="name"
+        class="custom-item {{current4 === item.name ? 'is-active' : ''}}"
+        data-name="{{item.name}}"
+        bind:tap="onCustomTab4"
+      >
+        <view class="icon">
+          <cu-icon name="{{item.icon}}" />
         </view>
-      </template>
-    </cu-tab-bar>
+        <view class="text">
+          <text>{{item.label}}</text>
+        </view>
+      </view>
+    </view>
   </view>
 
     </view>
@@ -84,11 +105,16 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-5">
-    <cu-tab-bar
-      value="{{current}}" bind:change="noop"
-      items="{{items}}"
-      bind:change="onChange"
-    />
+    <cu-tabs
+      value="{{current5}}"
+      bind:change="onChange5"
+    >
+      <cu-tab-pane
+        wx:for="{{items5}}" wx:key="name"
+        name="{{item.name}}"
+        label="{{item.label}}"
+      ></cu-tab-pane>
+    </cu-tabs>
   </view>
 
     </view>
@@ -98,13 +124,18 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-6">
-    <cu-tab-bar
-      value="{{current}}" bind:change="noop"
-      items="{{items}}"
+    <cu-tabs
+      value="{{current6}}"
       bind:change="onTabChange"
-    ></cu-tab-bar>
+    >
+      <cu-tab-pane
+        wx:for="{{items6}}" wx:key="name"
+        name="{{item.name}}"
+        label="{{item.label}}"
+      ></cu-tab-pane>
+    </cu-tabs>
     <cu-swiper
-      ref="swiper"
+      id="swiper6"
       autoplay="{{0}}"
       is-prevent="{{false}}"
       is-loop="{{false}}"
@@ -112,14 +143,23 @@
       bind:before-change="onSwiperChange"
     >
       <cu-swiper-item>
-        她对他很满意。走吧。好。他起身买单，腿却一拐一拐的。难怪他才华横溢，事业有成，却还是单身。趁着他买单，她赶紧悄悄走了。
+        <view class="swiper-text">她对他很满意。走吧。好。他起身买单，腿却一拐一拐的。难怪他才华横溢，事业有成，却还是单身。趁着他买单，她赶紧悄悄走了。</view>
       </cu-swiper-item>
       <cu-swiper-item>
-        又是一年，她又遇到了他，他正牵着孩子的手，走的飞快。
+        <view class="swiper-text">又是一年，她又遇到了他，他正牵着孩子的手，走的飞快。</view>
       </cu-swiper-item>
     </cu-swiper>
   </view>
 
     </view>
   </view>
+  <cu-toast id="cu-toast" />
 </view>
+<!--
+  平台差异说明（对齐 legacy/components/tab-bar/demo/cases/demo0~6.vue）：
+  - cu-tab-bar 组件未移植，统一以 cu-tabs（tab 条 + 空面板）替代；v-model 改为 value + change 回写
+  - md-tab-bar 的 maxLength 无直接等价物：cu-tabs 按内容宽度自动布局/滚动
+  - demo4 自定义 item 作用域插槽无平台等价物，改为自绘 tab 条（icon + 文本，激活色 --tab-active-color）
+  - demo5 Toast.info 改为页面 cu-toast 组件命令式调用
+  - demo6 $refs.swiper.goto 改为 selectComponent('#swiper6').goto
+-->

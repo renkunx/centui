@@ -6,6 +6,7 @@
     "cu-switch": "../../../../dist/components/switch/index",
     "cu-button": "../../../../dist/components/button/index",
     "cu-captcha": "../../../../dist/components/captcha/index",
-    "cu-dialog": "../../../../dist/components/dialog/index"
+    "cu-dialog": "../../../../dist/components/dialog/index",
+    "cu-toast": "../../../../dist/components/toast/index"
   }
 }
