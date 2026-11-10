@@ -1,4 +1,4 @@
-import {describe, it, expect} from 'vitest'
+import {describe, it, expect, vi, beforeEach, afterEach} from 'vitest'
 import {
   buildRollerStyles,
   buildSuccessStyles,
@@ -7,6 +7,7 @@ import {
   resolveStrokeWidth,
   CAROUSEL_PHASES,
   SUCCESS_BG,
+  CAROUSEL_PHASE_INTERVAL,
 } from '../../src/shared/indicator-ring'
 
 /** Roller.vue 几何：viewBoxSize = size + 2*w，scale = size/viewBoxSize，外径 = (size+w)*scale */
@@ -126,5 +127,152 @@ describe('indicator-ring/carousel', () => {
 
   it('舞台宽 = len*size + (len-1)*size/2 = 4*size', () => {
     expect(buildCarouselBoxStyle(30)).toBe('position:relative;width:120px;height:30px;')
+  })
+})
+
+/**
+ * 组件层（index.ts）：三态样式派生（roller/success/spinner/carousel）、carousel
+ * 相位定时器、文字样式、插槽探针与 detached 清理。
+ */
+import {loadComponent, mountDef} from '../helpers/weapp'
+
+const comp = await loadComponent(() => import('../../src/components/activity-indicator/index'))
+
+describe('activity-indicator 组件', () => {
+  beforeEach(() => vi.useFakeTimers())
+  afterEach(() => vi.useRealTimers())
+
+  it('attached（默认 roller 不定态）：样式派生、hasFill=false、无 carousel 定时器', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    expect(inst.data.rollerBoxStyle).toBe('position:relative;width:70px;height:70px;')
+    expect(inst.data.rollerArcStyle).toContain('316.8deg')
+    expect(inst.data.rollerArcStyle).toContain('animation:cu-rotate 2s linear infinite;')
+    expect(inst.data.rollerFillStyle).toBe('')
+    expect(inst.data.hasFill).toBe(false)
+    expect(inst.data.spinnerStyle).toBe('')
+    expect((inst as any).__aiState.carouselTimer).toBeNull()
+  })
+
+  it('roller：自定义色/fill/rotate（color 空回退默认 #2F86F6，fill 非透明 → hasFill）', () => {
+    const inst = mountDef(comp.def, {
+      props: {color: '#F00', fill: '#FFF6F1', rotate: 90, width: 8},
+    })
+    inst.attached()
+    expect(inst.data.rollerArcStyle).toContain('#F00')
+    expect(inst.data.rollerBoxStyle).toContain('transform:rotateZ(90deg);')
+    expect(inst.data.rollerFillStyle).toContain('background:#FFF6F1;')
+    expect(inst.data.hasFill).toBe(true)
+  })
+
+  it('isSuccess：success 样式分支（successColor 空回退默认，width 0 → 8）', () => {
+    const inst = mountDef(comp.def, {props: {isSuccess: true, successColor: ''}})
+    inst.attached()
+    expect(inst.data.successBoxStyle).toBe('position:relative;width:70px;height:70px;')
+    expect(inst.data.successDiscStyle).toContain('background:#FFF6F1;')
+    expect(inst.data.successBar0Style).toContain(`background:${'#28AA8F'};`)
+    expect(inst.data.successBar0Style).toContain('height:8.00px;')
+
+    // 自定义 successColor 透传到对勾条
+    const custom = mountDef(comp.def, {props: {isSuccess: true, successColor: '#123456'}})
+    custom.attached()
+    expect(custom.data.successBar1Style).toContain('background:#123456;')
+  })
+
+  it('spinner：dark 语义（color 空回退 dark → #000 底 + invert 滤镜）', () => {
+    const inst = mountDef(comp.def, {props: {type: 'spinner', size: 30}})
+    inst.attached()
+    expect(inst.data.spinnerDark).toBe(true)
+    expect(inst.data.spinnerStyle).toContain('background:repeating-conic-gradient(from 0deg, #000 0deg 15deg')
+    expect(inst.data.spinnerStyle).toContain('filter:invert(1);')
+    expect(inst.data.rollerBoxStyle).toBe('')
+  })
+
+  it('spinner：非 dark 自定义色 → glyph #eee 底、无滤镜', () => {
+    const inst = mountDef(comp.def, {props: {type: 'spinner', color: 'red'}})
+    inst.attached()
+    expect(inst.data.spinnerDark).toBe(false)
+    expect(inst.data.spinnerStyle).toContain('repeating-conic-gradient(from 0deg, #eee 0deg 15deg')
+    expect(inst.data.spinnerStyle).not.toContain('filter')
+  })
+
+  it('carousel：舞台/圆点样式（color 空回退默认色）+ 相位定时器推进与类型切换清理', () => {
+    const inst = mountDef(comp.def, {props: {type: 'carousel', size: 30}})
+    inst.attached()
+    expect(inst.data.carouselBoxStyle).toBe('position:relative;width:120px;height:30px;')
+    expect(inst.data.carouselDots[0]).toContain('opacity:1;transform:scale(1);')
+    expect(inst.data.carouselDots[0]).toContain('#2F86F6')
+    const timer = (inst as any).__aiState.carouselTimer
+    expect(timer).not.toBeNull()
+    expect((inst as any).__aiState.timers.size()).toBe(1)
+
+    // 相位推进：dot0 值 1 → 0.8
+    vi.advanceTimersByTime(CAROUSEL_PHASE_INTERVAL)
+    expect(inst.data.carouselDots[0]).toContain('opacity:0.8;transform:scale(0.8);')
+    // 循环：7 相位回绕（再推进 6 拍回到相位 0）
+    vi.advanceTimersByTime(CAROUSEL_PHASE_INTERVAL * 6)
+    expect(inst.data.carouselDots[0]).toContain('opacity:1;transform:scale(1);')
+
+    // 类型切回 roller：定时器清理
+    inst.setData({type: 'roller'})
+    expect((inst as any).__aiState.carouselTimer).toBeNull()
+    expect((inst as any).__aiState.timers.size()).toBe(0)
+  })
+
+  it('carousel：自定义 color 透传圆点着色', () => {
+    const inst = mountDef(comp.def, {props: {type: 'carousel', color: '#0A0'}})
+    inst.attached()
+    expect(inst.data.carouselDots[0]).toContain('#0A0')
+  })
+
+  it('样式 observers：任一几何键变更重派生；未知 type → 空补丁不崩溃', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.setData({size: 40})
+    expect(inst.data.rollerBoxStyle).toContain('width:40px;')
+    inst.setData({process: 0.5})
+    expect(inst.data.rollerArcStyle).toContain('from 90deg')
+    inst.setData({isSuccess: true})
+    expect(inst.data.successBoxStyle).toContain('width:40px;')
+    inst.setData({isSuccess: false, type: 'weird'})
+    expect(() => inst.setData({rotate: 30})).not.toThrow()
+  })
+
+  it('文字样式：textSize>0 加 font-size；attached 默认 #999', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    expect(inst.data.textStyle).toBe('color:#999;')
+    inst.setData({textSize: 20})
+    expect(inst.data.textStyle).toBe('color:#999;font-size:20px;')
+    inst.setData({textColor: '#F00', textSize: 0})
+    expect(inst.data.textStyle).toBe('color:#F00;')
+  })
+
+  it('ready 插槽探针：探针节点存在 → hasText=false；不存在保持 true', () => {
+    const withText = mountDef(comp.def, {rects: {'#cu-ai-text-probe': {height: 0}}})
+    withText.ready()
+    expect(withText.data.hasText).toBe(false)
+
+    const empty = mountDef(comp.def)
+    empty.ready()
+    expect(empty.data.hasText).toBe(true)
+  })
+
+  it('getStrokeWidth：width 0 → size/12；显式 width 原样', () => {
+    const inst = mountDef(comp.def)
+    expect(inst.methods.getStrokeWidth.call(inst)).toBeCloseTo(70 / 12)
+    const w = mountDef(comp.def, {props: {width: 9}})
+    expect(w.methods.getStrokeWidth.call(w)).toBe(9)
+  })
+
+  it('detached：carousel 定时器全量清理，推进不再派发', () => {
+    const inst = mountDef(comp.def, {props: {type: 'carousel'}})
+    inst.attached()
+    expect((inst as any).__aiState.timers.size()).toBe(1)
+    inst.detached()
+    expect((inst as any).__aiState.timers.size()).toBe(0)
+    const before = inst.data.carouselDots[0]
+    vi.advanceTimersByTime(CAROUSEL_PHASE_INTERVAL * 3)
+    expect(inst.data.carouselDots[0]).toBe(before)
   })
 })

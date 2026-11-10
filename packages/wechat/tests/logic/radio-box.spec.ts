@@ -82,3 +82,48 @@ describe('radio-box 组协同', () => {
     expect(inst.data.isChecked).toBe(true)
   })
 })
+
+describe('radio-box 分支补齐', () => {
+  it('ready 插槽探测：rect null / 有高度 / 零高度 三路', () => {
+    const bare = mountDef(comp.def, {props: {name: 'a', label: 'L'}})
+    bare.ready()
+    expect(bare.data.hasDefault).toBe(true)
+
+    const tall = mountDef(comp.def, {props: {name: 'a'}, rects: {'.cu-radio-box-content': {height: 12}}})
+    tall.ready()
+    expect(tall.data.hasDefault).toBe(true)
+
+    const empty = mountDef(comp.def, {props: {name: 'a', label: 'L'}, rects: {'.cu-radio-box-content': {height: 0}}})
+    empty.ready()
+    expect(empty.data.hasDefault).toBe(false)
+  })
+
+  it('relations linked：parent 无 data / 组值 undefined（?? 防御两路）', () => {
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.attached()
+    const rel = comp.def.relations!['../radio-group/index']
+    rel.linked.call(inst, {} as never)
+    expect(inst.data.groupValue).toBe(null)
+
+    inst.linkRelation('../radio-group/index', {data: {}})
+    expect(inst.data.groupValue).toBe(null)
+  })
+
+  it('relations unlinked：解除后点击不上报组', () => {
+    const checkChild = vi.fn()
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.attached()
+    inst.linkRelation('../radio-group/index', {data: {value: ''}, checkChild})
+    const rel = comp.def.relations!['../radio-group/index']
+    rel.unlinked!.call(inst, {} as never)
+    inst.methods.onBaseTap.call(inst)
+    expect(checkChild).not.toHaveBeenCalled()
+  })
+
+  it('receiveGroupValue：undefined 归一 null', () => {
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.attached()
+    inst.methods.receiveGroupValue.call(inst, undefined)
+    expect(inst.data.groupValue).toBe(null)
+  })
+})

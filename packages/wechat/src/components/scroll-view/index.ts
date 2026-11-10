@@ -252,16 +252,21 @@ CuComponent({
       const distance = pullDistanceOf(dy, threshold)
       const active = distance >= threshold
       const patch: Record<string, unknown> = {}
+      let refreshActiveToggled = false
       if (active !== this.data.isRefreshActive) {
         patch.isRefreshActive = active
         if (active) {
           patch.isRefreshing = false
           this.triggerEvent('refreshActive')
         }
-        this.__refreshTip()
+        refreshActiveToggled = true
       }
       patch.refreshProcess = refreshProcessOf(distance, threshold)
       this.setData(patch)
+      // 文案读取 isRefreshActive 终态，必须在 setData 之后刷新（否则滞后一拍）
+      if (refreshActiveToggled) {
+        this.__refreshTip()
+      }
       this.__setPull(distance)
     },
 

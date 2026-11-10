@@ -2,8 +2,10 @@
  * image-reader 纯逻辑测试：体积校验字节估算（对齐修复后的语义）、dataURL 组装、
  * chooseMedia 参数映射（count/sourceType）、错误码表。
  * 对照 Vue 版 ImageReader.vue 的 read()/dataURItoBlob/props 映射。
+ * 另含组件层（index.ts）：wx.chooseMedia / FileSystemManager 桩驱动的拾取管线
+ * （select → 103 张数校验 → 逐张 readFile → 101 体积校验 → complete / 102 读取失败）。
  */
-import {describe, it, expect} from 'vitest'
+import {describe, it, expect, afterEach} from 'vitest'
 import {
   buildDataUrl,
   chooseCount,
@@ -13,6 +15,9 @@ import {
   mimeForPath,
   sourceTypeOf,
 } from '../../src/components/image-reader/logic'
+import {loadComponent, mountDef} from '../helpers/weapp'
+
+const comp = await loadComponent(() => import('../../src/components/image-reader/index'))
 
 describe('image-reader/estimateBytesFromBase64（修复后的字节估算）', () => {
   it('无补位的整组：4 字符 = 3 字节', () => {
@@ -100,5 +105,224 @@ describe('image-reader/错误码表（Vue ERROR 常量）', () => {
     expect(IMAGE_READER_ERRORS['101']).toBe('picture size is beyond the preset')
     expect(IMAGE_READER_ERRORS['102']).toBe('picture read failure')
     expect(IMAGE_READER_ERRORS['103']).toBe('the number of pictures exceeds the limit')
+  })
+
+  it('mimeForPath：空路径兜底 image/png（filePath || \'\' 分支）', () => {
+    expect(mimeForPath('')).toBe('image/png')
+  })
+})
+
+/* -------------------------------------------------------------------------
+ * 组件层（index.ts）：wx.chooseMedia / FileSystemManager 桩（globalThis.wx 补桩）
+ * ---------------------------------------------------------------------- */
+
+interface ReadCall {
+  filePath: string
+  encoding: string
+  success?: (res: {data: string}) => void
+  fail?: () => void
+}
+
+const g = globalThis as any
+
+function installWxStubs() {
+  const chooseCalls: Array<{success: (r: unknown) => void; [k: string]: unknown}> = []
+  const reads: ReadCall[] = []
+  const prevChoose = g.wx.chooseMedia
+  const prevFs = g.wx.getFileSystemManager
+  g.wx.chooseMedia = (opts: Record<string, unknown>) => {
+    chooseCalls.push(opts)
+  }
+  g.wx.getFileSystemManager = () => ({
+    readFile: (opts: ReadCall) => {
+      reads.push(opts)
+    },
+  })
+  return {
+    chooseCalls,
+    reads,
+    restore() {
+      g.wx.chooseMedia = prevChoose
+      g.wx.getFileSystemManager = prevFs
+    },
+  }
+}
+
+const FILE_A = {tempFilePath: 'wxfile://tmp/a.png', size: 4}
+const FILE_B = {tempFilePath: 'wxfile://tmp/b.jpg', size: 4}
+
+describe('image-reader 组件', () => {
+  afterEach(() => {
+    g.wx.chooseMedia = undefined
+    g.wx.getFileSystemManager = undefined
+  })
+
+  it('attached：默认生成 image-reader-随机串；显式 name 透传', () => {
+    const anon = mountDef(comp.def)
+    anon.attached()
+    expect(anon.data.readerName).toMatch(/^image-reader-\d+$/)
+
+    const named = mountDef(comp.def, {props: {name: 'avatar'}})
+    named.attached()
+    expect(named.data.readerName).toBe('avatar')
+  })
+
+  it('onChoose：chooseMedia 参数映射（count/sourceType/mediaType）', () => {
+    const stubs = installWxStubs()
+    try {
+      const single = mountDef(comp.def)
+      single.attached()
+      single.methods.onChoose.call(single)
+      expect(stubs.chooseCalls[0]).toMatchObject({
+        count: 1,
+        mediaType: ['image'],
+        sourceType: ['album', 'camera'],
+      })
+
+      const multi = mountDef(comp.def, {props: {isMultiple: true, amount: 3, isCameraOnly: true}})
+      multi.attached()
+      multi.methods.onChoose.call(multi)
+      expect(stubs.chooseCalls[1]).toMatchObject({count: 3, sourceType: ['camera']})
+    } finally {
+      stubs.restore()
+    }
+  })
+
+  it('拾取成功管线：select → readFile → complete（base64/dataUrl 载荷）', () => {
+    const stubs = installWxStubs()
+    try {
+      const inst = mountDef(comp.def, {props: {name: 'n1'}})
+      inst.attached()
+      inst.methods.onChoose.call(inst)
+      stubs.chooseCalls[0].success({tempFiles: [FILE_A]})
+      expect(inst.eventsOf('select')).toEqual([
+        {name: 'select', detail: {name: 'n1', files: [FILE_A]}},
+      ])
+      expect(stubs.reads).toHaveLength(1)
+      expect(stubs.reads[0]).toMatchObject({filePath: 'wxfile://tmp/a.png', encoding: 'base64'})
+      stubs.reads[0].success!({data: 'AAAA'})
+      expect(inst.eventsOf('complete')[0].detail).toEqual({
+        name: 'n1',
+        file: FILE_A,
+        url: 'wxfile://tmp/a.png',
+        base64: 'AAAA',
+        dataUrl: 'data:image/png;base64,AAAA',
+      })
+    } finally {
+      stubs.restore()
+    }
+  })
+
+  it('多选：逐张读取各自 complete（扩展名决定 dataUrl MIME）', () => {
+    const stubs = installWxStubs()
+    try {
+      const inst = mountDef(comp.def, {props: {isMultiple: true}})
+      inst.attached()
+      inst.methods.onChoose.call(inst)
+      stubs.chooseCalls[0].success({tempFiles: [FILE_A, FILE_B]})
+      expect(stubs.reads).toHaveLength(2)
+      stubs.reads[0].success!({data: 'AAAA'})
+      stubs.reads[1].success!({data: 'BB'})
+      const completes = inst.eventsOf('complete')
+      expect(completes).toHaveLength(2)
+      expect(completes[0].detail.dataUrl).toBe('data:image/png;base64,AAAA')
+      expect(completes[1].detail.dataUrl).toBe('data:image/jpeg;base64,BB')
+    } finally {
+      stubs.restore()
+    }
+  })
+
+  it('__handleFiles：空结果（取消后空数组）不发 select', () => {
+    const stubs = installWxStubs()
+    try {
+      const inst = mountDef(comp.def)
+      inst.attached()
+      inst.methods.onChoose.call(inst)
+      stubs.chooseCalls[0].success({tempFiles: []})
+      expect(inst.events).toEqual([])
+    } finally {
+      stubs.restore()
+    }
+  })
+
+  it('超量校验（103）：amount=1 选 2 张 → 报错终止，不读取', () => {
+    const stubs = installWxStubs()
+    try {
+      const inst = mountDef(comp.def, {props: {amount: 1, isMultiple: true}})
+      inst.attached()
+      inst.methods.onChoose.call(inst)
+      stubs.chooseCalls[0].success({tempFiles: [FILE_A, FILE_B]})
+      expect(inst.eventsOf('select')).toHaveLength(1)
+      expect(inst.eventsOf('error')[0].detail).toEqual({
+        name: inst.data.readerName,
+        code: '103',
+        msg: IMAGE_READER_ERRORS['103'],
+      })
+      expect(stubs.reads).toHaveLength(0)
+    } finally {
+      stubs.restore()
+    }
+  })
+
+  it('体积校验（101）：size 限制内 base64 超限 → 报错且不发 complete', () => {
+    const stubs = installWxStubs()
+    try {
+      const inst = mountDef(comp.def, {props: {size: 1}}) // 1KB = 1000 字节
+      inst.attached()
+      inst.methods.onChoose.call(inst)
+      stubs.chooseCalls[0].success({tempFiles: [FILE_A]})
+      stubs.reads[0].success!({data: 'A'.repeat(4000)}) // 3000 字节 > 1000
+      expect(inst.eventsOf('error')[0].detail).toEqual({
+        name: inst.data.readerName,
+        code: '101',
+        msg: IMAGE_READER_ERRORS['101'],
+      })
+      expect(inst.eventsOf('complete')).toEqual([])
+    } finally {
+      stubs.restore()
+    }
+  })
+
+  it('读取失败（102）：readFile fail → error 102', () => {
+    const stubs = installWxStubs()
+    try {
+      const inst = mountDef(comp.def)
+      inst.attached()
+      inst.methods.onChoose.call(inst)
+      stubs.chooseCalls[0].success({tempFiles: [FILE_A]})
+      stubs.reads[0].fail!()
+      expect(inst.eventsOf('error')[0].detail).toEqual({
+        name: inst.data.readerName,
+        code: '102',
+        msg: IMAGE_READER_ERRORS['102'],
+      })
+    } finally {
+      stubs.restore()
+    }
+  })
+
+  it('chooseMedia fail：用户取消静默；其他错误 → error 102', () => {
+    const stubs = installWxStubs()
+    try {
+      const inst = mountDef(comp.def)
+      inst.attached()
+      inst.methods.onChoose.call(inst)
+      stubs.chooseCalls[0].fail({errMsg: 'chooseMedia:fail cancel'})
+      expect(inst.events).toEqual([])
+
+      inst.methods.onChoose.call(inst)
+      stubs.chooseCalls[1].fail({errMsg: 'chooseMedia:fail boom'})
+      expect(inst.eventsOf('error')[0].detail.code).toBe('102')
+
+      inst.methods.onChoose.call(inst)
+      stubs.chooseCalls[2].fail({}) // errMsg 缺失 → 非取消路径
+      expect(inst.eventsOf('error')[1].detail.code).toBe('102')
+
+      inst.methods.onChoose.call(inst)
+      stubs.chooseCalls[3].fail(undefined) // res 缺失 → 非取消路径
+      expect(inst.eventsOf('error')[2].detail.code).toBe('102')
+    } finally {
+      stubs.restore()
+    }
   })
 })

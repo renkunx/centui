@@ -4,7 +4,7 @@
  * （logic.ts 与组件 index.ts 即以同一份 core 源实现，见 logic.ts 头注释）。
  * 对照 Vue 版 Amount.vue 的 nonCapital/capital computed。
  */
-import {describe, it, expect} from 'vitest'
+import {describe, it, expect, vi, beforeEach, afterEach} from 'vitest'
 import {toFixedPrecision, formatNumberWithSeparator, numberToChineseCapital} from '../../../core/src/format'
 import {formatAmountText, legalPrecision} from '../../src/components/amount/logic'
 
@@ -118,5 +118,141 @@ describe('amount/capital 模式（isCapital=true）', () => {
     expect(fmt(v, {isCapital: true})).toBe(
       numberToChineseCapital(toFixedPrecision(v, 4, true)),
     )
+  })
+})
+
+/**
+ * 组件层（index.ts）：首轮同步/动画分派（isMounted 状态机）、formatting observers、
+ * ticker 动画推进/重入停止/detached 清理（fake timers + Date.now 同步推进）。
+ */
+import {loadComponent, mountDef} from '../helpers/weapp'
+
+const comp = await loadComponent(() => import('../../src/components/amount/index'))
+
+describe('amount 组件：显隐与首轮语义', () => {
+  beforeEach(() => vi.useFakeTimers())
+  afterEach(() => vi.useRealTimers())
+
+  it('attached：首轮直接同步终值不播动画（对齐修复后 Vue 版 onMounted）', () => {
+    const inst = mountDef(comp.def, {props: {value: 1234.567}})
+    inst.attached()
+    expect(inst.data.isMounted).toBe(true)
+    expect(inst.data.displayValue).toBe(1234.567)
+    expect(inst.data.text).toBe('1234.57')
+  })
+
+  it('attached 前 value 变更：isMounted=false 分支直接同步', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({value: 99.999})
+    expect(inst.data.isMounted).toBe(false)
+    expect(inst.data.displayValue).toBe(99.999)
+    expect(inst.data.text).toBe('100.00')
+  })
+
+  it('attached 后 value 变更（非动画）：直接同步 + 重格式化', () => {
+    const inst = mountDef(comp.def, {props: {value: 1}})
+    inst.attached()
+    inst.setData({value: 2.5})
+    expect(inst.data.displayValue).toBe(2.5)
+    expect(inst.data.text).toBe('2.50')
+  })
+})
+
+describe('amount 组件：动画', () => {
+  beforeEach(() => vi.useFakeTimers())
+  afterEach(() => vi.useRealTimers())
+
+  it('isAnimated=true：value 变更走动画并收敛终值（oldVal 不可得 → displayValue 起点）', () => {
+    const inst = mountDef(comp.def, {props: {value: 0, isAnimated: true, duration: 1000}})
+    inst.attached()
+    inst.setData({value: 100})
+    expect(inst.data.displayValue).toBe(0) // 首帧起点
+    // 16ms 步进：1000ms 窗口内最后一拍在 992ms（progress 0.992），终点拍在 1008ms
+    vi.advanceTimersByTime(1000)
+    expect(inst.data.displayValue).toBe(99.2)
+    vi.advanceTimersByTime(100)
+    expect(inst.data.displayValue).toBe(100)
+    expect(inst.data.text).toBe('100.00')
+  })
+
+  it('transition 别名（v2 遗留）同样启用动画', () => {
+    const inst = mountDef(comp.def, {props: {value: 0, transition: true, duration: 320}})
+    inst.attached()
+    inst.setData({value: 64})
+    vi.advanceTimersByTime(320)
+    expect(inst.data.displayValue).toBe(64)
+  })
+
+  it('duration=0：立即落地终值，onComplete 清句柄', () => {
+    const inst = mountDef(comp.def, {props: {value: 0, isAnimated: true, duration: 0}})
+    inst.attached()
+    inst.setData({value: 50})
+    expect(inst.data.displayValue).toBe(50)
+    expect(inst.data.text).toBe('50.00')
+    // 同步完成路径 onComplete 先于 handle 赋值执行（无害：句柄已 stopped）
+    expect((inst as any).__amountState.handle).not.toBeNull()
+    expect(() => inst.detached()).not.toThrow()
+  })
+
+  it('动画重入：旧句柄先停止，新动画以当前展示值为起点收敛', () => {
+    const inst = mountDef(comp.def, {props: {value: 0, isAnimated: true, duration: 1000}})
+    inst.attached()
+    inst.setData({value: 100})
+    vi.advanceTimersByTime(320) // 前一动画推进到 ≈32
+    inst.setData({value: 200}) // 重入
+    vi.advanceTimersByTime(2000)
+    expect(inst.data.displayValue).toBe(200)
+    expect((inst as any).__amountState.handle).toBeNull()
+  })
+
+  it('detached：动画句柄停止，推进不再更新 displayValue/text', () => {
+    const inst = mountDef(comp.def, {props: {value: 0, isAnimated: true, duration: 1000}})
+    inst.attached()
+    inst.setData({value: 100})
+    inst.detached()
+    const frozen = inst.data.displayValue
+    vi.advanceTimersByTime(2000)
+    expect(inst.data.displayValue).toBe(frozen)
+    expect((inst as any).__amountState.handle).toBeNull()
+  })
+
+  it('detached（无动画）：handle 为 null 分支安全', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    expect(() => inst.detached()).not.toThrow()
+  })
+})
+
+describe('amount 组件：格式化 observers', () => {
+  it('hasSeparator/separator/isCapital/isRoundUp/precision 变更重算 text', () => {
+    const inst = mountDef(comp.def, {props: {value: 1234567.891}})
+    inst.attached()
+    expect(inst.data.text).toBe('1234567.89')
+    inst.setData({hasSeparator: true})
+    expect(inst.data.text).toBe('1,234,567.89')
+    inst.setData({separator: '-'})
+    expect(inst.data.text).toBe('1-234-567.89')
+    inst.setData({isCapital: true})
+    expect(inst.data.text).toBe(
+      formatAmountText(1234567.891, {
+        precision: 2,
+        isRoundUp: true,
+        hasSeparator: true,
+        separator: '-',
+        isCapital: true,
+      }),
+    )
+    inst.setData({isRoundUp: false})
+    expect(inst.data.text).toBe(
+      formatAmountText(1234567.891, {
+        precision: 2,
+        isRoundUp: false,
+        hasSeparator: true,
+        separator: '-',
+        isCapital: true,
+      }),
+    )
+    inst.setData({precision: 0, isCapital: false})
+    expect(inst.data.text).toBe('1-234-567') // isRoundUp=false → 向零截断
   })
 })

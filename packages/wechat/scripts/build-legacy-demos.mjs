@@ -90,15 +90,13 @@ function evalCaseDef(src, file, todos) {
   }
 }
 
-/** Vue 模板 → wxml；返回 {out, needsNoop} */
+/** Vue 模板 → wxml；返回 {out} */
 function translateTemplate(tpl, todos) {
-  let needsNoop = false
   let out = tpl
   out = out.replace(/<\/?md-([\w-]+)/g, (m, n) => m.replace(`md-${n}`, `cu-${NAME_FIX[n] ?? n}`))
   out = out.replace(/:([\w-]+)="'([^"]*)'"/g, (m, prop, expr) => `${prop}="{{${expr}}}"`)
   out = out.replace(/:([\w-]+)="([^"]*)"/g, (m, prop, expr) => `${prop}="{{${expr}}}"`)
   out = out.replace(/@(\w[\w-]*)="([^"]+)"/g, (m, ev, h) => `bind:${EVENT_MAP[ev] ?? ev}="${h}"`)
-  needsNoop = /v-model=/.test(out)
   out = out.replace(/v-model="(\w+)"/g, 'value="{{$1}}" bind:change="noop"')
   out = out.replace(/<\/(\w+)\s+>/g, '</$1>')
   out = out.replace(/<img\b([^>]*?)\s*\/?>/g, '<image$1 />')
@@ -112,7 +110,7 @@ function translateTemplate(tpl, todos) {
   if (/v-for=/.test(out)) todos.push('v-for 需复核 wx:for/wx:key 改写')
   out = out.replace(/v-for="(\w+)\s+in\s+(\w+)"/g, 'wx:for="{{$2}}" wx:for-item="$1"')
   if (/v-else|v-html/.test(out)) todos.push('存在 v-else/v-html 需人工核对')
-  return {out, needsNoop}
+  return {out}
 }
 
 async function main() {

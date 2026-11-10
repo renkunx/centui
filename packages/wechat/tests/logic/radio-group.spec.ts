@@ -96,3 +96,56 @@ describe('radio-group 登记与广播', () => {
     expect(() => inst.linkRelation('../radio/index', {data: {name: 'a'}})).not.toThrow()
   })
 })
+
+describe('radio-group 分支补齐', () => {
+  it('radio-box unlinked：解除登记后不再广播', () => {
+    const inst = mountGroup({value: 'a'})
+    const child = fakeChild('a')
+    inst.linkRelation('../radio-box/index', child)
+    const rel = comp.def.relations!['../radio-box/index']
+    rel.unlinked!.call(inst, child)
+    inst.methods.check.call(inst, 'c')
+    expect(child.received).toEqual(['a'])
+  })
+
+  it('unlinked：移除未登记子项（indexOf -1）不崩溃（radio / radio-box 两路）', () => {
+    const inst = mountGroup({value: 'a'})
+    const relRadio = comp.def.relations!['../radio/index']
+    const relBox = comp.def.relations!['../radio-box/index']
+    expect(() => relRadio.unlinked!.call(inst, {} as never)).not.toThrow()
+    expect(() => relBox.unlinked!.call(inst, {} as never)).not.toThrow()
+  })
+
+  it('linked：运行时上下文无 data 时按空串推送（防御分支）', () => {
+    const inst = mountGroup({value: 'a'})
+    const relRadio = comp.def.relations!['../radio/index']
+    const relBox = comp.def.relations!['../radio-box/index']
+    const a = fakeChild('a')
+    const b = fakeChild('b')
+    relRadio.linked.call({} as never, a as never)
+    relBox.linked.call({} as never, b as never)
+    expect(a.received).toEqual([''])
+    expect(b.received).toEqual([''])
+  })
+
+  it('linked：组值 undefined → 推送空串', () => {
+    const inst = mountGroup({})
+    const child = fakeChild('a')
+    inst.linkRelation('../radio/index', child)
+    expect(child.received).toEqual([''])
+  })
+
+  it('observer：无 receiveGroupValue 的子项跳过广播（typeof 守卫 false 路）', () => {
+    const inst = mountGroup({value: 'a'})
+    inst.linkRelation('../radio/index', {data: {name: 'a'}})
+    inst.linkRelation('../radio-box/index', {data: {name: 'a'}})
+    inst.methods.check.call(inst, 'b')
+    expect(inst.data.value).toBe('b')
+  })
+
+  it('children 懒初始化：未登记子项时 observer 直变更不崩溃', () => {
+    const inst = mountGroup({value: ''})
+    expect(() => inst.setData({value: 'x'})).not.toThrow()
+    expect(inst.data.value).toBe('x')
+  })
+})

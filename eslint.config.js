@@ -58,10 +58,12 @@ export default tseslint.config(
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
         getCurrentPages: 'readonly',
+        console: 'readonly',
       },
     },
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off',
     },
   },
 )

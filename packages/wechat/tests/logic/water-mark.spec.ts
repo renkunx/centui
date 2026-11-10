@@ -134,3 +134,278 @@ describe('water-mark/watermarkItemStyle 与 spacingStyleOf', () => {
     expect(spacingStyleOf('20vw')).toBe('20vw')
   })
 })
+
+// ---------------------------------------------------------------------------
+// water-mark 组件实例（index.ts）：attached 派生、observers、canvas 初始化与绘制、
+// 插槽探测、防御分支
+// ---------------------------------------------------------------------------
+import {beforeEach as b2, afterEach as a2, describe as d2, expect as e2, it as i2, vi} from 'vitest'
+import {loadComponent, mountDef, type Mounted} from '../helpers/weapp'
+
+const comp = await loadComponent(() => import('../../src/components/water-mark/index'))
+
+b2(() => vi.useFakeTimers())
+a2(() => vi.useRealTimers())
+
+interface WmState {
+  ctx: Record<string, unknown> | null
+  node: Record<string, unknown> | null
+  containerWidth: number
+  containerHeight: number
+  ratio: number
+  initialized: boolean
+}
+
+function stateOf(inst: Mounted): WmState {
+  return (inst as unknown as {__waterMarkState: WmState}).__waterMarkState
+}
+
+function makeCanvas(withCtx = true) {
+  const ctx = {
+    scale: vi.fn(),
+    fillText: vi.fn(),
+    clearRect: vi.fn(),
+  }
+  const node = {width: 0, height: 0, getContext: vi.fn(() => (withCtx ? ctx : null))}
+  return {ctx, node}
+}
+
+/** 覆盖实例的 createSelectorQuery：select + fields 按序回放 */
+function installQuery(
+  inst: Mounted,
+  provide: () => unknown[],
+) {
+  ;(inst as unknown as Record<string, unknown>).createSelectorQuery = () => {
+    const ordered = provide()
+    const collected: unknown[] = []
+    let i = 0
+    const grab = () => (i < ordered.length ? ordered[i++] : null)
+    const top = {
+      select(_sel: string) {
+        return {
+          boundingClientRect(cb?: (r: unknown) => void) {
+            const r = grab()
+            collected.push(r)
+            cb?.(r)
+            return top
+          },
+          fields(_f: Record<string, unknown>) {
+            collected.push(grab())
+            return top
+          },
+        }
+      },
+      exec(done?: (res: unknown[]) => void) {
+        done?.(collected)
+        return top
+      },
+    }
+    return top
+  }
+}
+
+d2('water-mark attached 与 observers', () => {
+  i2('attached：wrapperStyle/tiling/spacing 派生（properties 初始值不触发 observer）', () => {
+    const inst = mountDef(comp.def)
+    e2(inst.data.tiling.itemCount).toBe(1) // 初始 data 字面量
+    inst.attached()
+    e2(inst.data.wrapperStyle).toBe('opacity:0.1;transform:rotate(-30deg)')
+    e2(inst.data.hasWatermark).toBe(false)
+    e2(inst.data.tiling.itemCount).toBe(50) // 默认 repeatX/Y → 50 列
+    e2(inst.data.itemIndexes).toHaveLength(50)
+    e2(inst.data.spacingStyle).toBe('20vw')
+    e2(inst.data.repeatXView).toBe(true)
+  })
+
+  i2('attached：content 非空 → hasWatermark true', () => {
+    const inst = mountDef(comp.def, {props: {content: 'CentUI'}})
+    inst.attached()
+    e2(inst.data.hasWatermark).toBe(true)
+  })
+
+  i2('rotate/opacity observer：wrapperStyle 重写', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.setData({rotate: -45, opacity: 0.5})
+    e2(inst.data.wrapperStyle).toBe('opacity:0.5;transform:rotate(-45deg)')
+  })
+
+  i2('repeatX/repeatY/spacing observer：tiling 重建', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.setData({repeatX: false})
+    e2(inst.data.tiling.itemCount).toBe(1) // 列数 = 1
+    e2(inst.data.tiling.itemStyles).toHaveLength(50) // 行样式仍按行展开
+    e2(inst.data.tiling.itemStyles.every((x: string) => x === '')).toBe(true)
+    e2(inst.data.repeatXView).toBe(false)
+    inst.setData({spacing: 30})
+    e2(inst.data.spacingStyle).toBe('30px')
+    e2(inst.data.tiling.itemStyles.every((x: string) => x === '')).toBe(true) // repeatX false → 无边距
+  })
+
+  i2('content observer：hasWatermark 同步；同值/空值早退（直调双参）', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    const obs = comp.def.observers!.content as (val: string, old: string) => void
+    obs.call(inst, 'X', 'X') // 同值 → 早退（不 init；state 未创建）
+    e2(inst.data.hasWatermark).toBe(true)
+    e2((inst as unknown as {__waterMarkState?: {initialized: boolean}}).__waterMarkState?.initialized ?? false).toBe(false)
+    obs.call(inst, '', '') // 空值 → 早退
+    e2(inst.data.hasWatermark).toBe(false)
+    // harness 语义：setData 单参（oldVal undefined）→ 非空值走 initCanvas
+    inst.setData({content: 'X'})
+    e2(stateOf(inst).initialized).toBe(false) // 默认查询无 node → 早退
+  })
+
+  i2('content observer（直调双参）：未初始化 → initCanvas；已初始化 → redraw', () => {
+    const {ctx, node} = makeCanvas()
+    const inst = mountDef(comp.def, {props: {content: 'A'}})
+    installQuery(inst, () => [{width: 100, height: 80}, {node, width: 100, height: 80}])
+    inst.attached()
+    inst.ready() // 初始 content → initCanvas
+    e2(stateOf(inst).initialized).toBe(true)
+
+    const obs = comp.def.observers!.content as (val: string, old: string) => void
+    obs.call(inst, 'B', 'A') // 已初始化 → redraw
+    e2(ctx.clearRect).toHaveBeenCalledTimes(1)
+    e2(ctx.fillText.mock.calls.length).toBeGreaterThan(0)
+
+    const blank = mountDef(comp.def) // content 空 + 未初始化
+    blank.attached()
+    installQuery(blank, () => [{width: 100, height: 80}, {node, width: 100, height: 80}])
+    obs.call(blank, 'X', '') // !initialized → initCanvas
+    e2(stateOf(blank).initialized).toBe(true)
+  })
+})
+
+d2('water-mark canvas 初始化与绘制', () => {
+  i2('ready + content：量取容器/节点 → ratio、canvasStyle、ctx.scale、平铺 fillText', () => {
+    const {ctx, node} = makeCanvas()
+    const inst = mountDef(comp.def, {props: {content: 'CentUI'}})
+    installQuery(inst, () => [{width: 375, height: 300}, {node, width: 375, height: 300}])
+    inst.attached()
+    inst.ready()
+    e2(stateOf(inst).ratio).toBe(2) // pixelRatio 2
+    e2(stateOf(inst).containerWidth).toBe(375)
+    e2(inst.data.canvasStyle).toBe('width:750px;height:600px;')
+    e2(node.width).toBe(750)
+    e2(node.height).toBe(600)
+    e2(ctx.scale).toHaveBeenCalledWith(0.5, 0.5)
+    e2(ctx.font).toContain('28px') // 14 * 2
+    e2(ctx.fillStyle).toBe('#858B9C')
+    const expected = computeTileCount(
+      375 * 2,
+      300 * 2,
+      'CentUI'.length * WATERMARK_FONT_SIZE * 2,
+      resolveSpacing('20vw', 375, undefined as never) * 2,
+      WATERMARK_FONT_SIZE * 2,
+    )
+    e2(ctx.fillText).toHaveBeenCalledTimes(expected.xCount * expected.yCount)
+    e2(stateOf(inst).initialized).toBe(true)
+  })
+
+  i2('ratio 下限：pixelRatio 1 → ratio 2；pixelRatio 3 → ratio 3', () => {
+    const g = globalThis as unknown as {wx: {getWindowInfo?: () => unknown}}
+    const prev = g.wx.getWindowInfo
+    const {node} = makeCanvas()
+    const inst = mountDef(comp.def, {props: {content: 'X'}})
+    installQuery(inst, () => [{width: 100, height: 100}, {node, width: 100, height: 100}])
+    inst.attached()
+    g.wx.getWindowInfo = () => ({pixelRatio: 1, windowWidth: 375})
+    inst.ready()
+    e2(stateOf(inst).ratio).toBe(2)
+    g.wx.getWindowInfo = () => ({pixelRatio: 3, windowWidth: 375})
+    const {node: node2} = makeCanvas()
+    installQuery(inst, () => [{width: 100, height: 100}, {node: node2, width: 100, height: 100}])
+    const inst2 = mountDef(comp.def, {props: {content: 'X'}})
+    installQuery(inst2, () => [{width: 100, height: 100}, {node: node2, width: 100, height: 100}])
+    inst2.attached()
+    inst2.ready()
+    e2(stateOf(inst2).ratio).toBe(3)
+    g.wx.getWindowInfo = prev
+  })
+
+  i2('防御：已初始化不再 init；rect/node 缺失早退；ctx 缺失早退', () => {
+    const {node} = makeCanvas(false) // getContext → null
+    const inst = mountDef(comp.def, {props: {content: 'X'}})
+    installQuery(inst, () => [{width: 100, height: 100}, {node, width: 100, height: 100}])
+    inst.attached()
+    inst.ready()
+    e2(stateOf(inst).initialized).toBe(false) // ctx null 早退
+    e2(stateOf(inst).ctx).toBe(null)
+
+    const noRect = mountDef(comp.def, {props: {content: 'X'}})
+    noRect.attached()
+    installQuery(noRect, () => [null, null])
+    e2(() => noRect.ready()).not.toThrow()
+    e2(stateOf(noRect).initialized).toBe(false)
+
+    const done = mountDef(comp.def, {props: {content: 'X'}})
+    done.attached()
+    const {node: n2} = makeCanvas()
+    installQuery(done, () => [{width: 100, height: 100}, {node: n2, width: 100, height: 100}])
+    done.ready()
+    const calls = n2.getContext as ReturnType<typeof vi.fn>
+    e2(calls.mock.calls.length).toBe(1)
+    e2(() => done.methods.__initCanvas.call(done)).not.toThrow() // initialized → return
+    e2(calls.mock.calls.length).toBe(1)
+  })
+
+  i2('__draw / __redraw 防御：无 ctx / 无 content / 无 node', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    e2(() => inst.methods.__draw.call(inst)).not.toThrow() // ctx null
+    e2(() => inst.methods.__redraw.call(inst)).not.toThrow() // node/ctx null
+
+    const {ctx, node} = makeCanvas()
+    const full = mountDef(comp.def, {props: {content: 'X'}})
+    installQuery(full, () => [{width: 100, height: 100}, {node, width: 100, height: 100}])
+    full.attached()
+    full.ready()
+    full.setData({content: ''}) // 清空内容（observer 空值早退）
+    ctx.fillText.mockClear()
+    e2(() => full.methods.__draw.call(full)).not.toThrow() // content '' → 早退
+    e2(ctx.fillText).not.toHaveBeenCalled()
+    full.setData({content: 'Y'}) // observer：非空且已初始化 → redraw（清屏重绘）
+    e2(ctx.clearRect).toHaveBeenCalledTimes(1)
+    e2(ctx.fillText).toHaveBeenCalled()
+    ctx.clearRect.mockClear()
+    full.methods.__redraw.call(full) // 直调再绘
+    e2(ctx.clearRect).toHaveBeenCalledTimes(1)
+  })
+})
+
+d2('water-mark 插槽探测与清理', () => {
+  i2('ready：插槽探测有高度 → hasWatermarkSlot/hasWatermark；rect null 不变', () => {
+    const inst = mountDef(comp.def, {rects: {'.water-mark-slot-probe': {height: 10}}})
+    inst.attached()
+    inst.ready()
+    e2(inst.data.hasWatermarkSlot).toBe(true)
+    e2(inst.data.hasWatermark).toBe(true)
+
+    const none = mountDef(comp.def)
+    none.attached()
+    none.ready()
+    e2(none.data.hasWatermarkSlot).toBe(false)
+  })
+
+  i2('ready：content 非空 / hasWatermark 已真 → 探测早退', () => {
+    const withContent = mountDef(comp.def, {props: {content: 'X'}})
+    withContent.attached()
+    withContent.ready()
+    e2(withContent.data.hasWatermarkSlot).toBe(false) // content 非空 → 探测跳过（查询来自 initCanvas）
+
+    const marked = mountDef(comp.def)
+    marked.attached()
+    marked.setData({hasWatermark: true})
+    const spy2 = vi.spyOn(marked, 'createSelectorQuery')
+    marked.ready()
+    e2(spy2).not.toHaveBeenCalled() // hasWatermark 已真 → 跳过
+  })
+
+  i2('detached：定时器清理不崩', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    e2(() => inst.detached()).not.toThrow()
+  })
+})

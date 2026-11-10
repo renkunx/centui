@@ -14,6 +14,9 @@ import {
   joinPlate,
   LETTER_KEYS,
 } from '../../src/components/license-plate/logic'
+import {loadComponent, mountDef} from '../helpers/weapp'
+
+const comp = await loadComponent(() => import('../../src/components/license-plate/index'))
 
 describe('license-plate/顺序填写规则（disorderClick）', () => {
   const empty = emptyKeyArray()
@@ -125,5 +128,134 @@ describe('license-plate/defaultValue 与 joinPlate', () => {
 
   it('joinPlate：空位补空格（keyArrayCopy 契约）', () => {
     expect(joinPlate(['京', 'A', '', '', '', '', '', ''])).toBe('京A      ')
+  })
+
+  it('enterValue：value undefined → 空串写入（?? 兜底）', () => {
+    const r = enterValue(emptyKeyArray(), 0, undefined)
+    expect(r.keyArray[0]).toBe('')
+    expect(r.selectedIndex).toBe(1)
+  })
+})
+
+/**
+ * 组件层（index.ts）：attached 初始化、selectedIndex/shortcuts/defaultValue observers、
+ * onKeyMapping（先展开键盘再守卫）、onEnter/onDelete/onConfirm/onTitleBarCancel。
+ */
+describe('license-plate 组件', () => {
+  it('attached：空 keyArray + 省份键盘面（keyboardType 1）', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    expect(inst.data.keyArray).toEqual(emptyKeyArray())
+    expect(inst.data.selectedIndex).toBe(0)
+    expect(inst.data.keyboard.keyboardType).toBe(1)
+    expect(inst.data.keyboard.shortcuts).toEqual(DEFAULT_SHORTCUTS)
+  })
+
+  it('attached：defaultValue 初始化车牌', () => {
+    const inst = mountDef(comp.def, {props: {defaultValue: '京A12345'}})
+    inst.attached()
+    expect(inst.data.keyArray[0]).toBe('京')
+    expect(inst.data.keyArray[6]).toBe('5')
+    expect(inst.data.keyArray[7]).toBe('')
+  })
+
+  it('attached：shortcuts 为 null → 空表兜底（?? 分支）', () => {
+    const inst = mountDef(comp.def, {props: {shortcuts: null}})
+    inst.attached()
+    expect(inst.data.keyboard.shortcuts).toEqual([])
+  })
+
+  it('observer：selectedIndex 变更重建键盘面（第 3 位 → 数字键恢复）', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({selectedIndex: 2})
+    expect(inst.data.keyboard.keyboardType).toBe(2)
+    const nums = inst.data.keyboard.mixedKeyboard.slice(0, 10)
+    expect(nums.every((item: {disabled: boolean}) => !item.disabled)).toBe(true)
+  })
+
+  it('observer：shortcuts 变更同步键盘面；null 回退空表（?? 分支）', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({shortcuts: ['京', '沪']})
+    expect(inst.data.keyboard.shortcuts).toEqual(['京', '沪'])
+    inst.setData({shortcuts: null})
+    expect(inst.data.keyboard.shortcuts).toEqual([])
+  })
+
+  it('observer：defaultValue 非空按位覆盖；空串不改写', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({defaultValue: '沪B'})
+    expect(inst.data.keyArray.slice(0, 3)).toEqual(['沪', 'B', ''])
+    const before = inst.data.keyArray.slice()
+    inst.setData({defaultValue: ''})
+    expect(inst.data.keyArray).toEqual(before)
+  })
+
+  it('onKeyMapping：键盘未展开先展开，再切换选中位', () => {
+    const inst = mountDef(comp.def)
+    expect(inst.data.showDivisionKeyboard).toBe(false)
+    inst.methods.onKeyMapping.call(inst, {detail: {index: 2}})
+    expect(inst.data.showDivisionKeyboard).toBe(true)
+    expect(inst.data.selectedIndex).toBe(2)
+  })
+
+  it('onKeyMapping：disorderClick=false 空中间位拦截（键盘仍保持展开）', () => {
+    const inst = mountDef(comp.def, {props: {disorderClick: false}})
+    inst.setData({showDivisionKeyboard: true})
+    inst.methods.onKeyMapping.call(inst, {detail: {index: 3}})
+    expect(inst.data.selectedIndex).toBe(0)
+    expect(inst.data.showDivisionKeyboard).toBe(true)
+  })
+
+  it('onEnter：逐位写入并推进，末位自动 confirm（division 收起键盘）', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({showDivisionKeyboard: true})
+    const input = ['京', 'A', '1', '2', '3', '4', '5', '6']
+    input.forEach((ch, i) => {
+      inst.methods.onEnter.call(inst, {detail: {value: ch}})
+      if (i < 7) expect(inst.data.selectedIndex).toBe(i + 1)
+    })
+    expect(inst.eventsOf('confirm')).toHaveLength(1)
+    expect(inst.eventsOf('confirm')[0].detail).toEqual({value: '京A123456'})
+    expect(inst.data.showDivisionKeyboard).toBe(false)
+  })
+
+  it('onEnter：value 缺省 → 空串写入（?? 兜底）', () => {
+    const inst = mountDef(comp.def)
+    inst.methods.onEnter.call(inst, {detail: {}})
+    expect(inst.data.keyArray[0]).toBe('')
+    expect(inst.data.selectedIndex).toBe(1)
+  })
+
+  it('onDelete：清空回退；第 0 位 division 收起键盘', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({keyArray: applyDefaultValue(emptyKeyArray(), '京A'), selectedIndex: 1})
+    inst.methods.onDelete.call(inst)
+    expect(inst.data.keyArray[1]).toBe('')
+    expect(inst.data.selectedIndex).toBe(0)
+    inst.setData({showDivisionKeyboard: true})
+    inst.methods.onDelete.call(inst)
+    expect(inst.data.showDivisionKeyboard).toBe(false)
+  })
+
+  it('onDelete：popUp 模式第 0 位不收起键盘', () => {
+    const inst = mountDef(comp.def, {props: {modeShow: 'popUp'}})
+    inst.setData({showDivisionKeyboard: true})
+    inst.methods.onDelete.call(inst)
+    expect(inst.data.showDivisionKeyboard).toBe(true)
+  })
+
+  it('onConfirm：popUp 模式不触碰 division 键盘状态，confirm 载荷为拼接串', () => {
+    const inst = mountDef(comp.def, {props: {modeShow: 'popUp', defaultValue: '京A123456'}})
+    inst.attached()
+    inst.setData({showDivisionKeyboard: true})
+    inst.methods.onConfirm.call(inst)
+    expect(inst.data.showDivisionKeyboard).toBe(true)
+    expect(inst.eventsOf('confirm')[0].detail).toEqual({value: '京A123456'})
+  })
+
+  it('onTitleBarCancel：popUp 标题栏关闭 → hide 事件', () => {
+    const inst = mountDef(comp.def)
+    inst.methods.onTitleBarCancel.call(inst)
+    expect(inst.eventsOf('hide')).toHaveLength(1)
   })
 })
