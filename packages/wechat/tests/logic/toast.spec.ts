@@ -10,7 +10,7 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 import {loadComponent, mountDef, type Mounted} from '../helpers/weapp'
 
 const comp = await loadComponent(() => import('../../src/components/toast/index'))
-const {Toast} = comp.exports as {Toast: any}
+const {Toast} = comp.exports as {Toast: Record<string, unknown> & ((c: unknown, p?: Record<string, unknown>) => unknown)}
 
 function makeToast(props: Record<string, unknown> = {}, timers = true): Mounted {
   const inst = mountDef(comp.def, {props})
