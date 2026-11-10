@@ -27,6 +27,17 @@ export type TraverseCallback = (
  * Multiple Array traversal
  * @return 1 continue
  * @return 2 break
+ *
+ * @remarks
+ * ⚠️ v2 契约怪癖（行为保持不变，既有组件依赖）：`walk` 在每个子树遍历结束后会把
+ * `level` / `indexs` 重置为初始值。后果是——在同一层数组中，位于任一「含 children
+ * 的节点」之后的兄弟节点会被**静默跳过**（level 被重置为 0，小于 childrenKeys 的
+ * 长度而被当作非叶子）；例如 `[branch, leaf]` 只会访问 branch 的子树，`leaf` 不会
+ * 被回调；`[leaf, branch]` 则 leaf 先被访问、branch 子树正常。
+ *
+ * 因此数据需满足「同一层级的节点要么都有 children、要么都没有」才能得到完整遍历
+ * （v2 picker-column / drop-menu 的数据即满足此约定）。修复此怪癖会导致上述组件
+ * 行为变化，v3 选择保留并在此显式记录。
  */
 export function traverse(
   data: TraverseNode[],

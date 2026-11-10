@@ -5,6 +5,6 @@ import { isProd } from './env'
 
 export const warn = (msg: string, fn: 'error' | 'warn' = 'error'): void => {
   if (!isProd) {
-    console[fn](`[Mand-Mobile]: ${msg}`)
+    console[fn](`[CentUI]: ${msg}`)
   }
 }

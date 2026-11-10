@@ -1,7 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { getLocale, setLocale, t } from '../src/locale'
+import { enUS as enUSFromEntry, esMX, getLocale, setLocale, t, zhCN } from '../src'
 import enUS from '../src/locale/lang/en-US'
-import zhCN from '../src/locale/lang/zh-CN'
 
 afterEach(() => {
   setLocale(zhCN)
@@ -56,5 +55,20 @@ describe('模板插值', () => {
   it('keeps placeholder when option key missing', () => {
     setLocale({ md: { greet: 'hello {name}' } })
     expect(t('md.greet', { other: 'x' })).toBe('hello {name}')
+  })
+})
+
+describe('内置语言包从包入口导出', () => {
+  it('switches to built-in packs without hand-writing them', () => {
+    setLocale(enUSFromEntry)
+    expect(t('md.date_picker.year')).toBe('Year')
+    setLocale(esMX)
+    expect(t('md.date_picker.year')).toBe('Año')
+    setLocale(zhCN)
+    expect(t('md.date_picker.year')).toBe('年')
+  })
+
+  it('entry-exported zhCN is the default pack instance', () => {
+    expect(getLocale()).toBe(zhCN)
   })
 })

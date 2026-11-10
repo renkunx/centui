@@ -24,6 +24,10 @@ describe('入口导出完整性', () => {
       't',
       'setLocale',
       'getLocale',
+      'zhCN',
+      'enUS',
+      'esMX',
+      'CORE_VERSION',
       'cascade',
       'buildDateColumns',
       'formatDate',
@@ -42,5 +46,9 @@ describe('入口导出完整性', () => {
   it('主入口不泄漏 web 专属模块', () => {
     expect(core).not.toHaveProperty('Scroller')
     expect(core).not.toHaveProperty('render')
+  })
+
+  it('CORE_VERSION 为 semver 字符串（构建时由 vite define 注入，源码态走 fallback）', () => {
+    expect(core.CORE_VERSION).toMatch(/^\d+\.\d+\.\d+$/)
   })
 })

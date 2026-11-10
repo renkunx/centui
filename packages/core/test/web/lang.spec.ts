@@ -60,5 +60,28 @@ describe('web requireRemoteScript onload', () => {
     const node = document.head.querySelector('script') as HTMLScriptElement
     node.dispatchEvent(new Event('load'))
     expect(cb).toHaveBeenCalledTimes(1)
+    expect(cb).toHaveBeenCalledWith(null)
+  })
+})
+
+describe('web requireRemoteScript onerror', () => {
+  it('invokes callback with an Error and removes the failed node', () => {
+    const cb = vi.fn()
+    requireRemoteScript('https://example.com/fail.js', cb)
+    const node = document.head.querySelector('script') as HTMLScriptElement
+    node.dispatchEvent(new Event('error'))
+    expect(cb).toHaveBeenCalledTimes(1)
+    expect(cb.mock.calls[0][0]).toBeInstanceOf(Error)
+    expect((cb.mock.calls[0][0] as Error).message).toContain('fail.js')
+    expect(document.head.querySelector('script')).toBeNull()
+  })
+
+  it('works without a callback (no throw on error)', () => {
+    expect(() => {
+      requireRemoteScript('https://example.com/fail2.js')
+      const node = document.head.querySelector('script') as HTMLScriptElement
+      node.dispatchEvent(new Event('error'))
+    }).not.toThrow()
+    expect(document.head.querySelector('script')).toBeNull()
   })
 })

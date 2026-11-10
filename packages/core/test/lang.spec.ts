@@ -84,3 +84,69 @@ describe('默认参数分支', () => {
     vi.useRealTimers()
   })
 })
+
+describe('debounce cancel/flush', () => {
+  it('cancel drops the pending call and allows later use', () => {
+    vi.useFakeTimers()
+    const fn = vi.fn()
+    const debounced = debounce(fn, 300)
+    debounced(1)
+    debounced.cancel()
+    vi.advanceTimersByTime(500)
+    expect(fn).not.toHaveBeenCalled()
+
+    debounced(2)
+    vi.advanceTimersByTime(300)
+    expect(fn).toHaveBeenCalledTimes(1)
+    expect(fn).toHaveBeenCalledWith(2)
+    vi.useRealTimers()
+  })
+
+  it('flush invokes the pending call immediately without double firing', () => {
+    vi.useFakeTimers()
+    const fn = vi.fn()
+    const debounced = debounce(fn, 300)
+    debounced('x')
+    debounced.flush()
+    expect(fn).toHaveBeenCalledTimes(1)
+    expect(fn).toHaveBeenCalledWith('x')
+    vi.advanceTimersByTime(500)
+    expect(fn).toHaveBeenCalledTimes(1)
+    vi.useRealTimers()
+  })
+
+  it('flush keeps only the latest pending args (same as debounce)', () => {
+    vi.useFakeTimers()
+    const fn = vi.fn()
+    const debounced = debounce(fn, 300)
+    debounced('a')
+    debounced('b')
+    debounced.flush()
+    expect(fn).toHaveBeenCalledTimes(1)
+    expect(fn).toHaveBeenCalledWith('b')
+    vi.useRealTimers()
+  })
+
+  it('flush is a no-op without a pending call', () => {
+    const fn = vi.fn()
+    const debounced = debounce(fn, 300)
+    expect(() => debounced.flush()).not.toThrow()
+    expect(fn).not.toHaveBeenCalled()
+  })
+})
+
+describe('throttle cancel', () => {
+  it('cancel restores immediate firing', () => {
+    vi.useFakeTimers()
+    const fn = vi.fn()
+    const throttled = throttle(fn, 300)
+    throttled('a')
+    throttled('b') // 间隔内被抑制
+    expect(fn).toHaveBeenCalledTimes(1)
+    throttled.cancel()
+    throttled('c') // 重置后立即触发
+    expect(fn).toHaveBeenCalledTimes(2)
+    expect(fn).toHaveBeenLastCalledWith('c')
+    vi.useRealTimers()
+  })
+})

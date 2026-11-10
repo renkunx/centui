@@ -134,4 +134,29 @@ describe('Animate 运行表压缩', () => {
     // 第 20 个动画触发压缩，全部仍可停止
     expect(() => Animate.stop(25)).not.toThrow()
   })
+
+  it('keeps only running animations on compaction: stopped ids never resurrect (v3 fix)', async () => {
+    // 全新模块实例以精确控制自增 id
+    vi.resetModules()
+    const fresh = await import('../../src/web/animate')
+    const A = fresh.Animate
+    const ids: number[] = []
+    for (let i = 0; i < 20; i++) {
+      ids.push(A.start(vi.fn(), undefined, undefined, 10000))
+    }
+    for (let i = 0; i < 10; i++) {
+      A.stop(ids[i])
+    }
+    expect(A.isRunning(ids[0])).toBe(false)
+
+    // 再启动 20 个（ids 21..40），id=40 的 start 触发第二次压缩
+    for (let i = 0; i < 20; i++) {
+      ids.push(A.start(vi.fn(), undefined, undefined, 10000))
+    }
+    // v2 缺陷：压缩会把值为 null 的已停止键改写为 true 而复活；v3 修复后不复活
+    expect(A.isRunning(ids[0])).toBe(false)
+    expect(A.stop(ids[0])).toBe(false)
+    // 键数收缩：仅剩运行中的 30 个（ids 11..40）；v2 缺陷下会是 40
+    expect(fresh.__animateRunningCount()).toBe(30)
+  })
 })

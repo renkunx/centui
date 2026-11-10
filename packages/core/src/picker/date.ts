@@ -5,6 +5,12 @@
 import { warn } from '../debug'
 import { t } from '../locale'
 
+/** t() 的字符串收窄包装：日期单位文案路径均为字符串叶子（t 按 v2 契约可能返回子树对象） */
+function tText(path: string): string {
+  const value = t(path)
+  return typeof value === 'string' ? value : ''
+}
+
 export type DateColumnType = 'Year' | 'Month' | 'Date' | 'Hour' | 'Minute'
 export type DateColumnTypeFormat = 'yyyy' | 'MM' | 'dd' | 'HH' | 'hh' | 'mm'
 
@@ -82,6 +88,10 @@ function getContextDefaults(ctx: GeneratorContext): Record<DateColumnType, numbe
     Hour: ctx.now.getHours(),
     Minute: ctx.now.getMinutes(),
   }
+}
+
+function isDateColumnType(type: string): type is DateColumnType {
+  return type === 'Year' || type === 'Month' || type === 'Date' || type === 'Hour' || type === 'Minute'
 }
 
 function getGeneratorArguments(
@@ -290,15 +300,21 @@ export function getDateColumnGenerators(
   options: DatePickerColumnOptions = {},
 ): Pick<DatePickerColumns, 'generators' | 'defaults'> {
   const type = options.type ?? 'date'
-  const minuteStep = options.minuteStep ?? 1
+  // step < 1（含 0 / 负数 / NaN）会让 generateData 的 while 循环永不终止，
+  // 统一 warn 并钳到 1，杜绝死循环。
+  let minuteStep = options.minuteStep ?? 1
+  if (!(minuteStep >= 1)) {
+    warn(`minuteStep should be >= 1, got ${options.minuteStep}; fallback to 1`)
+    minuteStep = 1
+  }
   const unitText =
     options.unitText ??
     [
-      t('md.date_picker.year'),
-      t('md.date_picker.month'),
-      t('md.date_picker.day'),
-      t('md.date_picker.hour'),
-      t('md.date_picker.minute'),
+      tText('md.date_picker.year'),
+      tText('md.date_picker.month'),
+      tText('md.date_picker.day'),
+      tText('md.date_picker.hour'),
+      tText('md.date_picker.minute'),
     ]
 
   const ctx: GeneratorContext = {
@@ -345,7 +361,13 @@ export function getDateColumnGenerators(
 
   const forCustom = () => {
     ;(options.customTypes ?? []).forEach(typeFormat => {
-      const columnType = TYPE_FORMAT[typeFormat] ?? (typeFormat as unknown as DateColumnType)
+      // 未知格式（既非 yyyy/MM/dd/HH/hh/mm，也非 Year/Month/Date/Hour/Minute）
+      // warn 后跳过该列，避免 TYPE_METHODS[columnType] 为 undefined 在生成阶段崩溃。
+      const columnType = TYPE_FORMAT[typeFormat] ?? (isDateColumnType(typeFormat) ? typeFormat : null)
+      if (!columnType) {
+        warn(`Unknown custom column type: ${String(typeFormat)}; column is skipped`)
+        return
+      }
       const gen = (() => {
         switch (columnType) {
           case 'Year':
