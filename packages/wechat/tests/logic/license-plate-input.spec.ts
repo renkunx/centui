@@ -51,3 +51,32 @@ describe('license-plate-input 事件', () => {
     expect(inst.eventsOf('keyMapping')).toEqual([{name: 'keyMapping', detail: {index: 3}}])
   })
 })
+
+/**
+ * 分支兜底：observer 侧非数组容错（Array.isArray false）与 null 项（?? 兜底），
+ * attached / observer 两侧各踩一遍。
+ */
+describe('license-plate-input 分支兜底', () => {
+  it('observer：非数组 keyArray 容错为空列表', () => {
+    const inst = mountDef(comp.def, {props: {keyArray: ['京'], selectedIndex: 0}})
+    inst.setData({keyArray: 'nope' as unknown as string[]})
+    expect(inst.data.items).toEqual([])
+  })
+
+  it('observer：null 项 → value 兜底空串（animation 仅激活空位为 true）', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({keyArray: [null, ''], selectedIndex: 1})
+    const items = inst.data.items as Array<Record<string, unknown>>
+    expect(items[0].value).toBe('')
+    expect(items[0].animation).toBe(false)
+    expect(items[1]).toMatchObject({value: '', active: true, animation: true})
+  })
+
+  it('attached：null 项 → value 兜底空串', () => {
+    const inst = mountDef(comp.def, {props: {keyArray: ['京', null], selectedIndex: 1}})
+    inst.attached()
+    const items = inst.data.items as Array<Record<string, unknown>>
+    expect(items[1].value).toBe('')
+    expect(items[1].animation).toBe(true)
+  })
+})

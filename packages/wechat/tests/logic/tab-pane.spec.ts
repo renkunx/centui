@@ -116,3 +116,17 @@ describe('tab-pane 父协同', () => {
     expect(() => inst.setData({label: 'x'})).not.toThrow()
   })
 })
+
+describe('tab-pane 双帧守卫（防御分支）', () => {
+  it('双帧回调触发时已失活：早退不回填 active 段类、不排程清理定时器', async () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.methods.setActive.call(inst, true, 'cu-tab-slide-left')
+    // 白盒：模拟 enter 起始类下发后、双帧回调前 active 被外部直接置否
+    inst.setData({active: false})
+    await vi.advanceTimersByTimeAsync(1)
+    expect(inst.data.paneCls).toBe('cu-tab-slide-left-enter cu-tab-slide-left-enter-active')
+    await vi.advanceTimersByTimeAsync(400)
+    expect(inst.data.paneCls).toBe('cu-tab-slide-left-enter cu-tab-slide-left-enter-active')
+  })
+})

@@ -213,14 +213,17 @@ CuComponent({
 
     onOptionTap(e: WechatMiniprogram.TouchEvent) {
       const index = Number(e.currentTarget.dataset.index)
-      const pane = (this.data.panes as TabPickerPane[])[this.data.currentIndex]
+      const tappedPaneIndex = this.data.currentIndex
+      const pane = (this.data.panes as TabPickerPane[])[tappedPaneIndex]
       const option = pane && pane.options[index]
       if (!option || (option as {disabled?: boolean}).disabled) return
       const value = option.value as string | number
       // 对齐 onSelectPaneItem：截断写入选中路径
-      this.setData({selected: spliceSelected(this.data.selected as Array<string | number>, this.data.currentIndex, value)})
-      // v2 契约：nextTick 后推进 tab / 触发 select / change
-      state(this).timers.setTimeout(() => this.__afterSelect(value, this.data.currentIndex), 0)
+      this.setData({selected: spliceSelected(this.data.selected as Array<string | number>, tappedPaneIndex, value)})
+      // v2 契约：nextTick 后推进 tab / 触发 select / change。
+      // 注意 selected observer 会同步把 currentIndex 推进到末层面板，
+      // 必须传捕获的面板序号（Vue 版 onSelectPaneItem 以参数传入 index，同语义）
+      state(this).timers.setTimeout(() => this.__afterSelect(value, tappedPaneIndex), 0)
     },
 
     __afterSelect(value: string | number, index: number) {

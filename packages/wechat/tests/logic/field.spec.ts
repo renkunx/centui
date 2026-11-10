@@ -47,6 +47,19 @@ describe('field disabled 广播', () => {
     const inst = mountDef(comp.def)
     expect(() => inst.linkRelation('../field-item/index', {})).not.toThrow()
   })
+
+  it('unlinked：移除未登记子项（indexOf -1 分支）不崩溃', () => {
+    const inst = mountDef(comp.def)
+    const rel = comp.def.relations!['../input-item/index']
+    expect(() => rel.unlinked!.call(inst, {} as never)).not.toThrow()
+  })
+
+  it('linked：运行时上下文无 data 时按未禁用推送（?? {} 防御分支）', () => {
+    const rel = comp.def.relations!['../field-item/index']
+    const child = fakeChild()
+    rel.linked.call({}, child as never)
+    expect(child.received).toEqual([false])
+  })
 })
 
 describe('field header/footer 显隐', () => {

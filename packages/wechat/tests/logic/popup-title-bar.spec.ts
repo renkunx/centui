@@ -1,8 +1,10 @@
 /**
  * popup-title-bar 纯逻辑测试：基础样式复刻（inline style 组装）。
  * 对照 popup.styl 的 title-bar 段与 Vue 版 PopupTitleBar.vue 的类切换。
+ * 组件实例：observers/attached 驱动 __refresh，confirm/cancel/noop 事件派发。
  */
 import {describe, it, expect} from 'vitest'
+import {loadComponent, mountDef} from '../helpers/weapp'
 import {buildTitleBarStyles} from '../../src/components/popup-title-bar/logic'
 
 const base = {
@@ -55,5 +57,58 @@ describe('popup-title-bar/logic 样式组装', () => {
     const styles = buildTitleBarStyles({...base, describe: '副标题'})
     expect(styles.describeStyle).toContain('--popup-title-bar-font-size-describe')
     expect(styles.describeStyle).toContain('--popup-title-bar-color-describe')
+  })
+})
+
+// ---------------------------------------------------------------------------
+// popup-title-bar 组件实例（index.ts）：observers / lifetimes / 事件派发
+// ---------------------------------------------------------------------------
+const comp = await loadComponent(() => import('../../src/components/popup-title-bar/index'))
+
+describe('popup-title-bar 组件实例', () => {
+  it('attached：初始样式由 props 组装（title 走 large 档）', () => {
+    const inst = mountDef(comp.def, {props: {title: '标题', describe: '副标题', largeRadius: true}})
+    inst.attached()
+    expect(inst.data.barStyle).toContain('--popup-title-bar-height-large)')
+    expect(inst.data.titleWrapStyle).toContain('width:100%')
+    expect(inst.data.closeStyle).toContain('position:absolute')
+  })
+
+  it('observer：titleAlign 变更重建样式（center → left 隐藏左格）', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    expect(inst.data.leftStyle).not.toContain('display:none')
+    inst.setData({titleAlign: 'left'})
+    expect(inst.data.leftStyle).toContain('display:none')
+    expect(inst.data.titleWrapStyle).toContain('align-items:flex-start')
+    inst.setData({titleAlign: 'right'})
+    expect(inst.data.rightStyle).toContain('display:none')
+  })
+
+  it('observer：describe 空串与非空切换高度档位', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    expect(inst.data.barStyle).toContain('--popup-title-bar-height)')
+    inst.setData({describe: 'd'})
+    expect(inst.data.barStyle).toContain('--popup-title-bar-height-large)')
+    inst.setData({describe: ''})
+    expect(inst.data.barStyle).toContain('--popup-title-bar-height)')
+  })
+
+  it('onlyClose observer 透传样式组装', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.setData({onlyClose: true})
+    expect(inst.data.closeStyle).toContain('--h-gap-sl')
+  })
+
+  it('onCancel / onConfirm / noop 事件与空实现', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.methods.onCancel()
+    inst.methods.onConfirm()
+    expect(inst.eventsOf('cancel')).toHaveLength(1)
+    expect(inst.eventsOf('confirm')).toHaveLength(1)
+    expect(() => inst.methods.noop()).not.toThrow()
   })
 })

@@ -172,3 +172,56 @@ describe('textarea-item 生命周期', () => {
     expect(inst.eventsOf('blur')).toHaveLength(0)
   })
 })
+
+describe('textarea-item ready 探测与 field 关联', () => {
+  it('ready：右侧量到高度 → rightFilled true + showRight true', () => {
+    const inst = mountDef(comp.def, {rects: {'.cu-field-item-right': {height: 20}}})
+    inst.attached()
+    inst.ready()
+    expect(inst.data.rightFilled).toBe(true)
+    expect(inst.data.showRight).toBe(true)
+  })
+
+  it('ready：右侧零高度 → rightFilled false；无 clearable 时 showRight false', () => {
+    const inst = mountDef(comp.def, {rects: {'.cu-field-item-right': {height: 0}}})
+    inst.attached()
+    inst.ready()
+    expect(inst.data.rightFilled).toBe(false)
+    expect(inst.data.showRight).toBe(false)
+  })
+
+  it('ready：量取失败（null rect）→ rightFilled 保持默认 true', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.ready()
+    expect(inst.data.rightFilled).toBe(true)
+  })
+
+  it('relations：field 祖先登记', () => {
+    const inst = mountDef(comp.def)
+    const parent = {}
+    inst.linkRelation('../field/index', parent)
+    expect((inst as unknown as {__field: unknown}).__field).toBe(parent)
+  })
+})
+
+describe('textarea-item 其余 observers', () => {
+  it('disabled/solid/error observer → __refresh 派生回写', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({error: '必填'})
+    expect(inst.data.errorInfo).toBe('必填')
+    expect(inst.data.rootClass).toContain('is-error')
+  })
+
+  it('maxLength/autosize/rows/maxHeight observer → __refresh 派生回写', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({rows: '5'})
+    expect(inst.data.heightStyle).toBe('height: 7em;')
+    inst.setData({maxLength: 20})
+    expect(inst.data.nativeMaxlength).toBe(20)
+    inst.setData({maxHeight: '300rpx'})
+    expect(inst.data.maxHeightStyle).toBe('max-height: 300rpx;')
+    inst.setData({autosize: true})
+    expect(inst.data.heightStyle).toBe('')
+  })
+})

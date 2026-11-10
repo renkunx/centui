@@ -113,3 +113,72 @@ describe('radio 组值广播', () => {
     expect(inst.data.isChecked).toBe(true)
   })
 })
+
+describe('radio 分支补齐', () => {
+  it('ready 插槽探测：rect 为 null 不改写 hasDefault', () => {
+    const inst = mountDef(comp.def, {props: {name: 'a', label: '文本'}})
+    inst.ready()
+    expect(inst.data.hasDefault).toBe(true)
+  })
+
+  it('ready 插槽探测：内容有高度 → 保持默认插槽', () => {
+    const inst = mountDef(comp.def, {
+      props: {name: 'a'},
+      rects: {'.cu-radio-label': {height: 20}},
+    })
+    inst.ready()
+    expect(inst.data.hasDefault).toBe(true)
+  })
+
+  it('ready 插槽探测：内容零高度 → 回退 label 文本', () => {
+    const inst = mountDef(comp.def, {
+      props: {name: 'a', label: '文本'},
+      rects: {'.cu-radio-label': {height: 0}},
+    })
+    inst.ready()
+    expect(inst.data.hasDefault).toBe(false)
+  })
+
+  it('relations linked：parent 无 data 时按空组值登记（?? {} 防御）', () => {
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.attached()
+    const rel = comp.def.relations!['../radio-group/index']
+    rel.linked.call(inst, {} as never)
+    expect(inst.data.groupValue).toBe(null)
+    expect((inst as unknown as {__radioGroup: unknown}).__radioGroup).toBeTruthy()
+  })
+
+  it('relations linked：组值 undefined → groupValue null', () => {
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.attached()
+    inst.linkRelation('../radio-group/index', {data: {}})
+    expect(inst.data.groupValue).toBe(null)
+  })
+
+  it('relations unlinked：解除登记后点击不再上报组', () => {
+    const checkChild = vi.fn()
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.attached()
+    inst.linkRelation('../radio-group/index', {data: {value: ''}, checkChild})
+    const rel = comp.def.relations!['../radio-group/index']
+    rel.unlinked!.call(inst, {} as never)
+    inst.methods.onTap.call(inst)
+    expect(checkChild).not.toHaveBeenCalled()
+    expect(inst.eventsOf('change')).toHaveLength(1)
+  })
+
+  it('receiveGroupValue：undefined/null 归一为 null（?? 防御）', () => {
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.attached()
+    inst.methods.receiveGroupValue.call(inst, undefined)
+    expect(inst.data.groupValue).toBe(null)
+    expect(inst.data.isChecked).toBe(false)
+  })
+
+  it('nextRadioValue：点击后的目标值即 name（纯函数契约）', async () => {
+    const {nextRadioValue} = await import('../../src/components/radio/logic')
+    expect(nextRadioValue('a')).toBe('a')
+    expect(nextRadioValue(1)).toBe(1)
+    expect(nextRadioValue(true)).toBe(true)
+  })
+})

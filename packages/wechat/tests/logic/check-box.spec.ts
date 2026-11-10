@@ -6,6 +6,7 @@
  * check-list 选项视图（buildCheckCells）逐一断言。
  */
 import {describe, it, expect} from 'vitest'
+import {loadComponent, mountDef, type Mounted} from '../helpers/weapp'
 import {
   isCheckChecked,
   nextCheckValue,
@@ -107,5 +108,128 @@ describe('check-list 选项视图（buildCheckCells）', () => {
   it('no 为选项下标（wx:key 稳定）', () => {
     const cells = buildCheckCells(options, {value: [], alignCenter: false, iconPosition: 'right'})
     expect(cells.map((c) => c.no)).toEqual([0, 1, 2, 3])
+  })
+})
+
+// ---------------------------------------------------------------------------
+// check-box 组件实例（index.ts）：observers / relations / ready 插槽探测 / onBaseTap
+// ---------------------------------------------------------------------------
+const comp = await loadComponent(() => import('../../src/components/check-box/index'))
+
+function view(inst: Mounted): {isChecked: boolean; hasDefault: boolean} {
+  return {
+    isChecked: inst.data.isChecked as boolean,
+    hasDefault: inst.data.hasDefault as boolean,
+  }
+}
+
+describe('check-box 组件实例', () => {
+  it('attached 初始派生（observers 不触发初始值）：value/name 命中', () => {
+    const inst = mountDef(comp.def, {props: {value: 'a', name: 'a'}})
+    inst.attached()
+    expect(view(inst)).toMatchObject({isChecked: true, hasDefault: true})
+  })
+
+  it('observer：value / groupValue 变更刷新 isChecked', () => {
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.attached()
+    inst.setData({value: 'a'})
+    expect(view(inst).isChecked).toBe(true)
+    inst.setData({value: ''})
+    expect(view(inst).isChecked).toBe(false)
+    inst.methods.receiveGroupValue(['a'])
+    expect(view(inst).isChecked).toBe(true)
+  })
+
+  it('receiveGroupValue(null) 按空组（|| [] 分支）', () => {
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.attached()
+    inst.methods.receiveGroupValue(null)
+    expect(inst.data.groupValue).toEqual([])
+    expect(view(inst).isChecked).toBe(false)
+    // data.groupValue 直接处于 null 态（异常数据）→ refresh 的 || [] 兜底
+    inst.setData({groupValue: null})
+    expect(view(inst).isChecked).toBe(false)
+  })
+
+  it('relations linked：登记组并同步组值；parent 无 data 按空组', () => {
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.linkRelation('../check-group/index', {data: {value: ['a']}})
+    expect(view(inst).isChecked).toBe(true)
+
+    const bare = mountDef(comp.def, {props: {name: 'a'}})
+    bare.linkRelation('../check-group/index', {})
+    expect(bare.data.groupValue).toEqual([])
+    expect(view(bare).isChecked).toBe(false)
+  })
+
+  it('relations unlinked：解除登记后不再上报组', () => {
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.linkRelation('../check-group/index', {data: {value: []}})
+    const rel = comp.def.relations!['../check-group/index']
+    rel.unlinked!.call(inst)
+    inst.methods.onBaseTap()
+    expect(inst.eventsOf('change')).toEqual([{name: 'change', detail: {value: 'a'}}])
+  })
+
+  it('onBaseTap：disabled 阻断', () => {
+    const inst = mountDef(comp.def, {props: {disabled: true}})
+    inst.methods.onBaseTap()
+    expect(inst.events).toEqual([])
+    expect(inst.data.value).toBe(false)
+  })
+
+  it('onBaseTap：布尔名取反 + change', () => {
+    const inst = mountDef(comp.def)
+    inst.methods.onBaseTap()
+    expect(inst.data.value).toBe(true)
+    expect(inst.eventsOf('change')).toEqual([{name: 'change', detail: {value: true}}])
+    inst.methods.onBaseTap()
+    expect(inst.data.value).toBe(false)
+  })
+
+  it('onBaseTap：非布尔名 + 组 toggleChild 上报；组无 toggleChild 不崩溃', () => {
+    const toggled: unknown[] = []
+    const inst = mountDef(comp.def, {props: {name: 'a'}})
+    inst.linkRelation('../check-group/index', {
+      data: {value: []},
+      toggleChild(n: unknown) {
+        toggled.push(n)
+      },
+    })
+    inst.methods.onBaseTap()
+    expect(toggled).toEqual(['a'])
+
+    const bare = mountDef(comp.def, {props: {name: 'b'}})
+    bare.linkRelation('../check-group/index', {data: {value: []}})
+    expect(() => bare.methods.onBaseTap()).not.toThrow()
+    expect(bare.data.value).toBe('b')
+  })
+
+  it('onBaseTap：布尔名即使有组也不上报组', () => {
+    const toggled: unknown[] = []
+    const inst = mountDef(comp.def)
+    inst.linkRelation('../check-group/index', {
+      data: {value: []},
+      toggleChild(n: unknown) {
+        toggled.push(n)
+      },
+    })
+    inst.methods.onBaseTap()
+    expect(toggled).toEqual([])
+  })
+
+  it('ready 插槽探测：空插槽回退 label；有内容保持；rect null 不回写', () => {
+    const empty = mountDef(comp.def, {rects: {'.cu-check-box-content': {height: 0}}})
+    empty.ready()
+    expect(view(empty).hasDefault).toBe(false)
+
+    const filled = mountDef(comp.def, {rects: {'.cu-check-box-content': {height: 22}}})
+    filled.ready()
+    expect(view(filled).hasDefault).toBe(true)
+
+    const missing = mountDef(comp.def)
+    missing.ready()
+    expect(view(missing).hasDefault).toBe(true)
   })
 })

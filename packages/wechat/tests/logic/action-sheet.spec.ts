@@ -12,6 +12,9 @@ import {
   ActionSheetFactory,
   type ActionSheetCreateProps,
 } from '../../src/components/action-sheet/factory'
+import {loadComponent, mountDef, tapEvent} from '../helpers/weapp'
+
+const comp = await loadComponent(() => import('../../src/components/action-sheet/index'))
 
 interface FakeComp {
   shown: Record<string, unknown>[]
@@ -157,5 +160,163 @@ describe('action-sheet 工厂（ActionSheetFactory.create）', () => {
     const props = {cancelText: '不开'} as ActionSheetCreateProps
     ActionSheetFactory.create(fakeContext(comp2), props)
     expect(comp2.shown[0].cancelText).toBe('不开')
+  })
+})
+
+/**
+ * 组件层（index.ts）：observers/attached 派生、一等 API show/hide、
+ * popup 转发链路（change/show/hide/cancel/selected）与工厂钩子登记。
+ */
+describe('action-sheet 组件', () => {
+  it('attached：初始 props 派生 innerShow/clickIndex/invalidList/cancelTextResolved', () => {
+    const inst = mountDef(comp.def, {
+      props: {show: true, defaultIndex: 1, invalidIndex: [0, 2]},
+    })
+    inst.attached()
+    expect(inst.data.innerShow).toBe(true)
+    expect(inst.data.clickIndex).toBe(1)
+    expect(inst.data.invalidList).toEqual([0, 2])
+    expect(inst.data.cancelTextResolved).toBe('取消') // 空文案回退 locale
+
+    const custom = mountDef(comp.def, {
+      props: {invalidIndex: 3, cancelText: '关闭'},
+    })
+    custom.attached()
+    custom.attached() // __sheetState 已存在：幂等
+    expect(custom.data.invalidList).toEqual([3])
+    expect(custom.data.cancelTextResolved).toBe('关闭')
+  })
+
+  it('observers：show/defaultIndex/invalidIndex/cancelText 变更驱动内态', () => {
+    const inst = mountDef(comp.def)
+    inst.setData({show: true})
+    expect(inst.data.innerShow).toBe(true)
+    inst.setData({defaultIndex: 2})
+    expect(inst.data.clickIndex).toBe(2)
+    inst.setData({invalidIndex: 1})
+    expect(inst.data.invalidList).toEqual([1])
+    inst.setData({cancelText: ''})
+    expect(inst.data.cancelTextResolved).toBe('取消')
+    inst.setData({cancelText: '自定义'})
+    expect(inst.data.cancelTextResolved).toBe('自定义')
+  })
+
+  it('show(options)：序列化字段入 data + 钩子登记 + 显示；_deferred 仅登记不显示', () => {
+    const inst = mountDef(comp.def)
+    const onShow = vi.fn()
+    inst.methods.show.call(inst, {
+      title: 'T',
+      options: [{text: 'A'}],
+      defaultIndex: 0,
+      invalidIndex: 1,
+      cancelText: '关',
+      maxHeight: 300,
+      _onShow: onShow,
+    })
+    expect(inst.data.innerShow).toBe(true)
+    expect(inst.data.title).toBe('T')
+    expect(inst.data.maxHeight).toBe(300)
+    expect(onShow).toHaveBeenCalledTimes(1)
+
+    // _deferred：登记配置但不显示、不触发 onShow
+    const deferred = mountDef(comp.def)
+    const onShow2 = vi.fn()
+    deferred.methods.show.call(deferred, {_onShow: onShow2, _deferred: true})
+    expect(deferred.data.innerShow).toBe(false)
+    expect(onShow2).not.toHaveBeenCalled()
+
+    // 无参 show：全键 undefined → 仅显示
+    inst.methods.show.call(inst)
+    expect(inst.data.innerShow).toBe(true)
+  })
+
+  it('hide()：innerShow 收起', () => {
+    const inst = mountDef(comp.def)
+    inst.methods.show.call(inst, {})
+    inst.methods.hide.call(inst)
+    expect(inst.data.innerShow).toBe(false)
+  })
+
+  it('onPopupChange：value=false 回流 hideSheet（change {value:false}）；value=true 忽略', () => {
+    const inst = mountDef(comp.def)
+    inst.methods.onPopupChange.call(inst, {detail: {value: true}})
+    expect(inst.events).toEqual([])
+    inst.methods.onPopupChange.call(inst, {detail: {value: false}})
+    expect(inst.data.innerShow).toBe(false)
+    expect(inst.eventsOf('change')[0].detail).toEqual({value: false})
+  })
+
+  it('onPopupShow/onPopupHide：show/hide 事件 + 工厂钩子；onPopupHide 后 onHide 注销', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    const onShow = vi.fn()
+    const onHide = vi.fn()
+    inst.methods.show.call(inst, {_onShow: onShow, _onHide: onHide})
+
+    // show() 立即触发 onShow 钩子（index.ts：非 _deferred 即回调）
+    expect(onShow).toHaveBeenCalledTimes(1)
+
+    inst.methods.onPopupShow.call(inst)
+    expect(inst.eventsOf('show')).toHaveLength(1)
+    expect(onShow).toHaveBeenCalledTimes(2) // popup show 事件再触发一次
+
+    inst.methods.onPopupHide.call(inst)
+    expect(inst.eventsOf('hide')).toHaveLength(1)
+    expect(onHide).toHaveBeenCalledTimes(1)
+    expect(inst.data.innerShow).toBe(false) // hideSheet
+    expect(inst.eventsOf('change')[0].detail).toEqual({value: false})
+
+    // onHide 已注销：再次 hide 不重复回调
+    inst.methods.onPopupHide.call(inst)
+    expect(onHide).toHaveBeenCalledTimes(1)
+  })
+
+  it('onSelect：禁用位阻断；命中项 → clickIndex + selected 载荷 {item, index} + 钩子 + 关闭', () => {
+    const inst = mountDef(comp.def, {props: {invalidIndex: [0]}})
+    inst.attached()
+    const onSelected = vi.fn()
+    inst.methods.show.call(inst, {options: [{text: 'A'}, {text: 'B'}], _onSelected: onSelected})
+
+    inst.methods.onSelect.call(inst, tapEvent({index: 0})) // 禁用位
+    expect(inst.events).toEqual([])
+    expect(inst.data.clickIndex).not.toBe(0)
+
+    inst.methods.onSelect.call(inst, tapEvent({index: 1}))
+    expect(inst.data.clickIndex).toBe(1)
+    expect(onSelected).toHaveBeenCalledWith({index: 1, item: {text: 'B'}})
+    expect(inst.eventsOf('selected')[0].detail).toEqual({item: {text: 'B'}, index: 1})
+    expect(inst.data.innerShow).toBe(false)
+  })
+
+  it('onSelect：越界 index → item 兜底空对象；未登记钩子不崩溃', () => {
+    const inst = mountDef(comp.def, {props: {options: [{text: 'A'}]}})
+    inst.attached()
+    expect(() => inst.methods.onSelect.call(inst, tapEvent({index: 9}))).not.toThrow()
+    expect(inst.eventsOf('selected')[0].detail).toEqual({item: {}, index: 9})
+    expect(inst.data.innerShow).toBe(false)
+  })
+
+  it('onCancel：cancel 事件 + 钩子 + 关闭', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    const onCancel = vi.fn()
+    inst.methods.show.call(inst, {_onCancel: onCancel})
+    inst.methods.onCancel.call(inst)
+    expect(onCancel).toHaveBeenCalledTimes(1)
+    expect(inst.eventsOf('cancel')).toHaveLength(1)
+    expect(inst.data.innerShow).toBe(false)
+  })
+
+  it('未 attached 时 popup 回调安全（__sheetState 缺省）', () => {
+    const inst = mountDef(comp.def)
+    expect(() => {
+      inst.methods.onPopupShow.call(inst)
+      inst.methods.onPopupHide.call(inst)
+      inst.methods.onSelect.call(inst, tapEvent({index: 0}))
+      inst.methods.onCancel.call(inst)
+    }).not.toThrow()
+    expect(inst.eventsOf('show')).toHaveLength(1)
+    expect(inst.eventsOf('hide')).toHaveLength(1)
+    expect(() => inst.methods.noop.call(inst)).not.toThrow()
   })
 })

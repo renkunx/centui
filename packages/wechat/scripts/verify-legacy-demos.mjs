@@ -11,7 +11,6 @@ const PAGES_ROOT = join(ROOT, 'demo/pages/legacy')
 let errors = 0
 let warnings = 0
 const fail = (m) => { console.error(`  ✗ ${m}`); errors++ }
-const warn = (m) => { console.warn(`  ⚠ ${m}`); warnings++ }
 
 function checkWxmlBalance(name, wxml) {
   const voidTags = new Set(['input', 'image', 'import', 'include', 'wxs'])

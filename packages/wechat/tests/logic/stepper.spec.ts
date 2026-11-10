@@ -108,3 +108,99 @@ describe('stepper/logic transitionStepper（watch(currentNum) 收敛语义）', 
     expect(t.value).toBe(5)
   })
 })
+
+/**
+ * 组件层（index.ts）：attached 初始化、四类 observer 收敛、加减/输入/失焦链路。
+ * 用 weapp 挂载器直接实例化（properties 初始值不触发 observers 的真机语义已内建）。
+ */
+import {loadComponent, mountDef} from '../helpers/weapp'
+
+const compStepper = await loadComponent(() => import('../../src/components/stepper/index'))
+
+describe('stepper 组件（mountDef）', () => {
+  it('attached：value||defaultValue 初始化 + isMin/isMax 状态', () => {
+    const inst = mountDef(compStepper.def, {props: {value: 5, min: 0, max: 10}})
+    inst.attached()
+    expect(inst.data.currentNum).toBe(5)
+    expect(inst.data.inputText).toBe('5')
+    expect(inst.data.isMin).toBe(false)
+    expect(inst.data.isMax).toBe(false)
+
+    const atMin = mountDef(compStepper.def, {props: {value: 0, min: 0, max: 10}})
+    atMin.attached()
+    expect(atMin.data.isMin).toBe(true)
+  })
+
+  it('onAdd/onReduce：步进、越界守卫与事件载荷', () => {
+    const inst = mountDef(compStepper.def, {props: {value: 5, min: 0, max: 6, step: 2}})
+    inst.attached()
+    inst.methods.onAdd.call(inst)
+    expect(inst.data.currentNum).toBe(6)
+    // diff 为实际位移（5→7 被 max 钳到 6，diff=1 而非 step 2）
+    expect(inst.eventsOf('change')?.at(-1)?.detail).toEqual({value: 6})
+    expect(inst.eventsOf('increase')?.at(-1)?.detail).toEqual({value: 1})
+    inst.methods.onAdd.call(inst) // isMax 守卫
+    expect(inst.data.currentNum).toBe(6)
+    inst.methods.onReduce.call(inst)
+    expect(inst.data.currentNum).toBe(4)
+    // decrease 载荷为位移绝对值（transitionStepper 约定）
+    expect(inst.eventsOf('decrease')?.at(-1)?.detail).toEqual({value: 2})
+  })
+
+  it('disabled 时加减不动', () => {
+    const inst = mountDef(compStepper.def, {props: {value: 5, disabled: true}})
+    inst.attached()
+    inst.methods.onAdd.call(inst)
+    inst.methods.onReduce.call(inst)
+    expect(inst.data.currentNum).toBe(5)
+  })
+
+  it('value observer：非编辑期外部回写收敛；编辑期忽略', () => {
+    const inst = mountDef(compStepper.def, {props: {value: 5, min: 0, max: 10}})
+    inst.attached()
+    inst.setData({value: 8})
+    expect(inst.data.currentNum).toBe(8)
+    // 编辑期忽略
+    inst.setData({isEditing: true})
+    inst.setData({value: 3})
+    expect(inst.data.currentNum).toBe(8)
+    inst.setData({isEditing: false})
+    // min/max observer：仅 clamp 越界侧（低于新 min / 高于新 max），正常区间只刷状态
+    inst.setData({min: 9})
+    expect(inst.data.currentNum).toBe(9)
+    inst.setData({max: 4})
+    expect(inst.data.currentNum).toBe(4)
+  })
+
+  it('onInput/onFocus/onBlur：只读抵消、格式化收敛、blur 钳位', () => {
+    const ro = mountDef(compStepper.def, {props: {value: 5, readOnly: true}})
+    ro.attached()
+    ro.methods.onInput.call(ro, {detail: {value: '9'}})
+    expect(ro.data.inputText).toBe('5')
+
+    const inst = mountDef(compStepper.def, {props: {value: 5, min: 0, max: 10}})
+    inst.attached()
+    inst.methods.onInput.call(inst, {detail: {value: '7'}})
+    expect(inst.data.currentNum).toBe(7)
+    expect(inst.data.isEditing).toBe(true)
+    // 编辑期外部 value 回写被忽略
+    inst.setData({value: 1})
+    expect(inst.data.currentNum).toBe(7)
+    inst.methods.onBlur.call(inst)
+    expect(inst.data.isEditing).toBe(false)
+
+    const clamp = mountDef(compStepper.def, {props: {value: 5, min: 0, max: 6}})
+    clamp.attached()
+    clamp.methods.onInput.call(clamp, {detail: {value: '9'}})
+    expect(clamp.data.currentNum).toBe(6)
+    clamp.methods.onBlur.call(clamp)
+    expect(clamp.data.inputText).toBe('6')
+  })
+
+  it('defaultValue observer：重置当前值', () => {
+    const inst = mountDef(compStepper.def, {props: {value: 5, defaultValue: 2, min: 0, max: 10}})
+    inst.attached()
+    inst.setData({defaultValue: 8})
+    expect(inst.data.currentNum).toBe(8)
+  })
+})

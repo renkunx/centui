@@ -157,3 +157,70 @@ describe('popup 其他', () => {
     expect(inst.eventsOf('show')).toHaveLength(0)
   })
 })
+
+describe('popup position/transition observers', () => {
+  it('position observer：无自定义 transition 时按新位置取默认过渡名', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.setData({position: 'bottom'})
+    expect(inst.data.transitionName).toBe('slide-up')
+    inst.setData({position: 'left'})
+    expect(inst.data.transitionName).toBe('slide-right')
+    inst.setData({position: 'center'})
+    expect(inst.data.transitionName).toBe('fade')
+  })
+
+  it('position observer：已有自定义 transition 时保持自定义名', () => {
+    const inst = mountDef(comp.def, {props: {transition: 'zoom'}})
+    inst.attached()
+    inst.setData({position: 'top'})
+    expect(inst.data.transitionName).toBe('zoom')
+  })
+
+  it('transition observer：非空覆盖默认；清空回退 position 默认', () => {
+    const inst = mountDef(comp.def, {props: {position: 'bottom'}})
+    inst.attached()
+    inst.setData({transition: 'punch'})
+    expect(inst.data.transitionName).toBe('punch')
+    inst.setData({transition: ''})
+    expect(inst.data.transitionName).toBe('slide-up')
+  })
+
+  it('noop 可调', () => {
+    const inst = mountDef(comp.def)
+    expect(() => inst.methods.noop()).not.toThrow()
+  })
+})
+
+describe('popup 收尾定时器防御分支', () => {
+  it('enter 完成定时器在 boxShown 已被离场收尾置 false 时早退（二次打断）', async () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.setData({show: true})
+    await vi.advanceTimersByTimeAsync(300) // enter 完成
+    inst.setData({show: false})
+    await vi.advanceTimersByTimeAsync(250) // leave 完成：boxShown=false、isAnimating=false
+    inst.setData({show: true}) // 二次进场
+    inst.setData({show: false}) // 立即离场（其收尾定时器早于 enter 收尾）
+    await vi.advanceTimersByTimeAsync(260) // 离场收尾先执行：boxShown=false
+    const showCount = inst.eventsOf('show').length
+    await vi.advanceTimersByTimeAsync(200) // enter 收尾定时器（boxShown 已 false）→ 早退
+    expect(inst.eventsOf('show').length).toBe(showCount)
+    await vi.advanceTimersByTimeAsync(300)
+    expect(inst.eventsOf('show').length).toBe(showCount)
+    expect(inst.data.isShown).toBe(false)
+  })
+
+  it('双帧回调在动画锁已被复位时早退，不回填 active 类（防御分支）', async () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.setData({show: true})
+    // 白盒：模拟 enter 时长定时器先于双帧回调复位动画锁（duration 0 场景的竞态防御）
+    ;(inst as unknown as {__popupState: {isAnimating: boolean}}).__popupState.isAnimating = false
+    await vi.advanceTimersByTimeAsync(1)
+    expect(inst.data.boxCls).toBe(enter('fade')) // 仍为起始类（未回填 active）
+    await vi.advanceTimersByTimeAsync(300) // 完成定时器正常收尾
+    expect(inst.data.boxCls).toBe('')
+    expect(inst.eventsOf('show')).toHaveLength(1)
+  })
+})

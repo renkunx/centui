@@ -1,5 +1,6 @@
 /* legacy/components/image-reader/demo 对译（TODO 已清零；差异见 wxml 尾注释） */
 
+const {Toast} = require('../../../../dist/components/toast/index')
 Page({
   data: {
     imageList: {

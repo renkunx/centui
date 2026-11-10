@@ -167,7 +167,10 @@ CuComponent({
       const transition = this.data.transition
       s.isSlide = transition.toLowerCase().indexOf('slide') !== -1
       s.isVertical = transition === 'slideY'
-      this.setData({isVertical: s.isVertical, isFade: !s.isSlide, axis: axisOf(this)})
+      // 先写 isVertical 再派生 axis（axisOf 读 data.isVertical，顺序颠倒会把
+      // 纵向轮播按 translateX 位移）
+      this.setData({isVertical: s.isVertical, isFade: !s.isSlide})
+      this.setData({axis: axisOf(this)})
       s.duration = this.data.autoplay
     },
     ready() {

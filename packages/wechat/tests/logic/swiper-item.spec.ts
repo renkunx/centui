@@ -67,3 +67,24 @@ describe('swiper-item fade', () => {
     expect(inst.data.fadeStyle).toBe('opacity: 1;')
   })
 })
+
+describe('swiper-item relations（父 swiper 通道）', () => {
+  it('linked：登记父实例；unlinked 置空', () => {
+    const inst = mountDef(comp.def)
+    const parent = {}
+    inst.linkRelation('../swiper/index', parent)
+    expect((inst as unknown as {__swiper: unknown}).__swiper).toBe(parent)
+
+    const rel = comp.def.relations!['../swiper/index']
+    rel.unlinked!.call(inst)
+    expect((inst as unknown as {__swiper: unknown}).__swiper).toBe(null)
+  })
+
+  it('setDimensions 后 linked 依旧仅登记（尺寸由父主动下发）', () => {
+    const inst = mountDef(comp.def)
+    inst.methods.setDimensions.call(inst, 100, false)
+    inst.linkRelation('../swiper/index', {id: 1})
+    expect(inst.data.boxStyle).toBe('width: 100px;')
+    expect((inst as unknown as {__swiper: unknown}).__swiper).toEqual({id: 1})
+  })
+})

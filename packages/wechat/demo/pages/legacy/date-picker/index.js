@@ -3,7 +3,7 @@ Page({
   data: {
   "minDate": "2013-09-08T16:00:00.000Z",
   "maxDate": "2020-09-08T16:00:00.000Z",
-  "currentDate": "2026-11-10T18:03:57.926Z",
+  "currentDate": "2026-11-10T18:30:40.338Z",
   "isDatePickerShow": false,
   "datePickerValue": ""
 },

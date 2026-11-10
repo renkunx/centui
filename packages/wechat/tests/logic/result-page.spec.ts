@@ -120,3 +120,22 @@ describe('result-page 按钮点击', () => {
     expect(inst.events).toEqual([])
   })
 })
+
+describe('result-page 防御分支', () => {
+  it('buttons 非数组（null）：视图为空数组，刷新不崩溃', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.setData({buttons: null})
+    expect(inst.data.buttonsView).toEqual([])
+    expect(() => inst.methods.onButtonTap.call(inst, tapEvent({index: 0}))).not.toThrow()
+  })
+
+  it('按钮全字段归一：icon/loading/inactive true 路径透传', () => {
+    const inst = mountDef(comp.def, {
+      props: {buttons: [{text: 'b', icon: 'right', loading: true, inactive: true}]},
+    })
+    inst.attached()
+    const view = inst.data.buttonsView as Array<Record<string, unknown>>
+    expect(view[0]).toMatchObject({icon: 'right', loading: true, inactive: true})
+  })
+})
