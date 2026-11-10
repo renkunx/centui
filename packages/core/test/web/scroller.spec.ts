@@ -239,6 +239,137 @@ describe('Scroller 减速（惯性 + 吸附）', () => {
   })
 })
 
+describe('Scroller 时间戳异常守卫（修复 Infinity/NaN 速度）', () => {
+  it('duplicate timestamps yield zero velocity and no deceleration', () => {
+    const complete = vi.fn()
+    const s = create()
+    s.options.scrollingComplete = complete
+    s.setDimensions(100, 100, 300, 300)
+    s.scrollTo(100, 0, false) // 预滚动，保证拖拽后仍在边界内（无回弹动画干扰断言）
+    s.doTouchStart([touch(50, 50)], T0)
+    s.doTouchMove([touch(60, 50)], T0 + 16) // 非拖拽帧：仅判定/记录
+    s.doTouchMove([touch(70, 50)], T0 + 16) // 拖拽帧：同一毫秒时间戳
+    s.doTouchEnd(T0 + 20)
+    // 不进入减速（修复前速度为 -Infinity，减速永不终止）
+    expect(runningSteps.size).toBe(0)
+    expect(complete).toHaveBeenCalledTimes(1)
+    for (const v of values) {
+      expect(Number.isFinite(v.left)).toBe(true)
+      expect(Number.isFinite(v.top)).toBe(true)
+    }
+  })
+
+  it('out-of-order timestamps yield zero velocity and no deceleration', () => {
+    const complete = vi.fn()
+    const s = create()
+    s.options.scrollingComplete = complete
+    s.setDimensions(100, 100, 300, 300)
+    s.scrollTo(100, 0, false)
+    s.doTouchStart([touch(50, 50)], T0)
+    s.doTouchMove([touch(60, 50)], T0 + 100)
+    s.doTouchMove([touch(70, 50)], T0 + 50) // 乱序（更早）
+    s.doTouchEnd(T0 + 60)
+    expect(runningSteps.size).toBe(0)
+    expect(complete).toHaveBeenCalledTimes(1)
+    for (const v of values) {
+      expect(Number.isFinite(v.left)).toBe(true)
+    }
+  })
+})
+
+describe('Scroller 公开状态 API', () => {
+  it('tracks dragging through the gesture lifecycle', () => {
+    const s = create()
+    s.setDimensions(100, 100, 300, 300)
+    s.scrollTo(100, 0, false) // 预滚动，拖拽后仍在边界内（避免 doTouchEnd 回弹动画干扰状态断言）
+    expect(s.isDragging()).toBe(false)
+    expect(s.isScrolling()).toBe(false)
+
+    s.doTouchStart([touch(50, 50)], T0)
+    expect(s.isDragging()).toBe(false) // 单指懒判定
+    s.doTouchMove([touch(60, 50)], T0 + 16) // 越过锁定阈值
+    s.doTouchMove([touch(70, 50)], T0 + 1000) // 真正进入拖拽（慢速拖动，结束时低于惯性阈值）
+    expect(s.isDragging()).toBe(true)
+    expect(s.isScrolling()).toBe(true)
+
+    s.doTouchEnd(T0 + 1010)
+    expect(s.isDragging()).toBe(false)
+    expect(s.isScrolling()).toBe(false)
+  })
+
+  it('reports dragging immediately for two-finger start', () => {
+    const s = create()
+    s.setDimensions(100, 100, 300, 300)
+    s.doTouchStart([touch(50, 50), touch(100, 50)], T0)
+    expect(s.isDragging()).toBe(true)
+    s.doTouchEnd(T0 + 16)
+    expect(s.isDragging()).toBe(false)
+  })
+
+  it('tracks animating state across an animated scrollTo', () => {
+    const s = create()
+    s.setDimensions(100, 100, 300, 300)
+    s.scrollTo(200, 0, true)
+    expect(s.isAnimating()).toBe(true)
+    expect(s.isScrolling()).toBe(true)
+    const id = [...runningSteps.keys()].at(-1)!
+    pumpFrame(id, 1)
+    expect(s.isAnimating()).toBe(false)
+    expect(s.isScrolling()).toBe(false)
+  })
+
+  it('tracks decelerating state across a fling', () => {
+    const s = create()
+    s.setDimensions(100, 100, 300, 300)
+    s.scrollTo(100, 0, false)
+    s.doTouchStart([touch(150, 50)], T0)
+    for (let i = 1; i <= 5; i++) {
+      s.doTouchMove([touch(150 - i * 10, 50)], T0 + i * 16)
+    }
+    s.doTouchEnd(T0 + 5 * 16)
+    expect(s.isDecelerating()).toBe(true)
+    expect(s.isScrolling()).toBe(true)
+    const decelId = [...runningSteps.keys()].at(-1)!
+    pumpDeceleration(decelId)
+    expect(s.isDecelerating()).toBe(false)
+    // 无 snapping：减速完成后瞬间归位，无后续动画
+    expect(s.isAnimating()).toBe(false)
+    expect(s.isScrolling()).toBe(false)
+  })
+
+  it('tracks zooming during a scale gesture and resets on new gestures', () => {
+    const s = create({ zooming: true })
+    s.setPosition(0, 0)
+    s.setDimensions(100, 100, 200, 200)
+    expect(s.isZooming()).toBe(false)
+
+    s.doTouchStart([touch(50, 50), touch(100, 50)], T0)
+    s.doTouchMove([touch(40, 50), touch(120, 50)], T0 + 16, 2)
+    expect(s.isZooming()).toBe(true)
+
+    // 新手势（未结束直接再次 touchstart）复位
+    s.doTouchStart([touch(50, 50)], T0 + 32)
+    expect(s.isZooming()).toBe(false)
+
+    // 结束手势复位
+    s.doTouchStart([touch(50, 50), touch(100, 50)], T0 + 48)
+    s.doTouchMove([touch(40, 50), touch(120, 50)], T0 + 64, 2)
+    expect(s.isZooming()).toBe(true)
+    s.doTouchEnd(T0 + 80)
+    expect(s.isZooming()).toBe(false)
+  })
+
+  it('never reports zooming without actual level change', () => {
+    const s = create({ zooming: true })
+    s.setPosition(0, 0)
+    s.setDimensions(100, 100, 200, 200)
+    s.doTouchStart([touch(50, 50)], T0)
+    s.doTouchMove([touch(70, 50)], T0 + 16) // 单指平移，无 scale
+    expect(s.isZooming()).toBe(false)
+    s.doTouchEnd(T0 + 32)
+  })
+})
+
 describe('Scroller 下拉刷新', () => {
   it('activates when pulled beyond refresh height and starts on release', () => {
     const activate = vi.fn()

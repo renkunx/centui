@@ -82,6 +82,8 @@ export class Scroller {
   private _isDragging = false
   private _isDecelerating: number | false = false
   private _isAnimating: number | false = false
+  /** 两指缩放手势进行中（本帧 scale 实际改变了 zoom level）；touchstart/touchend 复位 */
+  private _isZooming = false
   /**
    * v2 契约字段：v2 scroller 声明了该字段但从不置真（gesturing 归入 dragging）。
    * Picker 确认守卫以 `!== false` 判断滚动状态，缺失此字段会让守卫恒真、
@@ -194,6 +196,34 @@ export class Scroller {
       left: this._maxScrollLeft,
       top: this._maxScrollTop,
     }
+  }
+
+  /**
+   * 任一滚动活动进行中（拖拽、滚动动画或减速惯性任一为真）。
+   * 供适配层替代对私有字段的读取（如 Picker 的确认守卫）。
+   */
+  isScrolling(): boolean {
+    return this._isDragging || this._isAnimating !== false || this._isDecelerating !== false
+  }
+
+  /** 手指拖拽滚动进行中（两指起始直接为 true，单指越过锁定阈值后为 true） */
+  isDragging(): boolean {
+    return this._isDragging
+  }
+
+  /** 两指缩放手势进行中（scale 实际改变 zoom level 的触摸帧之间为 true） */
+  isZooming(): boolean {
+    return this._isZooming
+  }
+
+  /** 滚动/缩放补间动画（_publish animate 路径）进行中 */
+  isAnimating(): boolean {
+    return this._isAnimating !== false
+  }
+
+  /** 惯性减速进行中 */
+  isDecelerating(): boolean {
+    return this._isDecelerating !== false
   }
 
   /**
@@ -412,6 +442,9 @@ export class Scroller {
     // Reset initial scale
     this._lastScale = 1
 
+    // Reset zooming flag
+    this._isZooming = false
+
     // Reset locking flags
     this._enableScrollX = !isSingleTouch && this.options.scrollingX
     this._enableScrollY = !isSingleTouch && this.options.scrollingY
@@ -485,6 +518,7 @@ export class Scroller {
 
         // Only do further computation when change happened
         if (oldLevel !== level) {
+          this._isZooming = true
           // Compute relative event position to container
           const currentTouchLeftRel = currentTouchLeft - this._clientLeft
           const currentTouchTopRel = currentTouchTop - this._clientTop
@@ -594,6 +628,8 @@ export class Scroller {
 
     // Be sure to reset the dragging flag now. Here we also detect whether
     // the finger has moved fast enough to switch into a deceleration animation.
+    this._isZooming = false
+
     if (this._isDragging) {
       // Reset dragging flag
       this._isDragging = false
@@ -619,25 +655,34 @@ export class Scroller {
           const movedLeft = this._scrollLeft - positions[startPos - 2]
           const movedTop = this._scrollTop - positions[startPos - 1]
 
-          // Based on 50ms compute the movement to apply for each render step
-          this._decelerationVelocityX = (movedLeft / timeOffset) * (1000 / 60)
-          this._decelerationVelocityY = (movedTop / timeOffset) * (1000 / 60)
-
-          // How much velocity is required to start the deceleration
-          const minVelocityToStartDeceleration =
-            this.options.paging || this.options.snapping ? this.options.snappingVelocity : 0.01
-
-          // Verify that we have enough velocity to start deceleration
-          if (
-            Math.abs(this._decelerationVelocityX) > minVelocityToStartDeceleration ||
-            Math.abs(this._decelerationVelocityY) > minVelocityToStartDeceleration
-          ) {
-            // Deactivate pull-to-refresh when decelerating
-            if (!this._refreshActive) {
-              this._startDeceleration(timeStamp as number)
-            }
-          } else {
+          if (timeOffset <= 0) {
+            // 重复 / 乱序时间戳无法计算有效速度：按零速度处理，
+            // 直接走滚动完成回调，避免 Infinity/NaN 速度导致减速动画永不终止
+            // 或把非法值发布给渲染回调。
+            this._decelerationVelocityX = 0
+            this._decelerationVelocityY = 0
             this.options.scrollingComplete()
+          } else {
+            // Based on 50ms compute the movement to apply for each render step
+            this._decelerationVelocityX = (movedLeft / timeOffset) * (1000 / 60)
+            this._decelerationVelocityY = (movedTop / timeOffset) * (1000 / 60)
+
+            // How much velocity is required to start the deceleration
+            const minVelocityToStartDeceleration =
+              this.options.paging || this.options.snapping ? this.options.snappingVelocity : 0.01
+
+            // Verify that we have enough velocity to start deceleration
+            if (
+              Math.abs(this._decelerationVelocityX) > minVelocityToStartDeceleration ||
+              Math.abs(this._decelerationVelocityY) > minVelocityToStartDeceleration
+            ) {
+              // Deactivate pull-to-refresh when decelerating
+              if (!this._refreshActive) {
+                this._startDeceleration(timeStamp as number)
+              }
+            } else {
+              this.options.scrollingComplete()
+            }
           }
         } else {
           this.options.scrollingComplete()

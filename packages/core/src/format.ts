@@ -107,10 +107,12 @@ export function formatValueByGapStep(
 
 /**
  * 去除所有间隔符还原原始值
+ * @param gap 间隔符；含正则特殊字符时先转义，避免被当作模式解释
  */
 export function trimValue(value: string | undefined, gap = ' '): string {
   const val = typeof value === 'undefined' ? '' : value
-  const reg = new RegExp(gap, 'g')
+  const escapedGap = gap.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const reg = new RegExp(escapedGap, 'g')
   return val.toString().replace(reg, '')
 }
 
@@ -118,16 +120,80 @@ export function trimValue(value: string | undefined, gap = ' '): string {
  * 金额/数字展示格式化（自 v2 components/amount filters 迁移，供 Vue/React 双端复用）。
  */
 
+/** 十进制数字串进一（'099' -> '100'，'999' -> '1000'） */
+function incrementDigits(digits: string): string {
+  const arr = digits.split('')
+  for (let i = arr.length - 1; i >= 0; i--) {
+    if (arr[i] === '9') {
+      arr[i] = '0'
+    } else {
+      arr[i] = String(Number(arr[i]) + 1)
+      return arr.join('')
+    }
+  }
+  return `1${arr.join('')}`
+}
+
 /**
  * 指定精度舍入并输出定点字符串
- * @param precision 小数位数（< 0 时按 0 处理）
- * @param roundUp true 四舍五入 / false 向下取整
+ * @param precision 小数位数（< 0 时按 0 处理，非整数向下取整，上限 100，与 toFixed 一致）
+ * @param roundUp true 四舍五入 —— 按绝对值 half-away-from-zero，正负对称
+ *                （正数行为与 v2 的 Math.round 一致，-1.005 -> '-1.01'）；
+ *                false 向零截断。
+ *
+ * 基于 String(value) 的十进制数字串做整数化处理：显式展开指数记数
+ * （|value| < 1e-6 或 >= 1e21 时 String(value) 为 '1e-7' / '1e+21' 形式），
+ * 任意量级（含极小/极大值）都不会产生 "NaN"。非有限输入原样返回
+ * 'NaN' / 'Infinity' / '-Infinity'。全零结果不输出负号（'-0.00' -> '0.00'）。
  */
 export function toFixedPrecision(value: number, precision: number, roundUp = true): string {
-  const p = precision > 0 ? precision : 0
-  const exponentialForm = Number(`${value}e${p}`)
-  const rounded = roundUp ? Math.round(exponentialForm) : Math.floor(exponentialForm)
-  return Number(`${rounded}e-${p}`).toFixed(p)
+  if (!Number.isFinite(value)) {
+    return String(value)
+  }
+  const p = precision > 0 ? Math.min(Math.floor(precision), 100) : 0
+  const negative = value < 0
+
+  // 展开为「整数位串 + 小数位串」的规范十进制形式
+  const str = String(negative ? -value : value)
+  let mantissa = str
+  let exponent = 0
+  const eIndex = str.indexOf('e')
+  if (eIndex !== -1) {
+    mantissa = str.slice(0, eIndex)
+    exponent = parseInt(str.slice(eIndex + 1), 10)
+  }
+  const dotIndex = mantissa.indexOf('.')
+  const digits = dotIndex === -1 ? mantissa : mantissa.replace('.', '')
+  let decimalPos = dotIndex === -1 ? mantissa.length : dotIndex
+  decimalPos += exponent
+
+  let integerPart: string
+  let fraction: string
+  if (decimalPos <= 0) {
+    integerPart = '0'
+    fraction = '0'.repeat(-decimalPos) + digits
+  } else if (decimalPos >= digits.length) {
+    integerPart = digits + '0'.repeat(decimalPos - digits.length)
+    fraction = ''
+  } else {
+    integerPart = digits.slice(0, decimalPos)
+    fraction = digits.slice(decimalPos)
+  }
+
+  // 截断到目标精度；roundUp 时按小数点后 p+1 位决定是否进一
+  let combined = integerPart + fraction.slice(0, p).padEnd(p, '0')
+  if (roundUp && fraction.length > p && fraction.charCodeAt(p) >= 53 /* '5' */) {
+    combined = incrementDigits(combined)
+  }
+
+  const prefix = /^0*$/.test(combined) ? '' : negative ? '-' : ''
+  if (p > 0) {
+    if (combined.length <= p) {
+      combined = '0'.repeat(p - combined.length + 1) + combined
+    }
+    return `${prefix}${combined.slice(0, combined.length - p)}.${combined.slice(combined.length - p)}`
+  }
+  return `${prefix}${combined}`
 }
 
 /**
@@ -218,7 +284,9 @@ export function numberToChineseCapital(number: number | string): string {
   }
 
   // Convert integer part
+  let hasInteger = false
   if (parseInt(integerNum, 10) > 0) {
+    hasInteger = true
     let zeroCount = 0
     for (let i = 0, intLen = integerNum.length; i < intLen; i++) {
       const n = integerNum.charAt(i)
@@ -243,9 +311,16 @@ export function numberToChineseCapital(number: number | string): string {
 
   // Convert decimal part
   if (decimalNum !== '') {
+    // 财务规范：整数部位后有「元」，角位为 0 且后续存在非零位时需补「零」
+    // （如 10.05 -> 壹拾元零伍分）；整数部分为 0（无「元」）时不补。
+    let pendingZero = hasInteger && decimalNum.charAt(0) === '0'
     for (let i = 0, decLen = decimalNum.length; i < decLen; i++) {
       const n = decimalNum.charAt(i)
       if (n !== '0') {
+        if (pendingZero) {
+          capitalStr += cnNums[0]
+          pendingZero = false
+        }
         capitalStr += cnNums[Number(n)] + cnDecUnits[i]
       }
     }

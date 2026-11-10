@@ -217,4 +217,37 @@ describe('custom 类型分支', () => {
     expect(columns[0][0].value).toBe(2006)
     expect(columns[1].length).toBe(12)
   })
+
+  it('warns and skips unknown custom types instead of throwing', () => {
+    const warnSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const { generators, columns, defaults } = buildDateColumns({
+      type: 'custom',
+      customTypes: ['ss' as never, 'mm'],
+      defaultDate: new Date(2024, 3, 8, 9, 5),
+      now: NOW,
+    })
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Unknown custom column type'))
+    expect(generators.map(g => g.type)).toEqual(['Minute'])
+    expect(columns[0].length).toBe(60)
+    expect(defaults).toEqual([5])
+    warnSpy.mockRestore()
+  })
+})
+
+describe('minuteStep 边界（死循环防护）', () => {
+  it('clamps minuteStep 0 to 1 with a warning', () => {
+    const warnSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const { columns } = buildDateColumns({ type: 'time', minuteStep: 0, now: NOW })
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('minuteStep'))
+    expect(columns[1].length).toBe(60)
+    expect(columns[1][1].value).toBe(1)
+    warnSpy.mockRestore()
+  })
+
+  it('clamps negative minuteStep to 1', () => {
+    const warnSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const { columns } = buildDateColumns({ type: 'time', minuteStep: -5, now: NOW })
+    expect(columns[1].length).toBe(60)
+    warnSpy.mockRestore()
+  })
 })

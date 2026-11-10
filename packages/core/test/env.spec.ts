@@ -20,16 +20,16 @@ describe('warn', () => {
     vi.unstubAllEnvs()
   })
 
-  it('logs with Mand-Mobile prefix in non-production', () => {
+  it('logs with CentUI prefix in non-production', () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {})
     warn('something wrong')
-    expect(error).toHaveBeenCalledWith('[Mand-Mobile]: something wrong')
+    expect(error).toHaveBeenCalledWith('[CentUI]: something wrong')
   })
 
   it('supports console method override', () => {
     const w = vi.spyOn(console, 'warn').mockImplementation(() => {})
     warn('be careful', 'warn')
-    expect(w).toHaveBeenCalledWith('[Mand-Mobile]: be careful')
+    expect(w).toHaveBeenCalledWith('[CentUI]: be careful')
   })
 
   it('stays silent in production', async () => {

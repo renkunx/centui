@@ -94,6 +94,12 @@ describe('trimValue', () => {
     expect(trimValue('123-456', '-')).toBe('123456')
     expect(trimValue(undefined)).toBe('')
   })
+
+  it('escapes regex-special gap characters', () => {
+    expect(trimValue('1.234.567', '.')).toBe('1234567')
+    expect(trimValue('1*234*567', '*')).toBe('1234567')
+    expect(trimValue('1+234+567', '+')).toBe('1234567')
+  })
 })
 
 describe('无 range 的增删分支', () => {
@@ -126,6 +132,52 @@ describe('toFixedPrecision', () => {
 
   it('pads decimals to requested precision', () => {
     expect(toFixedPrecision(1, 4)).toBe('1.0000')
+  })
+})
+
+describe('toFixedPrecision 指数记数与非有限输入（修复 "NaN" 输出）', () => {
+  it('handles sub-1e-6 values whose String() form is exponential', () => {
+    expect(toFixedPrecision(0.0000001, 8)).toBe('0.00000010')
+    expect(toFixedPrecision(1e-7, 2)).toBe('0.00')
+    expect(toFixedPrecision(1.5e-7, 8)).toBe('0.00000015')
+  })
+
+  it('handles >= 1e21 values whose String() form is exponential', () => {
+    expect(toFixedPrecision(1e21, 2)).toBe('1000000000000000000000.00')
+    expect(toFixedPrecision(2.5e21, 0)).toBe('2500000000000000000000')
+  })
+
+  it('passes through non-finite input without throwing', () => {
+    expect(toFixedPrecision(Number.NaN, 2)).toBe('NaN')
+    expect(toFixedPrecision(Number.POSITIVE_INFINITY, 2)).toBe('Infinity')
+    expect(toFixedPrecision(Number.NEGATIVE_INFINITY, 2)).toBe('-Infinity')
+  })
+})
+
+describe('toFixedPrecision 舍入规则（绝对值 half-away-from-zero，正负对称）', () => {
+  it('rounds negative halves away from zero', () => {
+    expect(toFixedPrecision(-1.005, 2)).toBe('-1.01')
+    expect(toFixedPrecision(-0.005, 2)).toBe('-0.01')
+  })
+
+  it('truncates toward zero when roundUp is false', () => {
+    expect(toFixedPrecision(-1.005, 2, false)).toBe('-1.00')
+    expect(toFixedPrecision(-1.999, 2, false)).toBe('-1.99')
+  })
+
+  it('keeps float-sum inputs stable', () => {
+    expect(toFixedPrecision(0.1 + 0.2, 2)).toBe('0.30')
+  })
+
+  it('carries rounding into the integer part and drops negative zero', () => {
+    expect(toFixedPrecision(9.99, 1)).toBe('10.0')
+    expect(toFixedPrecision(0.999, 2)).toBe('1.00')
+    expect(toFixedPrecision(-0.0001, 2)).toBe('0.00')
+    expect(toFixedPrecision(0, 2)).toBe('0.00')
+  })
+
+  it('supports large precision on small values', () => {
+    expect(toFixedPrecision(0.1, 20)).toBe('0.10000000000000000000')
   })
 })
 
@@ -177,6 +229,20 @@ describe('numberToChineseCapital', () => {
 
   it('falls back to 零元整 when integer part is all zero', () => {
     expect(numberToChineseCapital(0.5)).toBe('伍角')
+    expect(numberToChineseCapital(0.05)).toBe('伍分')
+  })
+
+  it('inserts 零 between 元 and decimal when 角 is zero (financial standard)', () => {
+    expect(numberToChineseCapital(10.05)).toBe('壹拾元零伍分')
+    expect(numberToChineseCapital(1000.05)).toBe('壹仟元零伍分')
+    expect(numberToChineseCapital(100.05)).toBe('壹佰元零伍分')
+    expect(numberToChineseCapital(1.01)).toBe('壹元零壹分')
+    expect(numberToChineseCapital(-10.05)).toBe('负壹拾元零伍分')
+  })
+
+  it('does not insert 零 when 角 is nonzero or there is no 元', () => {
+    expect(numberToChineseCapital(10.5)).toBe('壹拾元伍角')
+    expect(numberToChineseCapital(100.5)).toBe('壹佰元伍角')
     expect(numberToChineseCapital(0.05)).toBe('伍分')
   })
 })
