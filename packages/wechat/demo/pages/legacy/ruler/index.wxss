@@ -1,0 +1,31 @@
+@import "../legacy.wxss";
+
+.md-example-child-single-component .container {
+  margin: 0 auto;
+  width: 640px;
+}
+
+.md-example-child-single-component .container {
+  margin: 0 auto;
+  width: 640px;
+}
+
+.md-example-child-single-component .container {
+  margin: 0 auto;
+  width: 640px;
+}
+
+.md-example-child-single-component .container {
+  margin: 0 auto;
+  width: 640px;
+}
+
+.md-example-child-single-component .container {
+  margin: 0 auto;
+  width: 640px;
+}
+
+.md-example.single-component {
+  position: relative;
+}
+

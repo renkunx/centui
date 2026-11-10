@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "cu-slider": "../../../../dist/components/slider/index"
+  }
+}

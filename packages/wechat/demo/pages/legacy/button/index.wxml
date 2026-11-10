@@ -1,0 +1,75 @@
+<view class="legacy-wrapper md-example button">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-button md-example-child-button-0">
+    <cu-button type="default">Default</cu-button>
+    <cu-button type="default" inactive>Default Inactive</cu-button>
+    <cu-button type="primary">Primary</cu-button>
+    <cu-button type="primary" inactive>Primary Inactive</cu-button>
+    <cu-button type="primary" loading>Loading</cu-button>         
+    <cu-button type="warning">Warning</cu-button>
+    <cu-button type="warning" inactive>Warning Inactive</cu-button>
+    <cu-button type="disabled">Disabled</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">线性按钮</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-button md-example-child-button-1">
+    <cu-button type="default" plain>Default & Plain</cu-button>
+    <cu-button type="primary" plain>Primary & Plain</cu-button>
+    <cu-button type="warning" plain>Warning & Plain</cu-button>
+    <cu-button type="disabled" plain>Disabled & Plain</cu-button>
+    <cu-button type="primary" plain round>Primary & Plain & Round</cu-button>
+    <cu-button type="primary" plain round loading>Primary & Plain & Loading</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">圆角按钮</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-button md-example-child-button-2">
+    <cu-button type="default" round>Default & Round</cu-button>
+    <cu-button type="primary" round>Primary & Round</cu-button>
+    <cu-button type="warning" round>Warning & Round</cu-button>
+    <cu-button type="disabled" round>Disabled & Round</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">行内按钮</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child  md-example-child-button md-example-child-button-3">
+    <view class="md-example-section">
+      <cu-button type="primary" icon="edit" inline>Inline Primary</cu-button>
+      <cu-button type="primary" inline plain>Inline Plain</cu-button>
+    </view>
+    <view class="md-example-section">
+      <cu-button type="warning" size="small" inline>Warning</cu-button>
+      <cu-button type="disabled" size="small" inline>Disabled</cu-button>
+    </view>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">文字链接按钮</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child  md-example-child-button md-example-child-button-3">
+    <cu-button type="link" icon="message">评论</cu-button>
+    <cu-button type="link" inactive>去看看<cu-icon name="arrow" size="md"></cu-icon></cu-button>
+  </view>
+
+    </view>
+  </view>
+</view>

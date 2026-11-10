@@ -1,0 +1,30 @@
+@import "../legacy.wxss";
+
+.md-example-child-icon {
+  padding-top: 20px;
+  background: #fff;
+}
+.md-example-child-icon .md-example-item,
+.md-example-child-icon .md-example-item-s {
+  float: left;
+  width: 25%;
+  height: 100px;
+  padding: 15px 0;
+  color: #333;
+  text-align: center;
+}
+.md-example-child-icon .md-example-item .md-icon,
+.md-example-child-icon .md-example-item-s .md-icon {
+  margin: 0 auto;
+  color: #111a34;
+}
+.md-example-child-icon .md-example-item p,
+.md-example-child-icon .md-example-item-s p {
+  text-align: center;
+  font-size: font-body-normal;
+  color: #999;
+}
+.md-example-child-icon .md-example-item-s {
+  width: 25%;
+}
+

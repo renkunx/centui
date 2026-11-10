@@ -1,0 +1,35 @@
+/* v2 文档首页风格：分组卡片列表 */
+.catalog {
+  padding: 24rpx;
+}
+
+.catalog-group {
+  margin-bottom: 32rpx;
+}
+
+.catalog-group-title {
+  font-size: var(--font-caption-normal);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-minor);
+  padding: 16rpx 8rpx;
+}
+
+.catalog-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-bg-inverse);
+  padding: 28rpx 32rpx;
+  margin-bottom: 2rpx;
+  font-size: var(--font-body-large);
+  color: var(--color-text-base);
+}
+
+.catalog-item-hover {
+  background: var(--color-bg-tap);
+}
+
+.catalog-dir {
+  font-size: var(--font-minor-normal);
+  color: var(--color-text-caption);
+}

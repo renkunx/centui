@@ -1,0 +1,129 @@
+<view class="legacy-wrapper md-example notice-bar">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-notice-bar md-example-child-notice-bar-0">
+    <cu-notice-bar>为了确保您的资金安全，请设置支付密码</cu-notice-bar>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">设置图标</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-notice-bar md-example-child-notice-bar-1">
+    <cu-notice-bar
+      mode="closable"
+      icon="security"
+    >
+      为了确保您的资金安全，请设置支付密码
+    </cu-notice-bar>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">设置时间</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-notice-bar md-example-child-notice-bar-2">
+    <cu-notice-bar time="{{5000}}">为了确保您的资金安全，请设置支付密码</cu-notice-bar>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">圆角</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-notice-bar md-example-child-notice-bar-3">
+    <cu-notice-bar round>为了确保您的资金安全，请设置支付密码</cu-notice-bar>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">样式</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-notice-bar md-example-child-notice-bar-4">
+    <cu-notice-bar
+      icon="warn"
+      mode="closable"
+      type="warning"
+    >
+      该银行3:00-12:00系统维护，请更换其他银行卡
+    </cu-notice-bar>
+    <cu-notice-bar
+      icon="coupon"
+      mode="link"
+      type="activity"
+      style="margin-top:10px;"
+    >
+      福利来啦，7日免息券发放中！
+    </cu-notice-bar>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">多行显示</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-notice-bar md-example-child-notice-bar-5">
+    <cu-notice-bar
+      mode="link"
+      icon="security"
+      multi-rows
+    >
+      为了确保您的资金安全，请设置支付密码。为了确保您的资金安全，请设置支付密码。为了确保您的资金安全，请设置支付密码。
+    </cu-notice-bar>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">滚动播放</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-notice-bar md-example-child-notice-bar-6">
+    <cu-notice-bar
+      mode="closable"
+      icon="volumn"
+      scrollable
+    >
+      为了确保您的资金安全，请设置支付密码为了确保您的资金安全，请设置支付密码为了确保您的资金安全，请设置支付密码
+    </cu-notice-bar>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">使用插槽自定义</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-notice-bar md-example-child-notice-bar-7">
+    <cu-notice-bar>
+      <cu-icon slot="left" class="md-notice-demo-icon md-notice-demo-icon-left" name="security"></cu-icon>
+      为了确保您的资金安全，请设置支付密码
+    </cu-notice-bar>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">动态插槽内容</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-notice-bar md-example-child-notice-bar-7">
+    <cu-notice-bar scrollable>
+      <cu-icon slot="left" class="md-notice-demo-icon md-notice-demo-icon-left" name="security"></cu-icon>
+      {{ content }}
+    </cu-notice-bar>
+  </view>
+
+    </view>
+  </view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "cu-progress": "../../../../dist/components/progress/index",
+    "cu-amount": "../../../../dist/components/amount/index"
+  }
+}

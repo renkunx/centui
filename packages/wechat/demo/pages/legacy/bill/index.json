@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "cu-bill": "../../../../dist/components/bill/index",
+    "cu-detail-item": "../../../../dist/components/detail-item/index",
+    "cu-icon": "../../../../dist/components/icon/index",
+    "cu-tag": "../../../../dist/components/tag/index"
+  }
+}

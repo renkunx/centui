@@ -1,0 +1,103 @@
+<view class="legacy-wrapper md-example tag">
+  <view class="legacy-section">
+    <view class="legacy-title">半圆</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tag md-example-child-tag-0">
+    <cu-tag size="tiny" shape="circle" type="fill" fill-color="#FC7353" font-color="#000"></cu-tag>
+    <cu-tag size="small" shape="circle" type="fill" fill-color="#FC7353" font-color="#fff">特惠</cu-tag>
+    <cu-tag size="large" shape="circle" type="fill" fill-color="#FC7353" font-color="#fff">返5000</cu-tag>
+    <cu-tag size="small" shape="circle" type="ghost" font-color="#FC7353">特惠</cu-tag>
+    <cu-tag
+      size="small"
+      shape="circle"
+      sharp="bottom-left"
+      type="fill"
+      fill-color="linear-gradient(90deg, #FC7353 0%, #FC9153 100%)"
+      font-color="#fff"
+    >续保3折起</cu-tag>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">圆角</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tag md-example-child-tag-1">
+    <cu-tag
+      size="large"
+      shape="fillet"
+      type="fill"
+      fill-color="rgba(255, 91, 96, .1)"
+      font-weight="normal"
+      font-color="#FF5B60"
+    >逾期23天</cu-tag>
+    <cu-tag
+      size="large"
+      shape="fillet"
+      type="ghost"
+      fill-color="rgba(255, 91, 96, .1)"
+      font-weight="normal"
+      font-color="#FF5B60"
+    >逾期23天</cu-tag>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">线框</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tag md-example-child-tag-2">
+    <tag size="large" shape="square" font-color="#FF8843" type="ghost">可选</tag>
+    <tag size="small" shape="square" font-color="#28AA91" type="ghost">可选</tag>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">阳文</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tag md-example-child-tag-3">
+    <tag size="large" shape="square" fill-color="rgba(0,0,0,0)" type="fill" font-weight="bolder" font-color="#333">￥3600</tag>
+    <tag size="small" shape="square" fill-color="rgba(0,0,0,0)" type="fill" font-weight="bolder" font-color="#333">￥300</tag>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">特殊标签</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tag md-example-child-tag-3">
+    <cu-tag
+      size="large"
+      shape="coupon"
+      fill-color="#FC9153"
+      type="fill"
+      font-color="#fff"
+      style="margin-right:20px;"
+    >免息券70.1</cu-tag>
+    <cu-tag
+      size="large"
+      shape="quarter"
+      fill-color="#FC9153"
+      type="fill"
+      font-color="#fff"
+      style="margin-right:20px;"
+    >
+      <cu-icon name="right"></cu-icon>
+    </cu-tag>
+    <cu-tag
+      size="large"
+      shape="bubble"
+      fill-color="linear-gradient(90deg, #FF5B60 0%, #F98472 100%)"
+      type="fill"
+    >99</cu-tag>
+  </view>
+
+    </view>
+  </view>
+</view>

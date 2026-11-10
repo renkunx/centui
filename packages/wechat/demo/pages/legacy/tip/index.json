@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "cu-tip": "../../../../dist/components/tip/index",
+    "cu-button": "../../../../dist/components/button/index"
+  }
+}

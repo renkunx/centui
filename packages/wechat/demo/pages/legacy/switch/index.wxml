@@ -1,0 +1,56 @@
+<view class="legacy-wrapper md-example switch">
+  <view class="legacy-section">
+    <view class="legacy-title">开启状态</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-switch md-example-child-switch-0">
+    <cu-switch
+      value="{{isActive}}" bind:change="noop"
+      bind:change="handler('switch0', isActive, $event)"
+    ></cu-switch>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">关闭状态</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-switch md-example-child-switch-1">
+    <cu-switch
+      value="{{isActive}}" bind:change="noop"
+      bind:change="handler('switch1', isActive, $event)"
+    ></cu-switch>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">开启不可用状态</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-switch md-example-child-switch-2">
+    <cu-switch
+      value="{{isActive}}" bind:change="noop"
+      disabled
+      bind:change="handler('switch2', isActive, $event)"
+    ></cu-switch>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">关闭不可用状态</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-switch md-example-child-switch-3">
+    <cu-switch
+      value="{{isActive}}" bind:change="noop"
+      disabled
+      bind:change="handler('switch3', isActive, $event)"
+    ></cu-switch>
+  </view>
+
+    </view>
+  </view>
+</view>

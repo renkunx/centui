@@ -1,0 +1,163 @@
+<view class="legacy-wrapper md-example selector">
+  <view class="legacy-section">
+    <view class="legacy-title">无需确认</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-selector md-example-child-selector-0">
+    <cu-field>
+      <cu-field-item
+        title="普通模式"
+        content="{{selectorValue}}"
+        bind:tap="showSelector"
+        arrow
+        solid
+      />
+    </cu-field>
+    <cu-selector
+      value="{{isSelectorShow}}" bind:change="noop"
+      default-value="2"
+      data="{{data[0]}}"
+      max-height="320px"
+      title="普通模式"
+      large-radius
+      bind:choose="onSelectorChoose"
+    ></cu-selector>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">自定义选项</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-selector md-example-child-selector-1">
+    <cu-field>
+      <cu-field-item
+        title="自定义"
+        content="{{selectorValue}}"
+        bind:tap="showSelector"
+        arrow
+        solid
+      />
+    </cu-field>
+    <cu-selector
+      value="{{isSelectorShow}}" bind:change="noop"
+      data="{{data[0]}}"
+      hide-title-bar
+      large-radius
+      is-check
+      iconSize="lg"
+      bind:choose="onSelectorChoose"
+    >
+      <view class="selector-header" slot="header">
+        Header Slot
+      </view>
+      <template slot-scope="{ option, index, selected }">
+        <!-- <view class="md-selector-custom-brief">{{ option.text }}使用slot-scope</view> -->
+        <view class="selector-item-body" class="{{{disabled: option.disabled, selected}}}">
+          <view class="selector-item-left">
+            <text class="holder" v-text="option.value"></text>
+          </view>
+          <view class="selector-item-content">
+            <view class="legacy-p" class="selector-item-title" v-text="option.text"></view>
+            <view class="legacy-p" class="selector-item-brief" v-text="`${option.describe}-${index}`"></view>
+          </view>
+        </view>
+      </template>
+      <view class="selector-footer" slot="footer">
+        Footer Slot
+      </view>
+    </cu-selector>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">确认模式</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-selector md-example-child-selector-2">
+    <cu-field>
+      <cu-field-item
+        title="确认模式"
+        content="{{selectorValue}}"
+        bind:tap="showSelector"
+        arrow
+        solid
+      />
+    </cu-field>
+    <cu-selector
+      value="{{isSelectorShow}}" bind:change="noop"
+      data="{{data[0]}}"
+      min-height="320px"
+      title="确认模式"
+      okText="确认"
+      large-radius
+      bind:confirm="onSelectorConfirm"
+    ></cu-selector>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">Check模式</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-selector md-example-child-selector-3">
+    <cu-field>
+      <cu-field-item
+        title="Check模式"
+        content="{{selectorValue}}"
+        bind:tap="showSelector"
+        arrow
+      />
+    </cu-field>
+    <cu-selector
+      value="{{isSelectorShow}}" bind:change="noop"
+      data="{{data[0]}}"
+      title="Check模式"
+      min-height="320px"
+      okText="确认"
+      cancelText="取消"
+      large-radius
+      bind:confirm="onSelectorConfirm"
+      is-check
+    ></cu-selector>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">多选模式</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-selector md-example-child-selector-4">
+    <cu-field>
+      <cu-field-item
+        title="多选模式"
+        content="{{selectorValue.join(',')}}"
+        bind:tap="showSelector"
+        arrow
+      />
+    </cu-field>
+    <cu-selector
+      value="{{isSelectorShow}}" bind:change="noop"
+      data="{{data[0]}}"
+      defaultValue="{{selectorValue}}"
+      title="多选模式"
+      min-height="320px"
+      okText="确定"
+      cancelText="取消"
+      large-radius
+      bind:confirm="onSelectorConfirm"
+      multi
+    ></cu-selector>
+  </view>
+
+    </view>
+  </view>
+</view>
+<!--
+TODO 修整清单（selector）：
+  - wxml 方法调用表达式需改写：{{selectorValue.join(',')}}
+-->

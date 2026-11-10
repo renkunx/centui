@@ -1,0 +1,6 @@
+@import "../legacy.wxss";
+
+.md-example.slider {
+  position: relative;
+}
+

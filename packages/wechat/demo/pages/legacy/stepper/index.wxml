@@ -1,0 +1,86 @@
+<view class="legacy-wrapper md-example stepper">
+  <view class="legacy-section">
+    <view class="legacy-title">禁用</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-stepper md-example-child-stepper-0">
+    <cu-field>
+      <cu-field-item title="禁用">
+        <cu-stepper slot="right" disabled />
+      </cu-field-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">只读</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-stepper md-example-child-stepper-1">
+    <cu-field>
+      <cu-field-item title="只读">
+        <cu-stepper slot="right" read-only />
+      </cu-field-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">最小值-12，最大值18</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-stepper md-example-child-stepper-2">
+    <cu-field>
+      <cu-field-item title="最小值-12，最大值18">
+        <cu-stepper slot="right" value="{{value}}" bind:change="noop" min="-12" max="18" />
+      </cu-field-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">步进2</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-stepper md-example-child-stepper-3">
+    <cu-field>
+      <cu-field-item title="步进2, 只允许输入整数">
+        <cu-stepper slot="right" value="{{value}}" bind:change="noop" step="{{2}}" min="{{2}}" is-integer />
+      </cu-field-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">最小值4大于默认值</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-stepper md-example-child-stepper-4">
+    <cu-field>
+      <cu-field-item title="最小值4大于默认值">
+        <cu-stepper slot="right" min="{{4}}" />
+      </cu-field-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">step为小数1.3</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-stepper md-example-child-stepper-5">
+    <cu-field>
+      <cu-field-item title="step为小数1.3">
+        <cu-stepper slot="right" step="{{1.3}}" />
+      </cu-field-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+</view>

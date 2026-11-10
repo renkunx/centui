@@ -1,0 +1,77 @@
+<view class="legacy-wrapper md-example bill">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-bill-0">
+    <cu-bill
+      title="借款电子票据"
+      no="12345689"
+      water-mark="MAND-MOBILE"
+    >
+      <cu-detail-item title="借款金额">
+        &yen;30,000
+      </cu-detail-item>
+      <cu-detail-item title="收款账户">
+        <cu-icon name="bank-zs" svg style="margin-right:10px;"></cu-icon>招商银行(尾号xxxx)
+      </cu-detail-item>
+      <cu-detail-item title="借款期数" content="12期" />
+      <cu-detail-item title="正常还款总息">
+        &yen;140.50
+      </cu-detail-item>
+      <cu-detail-item title="还款">
+        <cu-tag
+          size="small"
+          shape="fillet"
+          type="fill"
+          fill-color="#858B9C"
+          style="margin-right:4px;"
+        >首次</cu-tag>
+        &yen;404.50&nbsp;(9月22日)
+      </cu-detail-item>
+    </cu-bill>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">使用插槽</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-bill-1">
+    <cu-bill>
+      <view class="header-slot" slot="header">
+        <h1 class="title">借款单据</h1>
+        <view class="legacy-p" class="desc">仔细阅读，关注您的利益、义务</view>
+      </view>
+      <cu-detail-item title="借款金额">
+        &yen;30,000
+      </cu-detail-item>
+      <cu-detail-item title="收款账户">
+        <cu-icon name="bank-zs" svg style="margin-right:10px;"></cu-icon>招商银行(尾号xxxx)
+      </cu-detail-item>
+      <cu-detail-item title="借款期数" content="12期" />
+      <cu-detail-item title="正常还款总息">
+        &yen;140.50
+      </cu-detail-item>
+      <cu-detail-item title="还款">
+        <cu-tag
+          size="small"
+          shape="fillet"
+          type="fill"
+          fill-color="#858B9C"
+          style="margin-right:4px;"
+        >首次</cu-tag>
+        &yen;404.50&nbsp;(9月22日)
+      </cu-detail-item>
+      <view class="footer-slot" slot="footer">
+        1 账单生成后显示在滴水贷首页，请按时还款避免逾期。 
+        2 整笔账单还款完成后，额度将恢复。暂不支持额度实时恢复。
+        3 还款日将自动扣款，扣款顺序优先余额，其次还款账户：工商银行 (尾号xxxx)。
+      </view>
+    </cu-bill>
+	</view>
+
+    </view>
+  </view>
+</view>

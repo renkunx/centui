@@ -1,0 +1,46 @@
+@import "../legacy.wxss";
+
+.md-example-child-steps-5 {
+  height: 140px;
+}
+.md-example-child-steps-5 .md-steps .icon.current::before {
+  content: '';
+  color: color-primary-tap;
+  border-bottom: 10px solid;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  position: absolute;
+  top: 130px;
+}
+
+.md-example-child-steps-7 .md-steps {
+  height: 420px;
+}
+
+.md-example-child-steps-8 .custom-content .name {
+  font-size: 28px;
+  color: #858b9c;
+}
+.md-example-child-steps-8 .custom-content .name.active {
+  font-size: 40px;
+  color: #111a34;
+}
+.md-example-child-steps-8 .custom-content .amount {
+  margin-top: 20px;
+  color: #111a34;
+}
+.md-example-child-steps-8 .custom-content .amount .md-amount {
+  margin-right: 5px;
+  font-size: 80px;
+}
+.md-example-child-steps-8 .custom-content .desc {
+  line-height: 40px !important;
+}
+.md-example-child-steps-8 .custom-content .desc span {
+  color: #ff8325;
+}
+
+.md-example-content {
+  background: color-bg-base;
+}
+

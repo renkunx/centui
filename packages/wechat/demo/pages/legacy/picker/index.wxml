@@ -1,0 +1,85 @@
+<view class="legacy-wrapper md-example picker">
+  <view class="legacy-section">
+    <view class="legacy-title">单列数据 <a href="javascript:window.PickerTrigger0()">getColumnValues</a><a href="javascript:window.PickerTrigger1()">getColumnIndexs</a><a href="javascript:window.PickerTrigger2()">setColumnValues</a></view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-picker md-example-child-picker-0">
+    <cu-picker
+      ref="picker"
+      data="{{pickerData}}"
+      invalid-index="{{[[2, 3, 4]]}}"
+      bind:initialed="onPickerInitialed"
+      bind:change="onPickerConfirm"
+      is-view
+    ></cu-picker>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">联动数据 <a href="javascript:window.PickerTrigger3()">getColumnValue(0)</a><a href="javascript:window.PickerTrigger4()">getColumnIndex(0)</a><a href="javascript:window.PickerTrigger5()">changeDefaultValue</a></view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-picker md-example-child-picker-1">
+    <cu-picker
+      ref="picker"
+      data="{{pickerData}}"
+      cols="{{3}}"
+      default-index="{{pickerDefaultIndex}}"
+      default-value="{{pickerDefaultValue}}"
+      is-view
+      is-cascade
+      bind:initialed="onPickerInitialed"
+      bind:change="onPickerConfirm"
+    ></cu-picker>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">弹出展示</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-picker md-example-child-picker-2">
+    <cu-field>
+      <cu-field-item
+        title="起保年份"
+        arrow="arrow"
+        addon="{{pickerValue0}}"
+        bind:tap="isPickerShow0 = true">
+      </cu-field-item>
+      <cu-field-item
+        title="省市区/县"
+        arrow="arrow"
+        addon="{{pickerValue1}}"
+        bind:tap="isPickerShow1 = true">
+      </cu-field-item>
+    </cu-field>
+    <cu-picker
+      ref="picker0"
+      value="{{isPickerShow0}}" bind:change="noop"
+      data="{{pickerData0}}"
+      large-radius
+      bind:confirm="onPickerConfirm(0)"
+      title="选择年份"
+    ></cu-picker>
+    <cu-picker
+      ref="picker1"
+      value="{{isPickerShow1}}" bind:change="noop"
+      data="{{pickerData1}}"
+      cols="{{3}}"
+      is-cascade
+      large-radius
+      title="选择省市区/县"
+      bind:confirm="onPickerConfirm(1)"
+    ></cu-picker>
+  </view>
+
+    </view>
+  </view>
+</view>
+<!--
+TODO 修整清单（picker）：
+  - demo0.vue: 定义对象求值失败（simple is not defined），data/methods 未搬运
+  - demo2.vue: 定义对象求值失败（simple is not defined），data/methods 未搬运
+-->

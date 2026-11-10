@@ -1,0 +1,114 @@
+<view class="legacy-wrapper md-example toast">
+  <view class="legacy-section">
+    <view class="legacy-title">纯文字</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-toast md-example-child-toast-0">
+    <cu-button bind:tap="showTextToast">纯文字</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">成功</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-toast md-example-child-toast-1">
+    <cu-button bind:tap="showSucceedToast">成功</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">失败</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-toast md-example-child-toast-2">
+    <cu-button bind:tap="showSucceedToast">失败</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">载入</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-toast md-example-child-toast-3">
+    <cu-button bind:tap="showLoadingToast">载入</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">连续调用</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-toast md-example-child-toast-3">
+    <cu-button bind:tap="start">连续调用</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">长文字</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-toast md-example-child-toast-1">
+    <cu-button bind:tap="showToast">长文字</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">自定义位置</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-toast md-example-child-toast-0">
+    <cu-button bind:tap="showTextToast">自定义位置</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">定制Toast</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-toast md-example-child-toast-7">
+    <cu-toast ref="toast">
+      <cu-activity-indicator
+        size="{{20}}"
+        text-size="{{16}}"
+        color="yellow"
+        text-color="white"
+      >loading...</cu-activity-indicator>
+    </cu-toast>
+    <cu-button bind:tap="showTextToast">定制Toast</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">方形 Toast</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-toast md-example-child-toast-7">
+    <cu-toast ref="toast" icon="ring" icon-svg content="loading..." square>
+    </cu-toast>
+    <cu-button bind:tap="showTextToast">方形Toast</cu-button>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">方形 Toast 长文本</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-toast md-example-child-toast-7">
+    <cu-toast ref="toast" icon="success" content="方形 Toast 最多支持2行文字" square>
+    </cu-toast>
+    <cu-button bind:tap="showTextToast">方形Toast长文字</cu-button>
+  </view>
+
+    </view>
+  </view>
+</view>

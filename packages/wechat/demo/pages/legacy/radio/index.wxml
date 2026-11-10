@@ -1,0 +1,101 @@
+<view class="legacy-wrapper md-example radio">
+  <view class="legacy-section">
+    <view class="legacy-title">普通单选项</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-radio md-example-child-radio-0">
+    <cu-radio name="0" value="{{checked}}" bind:change="noop" label="单选项1" />
+    <cu-radio name="1" value="{{checked}}" bind:change="noop" label="单选项2" />
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">表单项内联</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-radio md-example-child-radio-1">
+    <cu-field>
+      <cu-field-item title="婚姻状况" solid>
+        <cu-radio name="2" value="{{marriage}}" bind:change="noop" label="已婚" inline />
+        <cu-radio name="1" value="{{marriage}}" bind:change="noop" label="未婚" inline />
+        <cu-radio name="3" value="{{marriage}}" bind:change="noop" label="保密" inline />
+      </cu-field-item>
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">列表模式</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-radio md-example-child-radio-2">
+    <cu-field title="简单选择列表" class="radio-field">
+      <cu-radio-list
+        value="{{myBank}}" bind:change="noop"
+        options="{{banks}}"
+        icon-size="lg"
+      />
+    </cu-field>
+    <cu-field title="输入项" class="radio-field">
+      <cu-radio-list
+        options="{{reasons}}"
+        value="{{myReason}}" bind:change="noop"
+        icon="right"
+        icon-inverse=""
+        icon-disabled=""
+        icon-position="right"
+        has-input
+        input-label="其他"
+        input-placeholder="请输入原因"
+      />
+    </cu-field>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">单选项组</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-radio md-example-child-radio-3">
+    <cu-radio-group value="{{favorites}}" bind:change="noop">
+      <cu-radio name="watermelon" label="西瓜"/>
+      <cu-radio name="apple" label="苹果" />
+      <cu-radio name="banana" label="香蕉" />
+      <cu-radio name="orange" label="橙子" />
+      <cu-radio name="tomato" label="西红柿" disabled />
+    </cu-radio-group>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">单选框</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-check md-example-child-check-4">
+    <cu-radio-box name="day" value="{{pay}}" bind:change="noop" label="日缴" disabled />
+    <cu-radio-box name="month" value="{{pay}}" bind:change="noop" label="月付" icon-position="lt"/>
+    <cu-radio-box name="season" value="{{pay}}" bind:change="noop" label="季度费" />
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">单选框组</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-check md-example-child-check-5">
+    <cu-radio-group value="{{insurants}}" bind:change="noop">
+      <cu-radio-box name="self">自己</cu-radio-box>
+      <cu-radio-box icon-position="lt" name="couple">配偶</cu-radio-box>
+      <cu-radio-box name="parent">父母</cu-radio-box>
+      <cu-radio-box name="child" disabled>子女</cu-radio-box>
+    </cu-radio-group>
+	</view>
+
+    </view>
+  </view>
+</view>

@@ -1,0 +1,73 @@
+@import "../legacy.wxss";
+
+.md-example-child-captcha {
+  padding: 20px;
+}
+.md-example-child-captcha .md-field {
+  margin-bottom: 40px;
+}
+
+.md-example-child-captcha-1 {
+  height: 650px;
+  padding: 30px 0;
+}
+.md-example-child-captcha-1 .md-number-keyboard {
+  margin-top: 30px;
+}
+
+.md-example-child-captcha {
+  padding: 20px;
+}
+.md-example-child-captcha .md-field {
+  margin-bottom: 40px;
+}
+.soltDiv {
+  font-size: captcha-font-size;
+  color: captcha-color;
+  text-align: left;
+  line-height: 44px;
+}
+.soltDiv span.phone {
+  color: #31383f;
+  font-weight: bold;
+  margin-right: 1em;
+}
+.soltDiv span.hint {
+  color: #198cff;
+}
+
+.md-example.captcha .md-example-child {
+  padding: 0;
+}
+.md-example.captcha .md-example-section {
+  float: left;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.md-example.captcha .md-example-section h1 {
+  margin-bottom: 10px;
+  color: #111a34;
+  font-size: font-heading-normal;
+  font-weight: normal;
+}
+.md-example.captcha .md-example-section .md-example-box {
+  position: relative;
+  float: left;
+  width: 100%;
+}
+.md-example.captcha .md-example-section .md-example-box .md-example-box-content {
+  float: left;
+  width: 100%;
+  padding: 60px h-gap-lg;
+  color: color-text-base;
+  font-size: font-minor-large;
+  text-align: left;
+  background: color-bg-base;
+  box-sizing: border-box;
+  line-height: 1.5;
+  text-indent: 2em;
+}
+.md-example.captcha .md-example-section .md-example-box .md-button {
+  margin: 0;
+}
+

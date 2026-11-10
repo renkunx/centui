@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "cu-field": "../../../../dist/components/field/index",
+    "cu-textarea-item": "../../../../dist/components/textarea-item/index"
+  }
+}

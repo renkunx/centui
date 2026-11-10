@@ -1,0 +1,32 @@
+<view class="legacy-wrapper md-example action-sheet">
+  <view class="legacy-section">
+    <view class="legacy-title">操作说明的标题</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-action-sheet">
+    <cu-button bind:tap="$_showActionSheet">唤起动作面板</cu-button>
+    <cu-action-sheet
+      value="{{value}}" bind:change="noop"
+      title="{{title}}"
+      default-index="{{defaultIndex}}"
+      invalid-index="{{invalidIndex}}"
+      cancel-text="{{cancelText}}"
+      options="{{options}}"
+      bind:selected="$_selected"
+      bind:cancel="$_cancel"
+    ></cu-action-sheet>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">单例模式</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-action-sheet">
+    <cu-button bind:tap="$_showActionSheet">唤起动作面板</cu-button>
+  </view>
+
+    </view>
+  </view>
+</view>

@@ -1,0 +1,14 @@
+@import "../legacy.wxss";
+
+.md-example-child {
+  font-size: 28px;
+}
+
+.md-example-child {
+  font-size: 28px;
+}
+
+.md-example.md-example-child-check {
+  position: relative;
+}
+

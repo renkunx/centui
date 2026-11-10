@@ -1,0 +1,15 @@
+@import "../legacy.wxss";
+
+.md-example-child-landscape .md-button {
+  margin-bottom: 20px;
+}
+.md-landscape-content {
+  padding: 30px;
+  font-size: 30px;
+  line-height: 1.5;
+  color: #666;
+}
+.md-landscape-content p {
+  margin-bottom: 30px;
+}
+

@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "cu-check": "../../../../dist/components/check/index",
+    "cu-check-group": "../../../../dist/components/check-group/index",
+    "cu-check-box": "../../../../dist/components/check-box/index",
+    "cu-field": "../../../../dist/components/field/index",
+    "cu-check-list": "../../../../dist/components/check-list/index",
+    "cu-cell-item": "../../../../dist/components/cell-item/index",
+    "cu-button": "../../../../dist/components/button/index"
+  }
+}

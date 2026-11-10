@@ -1,0 +1,125 @@
+<view class="legacy-wrapper md-example tab-bar">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-0">
+    <cu-tab-bar
+      value="{{current}}" bind:change="noop"
+      items="{{items}}"
+    />
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">首屏数量</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-1">
+    <cu-tab-bar
+      value="{{current}}" bind:change="noop"
+      items="{{items}}"
+      maxLength="{{5}}"
+    />
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">滚动</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-2">
+    <cu-tab-bar
+      value="{{current}}" bind:change="noop"
+      items="{{items}}"
+      maxLength="{{5}}"
+    />
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">无下划线</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-3">
+    <cu-tab-bar
+      value="{{current}}" bind:change="noop"
+      items="{{items}}"
+      hasInk="{{false}}"
+    />
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">自定义内容</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-4">
+    <cu-tab-bar
+      value="{{current}}" bind:change="noop"
+      items="{{items}}"
+      has-ink="{{false}}"
+    >
+      <template slot="item" slot-scope="{ item }">
+        <view class="custom-item">
+          <view class="icon">
+            <cu-icon name="{{item.icon}}" />
+          </view>
+          <view class="text">
+            <text v-text="item.label"></text>
+          </view>
+        </view>
+      </template>
+    </cu-tab-bar>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">监听事件</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-5">
+    <cu-tab-bar
+      value="{{current}}" bind:change="noop"
+      items="{{items}}"
+      bind:change="onChange"
+    />
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">手势切换</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-tabs md-example-child-tab-bar-6">
+    <cu-tab-bar
+      value="{{current}}" bind:change="noop"
+      items="{{items}}"
+      bind:change="onTabChange"
+    ></cu-tab-bar>
+    <cu-swiper
+      ref="swiper"
+      autoplay="{{0}}"
+      is-prevent="{{false}}"
+      is-loop="{{false}}"
+      has-dots="{{false}}"
+      bind:before-change="onSwiperChange"
+    >
+      <cu-swiper-item>
+        她对他很满意。走吧。好。他起身买单，腿却一拐一拐的。难怪他才华横溢，事业有成，却还是单身。趁着他买单，她赶紧悄悄走了。
+      </cu-swiper-item>
+      <cu-swiper-item>
+        又是一年，她又遇到了他，他正牵着孩子的手，走的飞快。
+      </cu-swiper-item>
+    </cu-swiper>
+  </view>
+
+    </view>
+  </view>
+</view>

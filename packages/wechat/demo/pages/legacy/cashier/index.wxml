@@ -1,0 +1,93 @@
+<view class="legacy-wrapper md-example cashier">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-cashier">
+    <cu-field
+      title="支付结果"
+    >
+      <cu-radio-list
+        value="{{cashierResult}}" bind:change="noop"
+        options="{{cashierResults}}"
+      />
+    </cu-field>
+    <cu-field
+      title="支付配置"
+    >
+      <cu-input-item
+        title="支付金额"
+        align="right"
+        type="money"
+        value="{{cashierAmount}}" bind:change="noop"
+      >
+      </cu-input-item>
+      <cu-field-item
+        title="发送验证码"
+        align="right"
+      >
+        <cu-switch value="{{isCashierCaptcha}}" bind:change="noop"></cu-switch>
+      </cu-field-item>
+    </cu-field>
+    <cu-button bind:tap="isCashierhow = !isCashierhow">{{ isCashierhow ? '收起收银台' : '唤起收银台' }}</cu-button>
+    <cu-cashier
+      ref="cashier"
+      value="{{isCashierhow}}" bind:change="noop"
+      channels="{{cashierChannels}}"
+      channel-limit="{{2}}"
+      payment-amount="{{cashierAmount}}"
+      payment-describe="关于支付金额的特殊说明"
+      large-radius
+      bind:select="onCashierSelect"
+      bind:pay="onCashierPay"
+      bind:cancel="onCashierCancel"
+    ></cu-cashier>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">使用插槽及其他配置</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-cashier">
+    <cu-button bind:tap="isCashierhow = !isCashierhow">{{ isCashierhow ? '收起收银台' : '唤起收银台' }}</cu-button>
+    <cu-cashier
+      ref="cashier"
+      value="{{isCashierhow}}" bind:change="noop"
+      channels="{{cashierChannels}}"
+      payment-amount="{{cashierAmount}}"
+      payment-describe="关于支付金额的特殊说明"
+      large-radius
+      bind:show="onCashierShow"
+      bind:select="onCashierSelect"
+      bind:pay="onCashierPay"
+      bind:cancel="onCashierCancel"
+    >
+      <view slot-scope="{ scene }" slot="header">
+        <cu-notice-bar
+          wx:if="{{scene === 'choose'"
+          mode="closable"
+          icon="warn"
+          type="warning"
+        >
+          该银行3:00-12:00系统维护，请更换其他银行卡
+        </cu-notice-bar>
+      </view>
+      <view slot-scope="{ scene }" slot="footer">
+        <view wx:if="{{scene === 'choose' && !isCashierInitialed" class="cashier-loading">
+          <cu-activity-indicator size="{{30}}" vertical>加载中...</cu-activity-indicator>
+        </view>
+      </view>
+      <view slot="payButton" style="display:flex;">
+        <cu-icon name="checked"></cu-icon>发起支付
+      </view>
+      <view slot="scene" class="custom-scene">
+        Custom Scene
+      </view>
+    </cu-cashier>
+	</view>
+
+    </view>
+  </view>
+</view>

@@ -1,0 +1,79 @@
+<view class="legacy-wrapper md-example amount">
+  <view class="legacy-section">
+    <view class="legacy-title">基础</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-amount">
+    <view class="legacy-p">
+      <text class="describe">Original</text>
+      <cu-amount value="{{1234.125}}" precision="{{3}}"></cu-amount>
+    </view>
+    <view class="legacy-p">
+      <text class="describe">Round</text>
+      <cu-amount value="{{1234.125}}"></cu-amount>
+    </view>
+    <view class="legacy-p">
+      <text class="describe">Floor</text>
+      <cu-amount value="{{1234.123}}" is-round-up="{{false}}"></cu-amount>
+    </view>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">千位分隔符</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-amount">
+    <cu-amount
+      value="{{1234}}"
+      has-separator
+    ></cu-amount>
+    
+    <cu-amount
+      value="{{-123456.123}}"
+      precision="{{3}}"
+      has-separator
+    ></cu-amount>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">变化动效</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-amount">
+    <cu-amount
+      value="{{val}}"
+      duration="{{800}}"
+      transition
+    ></cu-amount>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">大写中文</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-amount">
+    <cu-amount
+      value="{{1234}}"
+      is-capital
+    ></cu-amount>
+    
+    <cu-amount
+      value="{{1234.1118}}"
+      is-capital
+    ></cu-amount>
+    
+    <cu-amount
+      value="{{1234.1010}}"
+      is-capital
+    ></cu-amount>
+	</view>
+
+    </view>
+  </view>
+</view>

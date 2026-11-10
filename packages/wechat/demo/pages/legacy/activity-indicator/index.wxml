@@ -1,0 +1,74 @@
+<view class="legacy-wrapper md-example activity-indicator">
+  <view class="legacy-section">
+    <view class="legacy-title">Roller</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-md-activity-indicator md-example-child-md-activity-indicator-0">
+    <cu-activity-indicator
+      size="{{20}}"
+      text-size="{{16}}"
+    >加载中...</cu-activity-indicator>
+    <cu-activity-indicator
+      size="{{20}}"
+      text-size="{{16}}"
+      vertical
+    >vertical loading</cu-activity-indicator>
+    <cu-activity-indicator
+      class="md-activity-indicator-css"
+    >loading...</cu-activity-indicator>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">Spinner</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-md-activity-indicator md-example-child-md-activity-indicator-1">
+    <cu-activity-indicator
+      type="spinner"
+      size="{{30}}"
+      text-size="{{20}}"
+    >加载中...</cu-activity-indicator>
+    <view class="activity-indicator-container">
+      <cu-activity-indicator
+        class="md-activity-indicator-css"
+        type="spinner"
+        size="{{30}}"
+        text-size="{{20}}"
+        color="light"
+      >加载中...</cu-activity-indicator>
+    </view>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">Carousel</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-md-activity-indicator md-example-child-md-activity-indicator-2">
+    <cu-activity-indicator
+      type="carousel"
+      size="{{15}}"
+    ></cu-activity-indicator>
+    <cu-button type="primary" bind:tap="createPay">
+      <cu-activity-indicator
+        wx:if="{{loading"
+        class="md-activity-indicator-css"
+        type="carousel"
+        size="{{15}}"
+        color="#fff"
+        text-color="#fff"
+      ></cu-activity-indicator>
+      <text v-else>确认支付</text>
+    </cu-button>
+	</view>
+
+    </view>
+  </view>
+</view>
+<!--
+TODO 修整清单（activity-indicator）：
+  - 存在 v-else/v-html 需人工核对
+-->

@@ -1,0 +1,14 @@
+{
+  "usingComponents": {
+    "cu-field": "../../../../dist/components/field/index",
+    "cu-radio-list": "../../../../dist/components/radio-list/index",
+    "cu-input-item": "../../../../dist/components/input-item/index",
+    "cu-field-item": "../../../../dist/components/field-item/index",
+    "cu-switch": "../../../../dist/components/switch/index",
+    "cu-button": "../../../../dist/components/button/index",
+    "cu-cashier": "../../../../dist/components/cashier/index",
+    "cu-notice-bar": "../../../../dist/components/notice-bar/index",
+    "cu-activity-indicator": "../../../../dist/components/activity-indicator/index",
+    "cu-icon": "../../../../dist/components/icon/index"
+  }
+}

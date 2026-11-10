@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "cu-notice-bar": "../../../../dist/components/notice-bar/index",
+    "cu-icon": "../../../../dist/components/icon/index"
+  }
+}

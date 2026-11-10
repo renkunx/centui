@@ -1,0 +1,62 @@
+<view class="legacy-wrapper md-example slider">
+  <view class="legacy-section">
+    <view class="legacy-title">基本</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-slider">
+    <cu-slider value="{{quantity}}" bind:change="noop"></cu-slider>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">禁用</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-slider">
+    <cu-slider value="{{quantity}}" bind:change="noop" disabled></cu-slider>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">格式化</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-slider">
+    <cu-slider value="{{quantity}}" bind:change="noop" format="{{format}}"></cu-slider>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">范围</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-slider">
+    <cu-slider value="{{range}}" bind:change="noop" range></cu-slider>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">步长</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-slider">
+    <cu-slider value="{{bucket}}" bind:change="noop" step="{{10}}"></cu-slider>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">边界值</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-slider">
+    <cu-slider value="{{range}}" bind:change="noop" min="{{15}}" max="{{80}}" range></cu-slider>
+	</view>
+
+    </view>
+  </view>
+</view>

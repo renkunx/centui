@@ -1,0 +1,30 @@
+@import "../legacy.wxss";
+
+.md-example-child-progress {
+  display: flex;
+  justify-content: center;
+}
+.md-example-child-progress .md-progress {
+  margin: 0 10px;
+}
+.md-example-child-progress .progress-value {
+  font-size: 24px;
+  font-family: 'Helvetica Neue';
+}
+
+.md-example-child-progress {
+  display: flex;
+  justify-content: center;
+}
+.md-example-child-progress .md-progress {
+  margin: 0 10px;
+}
+.md-example-child-progress .progress-value {
+  font-size: 24px;
+  font-family: 'Helvetica Neue';
+}
+
+.md-example.progress {
+  position: relative;
+}
+

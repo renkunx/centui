@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "cu-agree": "../../../../dist/components/agree/index"
+  }
+}

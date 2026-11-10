@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "cu-tabs": "../../../../dist/components/tabs/index",
+    "cu-tab-pane": "../../../../dist/components/tab-pane/index"
+  }
+}

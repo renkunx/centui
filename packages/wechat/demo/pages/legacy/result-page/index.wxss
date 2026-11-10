@@ -1,0 +1,19 @@
+@import "../legacy.wxss";
+
+.md-example-child-result-page-0 {
+  background: #fff;
+}
+
+.md-example-child-result-page-1 {
+  background: #fff;
+}
+
+.md-example-child-result-page-2 {
+  background: #fff;
+}
+
+.md-example-content {
+  background: #fff;
+  padding: 50px 0;
+}
+

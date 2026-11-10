@@ -1,0 +1,106 @@
+<view class="legacy-wrapper md-example agree">
+  <view class="legacy-section">
+    <view class="legacy-title">选中状态</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-agree md-example-child-0">
+    <cu-agree
+      v-model="agreeConf.checked"
+      disabled="{{agreeConf.disabled}}"
+      size="{{agreeConf.size}}"
+      bind:change="onChange(agreeConf.name, agreeConf.checked, $event)"
+    >
+      本人承诺投保人已充分了解本保险产品，并保证投保信息的真实性，理解并同意<a>《投保须知》</a>, <a>《保险条款》</a>
+    </cu-agree>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">未选中状态</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-agree md-example-child-1">
+    <cu-agree
+      v-model="agreeConf.checked"
+      disabled="{{agreeConf.disabled}}"
+      size="{{agreeConf.size}}"
+      bind:change="onChange(agreeConf.name, agreeConf.checked, $event)"
+    >
+      本人承诺投保人已充分了解本保险产品，并保证投保信息的真实性，理解并同意
+    </cu-agree>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">选中不可用状态</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-agree md-example-child-2">
+    <cu-agree
+      v-model="agreeConf.checked"
+      disabled="{{agreeConf.disabled}}"
+      size="{{agreeConf.size}}"
+      bind:change="onChange(agreeConf.name, agreeConf.checked, $event)"
+    >
+      本人承诺投保人已充分了解本保险产品，并保证投保信息的真实性，理解并同意
+    </cu-agree>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">未选中不可用状态</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-agree md-example-child-3">
+    <cu-agree
+      v-model="agreeConf.checked"
+      disabled="{{agreeConf.disabled}}"
+      size="{{agreeConf.size}}"
+      bind:change="onChange(agreeConf.name, agreeConf.checked, $event)"
+    >
+      本人承诺投保人已充分了解本保险产品，并保证投保信息的真实性，理解并同意
+    </cu-agree>
+	</view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">方形勾选框选中状态</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-agree md-example-child-0">
+    <cu-agree
+      v-model="agreeConf.checked"
+      disabled="{{agreeConf.disabled}}"
+      size="{{agreeConf.size}}"
+      icon-type="square"
+      bind:change="onChange(agreeConf.name, agreeConf.checked, $event)"
+    >
+      本人承诺投保人已充分了解本保险产品，并保证投保信息的真实性，理解并同意<a>《投保须知》</a>, <a>《保险条款》</a>
+    </cu-agree>
+  </view>
+
+    </view>
+  </view>
+  <view class="legacy-section">
+    <view class="legacy-title">方形勾选框未选中状态</view>
+    <view class="legacy-content">
+
+  <view class="md-example-child md-example-child-agree md-example-child-1">
+    <cu-agree
+      v-model="agreeConf.checked"
+      disabled="{{agreeConf.disabled}}"
+      size="{{agreeConf.size}}"
+      icon-type="square"
+      bind:change="onChange(agreeConf.name, agreeConf.checked, $event)"
+    >
+      本人承诺投保人已充分了解本保险产品，并保证投保信息的真实性，理解并同意
+    </cu-agree>
+  </view>
+
+    </view>
+  </view>
+</view>

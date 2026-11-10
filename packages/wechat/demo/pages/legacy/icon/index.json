@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "cu-icon": "../../../../dist/components/icon/index"
+  }
+}
