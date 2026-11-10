@@ -65,16 +65,37 @@ describe('captcha 倒计时登记表（shared/timer 集成路径）', () => {
  * 组件层（index.ts）：attached 首发链路、show 观察者、错误态/内联态 observers、
  * popup 转发、倒计时状态机（fake timers）、键盘高度监听与 detached 清理。
  */
-import {loadComponent, mountDef} from '../helpers/weapp'
+import {loadComponent, mountDef, type Mounted} from '../helpers/weapp'
+import type {TimerRegistry} from '../../src/shared/timer'
 
 const comp = await loadComponent(() => import('../../src/components/captcha/index'))
+
+/** 组件内部 __captchaState（对齐 index.ts 的 CaptchaState） */
+interface CaptchaState {
+  timers: TimerRegistry
+  counterId: number | null
+  firstShown: boolean
+  kbHandler: ((res: {height: number}) => void) | null
+}
+function stateOf(inst: Mounted): CaptchaState {
+  return (inst as unknown as {__captchaState: CaptchaState}).__captchaState
+}
+
+/** wx 键盘监听桩（beforeEach 写入的 vi.fn，可直接断言） */
+interface WxKeyboardStubs {
+  onKeyboardHeightChange?: ReturnType<typeof vi.fn>
+  offKeyboardHeightChange?: ReturnType<typeof vi.fn>
+  [k: string]: unknown
+}
+function wxStub(): WxKeyboardStubs {
+  return (globalThis as unknown as {wx: WxKeyboardStubs}).wx
+}
 
 describe('captcha 组件', () => {
   beforeEach(() => {
     vi.useFakeTimers()
-    const g = globalThis as any
-    g.wx.onKeyboardHeightChange = vi.fn()
-    g.wx.offKeyboardHeightChange = vi.fn()
+    wxStub().onKeyboardHeightChange = vi.fn()
+    wxStub().offKeyboardHeightChange = vi.fn()
   })
   afterEach(() => vi.useRealTimers())
 
@@ -85,7 +106,7 @@ describe('captcha 组件', () => {
     expect(inst.data.isInline).toBe(false)
     expect(inst.data.countBtnText).toBe('获取验证码')
     expect(inst.events).toEqual([])
-    expect((globalThis as any).wx.onKeyboardHeightChange).not.toHaveBeenCalled()
+    expect(wxStub().onKeyboardHeightChange).not.toHaveBeenCalled()
   })
 
   it('attached（show=true）：首发 send + 倒计时启动', () => {
@@ -95,8 +116,8 @@ describe('captcha 组件', () => {
     expect(inst.eventsOf('send')).toHaveLength(1)
     expect(inst.data.isCounting).toBe(true)
     expect(inst.data.countBtnText).toBe('60s 后重发')
-    expect((inst as any).__captchaState.firstShown).toBe(true)
-    expect((inst as any).__captchaState.timers.size()).toBe(1)
+    expect(stateOf(inst).firstShown).toBe(true)
+    expect(stateOf(inst).timers.size()).toBe(1)
   })
 
   it('attached（type=inline）：内联模式首发', () => {
@@ -116,7 +137,7 @@ describe('captcha 组件', () => {
   it('halfScreen：注册键盘高度监听，detached 注销 + 定时器清理', () => {
     const inst = mountDef(comp.def, {props: {type: 'halfScreen'}})
     inst.attached()
-    const register = (globalThis as any).wx.onKeyboardHeightChange as ReturnType<typeof vi.fn>
+    const register = wxStub().onKeyboardHeightChange!
     expect(register).toHaveBeenCalledTimes(1)
     const handler = register.mock.calls[0][0]
     handler({height: 200})
@@ -125,17 +146,17 @@ describe('captcha 组件', () => {
     expect(inst.data.isKeyboard).toBe(false)
 
     inst.detached()
-    expect((globalThis as any).wx.offKeyboardHeightChange).toHaveBeenCalledWith(handler)
-    expect((inst as any).__captchaState.kbHandler).toBeNull()
+    expect(wxStub().offKeyboardHeightChange).toHaveBeenCalledWith(handler)
+    expect(stateOf(inst).kbHandler).toBeNull()
   })
 
   it('detached（非 halfScreen）：不注销键盘监听，定时器清理', () => {
     const inst = mountDef(comp.def, {props: {show: true}})
     inst.attached()
-    expect((inst as any).__captchaState.timers.size()).toBe(1)
+    expect(stateOf(inst).timers.size()).toBe(1)
     inst.detached()
-    expect((globalThis as any).wx.offKeyboardHeightChange).not.toHaveBeenCalled()
-    expect((inst as any).__captchaState.timers.size()).toBe(0)
+    expect(wxStub().offKeyboardHeightChange).not.toHaveBeenCalled()
+    expect(stateOf(inst).timers.size()).toBe(0)
   })
 
   it('show observer：首次显示重置 code 并首发；此后不再首发', () => {
@@ -242,7 +263,7 @@ describe('captcha 组件', () => {
     expect(inst.data.isCounting).toBe(true)
     expect(inst.data.countBtnText).toBe('3s 后重发')
     inst.methods.countdown.call(inst) // 重入
-    expect((inst as any).__captchaState.timers.size()).toBe(1)
+    expect(stateOf(inst).timers.size()).toBe(1)
   })
 
   it('countdown：tick 推进文案，归零自动 resetcount（文案回 countNormalText）', () => {
@@ -257,8 +278,8 @@ describe('captcha 组件', () => {
     vi.advanceTimersByTime(1000)
     expect(inst.data.isCounting).toBe(false)
     expect(inst.data.countBtnText).toBe('获取验证码')
-    expect((inst as any).__captchaState.counterId).toBeNull()
-    expect((inst as any).__captchaState.timers.size()).toBe(0)
+    expect(stateOf(inst).counterId).toBeNull()
+    expect(stateOf(inst).timers.size()).toBe(0)
   })
 
   it('resetcount：无进行中倒计时时安全', () => {

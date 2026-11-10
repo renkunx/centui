@@ -109,7 +109,7 @@ describe('selector/logic 单元格视图（多选）', () => {
 // ---------------------------------------------------------------------------
 // selector 组件实例（index.ts）：observers/attached/选项交互/确认取消/popup 桥接
 // ---------------------------------------------------------------------------
-import {describe as d2, expect as e2, it as i2, vi} from 'vitest'
+import {describe as d2, expect as e2, it as i2} from 'vitest'
 import {loadComponent, mountDef, tapEvent, type Mounted} from '../helpers/weapp'
 
 const comp = await loadComponent(() => import('../../src/components/selector/index'))

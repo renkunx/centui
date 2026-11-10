@@ -109,6 +109,11 @@ function touchesEvt(pageX: number) {
   return {touches: [{pageX}], currentTarget: {dataset: {}}} as never
 }
 
+/** 事件流最后一个事件（等价 at(-1)，目标 lib 无 es2022） */
+function lastEvent(events: Array<{name: string; detail: unknown}>) {
+  return events[events.length - 1]
+}
+
 d2('slider attached 初始归一', () => {
   i2('默认 value 0：与初始 [min,max] 一致 → 不 emit', () => {
     const inst = mountDef(comp.def)
@@ -263,7 +268,7 @@ d2('slider 拖拽', () => {
     inst.methods.onHandleTouchMove.call(inst, touch(100)) // 100/200*(100-0) = 50
     e2(inst.data.lower).toBe(50)
     e2(inst.data.hint).toBe('50')
-    e2(inst.eventsOf('change').at(-1)?.detail).toEqual({value: 50})
+    e2(lastEvent(inst.eventsOf('change'))?.detail).toEqual({value: 50})
 
     inst.methods.onHandleTouchEnd.call(inst)
     e2(inst.data.isDragging).toBe(false)
@@ -279,7 +284,7 @@ d2('slider 拖拽', () => {
 
     inst.methods.onHandleTouchMove.call(inst, touch(-60)) // -60/200*100 = -30 → nextVal 50
     e2(inst.data.upper).toBe(50)
-    e2(inst.eventsOf('change').at(-1)?.detail).toEqual({value: [20, 50]})
+    e2(lastEvent(inst.eventsOf('change'))?.detail).toEqual({value: [20, 50]})
     inst.methods.onHandleTouchEnd.call(inst)
   })
 
@@ -298,7 +303,7 @@ d2('slider 拖拽', () => {
     inst.ready()
     inst.methods.onHandleTouchStart.call(inst, touch(0))
     inst.methods.onHandleTouchMove.call(inst, touch(200)) // nextVal 100 > upper 50 → lower = 50
-    e2(inst.eventsOf('change').at(-1)?.detail).toEqual({value: [50, 50]})
+    e2(lastEvent(inst.eventsOf('change'))?.detail).toEqual({value: [50, 50]})
   })
 
   i2('disabled：start/move 早退', () => {

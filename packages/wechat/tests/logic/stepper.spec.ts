@@ -117,6 +117,11 @@ import {loadComponent, mountDef} from '../helpers/weapp'
 
 const compStepper = await loadComponent(() => import('../../src/components/stepper/index'))
 
+/** 事件流最后一个事件（等价 at(-1)，目标 lib 无 es2022） */
+function lastEvent(events: Array<{name: string; detail: unknown}>) {
+  return events[events.length - 1]
+}
+
 describe('stepper 组件（mountDef）', () => {
   it('attached：value||defaultValue 初始化 + isMin/isMax 状态', () => {
     const inst = mountDef(compStepper.def, {props: {value: 5, min: 0, max: 10}})
@@ -137,14 +142,14 @@ describe('stepper 组件（mountDef）', () => {
     inst.methods.onAdd.call(inst)
     expect(inst.data.currentNum).toBe(6)
     // diff 为实际位移（5→7 被 max 钳到 6，diff=1 而非 step 2）
-    expect(inst.eventsOf('change')?.at(-1)?.detail).toEqual({value: 6})
-    expect(inst.eventsOf('increase')?.at(-1)?.detail).toEqual({value: 1})
+    expect(lastEvent(inst.eventsOf('change'))?.detail).toEqual({value: 6})
+    expect(lastEvent(inst.eventsOf('increase'))?.detail).toEqual({value: 1})
     inst.methods.onAdd.call(inst) // isMax 守卫
     expect(inst.data.currentNum).toBe(6)
     inst.methods.onReduce.call(inst)
     expect(inst.data.currentNum).toBe(4)
     // decrease 载荷为位移绝对值（transitionStepper 约定）
-    expect(inst.eventsOf('decrease')?.at(-1)?.detail).toEqual({value: 2})
+    expect(lastEvent(inst.eventsOf('decrease'))?.detail).toEqual({value: 2})
   })
 
   it('disabled 时加减不动', () => {

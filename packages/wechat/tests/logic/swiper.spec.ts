@@ -170,17 +170,26 @@ function makeItem() {
   return mountDef(compItem.def)
 }
 
+/** swiper def.methods 会拷贝到实例上（Mounted 接口未逐一声明），局部补齐签名 */
+interface SwiperMethods {
+  next(): void
+  prev(): void
+  stop(): void
+  play(duration?: number): void
+}
+type SwiperInst = Mounted & SwiperMethods
+
 function touchEvt(x: number, y = 0) {
   return {changedTouches: [{pageX: x, pageY: y}]} as never
 }
 
 /** 标准挂载：attached → 登记 items → ready（量取 + 首次定位 + 播放） */
-function mountSwiper(props: Record<string, unknown> = {}, items: Mounted[] = [], rects: Record<string, unknown> | undefined = {'.cu-swiper': {width: 375, height: 200}}) {
+function mountSwiper(props: Record<string, unknown> = {}, items: Mounted[] = [], rects: Record<string, unknown> | undefined = {'.cu-swiper': {width: 375, height: 200}}): SwiperInst {
   const inst = mountDef(comp.def, {props, rects: rects as never})
   inst.attached()
   for (const it of items) inst.linkRelation('../swiper-item/index', it)
   inst.ready()
-  return inst
+  return inst as SwiperInst
 }
 
 d2('swiper attached 与 ready 几何', () => {

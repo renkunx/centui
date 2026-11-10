@@ -134,9 +134,15 @@ describe('indicator-ring/carousel', () => {
  * 组件层（index.ts）：三态样式派生（roller/success/spinner/carousel）、carousel
  * 相位定时器、文字样式、插槽探针与 detached 清理。
  */
-import {loadComponent, mountDef} from '../helpers/weapp'
+import {loadComponent, mountDef, type Mounted} from '../helpers/weapp'
+import type {TimerRegistry} from '../../src/shared/timer'
 
 const comp = await loadComponent(() => import('../../src/components/activity-indicator/index'))
+
+/** 组件内部 __aiState（对齐 index.ts 的 IndicatorState） */
+function stateOf(inst: Mounted): {timers: TimerRegistry; carouselTimer: number | null} {
+  return (inst as unknown as {__aiState: {timers: TimerRegistry; carouselTimer: number | null}}).__aiState
+}
 
 describe('activity-indicator 组件', () => {
   beforeEach(() => vi.useFakeTimers())
@@ -151,7 +157,7 @@ describe('activity-indicator 组件', () => {
     expect(inst.data.rollerFillStyle).toBe('')
     expect(inst.data.hasFill).toBe(false)
     expect(inst.data.spinnerStyle).toBe('')
-    expect((inst as any).__aiState.carouselTimer).toBeNull()
+    expect(stateOf(inst).carouselTimer).toBeNull()
   })
 
   it('roller：自定义色/fill/rotate（color 空回退默认 #2F86F6，fill 非透明 → hasFill）', () => {
@@ -202,9 +208,9 @@ describe('activity-indicator 组件', () => {
     expect(inst.data.carouselBoxStyle).toBe('position:relative;width:120px;height:30px;')
     expect(inst.data.carouselDots[0]).toContain('opacity:1;transform:scale(1);')
     expect(inst.data.carouselDots[0]).toContain('#2F86F6')
-    const timer = (inst as any).__aiState.carouselTimer
+    const timer = stateOf(inst).carouselTimer
     expect(timer).not.toBeNull()
-    expect((inst as any).__aiState.timers.size()).toBe(1)
+    expect(stateOf(inst).timers.size()).toBe(1)
 
     // 相位推进：dot0 值 1 → 0.8
     vi.advanceTimersByTime(CAROUSEL_PHASE_INTERVAL)
@@ -215,8 +221,8 @@ describe('activity-indicator 组件', () => {
 
     // 类型切回 roller：定时器清理
     inst.setData({type: 'roller'})
-    expect((inst as any).__aiState.carouselTimer).toBeNull()
-    expect((inst as any).__aiState.timers.size()).toBe(0)
+    expect(stateOf(inst).carouselTimer).toBeNull()
+    expect(stateOf(inst).timers.size()).toBe(0)
   })
 
   it('carousel：自定义 color 透传圆点着色', () => {
@@ -268,9 +274,9 @@ describe('activity-indicator 组件', () => {
   it('detached：carousel 定时器全量清理，推进不再派发', () => {
     const inst = mountDef(comp.def, {props: {type: 'carousel'}})
     inst.attached()
-    expect((inst as any).__aiState.timers.size()).toBe(1)
+    expect(stateOf(inst).timers.size()).toBe(1)
     inst.detached()
-    expect((inst as any).__aiState.timers.size()).toBe(0)
+    expect(stateOf(inst).timers.size()).toBe(0)
     const before = inst.data.carouselDots[0]
     vi.advanceTimersByTime(CAROUSEL_PHASE_INTERVAL * 3)
     expect(inst.data.carouselDots[0]).toBe(before)

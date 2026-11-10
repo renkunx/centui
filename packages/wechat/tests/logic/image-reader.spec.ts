@@ -123,14 +123,28 @@ interface ReadCall {
   fail?: () => void
 }
 
-const g = globalThis as any
+/** chooseMedia 桩捕获的调用载荷（success/fail 由测试按场景驱动） */
+interface ChooseCall {
+  success?: (res: unknown) => void
+  fail?: (res?: {errMsg?: string} | undefined) => void
+  [k: string]: unknown
+}
+
+/** wx 桩容器（weapp.ts 已预置 wx 基座；此处仅替换/恢复两个 API） */
+interface WxStubBag {
+  chooseMedia?: (opts: ChooseCall) => void
+  getFileSystemManager?: () => {readFile: (opts: ReadCall) => void}
+  [k: string]: unknown
+}
+
+const g = globalThis as unknown as {wx: WxStubBag}
 
 function installWxStubs() {
-  const chooseCalls: Array<{success: (r: unknown) => void; [k: string]: unknown}> = []
+  const chooseCalls: ChooseCall[] = []
   const reads: ReadCall[] = []
   const prevChoose = g.wx.chooseMedia
   const prevFs = g.wx.getFileSystemManager
-  g.wx.chooseMedia = (opts: Record<string, unknown>) => {
+  g.wx.chooseMedia = (opts: ChooseCall) => {
     chooseCalls.push(opts)
   }
   g.wx.getFileSystemManager = () => ({
@@ -194,7 +208,7 @@ describe('image-reader 组件', () => {
       const inst = mountDef(comp.def, {props: {name: 'n1'}})
       inst.attached()
       inst.methods.onChoose.call(inst)
-      stubs.chooseCalls[0].success({tempFiles: [FILE_A]})
+      stubs.chooseCalls[0].success!({tempFiles: [FILE_A]})
       expect(inst.eventsOf('select')).toEqual([
         {name: 'select', detail: {name: 'n1', files: [FILE_A]}},
       ])
@@ -219,14 +233,14 @@ describe('image-reader 组件', () => {
       const inst = mountDef(comp.def, {props: {isMultiple: true}})
       inst.attached()
       inst.methods.onChoose.call(inst)
-      stubs.chooseCalls[0].success({tempFiles: [FILE_A, FILE_B]})
+      stubs.chooseCalls[0].success!({tempFiles: [FILE_A, FILE_B]})
       expect(stubs.reads).toHaveLength(2)
       stubs.reads[0].success!({data: 'AAAA'})
       stubs.reads[1].success!({data: 'BB'})
       const completes = inst.eventsOf('complete')
       expect(completes).toHaveLength(2)
-      expect(completes[0].detail.dataUrl).toBe('data:image/png;base64,AAAA')
-      expect(completes[1].detail.dataUrl).toBe('data:image/jpeg;base64,BB')
+      expect((completes[0].detail as {dataUrl: string}).dataUrl).toBe('data:image/png;base64,AAAA')
+      expect((completes[1].detail as {dataUrl: string}).dataUrl).toBe('data:image/jpeg;base64,BB')
     } finally {
       stubs.restore()
     }
@@ -238,7 +252,7 @@ describe('image-reader 组件', () => {
       const inst = mountDef(comp.def)
       inst.attached()
       inst.methods.onChoose.call(inst)
-      stubs.chooseCalls[0].success({tempFiles: []})
+      stubs.chooseCalls[0].success!({tempFiles: []})
       expect(inst.events).toEqual([])
     } finally {
       stubs.restore()
@@ -251,7 +265,7 @@ describe('image-reader 组件', () => {
       const inst = mountDef(comp.def, {props: {amount: 1, isMultiple: true}})
       inst.attached()
       inst.methods.onChoose.call(inst)
-      stubs.chooseCalls[0].success({tempFiles: [FILE_A, FILE_B]})
+      stubs.chooseCalls[0].success!({tempFiles: [FILE_A, FILE_B]})
       expect(inst.eventsOf('select')).toHaveLength(1)
       expect(inst.eventsOf('error')[0].detail).toEqual({
         name: inst.data.readerName,
@@ -270,7 +284,7 @@ describe('image-reader 组件', () => {
       const inst = mountDef(comp.def, {props: {size: 1}}) // 1KB = 1000 字节
       inst.attached()
       inst.methods.onChoose.call(inst)
-      stubs.chooseCalls[0].success({tempFiles: [FILE_A]})
+      stubs.chooseCalls[0].success!({tempFiles: [FILE_A]})
       stubs.reads[0].success!({data: 'A'.repeat(4000)}) // 3000 字节 > 1000
       expect(inst.eventsOf('error')[0].detail).toEqual({
         name: inst.data.readerName,
@@ -289,7 +303,7 @@ describe('image-reader 组件', () => {
       const inst = mountDef(comp.def)
       inst.attached()
       inst.methods.onChoose.call(inst)
-      stubs.chooseCalls[0].success({tempFiles: [FILE_A]})
+      stubs.chooseCalls[0].success!({tempFiles: [FILE_A]})
       stubs.reads[0].fail!()
       expect(inst.eventsOf('error')[0].detail).toEqual({
         name: inst.data.readerName,
@@ -307,20 +321,20 @@ describe('image-reader 组件', () => {
       const inst = mountDef(comp.def)
       inst.attached()
       inst.methods.onChoose.call(inst)
-      stubs.chooseCalls[0].fail({errMsg: 'chooseMedia:fail cancel'})
+      stubs.chooseCalls[0].fail!({errMsg: 'chooseMedia:fail cancel'})
       expect(inst.events).toEqual([])
 
       inst.methods.onChoose.call(inst)
-      stubs.chooseCalls[1].fail({errMsg: 'chooseMedia:fail boom'})
-      expect(inst.eventsOf('error')[0].detail.code).toBe('102')
+      stubs.chooseCalls[1].fail!({errMsg: 'chooseMedia:fail boom'})
+      expect((inst.eventsOf('error')[0].detail as {code: string}).code).toBe('102')
 
       inst.methods.onChoose.call(inst)
-      stubs.chooseCalls[2].fail({}) // errMsg 缺失 → 非取消路径
-      expect(inst.eventsOf('error')[1].detail.code).toBe('102')
+      stubs.chooseCalls[2].fail!({}) // errMsg 缺失 → 非取消路径
+      expect((inst.eventsOf('error')[1].detail as {code: string}).code).toBe('102')
 
       inst.methods.onChoose.call(inst)
-      stubs.chooseCalls[3].fail(undefined) // res 缺失 → 非取消路径
-      expect(inst.eventsOf('error')[2].detail.code).toBe('102')
+      stubs.chooseCalls[3].fail!(undefined) // res 缺失 → 非取消路径
+      expect((inst.eventsOf('error')[2].detail as {code: string}).code).toBe('102')
     } finally {
       stubs.restore()
     }
