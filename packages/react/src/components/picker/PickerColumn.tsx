@@ -334,6 +334,68 @@ export const CuPickerColumn = forwardRef<PickerColumnExposed, PickerColumnProps>
       }
     }
 
+    // S2：React 17+ 触摸事件为 passive，preventDefault 需原生非 passive 监听。
+    // 桥接层持最新 handler 引用，避免原生监听器闭包过期。
+    const nativeHandlersRef = useRef({
+      start: onColumnTouchStart,
+      move: onColumnTouchMove,
+      end: onColumnTouchEnd,
+    })
+    nativeHandlersRef.current = {
+      start: onColumnTouchStart,
+      move: onColumnTouchMove,
+      end: onColumnTouchEnd,
+    }
+
+    useEffect(() => {
+      const root = rootRef.current
+      if (!root) {
+        return
+      }
+      const hooks = Array.from(root.querySelectorAll<HTMLElement>('.cu-picker-column-hook'))
+      const removers: Array<() => void> = []
+      const isTouch = (event: Event) => 'touches' in event
+      hooks.forEach((el, index) => {
+        const start = (event: Event) => {
+          event.preventDefault()
+          if (isTouch(event)) {
+            nativeHandlersRef.current.start(event as unknown as React.TouchEvent, index, false)
+          } else {
+            nativeHandlersRef.current.start(event as unknown as React.MouseEvent, index, true)
+          }
+        }
+        const move = (event: Event) => {
+          if (isTouch(event)) {
+            nativeHandlersRef.current.move(event as unknown as React.TouchEvent, index, false)
+          } else {
+            nativeHandlersRef.current.move(event as unknown as React.MouseEvent, index, true)
+          }
+        }
+        const end = (event: Event) => {
+          if (isTouch(event)) {
+            nativeHandlersRef.current.end(event as unknown as React.TouchEvent, index, false)
+          } else {
+            nativeHandlersRef.current.end(event as unknown as React.MouseEvent, index, true)
+          }
+        }
+        el.addEventListener('touchstart', start, { passive: false })
+        el.addEventListener('touchmove', move, { passive: false })
+        el.addEventListener('touchend', end)
+        el.addEventListener('mousedown', start)
+        el.addEventListener('mousemove', move)
+        el.addEventListener('mouseup', end)
+        removers.push(() => {
+          el.removeEventListener('touchstart', start)
+          el.removeEventListener('touchmove', move)
+          el.removeEventListener('touchend', end)
+          el.removeEventListener('mousedown', start)
+          el.removeEventListener('mousemove', move)
+          el.removeEventListener('mouseup', end)
+        })
+      })
+      return () => removers.forEach(remove => remove())
+    }, [cols])
+
     const getColumnValue = (index = 0): PickerColumnItem | undefined => getColumnValues()[index]
 
     const getColumnValues = (): PickerColumnItem[] =>
@@ -355,6 +417,13 @@ export const CuPickerColumn = forwardRef<PickerColumnExposed, PickerColumnProps>
       getColumnIndex: (index = 0) => activedIndexsRef.current[index] ?? 0,
       getColumnIndexs: () => activedIndexsRef.current,
       getColumnIndexByDefault,
+      // v2 契约：向 Picker 透传滚动引擎与初始化状态（确认守卫 / show 时 refresh 判定）
+      get scrollers() {
+        return scrollersRef.current
+      },
+      get isScrollInitialed() {
+        return isInitialedRef.current
+      },
       setColumnValues: (index: number, values: PickerColumnItem[], callback?: () => void) => {
         if (index === undefined || values === undefined) {
           return
@@ -410,16 +479,7 @@ export const CuPickerColumn = forwardRef<PickerColumnExposed, PickerColumnProps>
           <div className="cu-picker-column-hooks">
             {cols
               ? Array.from({ length: cols }, (_, n) => (
-                  <div
-                    key={n}
-                    className="cu-picker-column-hook"
-                    onTouchStart={event => onColumnTouchStart(event, n)}
-                    onMouseDown={event => onColumnTouchStart(event, n, true)}
-                    onTouchMove={event => onColumnTouchMove(event, n)}
-                    onMouseMove={event => onColumnTouchMove(event, n, true)}
-                    onTouchEnd={event => onColumnTouchEnd(event, n)}
-                    onMouseUp={event => onColumnTouchEnd(event, n, true)}
-                  ></div>
+                  <div key={n} className="cu-picker-column-hook"></div>
                 ))
               : null}
           </div>

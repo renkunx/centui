@@ -55,8 +55,8 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
     header,
     footer,
     refresh,
-    more,
     children,
+    more,
     onRefreshActive,
     onRefreshing,
     onEndReached,
@@ -80,9 +80,33 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
   const dimsRef = useRef({ cw: 0, ch: 0, ctw: 0, cth: 0 })
   const startRef = useRef({ x: 0, y: 0, cx: 0, cy: 0 })
   const isMouseDownRef = useRef(false)
+  // 防重入闩（同步置位，杜绝快速连续 init 创建双 Scroller）
   const isInitialedRef = useRef(false)
+  // 首帧滚动回调门闩（初始化定位期间的 scrollTo 不对外发 onScroll）
+  const scrollReadyRef = useRef(false)
   const reflowTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const endReachedHandlerRef = useRef<(() => void) | null>(null)
+  const lastTopRef = useRef(0)
+  const isEndReachingRef = useRef(false)
+
+  // 回调 ref-mirror（修复：initScroller 固化首渲染闭包导致 onEndReached/onScroll 等
+  // 永远调用首次 props；ref 镜像保证热路径读取最新回调）
+  const callbacksRef = useRef({
+    onScroll,
+    onEndReached,
+    onEndReachedKebab,
+    onRefreshActive,
+    onRefreshing,
+    endReachedThreshold,
+  })
+  callbacksRef.current = {
+    onScroll,
+    onEndReached,
+    onEndReachedKebab,
+    onRefreshActive,
+    onRefreshing,
+    endReachedThreshold,
+  }
 
   const hasRefresher = !!refresh
 
@@ -94,12 +118,12 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
       return
     }
     const endOffset =
-      scroller._contentHeight - scroller._clientHeight - (scroller._scrollTop + moreOffsetYRef.current + endReachedThreshold)
-    if (scroller._scrollTop >= 0 && !isEndReaching && endOffset <= 0 && endReachedHandlerRef.current) {
+      scroller._contentHeight - scroller._clientHeight - (scroller._scrollTop + moreOffsetYRef.current + callbacksRef.current.endReachedThreshold)
+    if (scroller._scrollTop >= 0 && !isEndReachingRef.current && endOffset <= 0 && endReachedHandlerRef.current) {
       setIsEndReachingStart(true)
       endReachedHandlerRef.current()
     }
-  }, [endReachedThreshold, isEndReaching])
+  }, [])
 
   const onScrollCb = useCallback(
     (left: number, top: number) => {
@@ -109,19 +133,23 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
         return
       }
       scrollRef.current = { scrollX: left, scrollY: top }
+      lastTopRef.current = top
       checkScrollerEnd()
-      onScroll?.({ scrollLeft: left, scrollTop: top })
+      callbacksRef.current.onScroll?.({ scrollLeft: left, scrollTop: top })
     },
-    [checkScrollerEnd, onScroll],
+    [checkScrollerEnd],
   )
 
   const initScroller = useCallback(() => {
     if (isInitialedRef.current) {
       return
     }
+    // 同步置位防重入：快速连续 init() 不再创建第二个 Scroller
+    isInitialedRef.current = true
     const container = rootRef.current
     const content = contentRef.current
     if (!container || !content) {
+      isInitialedRef.current = false
       return
     }
     contentElRef.current = content
@@ -134,7 +162,7 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
     const scroller = new Scroller(
       (left, top) => {
         render(content, left, top)
-        if (isInitialedRef.current) {
+        if (scrollReadyRef.current) {
           onScrollCb(+left.toFixed(2), +top.toFixed(2))
         }
       },
@@ -155,7 +183,7 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
         () => {
           setIsRefreshActive(true)
           setIsRefreshing(false)
-          onRefreshActive?.()
+          callbacksRef.current.onRefreshActive?.()
         },
         () => {
           setIsRefreshActive(false)
@@ -164,7 +192,7 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
         () => {
           setIsRefreshActive(false)
           setIsRefreshing(true)
-          onRefreshing?.()
+          callbacksRef.current.onRefreshing?.()
         },
       )
     }
@@ -174,13 +202,14 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
       initAutoReflow()
     }
     endReachedHandlerRef.current = debounce(() => {
+      isEndReachingRef.current = true
       setIsEndReaching(true)
-      onEndReached?.()
-      onEndReachedKebab?.()
+      callbacksRef.current.onEndReached?.()
+      callbacksRef.current.onEndReachedKebab?.()
     }, 50)
 
     setTimeout(() => {
-      isInitialedRef.current = true
+      scrollReadyRef.current = true
     }, 50)
 
     if (immediateCheckEndReaching) {
@@ -188,7 +217,7 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
     }
   }, [
     scrollingX, scrollingY, bouncing, autoReflow, hasRefresher, immediateCheckEndReaching,
-    onRefreshActive, onRefreshing, onEndReached, onEndReachedKebab, onScrollCb, checkScrollerEnd,
+    onScrollCb,
   ])
 
   const initAutoReflow = useCallback(() => {
@@ -249,7 +278,7 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
     return () => {
       destroyAutoReflow()
     }
-  }, [manualInit, autoReflow])
+  }, [manualInit, autoReflow, initScroller, destroyAutoReflow])
 
   useImperativeHandle(
     ref,
@@ -265,12 +294,13 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
         reflowScrollerPrivate()
       },
       finishLoadMore: () => {
+        isEndReachingRef.current = false
         setIsEndReachingStart(false)
         setIsEndReaching(false)
         reflowScrollerPrivate()
       },
     }),
-    [],
+    [initScroller],
   )
 
   const reflowScrollerPrivate = useCallback((force = false) => {
@@ -292,7 +322,34 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
     }, 0)
   }, [])
 
-  const onScrollerTouchStart = (event: React.TouchEvent) => {
+  const touchHandlersRef = useRef({
+    start: (_event: TouchEvent) => {},
+    move: (_event: TouchEvent) => {},
+    end: (_event: TouchEvent) => {},
+  })
+
+  // S2：React 17+ 触摸事件为 passive，preventDefault 需原生非 passive 监听
+  useEffect(() => {
+    const el = rootRef.current
+    if (!el) {
+      return
+    }
+    const start = (event: TouchEvent) => touchHandlersRef.current.start(event)
+    const move = (event: TouchEvent) => touchHandlersRef.current.move(event)
+    const end = (event: TouchEvent) => touchHandlersRef.current.end(event)
+    el.addEventListener('touchstart', start)
+    el.addEventListener('touchmove', move, { passive: false })
+    el.addEventListener('touchend', end)
+    el.addEventListener('touchcancel', end)
+    return () => {
+      el.removeEventListener('touchstart', start)
+      el.removeEventListener('touchmove', move)
+      el.removeEventListener('touchend', end)
+      el.removeEventListener('touchcancel', end)
+    }
+  }, [])
+
+  const onScrollerTouchStart = (event: TouchEvent) => {
     const scroller = scrollerRef.current
     if (!scroller) {
       return
@@ -302,7 +359,7 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
     scroller.doTouchStart(Array.from(event.touches), event.timeStamp)
   }
 
-  const onScrollerTouchMove = (event: React.TouchEvent) => {
+  const onScrollerTouchMove = (event: TouchEvent) => {
     const scroller = scrollerRef.current
     if (!scroller) {
       return
@@ -331,7 +388,7 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
     scroller.doTouchMove(
       Array.from(event.touches),
       event.timeStamp,
-      (event as React.TouchEvent & { scale?: number }).scale,
+      (event as TouchEvent & { scale?: number }).scale,
     )
 
     const boundaryDistance = 15
@@ -350,8 +407,14 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
     }
   }
 
-  const onScrollerTouchEnd = (event: React.TouchEvent) => {
+  const onScrollerTouchEnd = (event: TouchEvent) => {
     scrollerRef.current?.doTouchEnd(event.timeStamp)
+  }
+
+  touchHandlersRef.current = {
+    start: onScrollerTouchStart,
+    move: onScrollerTouchMove,
+    end: onScrollerTouchEnd,
   }
 
   const onScrollerMouseDown = (event: React.MouseEvent) => {
@@ -399,10 +462,6 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
       ref={rootRef}
       className="cu-scroll-view"
       style={style}
-      onTouchStart={onScrollerTouchStart}
-      onTouchMove={onScrollerTouchMove}
-      onTouchEnd={onScrollerTouchEnd}
-      onTouchCancel={onScrollerTouchEnd}
       onMouseDown={onScrollerMouseDown}
       onMouseMove={onScrollerMouseMove}
       onMouseUp={onScrollerMouseUp}
@@ -420,7 +479,7 @@ export const CuScrollView = forwardRef<ScrollViewExposed, ScrollViewProps>(funct
               isRefreshActive ? ' refresh-active' : ''
             }`}
           >
-            {refresh({ scrollTop: 0, isRefreshing, isRefreshActive })}
+            {refresh({ scrollTop: lastTopRef.current, isRefreshing, isRefreshActive })}
           </div>
         ) : null}
         {children}

@@ -311,12 +311,48 @@ export const CuRuler = forwardRef<HTMLDivElement, RulerProps>(function CuRuler(
     }
     dragState.current.onDrag = onDrag
     dragState.current.onStop = onStop
-    window.addEventListener('touchmove', onDrag)
+    window.addEventListener('touchmove', onDrag, { passive: false })
     window.addEventListener('touchend', onStop)
   }
 
+  const rulerRef = useRef<HTMLDivElement | null>(null)
+  const startDragRef = useRef<(event: TouchEvent) => void>(() => {})
+  startDragRef.current = (event: TouchEvent) => startDrag(event as unknown as React.TouchEvent)
+  const nativeTouchStart = useRef((event: TouchEvent) => startDragRef.current(event)).current
+
+  const setRulerNode = (node: HTMLDivElement | null) => {
+    if (rulerRef.current) {
+      rulerRef.current.removeEventListener('touchstart', nativeTouchStart)
+    }
+    rulerRef.current = node
+    if (node) {
+      // S2：React 17+ 触摸事件为 passive，preventDefault 需原生非 passive 监听
+      node.addEventListener('touchstart', nativeTouchStart, { passive: false })
+    }
+    if (typeof ref === 'function') {
+      ref(node)
+    } else if (ref) {
+      ref.current = node
+    }
+  }
+
+  // 卸载兜底：拖拽中卸载时移除遗留的 window 监听器
+  useEffect(
+    () => () => {
+      if (dragState.current.onDrag) {
+        window.removeEventListener('touchmove', dragState.current.onDrag)
+      }
+      if (dragState.current.onStop) {
+        window.removeEventListener('touchend', dragState.current.onStop)
+      }
+      dragState.current = { onDrag: null, onStop: null }
+      isDraggingRef.current = false
+    },
+    [],
+  )
+
   return (
-    <div className="cu-ruler" ref={ref} onTouchStart={startDrag}>
+    <div className="cu-ruler" ref={setRulerNode}>
       <canvas ref={canvasRef} className="cu-ruler-canvas"></canvas>
       <div className={`cu-ruler-cursor${isStepTextBottom ? ' cu-ruler-cursor-bottom' : ''}`}></div>
       <div className="cu-ruler-arrow"></div>

@@ -103,6 +103,8 @@ export interface CheckBaseBoxProps {
   isChecked?: boolean
   /** lt | rt */
   iconPosition?: string
+  /** a11y：box 形态由具体变体声明 checkbox/radio */
+  role?: 'checkbox' | 'radio'
   onClick?: () => void
   children?: ReactNode
 }
@@ -172,6 +174,9 @@ export function CuCheck({
   return (
     <label
       className={`cu-check${disabled ? ' is-disabled' : ''}${isChecked ? ' is-checked' : ''}`}
+      role="checkbox"
+      aria-checked={isChecked}
+      aria-disabled={disabled}
       onClick={onClick}
     >
       <div className="cu-check-icon">
@@ -211,6 +216,7 @@ export function CuCheckBox({
       disabled={disabled}
       iconPosition={iconPosition}
       label={label}
+      role="checkbox"
       onClick={onClick}
     >
       {children ?? label}

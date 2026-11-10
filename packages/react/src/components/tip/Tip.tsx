@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { flushSync } from 'react-dom'
-import { randomId } from '@centui/core'
+import { randomId, warn } from '@centui/core'
 import { CuTipContent } from './TipContent'
 
 export interface TipProps {
@@ -58,9 +58,10 @@ export function CuTip({
     const el = hostRef.current
     wrapperRef.current = el ? getFirstScrollWrapper(el) : null
     return () => {
-      removeTip()
+      destroyTip()
       wrapperRef.current = null
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   /**
@@ -109,6 +110,22 @@ export function CuTip({
     if (tipRef.current?.container.parentNode) {
       tipRef.current.container.parentNode.removeChild(tipRef.current.container)
     }
+  }
+
+  /**
+   * 彻底销毁游离 root（修复：仅 detach 容器会让 createRoot 与整棵 fiber 树滞留到页面销毁）
+   */
+  function destroyTip() {
+    const tip = tipRef.current
+    if (!tip) {
+      return
+    }
+    removeTip()
+    // 延后一拍：清理可能发生在渲染/effect 上下文中，避免同步 unmount 重入
+    setTimeout(() => {
+      tip.root.unmount()
+    }, 0)
+    tipRef.current = null
   }
 
   /**
@@ -170,6 +187,8 @@ export function CuTip({
     const tip = getOrNewTip()
     const referenceEl = hostRef.current
     if (!referenceEl) {
+      // ref 注入失败（插槽首元素非 DOM/forwardRef 组件）时显式告警而非静默失效
+      warn('[cu-tip] 无法获取宿主元素：插槽首个元素需为 DOM 元素或 forwardRef 组件')
       return
     }
 

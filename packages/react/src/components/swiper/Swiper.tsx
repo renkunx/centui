@@ -2,6 +2,7 @@ import {
   cloneElement,
   createContext,
   forwardRef,
+  isValidElement,
   useContext,
   useEffect,
   useImperativeHandle,
@@ -112,13 +113,13 @@ export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper
   const [dimension, setDimension] = useState(0)
   const [oItemCount, setOItemCount] = useState(0)
   const [rItemCount, setRItemCount] = useState(0)
-  // loop 首尾渲染拷贝（v2 backupItem 的声明式等价）
-  const [copies, setCopies] = useState<{ head: ReactNode; tail: ReactNode } | null>(null)
   const draggingRef = useRef(false)
   const userScrollingRef = useRef<boolean | null>(null)
   const durationRef = useRef(autoplay)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const resizeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const translateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const fadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const transitionEndHandlerRef = useRef<(() => void) | null>(null)
   const fromIndexRef = useRef(0)
   const toIndexRef = useRef(0)
@@ -145,6 +146,24 @@ export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper
 
   const realIndex = calcDisplayIndex(index)
 
+  // loop 首尾渲染拷贝：渲染期派生（随 dimension 实时重算，不再固化为挂载时的 0px）
+  const backup = isLoop && isSlide && oCount > 1 ? 1 : 0
+  const headSource = itemNodes[oCount - 1]
+  const tailSource = itemNodes[0]
+  const copies =
+    backup && isValidElement(headSource) && isValidElement(tailSource)
+      ? {
+          head: cloneElement(headSource as never, {
+            className: 'cu-swiper-item-last-copy',
+            style: isVertical ? { height: `${dimension}px` } : { width: `${dimension}px` },
+          }),
+          tail: cloneElement(tailSource as never, {
+            className: 'cu-swiper-item-first-copy',
+            style: isVertical ? { height: `${dimension}px` } : { width: `${dimension}px` },
+          }),
+        }
+      : null
+
   function calcDisplayIndex(idx: number) {
     if (isLoop && isSlide && oCount > 0) {
       return idx - 1 < 0 ? oCount - 1 : idx - 1 > oCount - 1 ? 0 : idx - 1
@@ -162,10 +181,6 @@ export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper
       return idx + 1
     }
     return idx
-  }
-
-  function getDimension() {
-    setDimension(isVertical ? rootRef.current?.clientHeight ?? 0 : rootRef.current?.clientWidth ?? 0)
   }
 
   function initScroller() {
@@ -241,7 +256,11 @@ export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper
     fromEl.style.transition = animate ? 'opacity 500ms ease' : ''
     toEl.style.opacity = '1'
     if (animate) {
-      setTimeout(() => {
+      if (fadeTimerRef.current) {
+        clearTimeout(fadeTimerRef.current)
+      }
+      fadeTimerRef.current = setTimeout(() => {
+        fadeTimerRef.current = null
         onAfterChange?.(fromIndexRef.current, toIndexRef.current)
       }, 500)
     }
@@ -249,27 +268,9 @@ export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper
 
   function initState(count: number, startIndex?: number) {
     setOItemCount(count)
-    const backup = isLoop && isSlide && count > 1 ? 1 : 0
     // v2 契约：rItemCount 含首尾拷贝（+2），index/firstIndex/lastIndex 偏移 +backup
     setRItemCount(count + (backup ? 2 : 0))
     noDragRef.current = count === 1 || !dragable
-
-    if (backup) {
-      const items = itemNodes
-      // v2 契约：横向拷贝只设 width，纵向只设 height；类名只传增量（基类由 CuSwiperItem 渲染）
-      setCopies({
-        head: cloneElement(items[count - 1] as never, {
-          className: 'cu-swiper-item-last-copy',
-          style: isVertical ? { height: `${dimension}px` } : { width: `${dimension}px` },
-        }),
-        tail: cloneElement(items[0] as never, {
-          className: 'cu-swiper-item-first-copy',
-          style: isVertical ? { height: `${dimension}px` } : { width: `${dimension}px` },
-        }),
-      })
-    } else {
-      setCopies(null)
-    }
 
     // v2 backupItem 契约：loop 模式下 index 偏移 +1（头部 lastCopy 占位）；
     // startIndex 与 v2 一致为「显示索引」，需经 calcDisplayIndex 归一
@@ -288,16 +289,24 @@ export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper
     toIndexRef.current = nextIdx
   }
 
+  /**
+   * 同步读取根元素真实尺寸再初始化（修复 P0：setState 异步，
+   * 若依赖闭包 dimension 则挂载首帧恒为 0 —— loop 首屏错位、拷贝 0 宽）。
+   */
   function reInitItems(startIndex?: number) {
     if (!oCount) {
       return
     }
-    getDimension()
+    const dim = isVertical
+      ? rootRef.current?.clientHeight ?? 0
+      : rootRef.current?.clientWidth ?? 0
+    setDimension(dim)
+    dimensionRef.current = dim
     initState(oCount, startIndex)
 
     if (isSlide) {
       initScroller()
-      translate(-dimension * indexRef.current, false)
+      translate(-dim * indexRef.current, false)
     } else {
       opacity(false)
     }
@@ -383,7 +392,11 @@ export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper
       return
     }
 
-    setTimeout(() => {
+    if (translateTimerRef.current) {
+      clearTimeout(translateTimerRef.current)
+    }
+    translateTimerRef.current = setTimeout(() => {
+      translateTimerRef.current = null
       const curDimension = dimensionRef.current
       const isLast = newIndex === rItemCountRef.current - 1 && isLoop
       const isFirst = newIndex === 0 && isLoop
@@ -586,6 +599,34 @@ export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper
     draggingRef.current = false
   }
 
+  // S2：React 17+ 触摸事件为 passive，preventDefault 需原生非 passive 监听。
+  // 桥接层持最新 handler 引用，避免原生监听器闭包过期。
+  const touchHandlersRef = useRef({ start: onDragStart, move: onDragMove, end: onDragEnd })
+  touchHandlersRef.current = { start: onDragStart, move: onDragMove, end: onDragEnd }
+
+  useEffect(() => {
+    const el = rootRef.current
+    if (!el) {
+      return
+    }
+    const start = (event: TouchEvent) =>
+      touchHandlersRef.current.start(event as unknown as React.TouchEvent)
+    const move = (event: TouchEvent) =>
+      touchHandlersRef.current.move(event as unknown as React.TouchEvent)
+    const end = (event: TouchEvent) =>
+      touchHandlersRef.current.end(event as unknown as React.TouchEvent)
+    el.addEventListener('touchstart', start, { passive: false })
+    el.addEventListener('touchmove', move, { passive: false })
+    el.addEventListener('touchend', end)
+    el.addEventListener('touchcancel', end)
+    return () => {
+      el.removeEventListener('touchstart', start)
+      el.removeEventListener('touchmove', move)
+      el.removeEventListener('touchend', end)
+      el.removeEventListener('touchcancel', end)
+    }
+  }, [])
+
   function play(d = 3000) {
     clearTimer()
     if (d < 500) {
@@ -641,6 +682,16 @@ export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper
       if (resizeTimeoutRef.current) {
         clearTimeout(resizeTimeoutRef.current)
       }
+      // 卸载清理：遗留的过渡/淡出定时器不再触碰已卸载的 DOM 与回调
+      if (translateTimerRef.current) {
+        clearTimeout(translateTimerRef.current)
+        translateTimerRef.current = null
+      }
+      if (fadeTimerRef.current) {
+        clearTimeout(fadeTimerRef.current)
+        fadeTimerRef.current = null
+      }
+      transitionEndHandlerRef.current = null
     }
   }, [])
 
@@ -662,10 +713,6 @@ export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper
         onMouseMove={onDragMove}
         onMouseUp={onDragEnd}
         onMouseLeave={onDragEnd}
-        onTouchStart={onDragStart}
-        onTouchMove={onDragMove}
-        onTouchEnd={onDragEnd}
-        onTouchCancel={onDragEnd}
       >
         <div className="cu-swiper-box" ref={swiperBoxRef}>
           <div className="cu-swiper-container" ref={swiperRef}>
@@ -688,4 +735,3 @@ export const CuSwiper = forwardRef<SwiperExposed, SwiperProps>(function CuSwiper
     </SwiperDimensionContext.Provider>
   )
 })
-

@@ -76,12 +76,27 @@ export const CuDialog = forwardRef<DialogExposed, DialogProps>(function CuDialog
   ref,
 ) {
   const rootRef = useRef<HTMLDivElement>(null)
+  const footerRef = useRef<HTMLElement>(null)
   // v2 契约：appendTo 迁移以 portal 实现（保持 React 事件委托）；null = 原地渲染
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null | undefined>(undefined)
 
   useEffect(() => {
     setPortalTarget(appendTo === false ? null : appendTo === undefined ? document.body : appendTo)
   }, [appendTo])
+
+  // React 17+ 触摸事件为 passive，按钮上的滚动阻断需原生非 passive 监听
+  // （portal 切换会重建 footer 节点，依赖 portalTarget 重挂）
+  useEffect(() => {
+    const footer = footerRef.current
+    if (!footer) {
+      return
+    }
+    const prevent = (event: Event) => event.preventDefault()
+    footer.addEventListener('touchmove', prevent, { passive: false })
+    return () => {
+      footer.removeEventListener('touchmove', prevent)
+    }
+  }, [portalTarget])
 
   useImperativeHandle(ref, () => ({ close: () => onChange?.(false) }), [onChange])
 
@@ -99,7 +114,9 @@ export const CuDialog = forwardRef<DialogExposed, DialogProps>(function CuDialog
   }
 
   const dialogTree = (
-    <div ref={rootRef} className="cu-dialog" {...(position ? ({ position } as object) : {})}>
+    // v2 契约：content 走 v-html（dangerouslySetInnerHTML）以支持富文本段落。
+    // XSS 责任在调用方：仅传入可信内容，勿直接拼接用户输入。
+    <div ref={rootRef} className="cu-dialog" role="dialog" aria-modal="true" {...(position ? ({ position } as object) : {})}>
       <CuPopup
         value={value}
         hasMask={hasMask}
@@ -128,7 +145,7 @@ export const CuDialog = forwardRef<DialogExposed, DialogProps>(function CuDialog
             {title ? <h2 className="cu-dialog-title">{title}</h2> : null}
             {children ?? <div className="cu-dialog-text" dangerouslySetInnerHTML={{ __html: content }} />}
           </div>
-          <footer className={`cu-dialog-actions${layout === 'column' ? ' is-column' : ''}`}>
+          <footer ref={footerRef} className={`cu-dialog-actions${layout === 'column' ? ' is-column' : ''}`}>
             {btns.map((btn, index) => (
               <a
                 role="button"
@@ -137,7 +154,6 @@ export const CuDialog = forwardRef<DialogExposed, DialogProps>(function CuDialog
                   !btn.disabled && btn.warning ? ' warning' : ''
                 }`}
                 onClick={() => onClickBtn(btn)}
-                onTouchMove={event => event.preventDefault()}
               >
                 {btn.loading ? <CuActivityIndicatorRolling /> : null}
                 {!btn.loading && btn.icon ? (

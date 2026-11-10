@@ -63,13 +63,13 @@ export const CuCashier = forwardRef<
     channels = [],
     channelLimit = 2,
     defaultIndex = 0,
-    paymentTitle = t('md.cashier.payCash'),
+    paymentTitle = String(t('md.cashier.payCash')),
     paymentAmount = '0.00',
     paymentDescribe = '',
-    payButtonText = t('md.cashier.confirmPay'),
+    payButtonText = String(t('md.cashier.confirmPay')),
     payButtonDisabled = false,
-    moreButtonText = t('md.cashier.morePayWays'),
-    title = t('md.cashier.pay'),
+    moreButtonText = String(t('md.cashier.morePayWays')),
+    title = String(t('md.cashier.pay')),
     describe = '',
     largeRadius = false,
     headerSlot,
@@ -105,15 +105,15 @@ export const CuCashier = forwardRef<
       onSubmit: (code: string) => void
     }
   }>({
-    loading: { text: t('md.cashier.payResultSearch') },
+    loading: { text: String(t('md.cashier.payResultSearch')) },
     success: {
-      text: t('md.cashier.paySuccess'),
-      buttonText: t('md.cashier.confirm'),
+      text: String(t('md.cashier.paySuccess')),
+      buttonText: String(t('md.cashier.confirm')),
       handler: undefined,
     },
     fail: {
-      text: t('md.cashier.payFail'),
-      buttonText: t('md.cashier.confirm'),
+      text: String(t('md.cashier.payFail')),
+      buttonText: String(t('md.cashier.confirm')),
       handler: undefined,
     },
     captcha: {

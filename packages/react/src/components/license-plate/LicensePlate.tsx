@@ -98,14 +98,13 @@ export const CuLicensePlate = forwardRef<HTMLDivElement, LicensePlateProps>(func
   }
 
   function onEnter(value: string | number) {
-    setKeyArray(prev => {
-      const next = prev.slice()
-      next[selectedIndex] = String(value)
-      return next
-    })
+    // 同步计算 next（修复：setKeyArray 异步，末位确认时读到旧数组导致确认值缺最后一位）
+    const next = keyArray.slice()
+    next[selectedIndex] = String(value)
+    setKeyArray(next)
 
     if (selectedIndex === keyArray.length - 1) {
-      onConfirm?.(keyArray.map(item => (item ? item : ' ')).join(''))
+      onConfirm?.(next.map(item => (item ? item : ' ')).join(''))
     } else {
       setSelectedIndex(selectedIndex + 1)
     }

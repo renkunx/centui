@@ -1,5 +1,7 @@
 import {
   forwardRef,
+  memo,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -14,14 +16,17 @@ export interface KeyboardKeyProps {
   noPrevent?: boolean
   className?: string
   onPress?: (value: string | number) => void
+  /** a11y：无可见文本的按键（删除/收起）需提供可读标签 */
+  ariaLabel?: string
 }
 
-export function CuNumberKey({
+export const CuNumberKey = memo(function CuNumberKey({
   value = '',
   noTouch = false,
   noPrevent = false,
   className,
   onPress,
+  ariaLabel,
 }: KeyboardKeyProps) {
   const [active, setActive] = useState(false)
   const activeTypeRef = useRef('')
@@ -46,6 +51,7 @@ export function CuNumberKey({
       <li
         className={[className, active ? 'active' : ''].filter(Boolean).join(' ')}
         onClick={event => onFocus(event, 'click')}
+        aria-label={ariaLabel}
       >
         <span>{value}</span>
       </li>
@@ -59,11 +65,12 @@ export function CuNumberKey({
       onTouchEnd={() => setActive(false)}
       onTouchCancel={() => setActive(false)}
       onClick={event => onFocus(event, 'click')}
+      aria-label={ariaLabel}
     >
       <span>{value}</span>
     </li>
   )
-}
+})
 
 export interface KeyboardBoardProps {
   /** simple | professional */
@@ -107,6 +114,29 @@ export function CuKeyboardBoard({
     })
   })
 
+  // 稳定回调：配合 CuNumberKey 的 memo，避免任一状态变化引发全部键位重渲
+  const handleEnter = useCallback(
+    (val: string | number) => {
+      if (!disabled) {
+        onEnter?.(val)
+      }
+    },
+    [disabled, onEnter],
+  )
+  const handleDelete = useCallback(() => {
+    if (!disabled) {
+      onDelete?.()
+    }
+  }, [disabled, onDelete])
+  const handleConfirm = useCallback(() => {
+    if (!disabled) {
+      onConfirm?.()
+    }
+  }, [disabled, onConfirm])
+  const handleHide = useCallback(() => {
+    onHide?.()
+  }, [onHide])
+
   const resolvedOkText = okText ?? '确定'
   const dotText = textRender?.('.') || '.'
   const duplicateZeroValue = textRender?.('00') || '00'
@@ -121,7 +151,8 @@ export function CuKeyboardBoard({
               key={i}
               className="keyboard-number-item"
               value={keyNumberList[i]}
-              onPress={val => !disabled && onEnter?.(val)}
+              onPress={handleEnter}
+              ariaLabel={String(keyNumberList[i])}
             />
           ))}
           {type === 'professional' ? (
@@ -130,19 +161,22 @@ export function CuKeyboardBoard({
                 <CuNumberKey
                   className="keyboard-number-item"
                   value={duplicateZero ? zeroValue : dotText}
-                  onPress={val => !disabled && onEnter?.(val)}
+                  onPress={handleEnter}
+                  ariaLabel={duplicateZero ? String(zeroValue) : '小数点'}
                 />
               ) : null}
               <CuNumberKey
                 className={`keyboard-number-item${hideDot ? ' large-item' : ''}`}
                 value={duplicateZero ? duplicateZeroValue : keyNumberList[9]}
-                onPress={val => !disabled && onEnter?.(val)}
+                onPress={handleEnter}
+                ariaLabel={String(duplicateZero ? duplicateZeroValue : keyNumberList[9])}
               />
               {duplicateZero ? (
                 <CuNumberKey
                   className="keyboard-number-item"
                   value={dotText}
-                  onPress={val => !disabled && onEnter?.(val)}
+                  onPress={handleEnter}
+                  ariaLabel="小数点"
                 />
               ) : null}
               {!duplicateZero ? (
@@ -153,7 +187,8 @@ export function CuKeyboardBoard({
                     className="keyboard-number-item slidedown"
                     noTouch
                     noPrevent
-                    onPress={() => onHide?.()}
+                    onPress={handleHide}
+                    ariaLabel="收起键盘"
                   />
                 )
               ) : null}
@@ -164,11 +199,13 @@ export function CuKeyboardBoard({
               <CuNumberKey
                 className="keyboard-number-item"
                 value={keyNumberList[9]}
-                onPress={val => !disabled && onEnter?.(val)}
+                onPress={handleEnter}
+                ariaLabel={String(keyNumberList[9])}
               />
               <CuNumberKey
                 className="keyboard-number-item no-bg delete"
-                onPress={() => !disabled && onDelete?.()}
+                onPress={handleDelete}
+                ariaLabel="删除"
               />
             </>
           )}
@@ -179,14 +216,16 @@ export function CuKeyboardBoard({
           <ul className="keyboard-operate-list">
             <CuNumberKey
               className="keyboard-operate-item delete"
-              onPress={() => !disabled && onDelete?.()}
+              onPress={handleDelete}
+              ariaLabel="删除"
             />
             <CuNumberKey
               className="keyboard-operate-item confirm"
               value={resolvedOkText}
               noTouch
               noPrevent
-              onPress={() => !disabled && onConfirm?.()}
+              onPress={handleConfirm}
+              ariaLabel={String(resolvedOkText)}
             />
           </ul>
         </div>
@@ -249,11 +288,16 @@ export const CuNumberKeyboard = forwardRef<NumberKeyboardExposed, NumberKeyboard
     }: NumberKeyboardProps,
     ref,
   ) {
-    const [isKeyboardShow, setIsKeyboardShow] = useState(false)
+    // 初始态即持 value（挂载 value=true 时立即可见，v2 watch immediate 契约）
+    const [isKeyboardShow, setIsKeyboardShow] = useState(value)
     const rootRef = useRef<HTMLDivElement>(null)
+    const boardWrapperRef = useRef<HTMLDivElement>(null)
 
+    // v2 契约（S3 修复）：受控 value 双向同步，外部置 false 也能关闭
+    const prevValueRef = useRef(value)
     useEffect(() => {
-      if (value) {
+      if (prevValueRef.current !== value) {
+        prevValueRef.current = value
         setIsKeyboardShow(value)
       }
     }, [value])
@@ -261,6 +305,19 @@ export const CuNumberKeyboard = forwardRef<NumberKeyboardExposed, NumberKeyboard
     useEffect(() => {
       onChange?.(isKeyboardShow)
     }, [isKeyboardShow])
+
+    // React 17+ 触摸事件为 passive：键盘面板的滚动阻断需原生非 passive 监听（S2）
+    useEffect(() => {
+      const el = boardWrapperRef.current
+      if (!el) {
+        return
+      }
+      const prevent = (event: Event) => event.preventDefault()
+      el.addEventListener('touchmove', prevent, { passive: false })
+      return () => {
+        el.removeEventListener('touchmove', prevent)
+      }
+    }, [])
 
     useImperativeHandle(
       ref,
@@ -316,7 +373,7 @@ export const CuNumberKeyboard = forwardRef<NumberKeyboardExposed, NumberKeyboard
           onHide={onHide}
         >
           {children}
-          <div onTouchMove={event => event.preventDefault()}>{board(false)}</div>
+          <div ref={boardWrapperRef}>{board(false)}</div>
         </CuPopup>
       </div>
     )

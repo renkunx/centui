@@ -53,6 +53,11 @@ function defaultTransition(position: string): string {
   }
 }
 
+/**
+ * S1 修复说明：过渡完成的驱动在下方 transitionEpoch effect 中——
+ * 按 computed duration 选择 transitionend/animationend 监听，并以 duration+100ms 兜底；
+ * 无动画环境（duration=0，含 jsdom）下一拍立即完成，保证 onShow/onHide/动画锁复位必然发生。
+ */
 export function CuPopup({
   value = false,
   hasMask = true,
@@ -77,6 +82,15 @@ export function CuPopup({
   const isPopupBoxShowRef = useRef(false)
   const [largeRadius, setLargeRadius] = useState(false)
   const isAnimationRef = useRef(false)
+  // 过渡纪元：每次 show/hide 递增，驱动下方真实事件监听 effect 重挂
+  const [transitionEpoch, setTransitionEpoch] = useState(0)
+  const timerCleanupRef = useRef<(() => void) | null>(null)
+
+  // 回调 ref-mirror：过渡完成回调必须取最新 props（事件/兜底定时器跨越多次渲染）
+  const onShowRef = useRef(onShow)
+  onShowRef.current = onShow
+  const onHideRef = useRef(onHide)
+  onHideRef.current = onHide
 
   const transitionName = transition ?? defaultTransition(position)
 
@@ -89,16 +103,20 @@ export function CuPopup({
   }
 
   const fireTransitionEnd = () => {
+    // 幂等闩：动画锁未挂起时忽略（重复 transitionend / 兜底定时器 / 同步触发竞争）
     if (!isAnimationRef.current) {
       return
     }
-    if (!isPopupBoxShowRef.current) {
-      setIsPopupShow(false)
-      onHide?.()
-    } else {
-      onShow?.()
-    }
     isAnimationRef.current = false
+    timerCleanupRef.current?.()
+    timerCleanupRef.current = null
+    if (!isPopupBoxShowRef.current) {
+
+      setIsPopupShow(false)
+      onHideRef.current?.()
+    } else {
+      onShowRef.current?.()
+    }
   }
 
   const showPopupBox = () => {
@@ -106,6 +124,7 @@ export function CuPopup({
     isAnimationRef.current = true
     setIsPopupBoxShow(true)
     isPopupBoxShowRef.current = true
+    setTransitionEpoch(n => n + 1)
     if (isTestEnv) {
       // v2 契约：测试环境同步触发过渡钩子
       fireTransitionStart()
@@ -120,6 +139,7 @@ export function CuPopup({
     isAnimationRef.current = true
     setIsPopupBoxShow(false)
     isPopupBoxShowRef.current = false
+    setTransitionEpoch(n => n + 1)
     if (preventScroll) {
       bindPreventScroll(false)
     }
@@ -141,7 +161,82 @@ export function CuPopup({
     } else if (isPopupShow || isPopupBoxShow) {
       hidePopupBox()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
+
+  /**
+   * S1 修复：生产环境的过渡完成驱动。
+   * show/hide 后在 box 元素上按 computed duration 监听 transitionend/animationend，
+   * 并以 duration+100ms 兜底；无动画（duration=0）时下一拍立即完成。
+   * 测试环境（MAND_ENV=test）已在 show/hide 中同步触发，此处跳过。
+   */
+  useEffect(() => {
+    if (isTestEnv || !isAnimationRef.current) {
+      return
+    }
+    const box = rootRef.current?.querySelector<HTMLElement>('.cu-popup-box') ?? null
+    let duration = 0
+    let transitionMs = 0
+    let animationMs = 0
+    if (box) {
+      let style: CSSStyleDeclaration | null
+      try {
+        style = window.getComputedStyle(box)
+      } catch {
+        style = null
+      }
+      const parse = (raw?: string | null): number => {
+        if (!raw) {
+          return 0
+        }
+        return raw.split(',').reduce((max, part) => {
+          const v = parseFloat(part)
+          if (Number.isNaN(v)) {
+            return max
+          }
+          return Math.max(max, part.trim().endsWith('ms') ? v : v * 1000)
+        }, 0)
+      }
+      transitionMs = parse(style?.transitionDuration)
+      animationMs = parse(style?.animationDuration)
+      duration = Math.max(transitionMs, animationMs)
+    }
+
+    const onEnd = (event: Event) => {
+      if (!box || event.target === box) {
+        fireTransitionEnd()
+      }
+    }
+    const removers: Array<() => void> = []
+    if (box) {
+      // 按 duration 选择监听目标；两者皆无时防御性双挂（部分环境低报 duration）
+      if (transitionMs > 0 || (transitionMs === 0 && animationMs === 0)) {
+        box.addEventListener('transitionend', onEnd)
+        removers.push(() => box.removeEventListener('transitionend', onEnd))
+      }
+      if (animationMs > 0 || (transitionMs === 0 && animationMs === 0)) {
+        box.addEventListener('animationend', onEnd)
+        removers.push(() => box.removeEventListener('animationend', onEnd))
+      }
+    }
+    const fallbackTimer = setTimeout(fireTransitionEnd, duration > 0 ? duration + 100 : 0)
+    timerCleanupRef.current = () => clearTimeout(fallbackTimer)
+    return () => {
+      clearTimeout(fallbackTimer)
+      removers.forEach(remove => remove())
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transitionEpoch])
+
+  // 卸载兜底：清理遗留动画锁与定时器
+  useEffect(
+    () => () => {
+      timerCleanupRef.current?.()
+      timerCleanupRef.current = null
+      isAnimationRef.current = false
+    },
+    [],
+  )
 
   const preventDefault = (event: Event) => event.preventDefault()
   const stopImmediatePropagation = (event: Event) => event.stopImmediatePropagation()

@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState, type ChangeEvent } from 'react'
+import { forwardRef, useEffect, useRef, useState, type ChangeEvent } from 'react'
 
 export interface ImageReaderProps {
   name?: string
@@ -35,9 +35,19 @@ export const CuImageReader = forwardRef<HTMLDivElement, ImageReaderProps>(functi
   },
   ref,
 ) {
+  // v2 created 契约：name 只在创建时生成一次（渲染期随机会导致 select/complete 事件 name 不一致）
+  const [resolvedName] = useState(name)
   const [inputTmpKey, setInputTmpKey] = useState(() => Date.now())
-  const nameRef = useRef(name)
-  nameRef.current = name
+  // 卸载守卫：FileReader/Image 回调晚于卸载到达时不再外发事件与 setState
+  const aliveRef = useRef(true)
+  useEffect(
+    () => () => {
+      aliveRef.current = false
+    },
+    [],
+  )
+  const nameRef = useRef(resolvedName)
+  nameRef.current = resolvedName
   const callbacksRef = useRef({ onSelect, onComplete, onError })
   callbacksRef.current = { onSelect, onComplete, onError }
 
@@ -46,6 +56,9 @@ export const CuImageReader = forwardRef<HTMLDivElement, ImageReaderProps>(functi
     : 'image/*'
 
   function emitter(event: 'select' | 'complete' | 'error', data: unknown) {
+    if (!aliveRef.current) {
+      return
+    }
     const cbs = callbacksRef.current
     if (event === 'select') {
       cbs.onSelect?.(nameRef.current, data as { files: File[] })
@@ -57,7 +70,18 @@ export const CuImageReader = forwardRef<HTMLDivElement, ImageReaderProps>(functi
   }
 
   function clearFile() {
+    if (!aliveRef.current) {
+      return
+    }
     setInputTmpKey(Date.now())
+  }
+
+  /**
+   * 以 base64 长度估算原始字节数（4/3 膨胀），修正 dataUrl 字符长度直接对比 KB 的偏差
+   */
+  function estimateBytes(dataUrl: string): number {
+    const base64 = dataUrl.split(',')[1] ?? ''
+    return Math.floor((base64.length * 3) / 4)
   }
 
   function dataURItoBlob(dataURI: string): Blob {
@@ -90,7 +114,8 @@ export const CuImageReader = forwardRef<HTMLDivElement, ImageReaderProps>(functi
         const reader = new FileReader()
         reader.onload = () => {
           const dataUrl = String(reader.result ?? '')
-          if (sizeLimit && dataUrl.length > sizeLimit) {
+          // 以估算的原始字节对比 KB 限额（base64 字符长度含 4/3 膨胀，直接对比会放宽阈值）
+          if (sizeLimit && estimateBytes(dataUrl) > sizeLimit) {
             emitter('error', { code: '101', msg: ERROR['101'] })
             done++
             if (done >= files.length) {
@@ -137,7 +162,7 @@ export const CuImageReader = forwardRef<HTMLDivElement, ImageReaderProps>(functi
         key={inputTmpKey}
         className="cu-image-reader-file"
         type="file"
-        name={name}
+        name={resolvedName}
         accept={mimeType}
         {...(isCameraOnly ? ({ capture: true } as object) : {})}
         multiple={isMultiple}

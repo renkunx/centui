@@ -65,6 +65,7 @@ export function CuPopupTitleBar({
 
       {title ? (
         <div className="title-bar-title">
+      {/* v2 契约：文本走 v-html（dangerouslySetInnerHTML）。XSS 责任在调用方：仅传入可信内容，勿直接拼接用户输入。 */}
           <p className="title" dangerouslySetInnerHTML={{ __html: title }}></p>
           {describe ? (
             <p className="describe" dangerouslySetInnerHTML={{ __html: describe }}></p>

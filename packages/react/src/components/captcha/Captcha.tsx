@@ -41,8 +41,8 @@ export interface CaptchaProps {
   onSend?: (countdown: () => void) => void
 }
 
-const SEND_TEXT = () => t('md.captcha.sendCaptcha')
-const COUNTDOWN_TEXT = () => t('md.captcha.countdown')
+const SEND_TEXT = () => String(t('md.captcha.sendCaptcha'))
+const COUNTDOWN_TEXT = () => String(t('md.captcha.countdown'))
 
 export const CuCaptcha = forwardRef<
   { countdown: () => void; resetcount: () => void; setError: (m: string) => void; close: () => void },
@@ -85,6 +85,8 @@ export const CuCaptcha = forwardRef<
   const [isKeyboard, setIsKeyboard] = useState(false)
   const originHeightRef = useRef(0)
   const counterRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  // StrictMode 双跑守卫：dev 下挂载 effect 执行两次，autoSend 只允许真正触发一次
+  const autoSendGuardRef = useRef(false)
 
   const isInline = isView || type === 'inline'
   const isShowErrorStyle = errorMsg !== '' && !disableSend
@@ -128,7 +130,8 @@ export const CuCaptcha = forwardRef<
       originHeightRef.current = document.documentElement.clientHeight || document.body.clientHeight
       window.addEventListener('resize', listenResize, false)
     }
-    if (value || isInline) {
+    if ((value || isInline) && !autoSendGuardRef.current) {
+      autoSendGuardRef.current = true
       firstShownRef.current = true
       if (autoSend) {
         handleResend()
@@ -236,17 +239,16 @@ export const CuCaptcha = forwardRef<
         hasMask
         position="bottom"
         maskClosable={false}
-        onChange={(v) => {
-          onChange?.(v)
-          if (v) {
-            onShow?.()
-            setVisible(true)
-            codeboxRef.current?.focus()
-          } else {
-            onHide?.()
-            setVisible(false)
-            codeboxRef.current?.blur()
-          }
+        onChange={onChange}
+        onShow={() => {
+          onShow?.()
+          setVisible(true)
+          codeboxRef.current?.focus()
+        }}
+        onHide={() => {
+          onHide?.()
+          setVisible(false)
+          codeboxRef.current?.blur()
         }}
       >
         <div className="cu-captcha-half-container">
@@ -292,17 +294,16 @@ export const CuCaptcha = forwardRef<
         closable
         appendTo={appendToProp === undefined ? false : appendToProp}
         position="center"
-        onChange={(v) => {
-          onChange?.(v)
-          if (v) {
-            onShow?.()
-            setVisible(true)
-            codeboxRef.current?.focus()
-          } else {
-            onHide?.()
-            setVisible(false)
-            codeboxRef.current?.blur()
-          }
+        onChange={onChange}
+        onShow={() => {
+          onShow?.()
+          setVisible(true)
+          codeboxRef.current?.focus()
+        }}
+        onHide={() => {
+          onHide?.()
+          setVisible(false)
+          codeboxRef.current?.blur()
         }}
       >
         <div className="cu-captcha-content">

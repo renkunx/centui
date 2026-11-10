@@ -79,17 +79,24 @@ export function CuSlider({
 
   const startDragMousePos = useRef(0)
   const startVal = useRef(0)
-  const skipChangeRef = useRef(false)
+  const lowerNodeRef = useRef<HTMLSpanElement | null>(null)
+  const upperNodeRef = useRef<HTMLSpanElement | null>(null)
+  const activeHandlersRef = useRef<{
+    drag: (event: MouseEvent | TouchEvent) => void
+    up: (event: Event) => void
+  } | null>(null)
 
-  // v2 watch value：外部值变化 → 归一化（跳过自身派发引起的回环）
+  // onChange ref-mirror：拖拽期间注册的原生监听器始终调用最新回调
+  const onChangeRef = useRef(onChange)
+  onChangeRef.current = onChange
+
+  // v2 watch value：外部值变化 → 归一化（拖拽中忽略自身派发引起的回环）
   useEffect(() => {
-    if (skipChangeRef.current) {
-      skipChangeRef.current = false
+    if (isDraggingRef.current) {
       return
     }
     const next = normalize(value, valuesRef.current, min, max, step)
     if (next) {
-      skipChangeRef.current = true
       setValues(next)
     }
   }, [value])
@@ -102,9 +109,29 @@ export function CuSlider({
 
   const commit = (next: Values) => {
     if (range) {
-      onChange?.(next)
+      onChangeRef.current?.(next)
     } else {
-      onChange?.(next[0])
+      onChangeRef.current?.(next[0])
+    }
+  }
+
+  function bindDragListeners() {
+    // 拖拽期间注册的 handler 原地固化在 ref 中，卸载/停止时按同一身份移除
+    activeHandlersRef.current = { drag: onDrag, up: onUp }
+    window.addEventListener('mousemove', onDrag)
+    window.addEventListener('touchmove', onDrag, { passive: false })
+    window.addEventListener('mouseup', onUp)
+    window.addEventListener('touchend', onUp)
+  }
+
+  function unbindDragListeners() {
+    const active = activeHandlersRef.current
+    if (active) {
+      window.removeEventListener('mousemove', active.drag)
+      window.removeEventListener('touchmove', active.drag)
+      window.removeEventListener('mouseup', active.up)
+      window.removeEventListener('touchend', active.up)
+      activeHandlersRef.current = null
     }
   }
 
@@ -121,10 +148,8 @@ export function CuSlider({
     isDraggingRef.current = true
     setIsDragingUpper(false)
     setIsDragging(true)
-    window.addEventListener('mousemove', onDrag)
-    window.addEventListener('touchmove', onDrag)
-    window.addEventListener('mouseup', onUp)
-    window.addEventListener('touchend', onUp)
+    unbindDragListeners()
+    bindDragListeners()
   }
 
   const startUpperDrag = (e: React.MouseEvent | React.TouchEvent) => {
@@ -140,10 +165,8 @@ export function CuSlider({
     isDraggingRef.current = true
     setIsDragingUpper(true)
     setIsDragging(true)
-    window.addEventListener('mousemove', onDrag)
-    window.addEventListener('touchmove', onDrag)
-    window.addEventListener('mouseup', onUp)
-    window.addEventListener('touchend', onUp)
+    unbindDragListeners()
+    bindDragListeners()
   }
 
   function onDrag(e: MouseEvent | TouchEvent) {
@@ -166,7 +189,6 @@ export function CuSlider({
         ? normalize([null as unknown as number, nextVal], valuesRef.current, min, max, step)
         : normalize([nextVal, null as unknown as number], valuesRef.current, min, max, step)
       if (next) {
-        skipChangeRef.current = true
         setValues(next)
         commit(next)
       }
@@ -180,15 +202,55 @@ export function CuSlider({
   }
 
   function stopDrag() {
+    unbindDragListeners()
     isDraggingRef.current = false
     isDragingUpperRef.current = false
     setIsDragging(false)
     setIsDragingUpper(false)
-    window.removeEventListener('mousemove', onDrag)
-    window.removeEventListener('touchmove', onDrag)
-    window.removeEventListener('mouseup', onUp)
-    window.removeEventListener('touchend', onUp)
   }
+
+  // S2：handle 的 touchstart 需非 passive 才能 preventDefault 阻断页面滚动
+  const lowerTouchStartRef = useRef<(event: TouchEvent) => void>(() => {})
+  lowerTouchStartRef.current = (event: TouchEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    startLowerDrag(event as unknown as React.TouchEvent)
+  }
+  const upperTouchStartRef = useRef<(event: TouchEvent) => void>(() => {})
+  upperTouchStartRef.current = (event: TouchEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    startUpperDrag(event as unknown as React.TouchEvent)
+  }
+  const lowerNativeStart = useRef((event: TouchEvent) => lowerTouchStartRef.current(event)).current
+  const upperNativeStart = useRef((event: TouchEvent) => upperTouchStartRef.current(event)).current
+
+  const setLowerNode = (node: HTMLSpanElement | null) => {
+    if (lowerNodeRef.current) {
+      lowerNodeRef.current.removeEventListener('touchstart', lowerNativeStart)
+    }
+    lowerNodeRef.current = node
+    if (node) {
+      node.addEventListener('touchstart', lowerNativeStart, { passive: false })
+    }
+  }
+  const setUpperNode = (node: HTMLSpanElement | null) => {
+    if (upperNodeRef.current) {
+      upperNodeRef.current.removeEventListener('touchstart', upperNativeStart)
+    }
+    upperNodeRef.current = node
+    if (node) {
+      node.addEventListener('touchstart', upperNativeStart, { passive: false })
+    }
+  }
+
+  // 卸载兜底：拖拽中卸载时按注册身份移除 window 监听器
+  useEffect(
+    () => () => {
+      unbindDragListeners()
+    },
+    [],
+  )
 
   const formatHint = (val: number) => (format ? format(val) : val)
 
@@ -202,14 +264,14 @@ export function CuSlider({
             data-hint={String(formatHint(values[0]))}
             style={{ left: lowerHandlePosition + '%' }}
           >
-            <span onMouseDown={startLowerDrag} onTouchStart={startLowerDrag}></span>
+            <span ref={setLowerNode} onMouseDown={startLowerDrag}></span>
           </div>
           <div
             className={`cu-slider-handle is-higher${isDragging && isDragingUpper ? ' is-active' : ''}`}
             data-hint={String(formatHint(values[1]))}
             style={{ left: upperHandlePosition + '%' }}
           >
-            <span onMouseDown={startUpperDrag} onTouchStart={startUpperDrag}></span>
+            <span ref={setUpperNode} onMouseDown={startUpperDrag}></span>
           </div>
         </>
       ) : (
@@ -220,7 +282,7 @@ export function CuSlider({
             data-hint={String(formatHint(values[0]))}
             style={{ left: lowerHandlePosition + '%' }}
           >
-            <span onMouseDown={startLowerDrag} onTouchStart={startLowerDrag}></span>
+            <span ref={setLowerNode} onMouseDown={startLowerDrag}></span>
           </div>
         </>
       )}

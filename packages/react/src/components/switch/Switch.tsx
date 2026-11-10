@@ -10,6 +10,9 @@ export function CuSwitch({ value = false, disabled = false, onChange }: SwitchPr
   return (
     <div
       className={`cu-switch${disabled ? ' disabled' : ''}${value ? ' active' : ''}`}
+      role="switch"
+      aria-checked={value}
+      aria-disabled={disabled || undefined}
       onClick={event => {
         if (disabled) {
           return

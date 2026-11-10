@@ -15,6 +15,7 @@ export interface ActionSheetProps {
   defaultIndex?: number
   invalidIndex?: number | number[]
   cancelText?: string
+  /** 选项列表最大高度（px），超出滚动；未显式传入时不渲染内联限高（与 v2 结构一致） */
   maxHeight?: number
   onShow?: () => void
   onHide?: () => void
@@ -31,15 +32,14 @@ export function CuActionSheet({
   defaultIndex = -1,
   invalidIndex = -1,
   cancelText,
-  maxHeight = 400,
+  maxHeight,
   onShow,
   onHide,
   onSelected,
   onCancel,
   onChange,
 }: ActionSheetProps) {
-  const resolvedCancelText = cancelText ?? t('md.action_sheet.cancel')
-  void maxHeight
+  const resolvedCancelText = cancelText ?? String(t('md.action_sheet.cancel'))
 
   const hideSheet = () => {
     onChange?.(false)
@@ -76,7 +76,10 @@ export function CuActionSheet({
       >
         <div className="cu-action-sheet-content">
           {title ? <header className="cu-action-sheet-header">{title}</header> : null}
-          <ul className="cu-action-sheet-list">
+          <ul
+            className="cu-action-sheet-list"
+            style={maxHeight === undefined ? undefined : { maxHeight: `${maxHeight}px` }}
+          >
             {options.map((item, index) => (
               <li
                 key={index}
@@ -90,6 +93,8 @@ export function CuActionSheet({
                 onClick={() => onSelect(item, index)}
               >
                 <div className="cu-action-sheet-item-wrapper">
+                  {/* v2 契约：option 文本走 v-html（dangerouslySetInnerHTML）。
+                      XSS 责任在调用方：仅传入可信内容，勿直接拼接用户输入。 */}
                   <div
                     className="cu-action-sheet-item-section"
                     dangerouslySetInnerHTML={{ __html: item.text || item.label || '' }}
