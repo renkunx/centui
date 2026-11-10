@@ -3,6 +3,12 @@ title: 更新日志
 toc: hidden
 ---
 
+> [!NOTE]
+> 本文件为 mand-mobile v2 时代的历史存档（随 legacy 一并保留，不再更新）。
+> centui v3 的版本变更记录以各包内的 changesets CHANGELOG 为准：
+> `packages/vue/CHANGELOG.md`（centui）、`packages/react/CHANGELOG.md`（@centui/react）、
+> `packages/core/CHANGELOG.md`（@centui/core）、`packages/styles/CHANGELOG.md`（@centui/styles）。
+
 ### 2.7.0
 
 `2024-03-12`

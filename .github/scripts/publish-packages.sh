@@ -26,8 +26,9 @@ readonly -a PACKAGE_DIRS=(
 
 readonly NPM_REGISTRY='https://registry.npmjs.org/'
 readonly GPR_REGISTRY='https://npm.pkg.github.com'
-# GPR 镜像 scope：必须与运行仓库的 owner 一致（GPR 硬性规则）
-readonly GPR_SCOPE='@renkunx'
+# GPR 镜像 scope：必须与运行仓库的 owner 一致（GPR 硬性规则）——
+# 由 CI 环境变量派生，仓库转移/改名后无需改脚本；本地调试回退 renkunx
+readonly GPR_SCOPE="@${GITHUB_REPOSITORY_OWNER:-renkunx}"
 
 cleanup() {
   restore_npmrc
@@ -42,6 +43,18 @@ name_of() { node -p "require('./$1/package.json').name"; }
 
 dist_tag_of() {
   if [[ "$1" == *-* ]]; then echo alpha; else echo latest; fi
+}
+
+# 幂等打 tag：已存在（含往次部分失败的 run 补发场景）则跳过，新打的记入 TAGS_THIS_RUN
+ensure_tag() { # $1 = "name@version"
+  if git tag -l "$1" | grep -q .; then
+    echo "⏭  tag $1 已存在"
+  elif git tag "$1" 2>/dev/null; then
+    TAGS_THIS_RUN+=("$1")
+    echo "🏷  $1"
+  else
+    echo "⏭  tag $1 创建失败（可能远端同名 tag 尚未拉取）"
+  fi
 }
 
 write_npmrc() { # $1 = registry, $2 = 持 token 的环境变量名
@@ -127,6 +140,9 @@ publish_strict() { # $1 = registry, $2 = token env var；任何失败中断脚�
     version=$(version_of "$dir")
     if npm view "$name@$version" version --registry "$1" >/dev/null 2>&1; then
       echo "⏭  $name@$version 已存在于 $1，跳过"
+      # 已发布但 tag 缺失的场景（往次 run 部分失败后重跑）也要补 tag，
+      # 否则该版本的 git tag 与 GitHub Release 永久缺失
+      ensure_tag "${name}@${version}"
       continue
     fi
     echo "🚀 $name@$version → $1 (tag: $(dist_tag_of "$version"))"
@@ -137,12 +153,7 @@ publish_strict() { # $1 = registry, $2 = token env var；任何失败中断脚�
     # 自定义 publish 脚本下 changesets/action 不会推 tag，这里自管：
     # 幂等打 tag（已存在则跳过），脚本末尾统一推送
     if [[ "$1" == "$NPM_REGISTRY" ]]; then
-      if git tag "${name}@${version}" 2>/dev/null; then
-        TAGS_THIS_RUN+=("${name}@${version}")
-        echo "🏷  ${name}@${version}"
-      else
-        echo "⏭  tag ${name}@${version} 已存在"
-      fi
+      ensure_tag "${name}@${version}"
     fi
   done
 }

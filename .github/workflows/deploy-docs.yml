@@ -1,7 +1,7 @@
 name: Deploy Docs
 
 # 文档站（Astro + Starlight）构建并发布到 GitHub Pages：
-# https://renkunx.github.io/mand-mobile/
+# https://renkunx.github.io/centui/
 # （仓库 Settings → Pages 的 Source 已设为 GitHub Actions，见首次配置）
 on:
   push:
