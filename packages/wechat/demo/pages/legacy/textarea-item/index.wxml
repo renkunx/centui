@@ -6,25 +6,25 @@
   <view class="md-example-child md-example-child-textarea md-example-child-textarea-0">
     <cu-field>
       <cu-textarea-item
-        ref="demo0"
+        id="textarea0"
         title="普通"
         autosize
         class="example"
-        value="{{value}}" bind:change="noop"
+        value="{{value0}}" bind:change="onValue0Change"
         placeholder="普通文本域"
       />
       <cu-textarea-item
-        ref="demo0"
+        id="textarea1"
         title="自动适应"
         class="example"
         autosize="{{true}}"
-        value="{{value2}}" bind:change="noop"
+        value="{{value2}}" bind:change="onValue2Change"
         rows="{{1}}"
         placeholder="最大高度150px"
         max-height="{{150}}"
       />
       <cu-textarea-item
-        ref="demo0"
+        id="textarea2"
         title="删除图标"
         class="example"
         autosize="{{true}}"
@@ -34,7 +34,6 @@
         max-height="{{150}}"
       />
       <cu-textarea-item
-        ref="demo0"
         title="禁用"
         class="example"
         autosize="{{true}}"
@@ -44,7 +43,6 @@
         disabled
       />
       <cu-textarea-item
-        ref="demo0"
         title="只读"
         class="example"
         autosize="{{true}}"
@@ -54,12 +52,11 @@
         readonly
       />
       <cu-textarea-item
-        ref="demo0"
+        id="textarea3"
         title="格式化"
         autosize
         class="example"
-        value="{{value3}}" bind:change="noop"
-        formation="{{format}}"
+        value="{{value3}}" bind:change="onValue3Change"
         placeholder="去掉所有数字"
       />
     </cu-field>
@@ -74,12 +71,10 @@
   <view class="md-example-child md-example-child-textarea md-example-child-textarea-0">
     <cu-field>
       <cu-textarea-item
-        ref="demo1"
         title="错误提示"
         class="example"
-        value="{{value}}" bind:change="noop"
+        value="{{valueErr}}" bind:change="change"
         bind:blur="blur"
-        bind:change="change"
         bind:keyup="keyup"
         bind:keydown="keydown"
         bind:focus="focus"
@@ -99,27 +94,22 @@
   <view class="md-example-child md-example-child-textarea md-example-child-textarea-2">
     <cu-field>
       <cu-textarea-item
-        ref="demo2"
         class="demo2"
         autosize="{{true}}"
-        value="{{value}}" bind:change="noop"
+        value="{{valueD2}}" bind:change="onValueD2Change"
         max-length="{{100}}"
         max-height="{{150}}"
         placeholder="描述信息在100字以内"
       >
-        <template slot="footer">
-          <view class="legacy-p" class="demo2-footer">
-            <text
-              class="demo2-footer-left"
-              wx:if="{{value.length"
-              >{{ value.length }}/100</text>
-            <text v-else></text>
-
-            <text
-              class="demo2-footer-right"
-              >页脚文案</text>
-          </view>
-        </template>
+        <view slot="footer" class="legacy-p demo2-footer">
+          <text
+            class="demo2-footer-left"
+            wx:if="{{valueD2.length > 0}}"
+          >{{ valueD2.length }}/100</text>
+          <text
+            class="demo2-footer-right"
+          >页脚文案</text>
+        </view>
       </cu-textarea-item>
     </cu-field>
   </view>
@@ -128,6 +118,10 @@
   </view>
 </view>
 <!--
-TODO 修整清单（textarea-item）：
-  - 存在 v-else/v-html 需人工核对
+  平台差异说明（对齐 legacy/components/textarea-item/demo/cases/demo0~2.vue）：
+  - v-model 均改为 value + change 事件回写（各 case 字段拆分为 value0/value2/value3/valueErr/valueD2）
+  - formation 函数属性无法经 wxml 传递，改为 onReady 里对格式化文本域 setFormation(fn) 注入
+  - keyup/keydown 为 no-op 事件（小程序无对应），handler 保留仅对齐绑定
+  - footer 插槽 value.length 计数改为 wx:if + data 绑定；空的 v-else 文本节点无展示意义，移除
+  - 重复的 ref="demo0" 移除（组件实例改用 id 定位）
 -->

@@ -8,7 +8,7 @@
       <cu-field-item
         title="联系地址"
         arrow="arrow-right"
-        bind:tap="show = !show"
+        bind:click="toggleShow"
         placeholder="请选择联系地址"
         content="{{addressStr}}"
         solid
@@ -19,7 +19,7 @@
       describe="请选择您所在的省份、城市、区县"
       large-radius
       data="{{data}}"
-      value="{{show}}" bind:change="noop"
+      show="{{show}}"
       bind:change="handleChange"
     />
   </view>
@@ -28,6 +28,7 @@
   </view>
 </view>
 <!--
-TODO 修整清单（tab-picker）：
-  - demo0.vue: 定义对象求值失败（data is not defined），data/methods 未搬运
+  平台差异说明（对齐 legacy/components/tab-picker/demo/cases/demo0.vue）：
+  - @click="show = !show" 改为 bind:click="toggleShow"；v-model 改为 show 属性 + change 事件回写
+  - computed addressStr 改为 handleChange 里 setData 派生字段
 -->

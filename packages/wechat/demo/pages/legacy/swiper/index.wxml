@@ -1,20 +1,21 @@
 <view class="legacy-wrapper md-example swiper">
   <view class="legacy-section">
-    <view class="legacy-title">横向轮播 <a href="javascript:window.triggerSwiper0()">Goto 2</a><a href="javascript:window.triggerSwiper1()">Play</a><a href="javascript:window.triggerSwiper2()">Stop</a></view>
+    <view class="legacy-title">横向轮播 <text class="title-link" bind:tap="goto0">Goto 2</text><text class="title-link" bind:tap="play0">Play</text><text class="title-link" bind:tap="stop0">Stop</text></view>
+    <view class="legacy-describe">10秒后异步加载更多项，20秒后重置为初始数量</view>
+    <view class="legacy-describe">@before-change: from: {{m0.bf}}, to: {{m0.bt}}</view>
+    <view class="legacy-describe">@after-change: from: {{m0.af}}, to: {{m0.at}}</view>
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-swiper md-example-child-swiper-0">
     <cu-swiper
-      bind:before-change="beforeChange"
-      bind:after-change="afterChange"
-      ref="swiper"
+      id="swiper0"
+      bind:before-change="beforeChange0"
+      bind:after-change="afterChange0"
       is-prevent="{{false}}"
-      useNative-driver="{{false}}"
+      use-native-driver="{{false}}"
     >
-      <cu-swiper-item key="{{$index}}" v-for="(item, $index) in simple">
-        <view
-          class="banner-item"
-          style="{{{'background': `${item.color}`}}}">{{item.text}}</view>
+      <cu-swiper-item wx:for="{{simple}}" wx:key="key">
+        <view class="banner-item" style="background: {{item.color}};">{{item.text}}</view>
       </cu-swiper-item>
     </cu-swiper>
   </view>
@@ -23,20 +24,20 @@
   </view>
   <view class="legacy-section">
     <view class="legacy-title">纵向轮播</view>
+    <view class="legacy-describe">@before-change: from: {{m1.bf}}, to: {{m1.bt}}</view>
+    <view class="legacy-describe">@after-change: from: {{m1.af}}, to: {{m1.at}}</view>
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-swiper md-example-child-swiper-1">
     <cu-swiper
-      bind:before-change="beforeChange"
-      bind:after-change="afterChange"
+      bind:before-change="beforeChange1"
+      bind:after-change="afterChange1"
       default-index="{{1}}"
       dragable="{{false}}"
       autoplay="{{5000}}"
       transition="slideY">
-      <cu-swiper-item key="{{$index}}" v-for="(item, $index) in simple">
-        <a href="javascript:void(0)"
-          class="banner-item"
-          style="{{{'background': `${item.color}`}}}">{{item.text}}</a>
+      <cu-swiper-item wx:for="{{simple}}" wx:key="key">
+        <view class="banner-item" style="background: {{item.color}};">{{item.text}}</view>
       </cu-swiper-item>
     </cu-swiper>
   </view>
@@ -44,20 +45,20 @@
     </view>
   </view>
   <view class="legacy-section">
-    <view class="legacy-title">渐隐轮播 <a href="javascript:window.triggerSwiper3()">Goto 2</a></view>
+    <view class="legacy-title">渐隐轮播 <text class="title-link" bind:tap="goto2">Goto 2</text></view>
+    <view class="legacy-describe">@before-change: from: {{m2.bf}}, to: {{m2.bt}}</view>
+    <view class="legacy-describe">@after-change: from: {{m2.af}}, to: {{m2.at}}</view>
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-swiper md-example-child-swiper-2">
     <cu-swiper
-      bind:before-change="beforeChange"
-      bind:after-change="afterChange"
+      id="swiper2"
+      bind:before-change="beforeChange2"
+      bind:after-change="afterChange2"
       autoplay="{{5000}}"
-      transition="fade"
-      ref="swiper">
-      <cu-swiper-item key="{{$index}}" v-for="(item, $index) in simple">
-        <a href="javascript:void(0)"
-          class="banner-item"
-          style="{{{'background': `${item.color}`}}}">{{item.text}}</a>
+      transition="fade">
+      <cu-swiper-item wx:for="{{simple}}" wx:key="key">
+        <view class="banner-item" style="background: {{item.color}};">{{item.text}}</view>
       </cu-swiper-item>
     </cu-swiper>
   </view>
@@ -65,20 +66,22 @@
     </view>
   </view>
   <view class="legacy-section">
-    <view class="legacy-title">每屏多内容 <a href="javascript:window.triggerSwiper4()">Goto 2</a></view>
+    <view class="legacy-title">每屏多内容 <text class="title-link" bind:tap="goto3">Goto 2</text></view>
+    <view class="legacy-describe">@before-change: from: {{m3.bf}}, to: {{m3.bt}}</view>
+    <view class="legacy-describe">@after-change: from: {{m3.af}}, to: {{m3.at}}</view>
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-swiper md-example-child-swiper-3">
     <cu-swiper
-      bind:before-change="beforeChange"
-      bind:after-change="afterChange"
-      ref="swiper">
-      <cu-swiper-item key="{{$index}}" v-for="(item, $index) in mulit">
-        <ul>
-          <li key="{{$index1}}" v-for="(sub, $index1) in item">
-            <a href="javascript:void(0)" class="banner-item" style="{{{'background': `${sub.color}`}}}">{{sub.text}}</a>
-          </li>
-        </ul>
+      id="swiper3"
+      bind:before-change="beforeChange3"
+      bind:after-change="afterChange3">
+      <cu-swiper-item wx:for="{{mulit}}" wx:key="key">
+        <view class="mulit-list">
+          <view class="mulit-item" wx:for="{{item.subs}}" wx:for-item="sub" wx:key="key">
+            <view class="banner-item" style="background: {{sub.color}};">{{sub.text}}</view>
+          </view>
+        </view>
       </cu-swiper-item>
     </cu-swiper>
   </view>
@@ -87,13 +90,9 @@
   </view>
 </view>
 <!--
-TODO 修整清单（swiper）：
-  - demo0.vue: 定义对象求值失败（simple is not defined），data/methods 未搬运
-  - v-for 需复核 wx:for/wx:key 改写
-  - demo1.vue: 定义对象求值失败（simple is not defined），data/methods 未搬运
-  - v-for 需复核 wx:for/wx:key 改写
-  - demo2.vue: 定义对象求值失败（simple is not defined），data/methods 未搬运
-  - v-for 需复核 wx:for/wx:key 改写
-  - demo3.vue: 定义对象求值失败（mulit is not defined），data/methods 未搬运
-  - v-for 需复核 wx:for/wx:key 改写
+  平台差异说明（对齐 legacy/components/swiper/demo/cases/*.vue）：
+  - 标题 javascript: 链接（Goto 2/Play/Stop）改为 title-link 按钮，经 selectComponent 调用组件 goto/play/stop
+  - message 行 setValue(document.querySelector) 改为 setData 展示字段 m0~m3，随 before/after-change 更新
+  - demo0 的 10s 追加 / 24.5s 重置异步行为在页面 onLoad 定时器中等价搬运
+  - demo3 的 ul/li 改为 view.mulit-list/mulit-item（样式等价）
 -->

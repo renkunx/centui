@@ -1,6 +1,19 @@
 @import "../legacy.wxss";
 
-.md-example.picker .md-example-title a {
+.md-example.picker .md-example-title .title-link {
   font-size: 20px !important;
 }
 
+
+/* examples/App.vue .md-example-title a 基础样式 */
+.legacy-title .title-link {
+  display: inline-block;
+  margin-right: 5rpx;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 5rpx 10rpx;
+  border-radius: var(--radius-normal);
+  font-weight: var(--font-weight-light);
+  line-height: 28rpx;
+  text-decoration: none;
+}

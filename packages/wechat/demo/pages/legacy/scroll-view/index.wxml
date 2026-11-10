@@ -1,20 +1,20 @@
 <view class="legacy-wrapper md-example scroll-view">
   <view class="legacy-section">
-    <view class="legacy-title">基础 <a href="javascript:ScrollViewTrigger0()">添加内容</a></view>
+    <view class="legacy-title">基础 <text class="title-link" bind:tap="addItems0">添加内容</text></view>
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-scroll-view md-example-child-scroll-view-0">
     <cu-scroll-view
-      ref="scrollView"
-      bind:scroll="$_onScroll"
+      id="scrollView0"
+      bind:scroll="onScroll0"
     >
       <view
-        wx:for="{{list}}" wx:for-item="i"
+        wx:for="{{items}}" wx:key="*this"
         class="scroll-view-item"
-        key="{{i}}"
-        bind:tap="$_onItemClick(i)"
+        data-i="{{item}}"
+        bind:tap="onItemClick0"
       >
-        {{i}}
+        {{item}}
       </view>
     </cu-scroll-view>
   </view>
@@ -27,17 +27,15 @@
 
   <view class="md-example-child md-example-child-scroll-view md-example-child-scroll-view-1">
     <cu-scroll-view
-      ref="scrollView"
       scrolling-y="{{false}}"
       touch-angle="{{80}}"
       is-prevent="{{false}}"
     >
       <view class="scroll-view-list">
-        <view class="legacy-p"
-          wx:for="{{list}}" wx:for-item="i"
-          key="{{i}}"
+        <view
+          wx:for="{{itemsH}}" wx:key="*this"
           class="scroll-view-item"
-        >{{i}}</view>
+        >{{item}}</view>
       </view>
     </cu-scroll-view>
   </view>
@@ -45,28 +43,21 @@
     </view>
   </view>
   <view class="legacy-section">
-    <view class="legacy-title">下拉刷新 <a href="javascript:ScrollViewTrigger1()">触发下拉刷新</a></view>
+    <view class="legacy-title">下拉刷新 <text class="title-link" bind:tap="triggerRefresh2">触发下拉刷新</text></view>
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-scroll-view md-example-child-scroll-view-2">
     <cu-scroll-view
-      ref="scrollView"
+      id="scrollView2"
       scrolling-x="{{false}}"
-      bind:refreshing="$_onRefresh"
+      default-refresher
+      bind:refreshing="onRefresh2"
     >
-      <cu-scroll-view-refresh
-        slot="refresh"
-        slot-scope="{ scrollTop, isRefreshActive, isRefreshing }"
-        scroll-top="{{scrollTop}}"
-        is-refreshing="{{isRefreshing}}"
-        is-refresh-active="{{isRefreshActive}}"
-      ></cu-scroll-view-refresh>
       <view
-        wx:for="{{list}}" wx:for-item="i"
-        key="{{i}}"
+        wx:for="{{itemsR}}" wx:key="*this"
         class="scroll-view-list"
       >
-        <view class="legacy-p" class="scroll-view-item">{{i}}</view>
+        <view class="scroll-view-item">{{item}}</view>
       </view>
     </cu-scroll-view>
   </view>
@@ -79,22 +70,17 @@
 
   <view class="md-example-child md-example-child-scroll-view md-example-child-scroll-view-3">
     <cu-scroll-view
-      ref="scrollView"
+      id="scrollView3"
       scrolling-x="{{false}}"
-      bind:end-reached="$_onEndReached"
+      bind:end-reached="onEndReached3"
     >
       <view
-        wx:for="{{list}}" wx:for-item="i"
-        key="{{i}}"
+        wx:for="{{itemsMore}}" wx:key="*this"
         class="scroll-view-list"
       >
-        <view class="legacy-p" class="scroll-view-item">{{i}}</view>
+        <view class="scroll-view-item">{{item}}</view>
       </view>
-      <cu-scroll-view-more
-        slot="more"
-        is-finished="{{isFinished}}"
-      >
-      </cu-scroll-view-more>
+      <text slot="more" class="scroll-view-more-inner">{{isFinished ? '全部已加载' : '更多加载中...'}}</text>
     </cu-scroll-view>
   </view>
 
@@ -106,26 +92,24 @@
 
   <view class="md-example-child md-example-child-scroll-view md-example-child-scroll-view-4">
     <cu-scroll-view
-      ref="scrollView"
+      id="scrollView4"
       scrolling-x="{{false}}"
-      bind:scroll="$_onScroll"
+      bind:scroll="onScroll4"
     >
       <view
-        wx:for="{{category}}" wx:for-item="i"
-        key="{{i}}"
+        wx:for="{{category}}" wx:for-item="i" wx:key="*this"
         class="scroll-view-category"
       >
-        <view class="legacy-p" class="scroll-view-category-title">{{ i }}</view>
+        <view class="scroll-view-category-title">{{ i }}</view>
         <view
-          wx:for="{{list}}" wx:for-item="j"
-          key="{{j}}"
+          wx:for="{{list}}" wx:for-item="j" wx:key="*this"
           class="scroll-view-list"
         >
-          <view class="legacy-p" class="scroll-view-item">{{`${i} - ${j}`}}</view>
+          <view class="scroll-view-item">{{i}} - {{j}}</view>
         </view>
       </view>
     </cu-scroll-view>
-    <view class="legacy-p" wx:if="{{activeBlockIndex > 0" class="scroll-view-striky-title">{{ activeBlockIndex }}</view>
+    <view wx:if="{{activeBlockIndex4 > 0}}" class="scroll-view-striky-title">{{ activeBlockIndex4 }}</view>
   </view>
 
     </view>
@@ -135,35 +119,35 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-scroll-view md-example-child-scroll-view-5">
-    <cu-tab-bar
-      value="{{activeBlockIndex}}" bind:change="noop"
-      items="{{tabBarItems}}"
-      max-length="{{5}}"
-      ref="tabBar"
-      bind:change="$_onTabChange"
-    ></cu-tab-bar>
-    <cu-scroll-view
-      class="scroll-view-with-tab-bar"
-      ref="scrollView"
-      scrolling-x="{{false}}"
-      bind:scroll="$_onScroll"
-      @mousedown.native="$_onScrollStart"
-      @touchstart.native="$_onScrollStart"
+    <cu-tabs
+      value="{{activeBlockIndex}}"
+      bind:change="onTabChange5"
     >
-      <view
-        wx:for="{{category}}" wx:for-item="i"
-        key="{{i}}"
-        class="scroll-view-category"
+      <cu-tab-pane
+        wx:for="{{tabBarItems}}" wx:key="name"
+        name="{{item.name}}"
+        label="{{item.label}}"
+      ></cu-tab-pane>
+    </cu-tabs>
+    <view class="scroll-view-with-tab-bar" bind:touchstart="onScrollStart5">
+      <cu-scroll-view
+        id="scrollView5"
+        scrolling-x="{{false}}"
+        bind:scroll="onScroll5"
       >
         <view
-          wx:for="{{list}}" wx:for-item="j"
-          key="{{j}}"
-          class="scroll-view-list"
+          wx:for="{{category}}" wx:for-item="i" wx:key="*this"
+          class="scroll-view-category"
         >
-          <view class="legacy-p" class="scroll-view-item">{{`${i} - ${j}`}}</view>
+          <view
+            wx:for="{{list}}" wx:for-item="j" wx:key="*this"
+            class="scroll-view-list"
+          >
+            <view class="scroll-view-item">{{i}} - {{j}}</view>
+          </view>
         </view>
-      </view>
-    </cu-scroll-view>
+      </cu-scroll-view>
+    </view>
   </view>
 
     </view>
@@ -174,68 +158,58 @@
 
   <view class="md-example-child md-example-child-scroll-view md-example-child-scroll-view-6">
     <cu-tabs
-      bind:change="$_onTabChange"
+      bind:change="onTabChange6"
       immediate
     >
-      <cu-tab-pane class="content" name="scrollView0" label="Block - 1">
-        <cu-scroll-view
-          ref="scrollView0"
-          scrolling-x="{{false}}"
-          manual-init
-          bind:refreshing="$_onRefresh(0)"
-        >
-          <cu-scroll-view-refresh
-            slot="refresh"
-            slot-scope="{ scrollTop, isRefreshActive, isRefreshing }"
-            scroll-top="{{scrollTop}}"
-            is-refreshing="{{isRefreshing}}"
-            is-refresh-active="{{isRefreshActive}}"
-          ></cu-scroll-view-refresh>
-          <view
-            wx:for="{{list0}}" wx:for-item="i"
-            key="{{i}}"
-            class="scroll-view-list"
+      <cu-tab-pane name="scrollView0" label="Block - 1">
+        <view class="content">
+          <cu-scroll-view
+            id="scrollView0-6"
+            scrolling-x="{{false}}"
+            manual-init
+            bind:refreshing="onRefresh6Pane0"
           >
-            <view class="legacy-p" class="scroll-view-item">{{`1 - ${i}`}}</view>
-          </view>
-        </cu-scroll-view>
+            <view
+              wx:for="{{list0}}" wx:key="*this"
+              class="scroll-view-list"
+            >
+              <view class="scroll-view-item">1 - {{item}}</view>
+            </view>
+          </cu-scroll-view>
+        </view>
       </cu-tab-pane>
-      <cu-tab-pane class="content" name="scrollView1" label="Block - 2">
-        <cu-scroll-view
-          ref="scrollView1"
-          scrolling-x="{{false}}"
-          manual-init
-          bind:refreshing="$_onRefresh(1)"
-        >
-          <cu-scroll-view-refresh
-            slot="refresh"
-            slot-scope="{ scrollTop, isRefreshActive, isRefreshing }"
-            scroll-top="{{scrollTop}}"
-            is-refreshing="{{isRefreshing}}"
-            is-refresh-active="{{isRefreshActive}}"
-          ></cu-scroll-view-refresh>
-          <view
-            wx:for="{{list1}}" wx:for-item="i"
-            key="{{i}}"
-            class="scroll-view-list"
+      <cu-tab-pane name="scrollView1" label="Block - 2">
+        <view class="content">
+          <cu-scroll-view
+            id="scrollView1-6"
+            scrolling-x="{{false}}"
+            manual-init
+            bind:refreshing="onRefresh6Pane1"
           >
-            <view class="legacy-p" class="scroll-view-item">{{`2 - ${i}`}}</view>
-          </view>
-        </cu-scroll-view>
+            <view
+              wx:for="{{list1}}" wx:key="*this"
+              class="scroll-view-list"
+            >
+              <view class="scroll-view-item">2 - {{item}}</view>
+            </view>
+          </cu-scroll-view>
+        </view>
       </cu-tab-pane>
     </cu-tabs>
   </view>
 
     </view>
   </view>
+  <cu-toast id="cu-toast" />
 </view>
 <!--
-TODO 修整清单（scroll-view）：
-  - v-for 需复核 wx:for/wx:key 改写
-  - v-for 需复核 wx:for/wx:key 改写
-  - v-for 需复核 wx:for/wx:key 改写
-  - v-for 需复核 wx:for/wx:key 改写
-  - v-for 需复核 wx:for/wx:key 改写
-  - v-for 需复核 wx:for/wx:key 改写
-  - v-for 需复核 wx:for/wx:key 改写
+  平台差异说明（对齐 legacy/components/scroll-view/demo/cases/demo0~6.vue）：
+  - 标题 javascript: 链接（添加内容/触发下拉刷新）改为 title-link 按钮
+  - v-for="i in list"（数字）改为数组数据 items/itemsH/itemsR/itemsMore/category/list/list0/list1（wx:key="*this"）
+  - cu-scroll-view-refresh 用组件内置刷新头 default-refresher 替代（文案一致：下拉刷新/释放刷新/刷新中...）
+  - cu-scroll-view-more 用 slot="more" + 文本（更多加载中.../全部已加载）替代
+  - cu-tab-bar 未移植，用 cu-tabs 替代（覆盖式绝对定位改为常规文档流）
+  - $el.querySelectorAll 测量改为 createSelectorQuery().selectAll('.scroll-view-category')
+  - Toast.info(`Click ${i}`) 改为页面 cu-toast + show；@click="$_onItemClick(i)" 改为 data-i + dataset
+  - demo6 的 @refreshing="$_onRefresh(0/1)" 拆分为 onRefresh6Pane0/1
 -->

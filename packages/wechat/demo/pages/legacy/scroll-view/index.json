@@ -2,6 +2,7 @@
   "usingComponents": {
     "cu-scroll-view": "../../../../dist/components/scroll-view/index",
     "cu-tabs": "../../../../dist/components/tabs/index",
-    "cu-tab-pane": "../../../../dist/components/tab-pane/index"
+    "cu-tab-pane": "../../../../dist/components/tab-pane/index",
+    "cu-toast": "../../../../dist/components/toast/index"
   }
 }

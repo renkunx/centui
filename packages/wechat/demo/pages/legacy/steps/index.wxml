@@ -4,7 +4,7 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-steps md-example-child-steps-0">
-    <cu-steps steps="{{steps}}"></cu-steps>
+    <cu-steps steps="{{stepsD0}}"></cu-steps>
   </view>
 
     </view>
@@ -14,7 +14,7 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-steps md-example-child-steps-1">
-    <cu-steps steps="{{steps}}" current="{{1.2}}"></cu-steps>
+    <cu-steps steps="{{stepsD0}}" current="{{1.2}}"></cu-steps>
   </view>
 
     </view>
@@ -24,32 +24,61 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-steps md-example-child-steps-2">
-    <cu-steps
-      steps="{{steps}}"
-      current="{{2}}"
-    >
-      <template slot="icon" slot-scope="props">
-        <b wx:if="{{props.index === props.currentIndex">{{ props.index }}</b>
-        <text v-else>{{ props.index }}</text>
-      </template>
-    </cu-steps>
-    <cu-steps
-      steps="{{steps}}"
-      current="{{2}}"
-    >
-      <template slot="reached" slot-scope="props">
-        <!-- props.index -->
-        <cu-icon name="checked" wx:if="{{props.index === 1"></cu-icon>
-        <view class="step-node-default" v-else>
-          <view class="step-node-default-icon" style="width: 6px;height: 6px;border-radius: 50%;"></view>
+    <cu-steps steps="{{stepsD2}}" current="{{2}}" custom>
+      <view class="steps-tree horizontal">
+        <view class="step-wrapper">
+          <view class="icon-wrapper"><text class="step-idx">0</text></view>
+          <view class="text-wrapper"><view class="name">登录</view></view>
         </view>
-      </template>
-      <template slot="current">
-        <cu-icon name="location"></cu-icon>
-      </template>
-      <template slot="unreached">
-        <cu-icon name="time"></cu-icon>
-      </template>
+        <view class="bar horizontal-bar"><view class="bar-inner"></view></view>
+        <view class="step-wrapper">
+          <view class="icon-wrapper"><text class="step-idx">1</text></view>
+          <view class="text-wrapper"><view class="name">开通</view></view>
+        </view>
+        <view class="bar horizontal-bar"><view class="bar-inner"></view></view>
+        <view class="step-wrapper">
+          <view class="icon-wrapper"><text class="step-idx idx-current">2</text></view>
+          <view class="text-wrapper"><view class="name">验证</view></view>
+        </view>
+        <view class="bar horizontal-bar"></view>
+        <view class="step-wrapper">
+          <view class="icon-wrapper"><text class="step-idx">3</text></view>
+          <view class="text-wrapper"><view class="name">成功</view></view>
+        </view>
+      </view>
+    </cu-steps>
+    <cu-steps steps="{{stepsD2}}" current="{{2}}" custom>
+      <view class="steps-tree horizontal">
+        <view class="step-wrapper reached">
+          <view class="icon-wrapper">
+            <view class="step-node-default">
+              <view class="step-node-default-icon"></view>
+            </view>
+          </view>
+          <view class="text-wrapper"><view class="name">登录</view></view>
+        </view>
+        <view class="bar horizontal-bar"><view class="bar-inner"></view></view>
+        <view class="step-wrapper reached">
+          <view class="icon-wrapper">
+            <cu-icon name="checked"></cu-icon>
+          </view>
+          <view class="text-wrapper"><view class="name">开通</view></view>
+        </view>
+        <view class="bar horizontal-bar"><view class="bar-inner"></view></view>
+        <view class="step-wrapper current">
+          <view class="icon-wrapper">
+            <cu-icon name="location"></cu-icon>
+          </view>
+          <view class="text-wrapper"><view class="name">验证</view></view>
+        </view>
+        <view class="bar horizontal-bar"></view>
+        <view class="step-wrapper">
+          <view class="icon-wrapper">
+            <cu-icon name="time"></cu-icon>
+          </view>
+          <view class="text-wrapper"><view class="name">成功</view></view>
+        </view>
+      </view>
     </cu-steps>
   </view>
 
@@ -61,7 +90,7 @@
 
   <view class="md-example-child md-example-child-steps md-example-child-steps-3">
     <cu-steps
-      steps="{{steps}}"
+      steps="{{stepsD2}}"
       current="{{2}}"
     >
     </cu-steps>
@@ -70,13 +99,13 @@
     </view>
   </view>
   <view class="legacy-section">
-    <view class="legacy-title">进度变化动效 <a href="javascript:window.triggerSteps0()">current = 2</a></view>
+    <view class="legacy-title">进度变化动效 <text class="title-link" bind:tap="triggerSteps0">current = 2</text></view>
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-steps md-example-child-steps-4">
     <cu-steps
-      steps="{{steps}}"
-      current="{{currentStep}}"
+      steps="{{stepsD2}}"
+      current="{{currentStep4}}"
       transition
     >
     </cu-steps>
@@ -90,8 +119,8 @@
 
   <view class="md-example-child md-example-child-steps md-example-child-steps-5">
     <cu-steps
-      steps="{{steps}}"
-      current="{{currentStep}}"
+      steps="{{stepsD2}}"
+      current="{{currentStep5}}"
     >
     </cu-steps>
   </view>
@@ -104,8 +133,8 @@
 
   <view class="md-example-child md-example-child-steps md-example-child-steps-6">
     <cu-steps
-      steps="{{steps}}"
-      current="{{currentStep}}"
+      steps="{{stepsD2}}"
+      current="{{currentStep6}}"
     >
     </cu-steps>
   </view>
@@ -119,7 +148,7 @@
   <view class="md-example-child md-example-child-steps md-example-child-steps-7">
     <cu-steps
       direction="vertical"
-      steps="{{steps}}"
+      steps="{{stepsD7}}"
       current="{{1}}"
       vertical-adaptive
     >
@@ -133,53 +162,67 @@
     <view class="legacy-content">
 
   <view class="md-example-child md-example-child-steps md-example-child-steps-8">
-    <cu-steps
-      direction="vertical"
-      steps="{{steps0}}"
-      current="{{0.5}}"
-    >
-      <template slot="reached">
-        <cu-icon name="checked"></cu-icon>
-      </template>
-      <view
-        class="custom-content"
-        slot="content"
-        slot-scope="{ index, step }"
-      >
-        <template wx:if="{{index === 0">
-          <view class="legacy-p" class="name active" v-text="step.name"></view>
-          <view class="legacy-p" class="amount">
-            <cu-amount value="{{+step.amount}}"></cu-amount>元
+    <cu-steps direction="vertical" steps="{{steps8a}}" current="{{0.5}}" custom>
+      <view class="steps-tree vertical">
+        <view class="step-wrapper current">
+          <view class="icon-wrapper">
+            <cu-icon name="success" color="{{stepsActiveColor}}"></cu-icon>
           </view>
-          <view class="legacy-p" class="desc" v-html="step.text"></view>
-        </template>
-        <template v-else>
-          <view class="legacy-p" class="name" v-text="step.name"></view>
-        </template>
+          <view class="text-wrapper">
+            <view class="custom-content">
+              <view class="name active">还款申请已提交</view>
+              <view class="amount">
+                <cu-amount value="{{600.5}}"></cu-amount>元
+              </view>
+              <view class="desc">
+                <rich-text nodes="{{steps8aText}}"></rich-text>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="bar vertical-bar"><view class="bar-inner" style="height: 50%;"></view></view>
+        <view class="step-wrapper">
+          <view class="icon-wrapper">
+            <view class="step-node-default">
+              <view class="step-node-default-icon"></view>
+            </view>
+          </view>
+          <view class="text-wrapper">
+            <view class="custom-content">
+              <view class="name">还款成功</view>
+            </view>
+          </view>
+        </view>
       </view>
     </cu-steps>
-    <cu-steps
-      direction="vertical"
-      steps="{{steps1}}"
-      current="{{1}}"
-    >
-      <template slot="current">
-        <cu-icon name="checked"></cu-icon>
-      </template>
-      <view
-        class="custom-content"
-        slot="content"
-        slot-scope="{ index, step }"
-      >
-        <template wx:if="{{index === 1">
-          <view class="legacy-p" class="name active" v-text="step.name"></view>
-          <view class="legacy-p" class="amount">
-            <cu-amount value="{{+step.amount}}"></cu-amount>元
+    <cu-steps direction="vertical" steps="{{steps8b}}" current="{{1}}" custom>
+      <view class="steps-tree vertical">
+        <view class="step-wrapper reached">
+          <view class="icon-wrapper">
+            <view class="step-node-default">
+              <view class="step-node-default-icon"></view>
+            </view>
           </view>
-        </template>
-        <template v-else>
-          <view class="legacy-p" class="name" v-text="step.name"></view>
-        </template>
+          <view class="text-wrapper">
+            <view class="custom-content">
+              <view class="name">还款申请已提交</view>
+            </view>
+          </view>
+        </view>
+        <view class="bar vertical-bar"><view class="bar-inner"></view></view>
+        <view class="step-wrapper current">
+          <view class="icon-wrapper">
+            <cu-icon name="checked"></cu-icon>
+          </view>
+          <view class="text-wrapper">
+            <view class="custom-content">
+              <view class="name active">还款成功</view>
+              <view class="amount">
+                <cu-amount value="{{600.5}}"></cu-amount>元
+              </view>
+            </view>
+          </view>
+        </view>
       </view>
     </cu-steps>
   </view>
@@ -188,7 +231,11 @@
   </view>
 </view>
 <!--
-TODO 修整清单（steps）：
-  - 存在 v-else/v-html 需人工核对
-  - 存在 v-else/v-html 需人工核对
+  平台差异说明（对齐 legacy/components/steps/demo/cases/demo0~8.vue）：
+  - icon/reached/current/unreached/content 逐项作用域插槽无小程序等价物（组件差异声明：
+    具名插槽不能在循环内重复渲染），demo2/demo8 改为 custom + 默认插槽整树渲染，
+    步骤/进度状态按各 case 的 current 静态展开（steps-tree 样式自 steps.styl 移植）
+  - 各 case 的 steps/currentStep 数据按 case 拆分（stepsD0/stepsD2/stepsD7/steps8a/steps8b）
+  - demo4 标题 javascript: 链接改为 title-link 按钮（triggerSteps0）
+  - demo8 的 v-html 描述文案改为 rich-text（span 高亮色内联），md-amount 改为 cu-amount
 -->

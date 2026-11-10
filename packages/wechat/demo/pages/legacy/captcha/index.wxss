@@ -22,17 +22,17 @@
   margin-bottom: 40px;
 }
 .soltDiv {
-  font-size: captcha-font-size;
-  color: captcha-color;
+  font-size: var(--captcha-font-size);
+  color: var(--captcha-color);
   text-align: left;
   line-height: 44px;
 }
-.soltDiv span.phone {
+.soltDiv .phone {
   color: #31383f;
   font-weight: bold;
   margin-right: 1em;
 }
-.soltDiv span.hint {
+.soltDiv .hint {
   color: #198cff;
 }
 
@@ -47,7 +47,7 @@
 .md-example.captcha .md-example-section h1 {
   margin-bottom: 10px;
   color: #111a34;
-  font-size: font-heading-normal;
+  font-size: var(--font-heading-normal);
   font-weight: normal;
 }
 .md-example.captcha .md-example-section .md-example-box {
@@ -58,11 +58,11 @@
 .md-example.captcha .md-example-section .md-example-box .md-example-box-content {
   float: left;
   width: 100%;
-  padding: 60px h-gap-lg;
-  color: color-text-base;
-  font-size: font-minor-large;
+  padding: 60rpx var(--h-gap-lg);
+  color: var(--color-text-base);
+  font-size: var(--font-minor-large);
   text-align: left;
-  background: color-bg-base;
+  background: var(--color-bg-base);
   box-sizing: border-box;
   line-height: 1.5;
   text-indent: 2em;
