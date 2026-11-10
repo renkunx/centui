@@ -3,6 +3,13 @@ title: Change Log
 toc: hidden
 ---
 
+> [!NOTE]
+> This file is a historical archive from the mand-mobile v2 era (kept alongside
+> `legacy/`, no longer updated). For centui v3, see the per-package changesets
+> changelogs: `packages/vue/CHANGELOG.md` (centui), `packages/react/CHANGELOG.md`
+> (@centui/react), `packages/core/CHANGELOG.md` (@centui/core),
+> `packages/styles/CHANGELOG.md` (@centui/styles).
+
 ### 2.7.0
 
 `2024-03-12`

@@ -13,7 +13,3 @@ allowBuilds:
 hoistPattern:
   - "*"
   - "!vue"
-
-# 允许必要依赖执行安装脚本（esbuild 为 vite/astro 必需）
-onlyBuiltDependencies:
-  - esbuild
