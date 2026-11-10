@@ -44,3 +44,5 @@
     </view>
   </view>
 </view>
+  <cu-toast id="cu-toast"></cu-toast>
+  <cu-dialog id="cu-dialog"></cu-dialog>

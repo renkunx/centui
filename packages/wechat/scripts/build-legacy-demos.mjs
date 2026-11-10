@@ -25,6 +25,18 @@ const OUT = join(ROOT, 'demo/pages/legacy')
 const INVENTORY = '/tmp/legacy-cases.json'
 const EVENT_MAP = {click: 'tap'}
 
+/** 命令式 API 工厂名 → 组件目录名 */
+const FACTORY_DIR = {Toast: 'toast', Dialog: 'dialog', ActionSheet: 'action-sheet', Tip: 'tip'}
+
+/** legacy 无连字符/异形名 → 我们的实际组件目录名 */
+const NAME_FIX = {
+  actionsheet: 'action-sheet',
+  checklist: 'check-list',
+  checkbox: 'check-box',
+  radiobox: 'radio-box',
+  radiolist: 'radio-list',
+}
+
 function renderStyl(source, filename) {
   return new Promise((res, rej) => {
     stylus(source).set('filename', filename).render((e, css) => (e ? rej(e) : res(css)))
@@ -82,7 +94,7 @@ function evalCaseDef(src, file, todos) {
 function translateTemplate(tpl, todos) {
   let needsNoop = false
   let out = tpl
-  out = out.replace(/<\/?md-([\w-]+)/g, (m) => m.replace('md-', 'cu-'))
+  out = out.replace(/<\/?md-([\w-]+)/g, (m, n) => m.replace(`md-${n}`, `cu-${NAME_FIX[n] ?? n}`))
   out = out.replace(/:([\w-]+)="'([^"]*)'"/g, (m, prop, expr) => `${prop}="{{${expr}}}"`)
   out = out.replace(/:([\w-]+)="([^"]*)"/g, (m, prop, expr) => `${prop}="{{${expr}}}"`)
   out = out.replace(/@(\w[\w-]*)="([^"]+)"/g, (m, ev, h) => `bind:${EVENT_MAP[ev] ?? ev}="${h}"`)
@@ -105,11 +117,19 @@ function translateTemplate(tpl, todos) {
 
 async function main() {
   const inventory = JSON.parse(readFileSync(INVENTORY, 'utf8'))
+  const handFixedPath = join(OUT, 'hand-fixed.json')
+  const handFixed = existsSync(handFixedPath) ? JSON.parse(readFileSync(handFixedPath, 'utf8')) : []
   const report = {}
   const pages = []
 
   for (const [name, cases] of Object.entries(inventory)) {
     const dir = join(OUT, name)
+    if (handFixed.includes(name)) {
+      // 该页已人工修整（语义级翻译），重跑生成器不得覆盖
+      report[name] = {cases: cases.length, todos: [], skipped: 'hand-fixed'}
+      pages.push(`demo/pages/legacy/${name}/index`)
+      continue
+    }
     mkdirSync(dir, {recursive: true})
     const todos = []
     const sections = []
@@ -155,12 +175,6 @@ async function main() {
       }
     }
 
-    // wxml（含 TODO 修整清单注释）
-    const wxml =
-      `<view class="legacy-wrapper md-example ${name}">\n${sections.join('\n')}\n</view>\n` +
-      (todos.length ? `<!--\nTODO 修整清单（${name}）：\n${todos.map((t) => `  - ${t}`).join('\n')}\n-->\n` : '')
-    writeFileSync(join(dir, 'index.wxml'), wxml)
-
     // js：data（JSON 化）+ methods（fn.toString 回填；简写方法自带名，避免双重命名）+ noop
     const dataJson = JSON.stringify(pageData, null, 2)
     const methodSrc = Object.entries(pageMethods)
@@ -170,9 +184,32 @@ async function main() {
         return nameRe.test(src) ? `  ${src},` : `  ${k}: ${src},`
       })
       .join('\n')
+
+    // 命令式 API 使用检测（case 模板与方法体两处：模板绑事件、方法体调工厂）
+    const sectionsText = sections.join('\n') + '\n' + methodSrc
+    const factories = ['Toast', 'Dialog', 'ActionSheet', 'Tip'].filter((f) =>
+      new RegExp(`\\b${f}\\.`).test(sectionsText),
+    )
+    const factoryDirs = factories.map((f) => FACTORY_DIR[f] ?? f.toLowerCase())
+
+    // wxml（含 TODO 修整清单注释）；命令式 API 页面追加宿主标签
+    const hostTags = factoryDirs
+      .map((d) => `<cu-${d} id="cu-${d}"></cu-${d}>`)
+      .join('\n  ')
+    const wxml =
+      `<view class="legacy-wrapper md-example ${name}">\n${sections.join('\n')}\n</view>\n` +
+      (hostTags ? `  ${hostTags}\n` : '') +
+      (todos.length ? `<!--\nTODO 修整清单（${name}）：\n${todos.map((t) => `  - ${t}`).join('\n')}\n-->\n` : '')
+    writeFileSync(join(dir, 'index.wxml'), wxml)
+    for (const d of factoryDirs) usedComponents.add(d)
+
+    // 引用裸命令式 API 的页面补 require
+    const requires = factories
+      .map((f, i) => `const {${f}} = require('../../../../dist/components/${factoryDirs[i]}/index')`)
+      .join('\n')
     writeFileSync(
       join(dir, 'index.js'),
-      `/* legacy/components/${name}/demo 对译（生成器产物，TODO 见 wxml 尾注释） */\nPage({\n  data: ${dataJson},\n${methodSrc ? `${methodSrc}\n` : ''}  noop() {},\n})\n`,
+      `/* legacy/components/${name}/demo 对译（生成器产物，TODO 见 wxml 尾注释） */\n${requires ? `${requires}\n` : ''}Page({\n  data: ${dataJson},\n${methodSrc ? `${methodSrc}\n` : ''}  noop() {},\n})\n`,
     )
 
     // wxss

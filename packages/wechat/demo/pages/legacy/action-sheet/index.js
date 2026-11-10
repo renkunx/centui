@@ -1,4 +1,6 @@
 /* legacy/components/action-sheet/demo 对译（生成器产物，TODO 见 wxml 尾注释） */
+const {Dialog} = require('../../../../dist/components/dialog/index')
+const {ActionSheet} = require('../../../../dist/components/action-sheet/index')
 Page({
   data: {
   "value": false,

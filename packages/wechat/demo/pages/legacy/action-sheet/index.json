@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "cu-button": "../../../../dist/components/button/index",
-    "cu-action-sheet": "../../../../dist/components/action-sheet/index"
+    "cu-action-sheet": "../../../../dist/components/action-sheet/index",
+    "cu-dialog": "../../../../dist/components/dialog/index"
   }
 }

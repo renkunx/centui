@@ -112,3 +112,4 @@
     </view>
   </view>
 </view>
+  <cu-toast id="cu-toast"></cu-toast>

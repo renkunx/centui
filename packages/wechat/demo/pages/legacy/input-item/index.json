@@ -3,6 +3,7 @@
     "cu-field": "../../../../dist/components/field/index",
     "cu-input-item": "../../../../dist/components/input-item/index",
     "cu-icon": "../../../../dist/components/icon/index",
-    "cu-number-keyboard": "../../../../dist/components/number-keyboard/index"
+    "cu-number-keyboard": "../../../../dist/components/number-keyboard/index",
+    "cu-dialog": "../../../../dist/components/dialog/index"
   }
 }
