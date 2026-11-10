@@ -12,6 +12,7 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import postcss from 'postcss'
+import { ThemeTokens } from './theme-tokens.mjs'
 
 const OUR_ES = new URL('../dist/es/', import.meta.url).pathname
 const V2_LIB = process.argv[2]
@@ -19,6 +20,21 @@ const V2_LIB = process.argv[2]
 if (!V2_LIB) {
   console.error('usage: node scripts/verify.mjs <npm-package>/lib')
   process.exit(2)
+}
+
+// 产物自 var() 化后，声明值为 var(--token)——比对前解析为具体值，与 v2 lib 的字面量对齐
+const theme = new ThemeTokens(new URL('../src/', import.meta.url).pathname)
+const resolveVars = value => {
+  // cssnano 无法穿透 var()，此处值未经过与 v2 相同的压缩——比对前做等价归一化
+  // （hex 小写、去引号、逗号/括号空白、bold↔700）使 DECLDIFF 报告只含真实差异
+  return value
+    .replace(/var\(--([a-z0-9-]+)\)/g, (_, name) => theme.resolve(name))
+    .replace(/#[0-9a-fA-F]{3,8}\b/g, h => h.toLowerCase())
+    .replace(/"([^"]*)"/g, '$1')
+    .replace(/\s*([,()])\s*/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^bold$/, '700')
 }
 
 /** 解析 CSS 为 Map<selector, Set<"prop:value">>（@media 内规则选择器加前缀标记） */
@@ -36,12 +52,13 @@ function parseCss(css) {
   }
   const walk = (root, media = '') => {
     root.nodes?.forEach(node => {
+      if (node.selector && node.selector.trim() === ':root') return // 新产物头部默认值块，v2 无此规则
       if (node.type === 'rule') {
         addRule(
           node.selector,
           node.nodes
             .filter(n => n.type === 'decl')
-            .map(n => `${n.prop}:${n.value.replace(/\s+/g, ' ').trim()}`),
+            .map(n => `${n.prop}:${resolveVars(n.value).replace(/\s+/g, ' ').trim()}`),
           media,
         )
       } else if (node.type === 'atrule' && node.name === 'media') {
@@ -52,7 +69,7 @@ function parseCss(css) {
       }
     })
   }
-  walk(postcss.parse(css).root !== undefined ? postcss.parse(css) : postcss.parse(css))
+  walk(postcss.parse(css))
   return map
 }
 
