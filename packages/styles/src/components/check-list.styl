@@ -1,0 +1,22 @@
+/* check-list 列表式多选样式源。
+   来源：packages/styles/src/components/check.styl 的「--- list.vue ---」段
+   （Vue CheckList 渲染于 CheckGroup 之上的后代规则）。
+   重新作用域化说明：Vue 版以 .cu-check-item 类挂在 CuCellItem 上做前缀选择器，
+   小程序 virtualHost 下无法从外部给子组件打类，故改以本组件根节点
+   .cu-check-list 后代选择器等价重写（视觉一致，选择器路径见组件头注释差异）。
+   跨组件命中依赖本组件 styleIsolation: shared（cu-check / cu-cell-item 均为
+   apply-shared，页面级提升的规则可作用其内部节点）。 */
+.cu-check-list
+  .cu-check
+    margin-top 0
+    margin-bottom 0
+    pointer-events none
+  .cu-cell-item-body.multilines .cu-cell-item-title
+    font-weight font-weight-medium
+
+  &.is-align-center
+    .cu-cell-item-content
+      text-align center
+    .cu-cell-left,
+    .cu-cell-right
+      display none

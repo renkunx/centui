@@ -25,7 +25,8 @@
     margin 2% 0
     align-items center
     justify-content center
-    span
+    // 小程序无 span 元素：文本节点用 .bar-item-text 类承载（原为 span 标签选择器）
+    .bar-item-text
       position relative
       padding-right 30px
       &:after
@@ -42,7 +43,7 @@
         transition transform .3s ease-in-out-quint
     &.active
       color drop-menu-color
-      span:after
+      .bar-item-text:after
         transform rotate(180deg)
         border-top-color drop-menu-color
     &.selected

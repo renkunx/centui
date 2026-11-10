@@ -11,9 +11,11 @@
   "style": "./dist/index.css",
   "exports": {
     ".": "./dist/index.css",
-    "./global.css": "./dist/global.css",
     "./es/*": "./dist/es/*",
+    "./fonts.css": "./dist/fonts.css",
+    "./global.css": "./dist/global.css",
     "./mixin/*": "./src/mixin/*",
+    "./scoped-reset.css": "./dist/scoped-reset.css",
     "./src/*": "./src/*"
   },
   "files": [
