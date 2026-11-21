@@ -1,12 +1,12 @@
 /**
  * @centui/wechat JS 构建：
  * 1. 每个组件 src/components/<name>/index.ts → dist/components/<name>/index.js
- *    （esbuild bundle:CJS，target es2018；@centui/core 打入公共 common/core.js —— DOM-free 主入口）
+ *    （esbuild bundle:CJS，target es2018；@centui/core 以 DOM-free 主入口内联进各组件 bundle）
  * 2. shared/*.ts → dist/shared/*.js
  * 3. icon-map：构建期求值 packages/vue/src/components/icon/default-svg-list.ts
  *    → dist/shared/icon-map.js（name → svg data-URI，供 icon 组件 mask-image 渲染）
  */
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs'
+import { readFileSync, writeFileSync, readdirSync, rmSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import esbuild from 'esbuild'
@@ -92,7 +92,6 @@ async function bundle(entryPoint, outFile) {
 export async function buildJs() {
   rmSync(join(DIST, 'components'), { recursive: true, force: true })
   rmSync(join(DIST, 'shared'), { recursive: true, force: true })
-  mkdirSync(join(DIST, 'common'), { recursive: true })
 
   // 组件清单以 src 目录为准
   const components = readdirSync(join(SRC, 'components')).sort()
