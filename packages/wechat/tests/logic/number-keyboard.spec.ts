@@ -321,3 +321,30 @@ describe('number-keyboard 组件', () => {
     expect(() => inst.methods.noop.call(inst)).not.toThrow()
   })
 })
+
+describe('number-keyboard/innerShow 同值短路（渲染层死循环防御）', () => {
+  it('同值 change 不重复 emit；异值才触发', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    // attached 内联 setData({innerShow: false}) → 初次短路（__lastInnerShow 初始 false）
+    expect(inst.eventsOf('change')).toEqual([])
+    // 显隐切换 → 异值 → emit
+    inst.setData({innerShow: true})
+    expect(inst.eventsOf('change')).toEqual([{name: 'change', detail: {value: true}}])
+    // 外部回写相同值（真机 observers 同值也触发的场景）→ 短路
+    inst.setData({innerShow: true})
+    expect(inst.eventsOf('change')).toHaveLength(1)
+    inst.setData({innerShow: false})
+    expect(inst.eventsOf('change')).toHaveLength(2)
+  })
+
+  it('show observer 驱动 innerShow：外部回写 show 同值不引发事件风暴', () => {
+    const inst = mountDef(comp.def)
+    inst.attached()
+    inst.setData({show: true})
+    expect(inst.eventsOf('change')).toEqual([{name: 'change', detail: {value: true}}])
+    // codebox 场景：change → 外部 setData({focused: false}) → show property 重设同值
+    inst.setData({show: true})
+    expect(inst.eventsOf('change')).toHaveLength(1)
+  })
+})

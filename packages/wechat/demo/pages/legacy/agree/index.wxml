@@ -5,7 +5,7 @@
 
   <view class="md-example-child md-example-child-agree md-example-child-0">
     <cu-agree
-      v-model="agreeConf.checked"
+      value="{{agreeConf.checked}}" bind:change="noop"
       disabled="{{agreeConf.disabled}}"
       size="{{agreeConf.size}}"
       bind:change="onChange(agreeConf.name, agreeConf.checked, $event)"
@@ -22,7 +22,7 @@
 
   <view class="md-example-child md-example-child-agree md-example-child-1">
     <cu-agree
-      v-model="agreeConf.checked"
+      value="{{agreeConf.checked}}" bind:change="noop"
       disabled="{{agreeConf.disabled}}"
       size="{{agreeConf.size}}"
       bind:change="onChange(agreeConf.name, agreeConf.checked, $event)"
@@ -39,7 +39,7 @@
 
   <view class="md-example-child md-example-child-agree md-example-child-2">
     <cu-agree
-      v-model="agreeConf.checked"
+      value="{{agreeConf.checked}}" bind:change="noop"
       disabled="{{agreeConf.disabled}}"
       size="{{agreeConf.size}}"
       bind:change="onChange(agreeConf.name, agreeConf.checked, $event)"
@@ -56,7 +56,7 @@
 
   <view class="md-example-child md-example-child-agree md-example-child-3">
     <cu-agree
-      v-model="agreeConf.checked"
+      value="{{agreeConf.checked}}" bind:change="noop"
       disabled="{{agreeConf.disabled}}"
       size="{{agreeConf.size}}"
       bind:change="onChange(agreeConf.name, agreeConf.checked, $event)"
@@ -73,7 +73,7 @@
 
   <view class="md-example-child md-example-child-agree md-example-child-0">
     <cu-agree
-      v-model="agreeConf.checked"
+      value="{{agreeConf.checked}}" bind:change="noop"
       disabled="{{agreeConf.disabled}}"
       size="{{agreeConf.size}}"
       icon-type="square"
@@ -91,7 +91,7 @@
 
   <view class="md-example-child md-example-child-agree md-example-child-1">
     <cu-agree
-      v-model="agreeConf.checked"
+      value="{{agreeConf.checked}}" bind:change="noop"
       disabled="{{agreeConf.disabled}}"
       size="{{agreeConf.size}}"
       icon-type="square"

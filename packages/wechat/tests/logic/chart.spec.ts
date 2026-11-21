@@ -249,6 +249,8 @@ function makeCtx() {
       calls.push({method: m, args})
     }
   }
+  // measureText：canvas 2d 真实 API（Y 轴标签留白补偿用）；按字符数近似宽度
+  ctx.measureText = (text: string) => ({width: String(text).length * 10})
   ctx.createLinearGradient = (...args: unknown[]) => {
     calls.push({method: 'createLinearGradient', args})
     const g: GradientRec = {stops: [], addColorStop(offset, color) { this.stops.push([offset, color]) }}
@@ -342,9 +344,14 @@ describe('chart 组件 ready 初始化链', () => {
     expect(node.height).toBe(640)
     expect(calls[0].method).toBe('scale') // __applyBackingStore 先于 __draw
     expect(callsOf(calls, 'scale')[0].args).toEqual([2, 2])
-    // 绘制链：clear → save → translate(shift*16, 0.2*16)
+    // 绘制链：clear → save → translate(offsets.left + labelPad, 0.2*16)
+    // labelPad：Y 轴标签实测宽度超出 shift*16 留白的补偿（canvas 裁负坐标的平台差异）
     expect(callsOf(calls, 'clearRect')).toHaveLength(1)
-    expect(callsOf(calls, 'translate')[0].args).toEqual([9.6, 3.2])
+    const translateArgs = callsOf(calls, 'translate')[0].args as number[]
+    expect(translateArgs[1]).toBe(3.2)
+    // offsets.left = 0.6*16 = 9.6；标签 "100"/"80"/... 最宽 3 字符 ×10 = 30
+    // labelPad = 30 + 0.5*10 + 2 - 9.6 = 27.4 → translate x = 37
+    expect(translateArgs[0]).toBeCloseTo(37, 5)
     // 网格线（yaxis 5+1 条 + xaxis 3 条短刻度）+ 折线起点
     expect(callsOf(calls, 'moveTo').length).toBe(10)
     expect(callsOf(calls, 'stroke')).toHaveLength(2) // 网格 1 次 + 折线 1 次

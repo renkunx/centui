@@ -1,121 +1,25 @@
 /**
  * InputItem 纯逻辑（自 Vue 版 input-item/InputItem.vue 的 formateValue/subValue/
- * stripSeparators 管线与 @centui/core format.ts 提取）。
+ * stripSeparators 管线提取）。
  *
- * formatValueByGapRule / formatValueByGapStep / trimValue 与 @centui/core 同步实现
- * （小程序逻辑测试环境不解析 @centui/core 包依赖；构建期 bundle 语义一致），
- * 修改任一侧必须同步另一侧。
+ * 格式化函数直接复用 @centui/core（三端同一实现，禁止在本文件内再维护副本）：
+ * formatValueByGapRule / formatValueByGapStep / trimValue。
  */
-export interface FormattedValue {
-  value: string
-  range: number | undefined
-}
+import {
+  formatValueByGapRule,
+  formatValueByGapStep,
+  trimValue,
+  type FormattedValue,
+} from '@centui/core'
+
+export { formatValueByGapRule, formatValueByGapStep, trimValue }
+export type { FormattedValue }
 
 export type Formation = (
   name: string | number,
   curValue: string,
   curPos: number,
 ) => FormattedValue | undefined
-
-// ---------------------------------------------------------------------------
-// 以下三个函数与 packages/core/src/format.ts 逐一对照
-// ---------------------------------------------------------------------------
-
-/** 按分组规则插入间隔符（gapRule 如 '3|4|4'） */
-export function formatValueByGapRule(
-  gapRule: string,
-  value: string,
-  gap = ' ',
-  range?: number,
-  isAdd = 1,
-): FormattedValue {
-  const arr = value ? value.split('') : []
-  let showValue = ''
-  const rule: number[] = []
-  gapRule.split('|').some((_n, j) => {
-    rule[j] = +_n + (rule[j - 1] ? +rule[j - 1] : 0)
-    return false
-  })
-  let j = 0
-  arr.some((n, i) => {
-    // Remove the excess part
-    if (i > rule[rule.length - 1] - 1) {
-      return true
-    }
-    if (i > 0 && i === rule[j]) {
-      showValue = showValue + gap + n
-      j++
-    } else {
-      showValue = showValue + '' + n
-    }
-    return false
-  })
-  let adapt = 0
-  rule.some((n, k) => {
-    if (range === +n + 1 + k) {
-      adapt = 1 * isAdd
-      return true
-    }
-    return false
-  })
-  const finalRange =
-    typeof range !== 'undefined' ? (range === 0 ? 0 : range + adapt) : showValue.length
-  return {value: showValue, range: finalRange}
-}
-
-/** 按固定步长插入间隔符（direction 'right' 从右往左分组） */
-export function formatValueByGapStep(
-  step: number,
-  value: string,
-  gap = ' ',
-  direction: 'right' | 'left' = 'right',
-  range?: number,
-  isAdd = 1,
-  oldValue = '',
-): FormattedValue {
-  if (value.length === 0) {
-    return {value, range}
-  }
-
-  const arr: string[] = value.split('')
-  let _range = range
-  let showValue = ''
-
-  if (direction === 'right') {
-    for (let j = arr.length - 1, k = 0; j >= 0; j--, k++) {
-      const m = arr[j]
-      showValue = k > 0 && k % step === 0 ? m + gap + showValue : m + '' + showValue
-    }
-    if (isAdd === 1) {
-      if (oldValue.length - showValue.length === -2) {
-        _range = (range as number) + 1
-      }
-    } else {
-      if (oldValue.length - showValue.length === 2) {
-        _range = (range as number) - 1
-      }
-      if (_range !== undefined && _range <= 0) {
-        _range = 0
-      }
-    }
-  } else {
-    arr.forEach((n, i) => {
-      showValue = i > 0 && i % step === 0 ? showValue + gap + n : showValue + '' + n
-    })
-    const adapt = range !== undefined && range % (step + 1) === 0 ? 1 * isAdd : 0
-    _range = typeof range !== 'undefined' ? (range === 0 ? 0 : range + adapt) : showValue.length
-  }
-
-  return {value: showValue, range: _range}
-}
-
-/** 去除所有间隔符还原原始值（gap 按字面量转义） */
-export function trimValue(value: string | undefined, gap = ' '): string {
-  const val = typeof value === 'undefined' ? '' : value
-  const escapedGap = gap.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const reg = new RegExp(escapedGap, 'g')
-  return val.toString().replace(reg, '')
-}
 
 // ---------------------------------------------------------------------------
 // InputItem 组件侧管线（对齐 Vue 版 InputItem.vue）

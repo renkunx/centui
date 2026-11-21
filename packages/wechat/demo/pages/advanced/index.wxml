@@ -1,8 +1,0 @@
-<view class="demo">
-  <view class="demo-section">
-    <view class="demo-title">V5c：codebox 单独</view>
-    <cu-codebox value="{{codeboxValue}}" maxlength="{{4}}" mask bind:change="onCodeboxChange"></cu-codebox>
-  </view>
-  <cu-tip id="cu-tip"></cu-tip>
-  <cu-toast id="cu-toast"></cu-toast>
-</view>

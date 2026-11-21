@@ -11,8 +11,11 @@
  *  1. SVG → Canvas 2D 新接口（type="2d"）：createSelectorQuery().in(this)
  *     .select('#cv').fields({node, size})，backing store = 绘制尺寸×dpr，
  *     ctx.scale(dpr) 后按 Vue 的 viewBox 坐标系绘制；坐标换算（极值推导、xaxis/yaxis、
- *     折线/面积点位）全部在 logic.ts 纯函数内（含单点/空数据的 Infinity 防护——
- *     Vue 版 labels/values 长度为 1 时 1/0=Infinity、0*Infinity=NaN，为修复项）。
+ *     差异：Vue 的 Y 轴标签 dx=-0.5em 悬挂在绘图区左侧，svg overflow 可见；canvas
+ *     裁剪负坐标 → 按标签实测宽度动态补足左留白（labelPad）并右移原点，另补
+ *     ctx.font（fillText 缺省 10px 与 Vue text 字号不符）
+ *     折线/面积点位）全部复用 @centui/core 的 chart 纯函数，与 Vue/React 同一实现；
+ *     空数据/单点/非有限值/退化区间统一按 0 处理，三端不再各自出 Infinity/NaN。
  *  2. 视觉 token：网格线/文本颜色与字号来自 --chart-line-color/--chart-text-color/
  *     --chart-label-size/--chart-value-size（ready 时经 computedStyle 查询，不可得时
  *     以 tokens 默认值兜底，rpx 按窗宽折算 px）；折线色沿用 Vue 内联默认
@@ -210,7 +213,6 @@ CuComponent({
       const min = computeMin(datasets, (props.min as number | null | undefined) ?? undefined)
       const step = computeStep(max, min, (props.step as number | null | undefined) ?? undefined, lines)
       const offsets = computeOffsets(props.shift as number, UNIT)
-      const innerWidth = st.width - offsets.left - offsets.right
       const innerHeight = st.height - offsets.top - offsets.bottom
       const userFormat = props.format
       const format =
@@ -220,11 +222,21 @@ CuComponent({
 
       ctx.clearRect(0, 0, st.width, st.height)
       ctx.save()
-      // SVG g.cu-chart-graph transform
-      ctx.translate(offsets.left, offsets.top)
 
-      // ── 网格（.cu-chart line：chart-line-color / 0.5 / square）──
+      // ── Y 轴先算：标签绘制于 x=-0.5em（对齐 Vue text dx；Web svg overflow 可见），
+      // canvas 裁剪负坐标区（平台差异，实测标签只剩末位字符）→ 按标签实测宽度
+      // 补足左留白并右移绘图原点，视觉等价 Web 版「标签悬挂在绘图区左侧」
       const yaxis = computeYAxis(lines, innerHeight, max, min, step, format)
+      ctx.font = `${st.valueSize}px sans-serif`
+      const yLabelMaxWidth = yaxis.reduce(
+        (w, item) => Math.max(w, ctx.measureText(item.label).width),
+        0,
+      )
+      const labelPad = Math.max(0, yLabelMaxWidth + 0.5 * st.valueSize + 2 - offsets.left)
+      const innerWidth = st.width - offsets.left - offsets.right - labelPad
+
+      // SVG g.cu-chart-graph transform（含标签留白补偿）
+      ctx.translate(offsets.left + labelPad, offsets.top)
       ctx.strokeStyle = st.gridColor
       ctx.lineWidth = 0.5
       ctx.lineCap = 'square'
@@ -250,6 +262,7 @@ CuComponent({
         ctx.fillText(item.label, -0.5 * st.valueSize, item.offset + 0.32 * st.valueSize)
       }
       ctx.textAlign = 'center'
+      ctx.font = `${st.labelSize}px sans-serif`
       for (const item of xaxis) {
         ctx.fillText(item.label, item.offset, innerHeight + 2 * st.labelSize)
       }

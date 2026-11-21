@@ -66,7 +66,7 @@
     >
       <view slot-scope="{ scene }" slot="header">
         <cu-notice-bar
-          wx:if="{{scene === 'choose'"
+          wx:if="{{scene === 'choose'}}"
           mode="closable"
           icon="warn"
           type="warning"
@@ -75,7 +75,7 @@
         </cu-notice-bar>
       </view>
       <view slot-scope="{ scene }" slot="footer">
-        <view wx:if="{{scene === 'choose' && !isCashierInitialed" class="cashier-loading">
+        <view wx:if="{{scene === 'choose' && !isCashierInitialed}}" class="cashier-loading">
           <cu-activity-indicator size="{{30}}" vertical>加载中...</cu-activity-indicator>
         </view>
       </view>

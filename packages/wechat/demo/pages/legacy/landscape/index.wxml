@@ -9,7 +9,7 @@
       <image src="//manhattan.didistatic.com/static/manhattan/do1_6VL7HL8TYaUMsIfygfpz" />
     </cu-landscape>
 
-    <cu-button @click.native="showMaskClosable=true">点击蒙层关闭</cu-button>
+    <cu-button bind:tap="showMaskClosable=true">点击蒙层关闭</cu-button>
     <cu-landscape value="{{showMaskClosable}}" bind:change="noop" mask-closable="{{true}}">
       <image src="//manhattan.didistatic.com/static/manhattan/do1_6VL7HL8TYaUMsIfygfpz" />
     </cu-landscape>

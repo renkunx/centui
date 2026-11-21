@@ -189,7 +189,7 @@
         placeholder="left/right slots"
       >
         <cu-icon name="bank-zs" slot="left" svg></cu-icon>
-        <cu-icon name="info" slot="right" @click.native="onClick"></cu-icon>
+        <cu-icon name="info" slot="right" bind:tap="onClick"></cu-icon>
       </cu-input-item>
     </cu-field>
   </view>
@@ -217,7 +217,7 @@
         bind:blur="checkBankCard"
       >
         <view class="legacy-p"
-          wx:if="{{isError"
+          wx:if="{{isError}}"
           class="error"
           slot="error"
         >

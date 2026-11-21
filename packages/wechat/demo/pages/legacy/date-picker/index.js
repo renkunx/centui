@@ -3,9 +3,10 @@ Page({
   data: {
   "minDate": "2013-09-08T16:00:00.000Z",
   "maxDate": "2020-09-08T16:00:00.000Z",
-  "currentDate": "2026-11-10T18:30:40.338Z",
+  "currentDate": "2026-11-21T13:36:30.488Z",
   "isDatePickerShow": false,
-  "datePickerValue": ""
+  "datePickerValue": "",
+  "unitText": ["", "", "", "'", "''"]
 },
   onDatePickerInitialed() {
       console.log(`[Mand Mobile] DatePicker getFormatDate: ${this.$refs.datePicker.getFormatDate('yyyy/MM/dd')}`)

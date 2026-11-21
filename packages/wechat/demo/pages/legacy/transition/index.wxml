@@ -6,7 +6,7 @@
   <view class="md-example-child md-example-child-transition md-example-child-transition-1">
     <cu-button bind:tap="showPopUp(0)">Fade</cu-button>
     <cu-popup
-      v-model="isPopupShow[0]"
+      value="{{isPopupShow[0]}}" bind:change="noop"
       transition="md-fade"
     >
       <view class="md-example-popup md-example-popup-center">
@@ -16,7 +16,7 @@
 
     <cu-button bind:tap="showPopUp(1)">Fade Up</cu-button>
     <cu-popup
-      v-model="isPopupShow[1]"
+      value="{{isPopupShow[1]}}" bind:change="noop"
       transition="md-fade-up"
     >
       <view class="md-example-popup md-example-popup-center">
@@ -26,7 +26,7 @@
 
     <cu-button bind:tap="showPopUp(2)">Fade Down</cu-button>
     <cu-popup
-      v-model="isPopupShow[2]"
+      value="{{isPopupShow[2]}}" bind:change="noop"
       transition="md-fade-down"
     >
       <view class="md-example-popup md-example-popup-center">
@@ -36,7 +36,7 @@
 
     <cu-button bind:tap="showPopUp(3)">Fade Left</cu-button>
     <cu-popup
-      v-model="isPopupShow[3]"
+      value="{{isPopupShow[3]}}" bind:change="noop"
       transition="md-fade-left"
     >
       <view class="md-example-popup md-example-popup-center">
@@ -46,7 +46,7 @@
 
     <cu-button bind:tap="showPopUp(4)">Fade Right</cu-button>
     <cu-popup
-      v-model="isPopupShow[4]"
+      value="{{isPopupShow[4]}}" bind:change="noop"
       transition="md-fade-right"
     >
       <view class="md-example-popup md-example-popup-center">
@@ -56,7 +56,7 @@
 
     <cu-button bind:tap="showPopUp(5)">Bounce</cu-button>
     <cu-popup
-      v-model="isPopupShow[5]"
+      value="{{isPopupShow[5]}}" bind:change="noop"
       transition="md-bounce"
     >
       <view class="md-example-popup md-example-popup-center">
@@ -66,7 +66,7 @@
 
     <cu-button bind:tap="showPopUp(6)">Punch</cu-button>
     <cu-popup
-      v-model="isPopupShow[6]"
+      value="{{isPopupShow[6]}}" bind:change="noop"
       transition="md-punch"
     >
       <view class="md-example-popup md-example-popup-center">
@@ -76,7 +76,7 @@
 
     <cu-button bind:tap="showPopUp(7)">Zoom</cu-button>
     <cu-popup
-      v-model="isPopupShow[7]"
+      value="{{isPopupShow[7]}}" bind:change="noop"
       transition="md-zoom"
     >
       <view class="md-example-popup md-example-popup-center">
@@ -86,7 +86,7 @@
 
     <cu-button bind:tap="showPopUp(8)">Slide Up</cu-button>
     <cu-popup
-      v-model="isPopupShow[8]"
+      value="{{isPopupShow[8]}}" bind:change="noop"
       transition="md-slide-up"
     >
       <view class="md-example-popup md-example-popup-center">
@@ -96,7 +96,7 @@
 
     <cu-button bind:tap="showPopUp(9)">Slide Down</cu-button>
     <cu-popup
-      v-model="isPopupShow[9]"
+      value="{{isPopupShow[9]}}" bind:change="noop"
       transition="md-slide-down"
     >
       <view class="md-example-popup md-example-popup-center">
@@ -106,7 +106,7 @@
 
     <cu-button bind:tap="showPopUp(10)">Slide Left</cu-button>
     <cu-popup
-      v-model="isPopupShow[10]"
+      value="{{isPopupShow[10]}}" bind:change="noop"
       transition="md-slide-left"
     >
       <view class="md-example-popup md-example-popup-center">
@@ -116,7 +116,7 @@
 
     <cu-button bind:tap="showPopUp(11)">Slide Right</cu-button>
     <cu-popup
-      v-model="isPopupShow[11]"
+      value="{{isPopupShow[11]}}" bind:change="noop"
       transition="md-slide-right"
     >
       <view class="md-example-popup md-example-popup-center">
