@@ -15,6 +15,7 @@ import { fileURLToPath } from 'node:url'
  * wechat 逻辑层不含 DOM 分支，90/80 是可达成且有效的"全覆盖"工程门禁）。
  */
 const iconMapStub = fileURLToPath(new URL('./tests/helpers/icon-map-stub.ts', import.meta.url))
+const coreEntry = fileURLToPath(new URL('../core/src/index.ts', import.meta.url))
 
 const iconMapStubPlugin = {
   name: 'centui-icon-map-stub',
@@ -26,6 +27,10 @@ const iconMapStubPlugin = {
 
 export default defineConfig({
   plugins: [iconMapStubPlugin],
+  resolve: {
+    // 测试直接跑 core 源码，避免依赖 core/dist 是否已构建
+    alias: [{ find: /^@centui\/core$/, replacement: coreEntry }],
+  },
   test: {
     name: 'wechat',
     environment: 'node',
