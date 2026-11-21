@@ -53,6 +53,7 @@ CuComponent({
   },
 
   data: {
+    __lastInnerShow: false,
     innerShow: false,
     resolvedType: 'professional',
     okTextResolved: NUMBER_KEYBOARD_CONFIRM_TEXT,
@@ -68,6 +69,13 @@ CuComponent({
       this.setData({innerShow: v})
     },
     innerShow(v: boolean) {
+      // 同值短路：真机 observers 在 setData 相同值时也会触发（与测试桩「值变化才触发」
+      // 语义分叉），外部回写 show property 会经 show→innerShow→change→外部 setData
+      // 形成 setProperty→observer→event→setProperty 死循环（实测拖垮模拟器渲染进程）
+      if (v === this.data.__lastInnerShow) {
+        return
+      }
+      this.setData({__lastInnerShow: v})
       // Vue watch(isKeyboardShow) → emit update:modelValue
       this.triggerEvent('change', {value: v})
     },

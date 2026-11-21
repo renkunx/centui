@@ -5,7 +5,7 @@
 
   <view class="md-example-child md-example-child-popup md-example-child-popup-0">
     <cu-button bind:tap="showPopUp('center')">屏幕中弹出</cu-button>
-    <cu-popup v-model="isPopupShow.center">
+    <cu-popup value="{{isPopupShow.center}}" bind:change="noop">
       <view class="md-example-popup md-example-popup-center">
         Popup Center
       </view>
@@ -13,7 +13,7 @@
 
     <cu-button bind:tap="showPopUp('bottom')">底部弹出</cu-button>
     <cu-popup
-      v-model="isPopupShow.bottom"
+      value="{{isPopupShow.bottom}}" bind:change="noop"
       position="bottom"
     >
       <cu-popup-title-bar
@@ -32,7 +32,7 @@
 
     <cu-button bind:tap="showPopUp('top')">顶部弹出</cu-button>
     <cu-popup
-      v-model="isPopupShow.top"
+      value="{{isPopupShow.top}}" bind:change="noop"
       hasMask="{{false}}"
       position="top"
     >
@@ -40,14 +40,14 @@
         Popup Top
         <cu-icon
           name="close"
-          @click.native="hidePopUp('top')"
+          bind:tap="hidePopUp('top')"
         ></cu-icon>
       </view>
     </cu-popup>
 
     <cu-button bind:tap="showPopUp('left')">左侧弹出</cu-button>
     <cu-popup
-      v-model="isPopupShow.left"
+      value="{{isPopupShow.left}}" bind:change="noop"
       position="left"
     >
       <view class="md-example-popup md-example-popup-left">
@@ -57,7 +57,7 @@
 
     <cu-button bind:tap="showPopUp('right')">右侧弹出</cu-button>
     <cu-popup
-      v-model="isPopupShow.right"
+      value="{{isPopupShow.right}}" bind:change="noop"
       position="right"
     >
       <view class="md-example-popup md-example-popup-right">
@@ -76,7 +76,7 @@
     <cu-button bind:tap="showPopUp('align')">标题居左</cu-button>
     <cu-popup
       class="inner-popup"
-      v-model="isPopupShow.align"
+      value="{{isPopupShow.align}}" bind:change="noop"
       position="bottom"
     >
       <cu-popup-title-bar
@@ -96,7 +96,7 @@
 
     <cu-button bind:tap="showPopUp('top')">无遮罩层</cu-button>
     <cu-popup
-      v-model="isPopupShow.top"
+      value="{{isPopupShow.top}}" bind:change="noop"
       hasMask="{{false}}"
       position="top"
     >
@@ -104,14 +104,14 @@
         Popup Top
         <cu-icon
           name="close"
-          @click.native="hidePopUp('top')"
+          bind:tap="hidePopUp('top')"
         ></cu-icon>
       </view>
     </cu-popup>
 
     <cu-button bind:tap="showPopUp('mask')">禁用遮罩层点击</cu-button>
     <cu-popup
-      v-model="isPopupShow.mask"
+      value="{{isPopupShow.mask}}" bind:change="noop"
       position="bottom"
       mask-closable="{{false}}"
     >

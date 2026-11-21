@@ -96,8 +96,14 @@ function translateTemplate(tpl, todos) {
   out = out.replace(/<\/?md-([\w-]+)/g, (m, n) => m.replace(`md-${n}`, `cu-${NAME_FIX[n] ?? n}`))
   out = out.replace(/:([\w-]+)="'([^"]*)'"/g, (m, prop, expr) => `${prop}="{{${expr}}}"`)
   out = out.replace(/:([\w-]+)="([^"]*)"/g, (m, prop, expr) => `${prop}="{{${expr}}}"`)
+  // Vue @click.native 修饰符：小程序组件根节点 bind:tap 等价（CuComponent 根节点接收）。
+  // 必须先剥 .native 再走通用 @ 映射——否则属性名 @click.native 使正则失配、属性残留，
+  // wxml 编译报 unexpected '@' 并中断整个 app 编译链（全页面白屏的根因，实测）
+  out = out.replace(/@(\w[\w-]*)\.native="/g, '@$1="')
   out = out.replace(/@(\w[\w-]*)="([^"]+)"/g, (m, ev, h) => `bind:${EVENT_MAP[ev] ?? ev}="${h}"`)
-  out = out.replace(/v-model="(\w+)"/g, 'value="{{$1}}" bind:change="noop"')
+  // v-model 兼容点路径/数组下标（agreeConf.checked / isKeyBoardShow[0]）；
+  // change 回写为 noop（受控回写缺失属示例语义级，由手工修整流程按页补 handler）
+  out = out.replace(/v-model="([\w.[\]]+)"/g, 'value="{{$1}}" bind:change="noop"')
   out = out.replace(/<\/(\w+)\s+>/g, '</$1>')
   out = out.replace(/<img\b([^>]*?)\s*\/?>/g, '<image$1 />')
   out = out.replace(/<div\b/g, '<view').replace(/<\/div>/g, '</view>')
@@ -106,7 +112,10 @@ function translateTemplate(tpl, todos) {
   out = out.replace(/<br\s*\/?>/g, '')
   const calls = out.match(/{{[^}]*\w+\([^}]*}}/g)
   if (calls) todos.push(`wxml 方法调用表达式需改写：${calls.slice(0, 3).join('；')}`)
-  out = out.replace(/v-if="/g, 'wx:if="{{').replace(/v-show="/g, 'wx:if="{{')
+  // v-if/v-show → wx:if：整体匹配属性值并补全右花括号（旧写法只加 {{ 不加 }}，
+  // 含引号的表达式截断为非法绑定，devtools 报 Bad value 并中断全 app 编译链，实测）
+  out = out.replace(/v-if="([^"]*)"/g, 'wx:if="{{$1}}"')
+  out = out.replace(/v-show="([^"]*)"/g, 'wx:if="{{$1}}"')
   if (/v-for=/.test(out)) todos.push('v-for 需复核 wx:for/wx:key 改写')
   out = out.replace(/v-for="(\w+)\s+in\s+(\w+)"/g, 'wx:for="{{$2}}" wx:for-item="$1"')
   if (/v-else|v-html/.test(out)) todos.push('存在 v-else/v-html 需人工核对')
@@ -186,7 +195,8 @@ async function main() {
     // 命令式 API 使用检测（case 模板与方法体两处：模板绑事件、方法体调工厂）
     const sectionsText = sections.join('\n') + '\n' + methodSrc
     const factories = ['Toast', 'Dialog', 'ActionSheet', 'Tip'].filter((f) =>
-      new RegExp(`\\b${f}\\.`).test(sectionsText),
+      // 同时覆盖 `Toast.info(...)` / `Dialog.confirm(...)` 与 `Toast({...})` 两种调用形态
+      new RegExp(`\\b${f}\\s*[.(]`).test(sectionsText),
     )
     const factoryDirs = factories.map((f) => FACTORY_DIR[f] ?? f.toLowerCase())
 

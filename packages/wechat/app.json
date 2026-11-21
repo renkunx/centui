@@ -1,7 +1,6 @@
 {
   "pages": [
     "demo/pages/index/index",
-    "demo/pages/advanced/index",
     "demo/pages/legacy/catalog/index",
     "demo/pages/legacy/button/index",
     "demo/pages/legacy/amount/index",

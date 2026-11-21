@@ -30,12 +30,28 @@ function checkWxmlBalance(name, wxml) {
   if (stack.length) fail(`${name}.wxml 未闭合：${stack.join('、')}`)
 }
 
+/** Vue 残留语法检测（剥离注释后扫描标签属性区）：
+ *  - @事件/.native=：wxml 编译直接报 unexpected '@' 并中断整个 app 编译链（全页面白屏，实测）；
+ *  - v-model/v-if/v-for/v-show/v-html：编译可过但运行时静默无效。
+ *  说明性文字须在 <!-- --> 注释内（生成器 TODO 清单），剥注释后不得残留。 */
+function checkVueResidue(name, wxml) {
+  // s 标志必需：TODO 修整清单为多行注释，无 s 时 .*? 不跨行导致清单文字误报
+  const stripped = wxml.replace(/<!--.*?-->/gs, '')
+  const residue = stripped.match(
+      /(?:\s@\w[\w-]*(?:\.native)?=|\s\.native=|\sv-(?:model|if|for|show|html|text|bind|on)=|\{\{[^}]*\\['"]|\{\{\{)/g,
+    )
+  if (residue) {
+    fail(`${name}.wxml Vue 残留语法（编译炸/运行时无效）：${[...new Set(residue)].map((s) => s.trim()).join('、')}`)
+  }
+}
+
 const dirs = readdirSync(PAGES_ROOT).filter((d) => d !== 'legacy.wxss' && existsSync(join(PAGES_ROOT, d, 'index.wxml'))).sort()
 for (const name of dirs) {
   const dir = join(PAGES_ROOT, name)
   const wxml = readFileSync(join(dir, 'index.wxml'), 'utf8')
   const js = readFileSync(join(dir, 'index.js'), 'utf8')
   checkWxmlBalance(name, wxml)
+  checkVueResidue(name, wxml)
   // 处理函数存在（bind:xxx="fn"）
   for (const m of wxml.matchAll(/(?:bind|catch)[:\w-]*="(\w+)"/g)) {
     const fn = m[1]

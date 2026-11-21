@@ -6,14 +6,14 @@
   <view class="md-example-child md-example-child-number-keyboard md-example-child-number-keyboard-0">
     <cu-button bind:tap="toggleKeyboard(0)">{{ isKeyBoardShow[0] ? '收起键盘' : '唤起键盘，有小数点' }}</cu-button>
     <cu-number-keyboard
-      v-model="isKeyBoardShow[0]"
+      value="{{isKeyBoardShow[0]}}" bind:change="noop"
       bind:enter="onNumberEnter"
       bind:delete="onNumberDelete"
     ></cu-number-keyboard>
 
     <cu-button bind:tap="toggleKeyboard(1)">{{ isKeyBoardShow[1] ? '收起键盘' : '唤起键盘，无小数点' }}</cu-button>
     <cu-number-keyboard
-      v-model="isKeyBoardShow[1]"
+      value="{{isKeyBoardShow[1]}}" bind:change="noop"
       hide-dot
       bind:enter="onNumberEnter"
       bind:delete="onNumberDelete"
@@ -21,7 +21,7 @@
 
     <cu-button bind:tap="toggleKeyboard(2)">{{ isKeyBoardShow[2] ? '收起键盘' : '唤起键盘，替换键值' }}</cu-button>
     <cu-number-keyboard
-      v-model="isKeyBoardShow[2]"
+      value="{{isKeyBoardShow[2]}}" bind:change="noop"
       text-render="{{keyFormatter}}"
       bind:enter="onNumberEnter"
       bind:delete="onNumberDelete"
@@ -29,13 +29,13 @@
 
     <cu-button bind:tap="toggleKeyboard(3)">{{ isKeyBoardShow[3] ? '收起键盘' : '唤起键盘，00 按键' }}</cu-button>
     <cu-number-keyboard
-      v-model="isKeyBoardShow[3]"
+      value="{{isKeyBoardShow[3]}}" bind:change="noop"
       duplicate-zero="{{true}}"
       text-render="{{keyFormatter1}}"
       bind:enter="onNumberEnter"
       bind:delete="onNumberDelete"
     ></cu-number-keyboard>
-    <view class="md-example-display" wx:if="{{isKeyBoardShow" v-text="number"></view>
+    <view class="md-example-display" wx:if="{{isKeyBoardShow}}">{{number}}></view>
   </view>
 
     </view>
@@ -52,7 +52,7 @@
       bind:enter="onNumberEnter"
       bind:delete="onNumberDelete"
     ></cu-number-keyboard>
-    <view class="md-example-display" wx:if="{{isKeyBoardShow" v-text="number"></view>
+    <view class="md-example-display" wx:if="{{isKeyBoardShow}}">{{number}}></view>
   </view>
 
     </view>
@@ -70,7 +70,7 @@
       bind:enter="onNumberEnter"
       bind:delete="onNumberDelete"
     ></cu-number-keyboard>
-    <view class="md-example-display" wx:if="{{isKeyBoardShow" v-text="number"></view>
+    <view class="md-example-display" wx:if="{{isKeyBoardShow}}">{{number}}></view>
   </view>
 
     </view>
@@ -106,7 +106,7 @@
       bind:enter="onNumberEnter"
       bind:delete="onNumberDelete"
     ></cu-number-keyboard>
-    <view class="md-example-display" wx:if="{{isKeyBoardShow" v-text="number"></view>
+    <view class="md-example-display" wx:if="{{isKeyBoardShow}}">{{number}}></view>
   </view>
 
     </view>

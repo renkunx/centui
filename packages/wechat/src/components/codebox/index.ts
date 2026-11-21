@@ -186,7 +186,9 @@ CuComponent({
     },
 
     onKbVisibleChange(e: WechatMiniprogram.CustomEvent<{value: boolean}>) {
-      if (e.detail && e.detail.value === false) {
+      // 同值短路：focused 已收起时不再 setData——keyboard 的 innerShow observer 对
+      // 相同 property 重设也会触发（真机语义），无条件回写会形成事件死循环
+      if (e.detail && e.detail.value === false && this.data.focused) {
         this.setData({focused: false})
       }
     },

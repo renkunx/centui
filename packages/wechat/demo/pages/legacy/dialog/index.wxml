@@ -14,7 +14,7 @@
     <cu-dialog
       title="窗口标题"
       closable="{{true}}"
-      v-model="basicDialog.open"
+      value="{{basicDialog.open}}" bind:change="noop"
       btns="{{basicDialog.btns}}"
     >
       人生的刺，就在这里，留恋着不肯快走的，偏是你所不留恋的东西。
@@ -23,7 +23,7 @@
     <cu-dialog
       icon="location"
       closable="{{true}}"
-      v-model="iconDialog.open"
+      value="{{iconDialog.open}}" bind:change="noop"
       btns="{{iconDialog.btns}}"
     >
       围在城里的人想逃出来，城外的人想冲进去，对婚姻也罢，职业也罢，人生的愿望大都如此。
@@ -32,7 +32,7 @@
     <cu-dialog
       title="警示操作"
       closable="{{false}}"
-      v-model="warnDialog.open"
+      value="{{warnDialog.open}}" bind:change="noop"
       btns="{{warnDialog.btns}}"
     >
       或是因为习惯了孤独，我们渴望被爱；又或是害怕爱而不得，我们最后仍然选择孤独。
@@ -40,7 +40,7 @@
 
     <cu-dialog
       closable="{{false}}"
-      v-model="asyncDialog.open"
+      value="{{asyncDialog.open}}" bind:change="noop"
       btns="{{asyncDialog.btns}}"
     >
       每个人都有属于自己的一片森林，也许我们 从来不曾去过，但它一直在那里，总会在那里。迷失的人迷失了，相逢的人会再相逢。
@@ -50,7 +50,7 @@
       title="窗口标题"
       closable="{{false}}"
       layout="column"
-      v-model="actDialog.open"
+      value="{{actDialog.open}}" bind:change="noop"
       btns="{{actDialog.btns}}"
     >
       据说每个人需要一面镜子，可以常常自照，知道自己是个什么东西。不过，能自知的人根本不用照镜子；不自知的东西，照了镜子也没有用。
@@ -59,7 +59,7 @@
     <cu-dialog
       title="家"
       closable="{{false}}"
-      v-model="slotDialog.open"
+      value="{{slotDialog.open}}" bind:change="noop"
       btns="{{slotDialog.btns}}"
     >
       <view class="dialog-banner" slot="header">
