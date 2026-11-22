@@ -3,7 +3,7 @@
   "version": "3.0.0-alpha.0",
   "private": true,
   "type": "module",
-  "description": "centui monorepo — Vue 3 / React multi-framework mobile UI toolkit",
+  "description": "centui monorepo — Vue 3 / React / WeChat mini-program mobile UI toolkit",
   "license": "Apache-2.0",
   "packageManager": "pnpm@12.4.1",
   "engines": {
@@ -12,7 +12,8 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "coverage": "pnpm -r --filter './packages/*' run test:coverage",
+    "coverage": "pnpm -r --workspace-concurrency=1 --filter './packages/*' run test:coverage",
+    "verify:api": "node scripts/verify-public-api.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",
     "build": "pnpm -r --filter './packages/*' --filter '@centui/e2e' run build",

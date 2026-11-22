@@ -114,6 +114,11 @@
       "import": "./dist/icon.js",
       "require": "./dist/icon.cjs"
     },
+    "./es/image-reader": {
+      "types": "./dist/image-reader.d.ts",
+      "import": "./dist/image-reader.js",
+      "require": "./dist/image-reader.cjs"
+    },
     "./es/image-viewer": {
       "types": "./dist/image-viewer.d.ts",
       "import": "./dist/image-viewer.js",
@@ -209,6 +214,11 @@
       "import": "./dist/steps.js",
       "require": "./dist/steps.cjs"
     },
+    "./es/swiper": {
+      "types": "./dist/swiper.d.ts",
+      "import": "./dist/swiper.js",
+      "require": "./dist/swiper.cjs"
+    },
     "./es/switch": {
       "types": "./dist/switch.d.ts",
       "import": "./dist/switch.js",
@@ -262,7 +272,7 @@
     "build": "vite build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "vitest run --coverage --no-file-parallelism",
     "playground": "vite playground"
   },
   "dependencies": {

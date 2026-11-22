@@ -1,4 +1,14 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
+import {
+  computeMax,
+  computeMin,
+  computeOffsets,
+  computeSeries,
+  computeStep,
+  computeXAxis,
+  computeYAxis,
+  resolveSize,
+} from '@centui/core'
 
 export interface ChartDataset {
   color?: string
@@ -17,42 +27,6 @@ export interface ChartProps {
   step?: number
   shift?: number
   format?: (val: number) => string | number
-}
-
-function computeMax(datasets: ChartDataset[], explicit?: number) {
-  if (explicit !== undefined) {
-    return explicit
-  }
-  const flatMax = datasets.flatMap(d => d.values)
-  // 空数据防护：Math.max() 无参返回 -Infinity，会把整张图写成 NaN
-  if (!flatMax.length) {
-    return 0
-  }
-  let max = Math.max(...flatMax)
-  let multiple = 1
-  while (max > 10) {
-    multiple *= 10
-    max /= 10
-  }
-  return Math.ceil(max) * multiple
-}
-
-function computeMin(datasets: ChartDataset[], explicit?: number) {
-  if (explicit !== undefined) {
-    return explicit
-  }
-  const flatMin = datasets.flatMap(d => d.values)
-  // 空数据防护：Math.min() 无参返回 Infinity
-  if (!flatMin.length) {
-    return 0
-  }
-  let min = Math.min(...flatMin)
-  let multiple = 1
-  while (min > 10) {
-    multiple *= 10
-    min = min / 10
-  }
-  return Math.floor(min) * multiple
 }
 
 export function CuChart({ labels = [], datasets = [], size = [480, 320], max, min, lines = 5, step, shift = 0.6, format = (v: number) => v }: ChartProps) {
@@ -75,33 +49,26 @@ export function CuChart({ labels = [], datasets = [], size = [480, 320], max, mi
     }
   }, [])
 
+  // 极值/坐标换算与 Vue、微信小程序共用 @centui/core 的同一实现
   const maxV = computeMax(datasets, max)
   const minV = computeMin(datasets, min)
-  const stepV = step !== undefined ? step : (maxV - minV) / lines
+  const stepV = computeStep(maxV, minV, step, lines)
 
-  const offset = {
-    top: 0.2 * unit,
-    bottom: 0.5 * unit,
-    left: shift * unit,
-    right: 0.2 * unit,
-  }
-  const width = typeof size[0] === 'string' && size[0].indexOf('rem') !== -1 ? parseFloat(size[0]) * unit : parseFloat(String(size[0]))
-  const height = typeof size[1] === 'string' && size[1].indexOf('rem') !== -1 ? parseFloat(size[1]) * unit : parseFloat(String(size[1]))
+  const offset = computeOffsets(shift, unit)
+  const [width, height] = resolveSize(size, unit)
   const innerWidth = width - offset.left - offset.right
   const innerHeight = height - offset.top - offset.bottom
 
-  // 单点/空标签防护：除零产生 Infinity 偏移
-  const deltaX = labels.length > 1 ? innerWidth / (labels.length - 1) : 0
-  const xaxis = labels.map((label, index) => ({ offset: index * deltaX, label }))
-
-  const yaxis: Array<{ offset: number; label: string | number }> = []
-  const deltaY = innerHeight / lines
-  for (let i = 0; i < lines; i++) {
-    yaxis.push({ offset: i * deltaY, label: format(maxV - i * stepV) })
-  }
-  yaxis.push({ offset: innerHeight, label: format(minV) })
-
-  const lower = maxV - (lines - 1) * stepV
+  const xaxis = computeXAxis(labels, innerWidth)
+  const yaxis = computeYAxis(lines, innerHeight, maxV, minV, stepV, val => String(format(val)))
+  const series = computeSeries(datasets, {
+    innerWidth,
+    innerHeight,
+    lines,
+    max: maxV,
+    min: minV,
+    step: stepV,
+  })
 
   const colors: string[] = []
   datasets.forEach(d => {
@@ -139,31 +106,19 @@ export function CuChart({ labels = [], datasets = [], size = [480, 320], max, mi
           ))}
         </g>
         <g className="cu-chart-paths">
-          {datasets.map((data, index) => {
-            const dx = innerWidth / (data.values.length - 1)
-            const dy = innerHeight / lines
-            const points = data.values.map((value, i) => {
-              if (value < lower) {
-                return {
-                  x: i * dx,
-                  y: innerHeight - (1 - (lower - value) / (lower - minV)) * dy,
-                }
-              }
-              return {
-                x: i * dx,
-                y: (1 - (value - lower) / (maxV - lower)) * (innerHeight - dy),
-              }
-            })
+          {series.map((item, index) => {
+            const data = datasets[index]
+            const points = item.points
 
             const style: React.CSSProperties = {
               fill: 'none',
-              stroke: data.color || '#fa8919',
-              strokeWidth: data.width || 1,
+              stroke: item.color,
+              strokeWidth: item.lineWidth,
             }
             let area: { d: string; style: React.CSSProperties } | undefined
             if (data.theme === 'heat') {
               style.stroke = `url(#path-fill-gradient-${data.color})`
-            } else if (data.theme === 'region') {
+            } else if (data.theme === 'region' && points.length > 0) {
               area = {
                 d:
                   `M0,${innerHeight} ` +
@@ -176,12 +131,14 @@ export function CuChart({ labels = [], datasets = [], size = [480, 320], max, mi
               }
             }
 
-            const rest = points.slice(1)
-            const d = `M0,${points.shift()!.y} ` + rest.map(p => `L${p.x},${p.y}`).join(' ')
+            const d =
+              points.length > 0
+                ? `M0,${points[0].y} ` + points.slice(1).map(p => `L${p.x},${p.y}`).join(' ')
+                : ''
 
             return (
               <Fragment key={index}>
-                <path className="cu-chart-path" style={style} d={d}></path>
+                {d ? <path className="cu-chart-path" style={style} d={d}></path> : null}
                 {area ? <path className="cu-chart-path-area" style={area.style} d={area.d}></path> : null}
               </Fragment>
             )
