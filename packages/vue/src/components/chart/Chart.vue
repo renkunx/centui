@@ -30,7 +30,7 @@
       </g>
       <g class="cu-chart-paths">
         <template v-for="(path, index) in paths" :key="`path-${index}`">
-          <path class="cu-chart-path" :style="path.style" :d="path.value"></path>
+          <path v-if="path.value" class="cu-chart-path" :style="path.style" :d="path.value"></path>
           <path
             v-if="path.area"
             class="cu-chart-path-area"
@@ -45,6 +45,16 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import {
+  computeMax,
+  computeMin,
+  computeOffsets,
+  computeSeries,
+  computeStep,
+  computeXAxis,
+  computeYAxis,
+  resolveSize,
+} from '@centui/core'
 
 defineOptions({ name: 'cu-chart' })
 
@@ -82,119 +92,54 @@ const props = withDefaults(
 
 const unit = ref(16)
 
-// v2 default 函数语义：由 datasets 推导极值
-const computedMax = computed(() => {
-  if (props.max !== undefined) {
-    return props.max
-  }
-  let max = Math.max.apply(
-    Math,
-    props.datasets.map(data => Math.max.apply(Math, data.values as never)),
-  )
-  let multiple = 1
-  while (max > 10) {
-    multiple *= 10
-    max /= 10
-  }
-  return Math.ceil(max) * multiple
-})
-
-const computedMin = computed(() => {
-  if (props.min !== undefined) {
-    return props.min
-  }
-  let min = Math.min.apply(
-    Math,
-    props.datasets.map(data => Math.min.apply(Math, data.values as never)),
-  )
-  let multiple = 1
-  while (min > 10) {
-    multiple *= 10
-    min = min / 10
-  }
-  return Math.floor(min) * multiple
-})
-
+// 极值/坐标换算与 React、微信小程序共用 @centui/core 的同一实现
+const computedMax = computed(() => computeMax(props.datasets, props.max))
+const computedMin = computed(() => computeMin(props.datasets, props.min))
 const computedStep = computed(() =>
-  props.step !== undefined ? props.step : (computedMax.value - computedMin.value) / props.lines,
+  computeStep(computedMax.value, computedMin.value, props.step, props.lines),
 )
 
-const offset = computed(() => ({
-  top: 0.2 * unit.value,
-  bottom: 0.5 * unit.value,
-  left: props.shift * unit.value,
-  right: 0.2 * unit.value,
-}))
-
-const width = computed(() => {
-  if (typeof props.size[0] === 'string' && props.size[0].indexOf('rem') !== -1) {
-    return parseFloat(props.size[0]) * unit.value
-  }
-  return parseFloat(String(props.size[0]))
-})
-
-const height = computed(() => {
-  if (typeof props.size[1] === 'string' && props.size[1].indexOf('rem') !== -1) {
-    return parseFloat(props.size[1]) * unit.value
-  }
-  return parseFloat(String(props.size[1]))
-})
+const offset = computed(() => computeOffsets(props.shift, unit.value))
+const dimensions = computed(() => resolveSize(props.size, unit.value))
+const width = computed(() => dimensions.value[0])
+const height = computed(() => dimensions.value[1])
 
 const innerWidth = computed(() => width.value - offset.value.left - offset.value.right)
 const innerHeight = computed(() => height.value - offset.value.top - offset.value.bottom)
 
-const xaxis = computed(() => {
-  const deltaX = innerWidth.value / (props.labels.length - 1)
-  return props.labels.map((label, index) => ({
-    offset: index * deltaX,
-    label,
-  }))
-})
+const xaxis = computed(() => computeXAxis(props.labels, innerWidth.value))
 
-const yaxis = computed(() => {
-  const items: Array<{ offset: number; label: string | number }> = []
-  const deltaY = innerHeight.value / props.lines
+const yaxis = computed(() =>
+  computeYAxis(
+    props.lines,
+    innerHeight.value,
+    computedMax.value,
+    computedMin.value,
+    computedStep.value,
+    val => String(props.format(val)),
+  ),
+)
 
-  for (let i = 0; i < props.lines; i++) {
-    items.push({
-      offset: i * deltaY,
-      label: props.format(computedMax.value - i * computedStep.value),
-    })
-  }
-
-  items.push({
-    offset: innerHeight.value,
-    label: props.format(computedMin.value),
-  })
-
-  return items
-})
-
-const lower = computed(() => computedMax.value - (props.lines - 1) * computedStep.value)
+const series = computed(() =>
+  computeSeries(props.datasets, {
+    innerWidth: innerWidth.value,
+    innerHeight: innerHeight.value,
+    lines: props.lines,
+    max: computedMax.value,
+    min: computedMin.value,
+    step: computedStep.value,
+  }),
+)
 
 const paths = computed(() => {
-  return props.datasets.map(data => {
-    const deltaX = innerWidth.value / (data.values.length - 1)
-    const deltaY = innerHeight.value / props.lines
-    const points = data.values.map((value, index) => {
-      if (value < lower.value) {
-        return {
-          x: index * deltaX,
-          y: innerHeight.value - (1 - (lower.value - value) / (lower.value - computedMin.value)) * deltaY,
-        }
-      } else {
-        return {
-          x: index * deltaX,
-          y: (1 - (value - lower.value) / (computedMax.value - lower.value)) * (innerHeight.value - deltaY),
-        }
-      }
-    })
-
+  return series.value.map((item, index) => {
+    const data = props.datasets[index]
+    const points = item.points
     const ret = {
       style: {
         fill: 'none',
-        stroke: data.color || '#fa8919',
-        strokeWidth: data.width || 1,
+        stroke: item.color,
+        strokeWidth: item.lineWidth,
       },
       area: undefined as undefined | { value: string; style: Record<string, string> },
       value: '',
@@ -202,7 +147,7 @@ const paths = computed(() => {
 
     if (data.theme === 'heat') {
       ret.style.stroke = `url(#path-fill-gradient-${data.color})`
-    } else if (data.theme === 'region') {
+    } else if (data.theme === 'region' && points.length > 0) {
       ret.area = {
         value:
           `M0,${innerHeight.value} ` +
@@ -215,8 +160,10 @@ const paths = computed(() => {
       }
     }
 
-    const rest = points.slice(1)
-    ret.value = `M0,${points.shift()!.y} ` + rest.map(point => `L${point.x},${point.y}`).join(' ')
+    if (points.length > 0) {
+      ret.value =
+        `M0,${points[0].y} ` + points.slice(1).map(point => `L${point.x},${point.y}`).join(' ')
+    }
 
     return ret
   })

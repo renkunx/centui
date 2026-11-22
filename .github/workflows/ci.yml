@@ -27,6 +27,11 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      # 公共 API 面先校验：按需入口 / package exports / 三端组件覆盖 / 文档与样式
+      # 全部只读源码与 package.json，不依赖 dist，放在构建前可最快暴露漂移
+      - name: Verify public API surface
+        run: pnpm verify:api
+
       # 先构建：react/vue 的 typecheck 与部分测试解析 @centui/core 的
       # dist 类型产物，无 dist 会在 Typecheck 步骤报 TS2307
       - name: Build
@@ -42,7 +47,9 @@ jobs:
       - name: Test
         run: pnpm test
 
-      # 覆盖率硬门禁（per-package）：core 90/85，vue 组件层 80/80
+      # 覆盖率硬门禁（per-package）：core 90/85，vue/react 组件层 80/80，
+      # wechat 逻辑层 90/80（此前 wechat 缺 test:coverage，门禁形同虚设）。
+      # 包间串行执行，避免多个 jsdom 并发导致 golden 初始态时序抖动
       - name: Coverage gate
         run: pnpm coverage
 

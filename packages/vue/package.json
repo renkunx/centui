@@ -14,6 +14,11 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./es/action-bar": {
+      "types": "./dist/action-bar.d.ts",
+      "import": "./dist/action-bar.js",
+      "require": "./dist/action-bar.cjs"
+    },
     "./es/action-sheet": {
       "types": "./dist/action-sheet.d.ts",
       "import": "./dist/action-sheet.js",
@@ -34,15 +39,35 @@
       "import": "./dist/amount.js",
       "require": "./dist/amount.cjs"
     },
+    "./es/bill": {
+      "types": "./dist/bill.d.ts",
+      "import": "./dist/bill.js",
+      "require": "./dist/bill.cjs"
+    },
     "./es/button": {
       "types": "./dist/button.d.ts",
       "import": "./dist/button.js",
       "require": "./dist/button.cjs"
     },
+    "./es/captcha": {
+      "types": "./dist/captcha.d.ts",
+      "import": "./dist/captcha.js",
+      "require": "./dist/captcha.cjs"
+    },
+    "./es/cashier": {
+      "types": "./dist/cashier.d.ts",
+      "import": "./dist/cashier.js",
+      "require": "./dist/cashier.cjs"
+    },
     "./es/cell-item": {
       "types": "./dist/cell-item.d.ts",
       "import": "./dist/cell-item.js",
       "require": "./dist/cell-item.cjs"
+    },
+    "./es/chart": {
+      "types": "./dist/chart.d.ts",
+      "import": "./dist/chart.js",
+      "require": "./dist/chart.cjs"
     },
     "./es/check": {
       "types": "./dist/check.d.ts",
@@ -64,10 +89,20 @@
       "import": "./dist/date-picker.js",
       "require": "./dist/date-picker.cjs"
     },
+    "./es/detail-item": {
+      "types": "./dist/detail-item.d.ts",
+      "import": "./dist/detail-item.js",
+      "require": "./dist/detail-item.cjs"
+    },
     "./es/dialog": {
       "types": "./dist/dialog.d.ts",
       "import": "./dist/dialog.js",
       "require": "./dist/dialog.cjs"
+    },
+    "./es/drop-menu": {
+      "types": "./dist/drop-menu.d.ts",
+      "import": "./dist/drop-menu.js",
+      "require": "./dist/drop-menu.cjs"
     },
     "./es/field": {
       "types": "./dist/field.d.ts",
@@ -84,10 +119,30 @@
       "import": "./dist/icon.js",
       "require": "./dist/icon.cjs"
     },
+    "./es/image-reader": {
+      "types": "./dist/image-reader.d.ts",
+      "import": "./dist/image-reader.js",
+      "require": "./dist/image-reader.cjs"
+    },
+    "./es/image-viewer": {
+      "types": "./dist/image-viewer.d.ts",
+      "import": "./dist/image-viewer.js",
+      "require": "./dist/image-viewer.cjs"
+    },
     "./es/input-item": {
       "types": "./dist/input-item.d.ts",
       "import": "./dist/input-item.js",
       "require": "./dist/input-item.cjs"
+    },
+    "./es/landscape": {
+      "types": "./dist/landscape.d.ts",
+      "import": "./dist/landscape.js",
+      "require": "./dist/landscape.cjs"
+    },
+    "./es/license-plate": {
+      "types": "./dist/license-plate.d.ts",
+      "import": "./dist/license-plate.js",
+      "require": "./dist/license-plate.cjs"
     },
     "./es/notice-bar": {
       "types": "./dist/notice-bar.d.ts",
@@ -124,10 +179,25 @@
       "import": "./dist/radio-list.js",
       "require": "./dist/radio-list.cjs"
     },
+    "./es/result-page": {
+      "types": "./dist/result-page.d.ts",
+      "import": "./dist/result-page.js",
+      "require": "./dist/result-page.cjs"
+    },
+    "./es/ruler": {
+      "types": "./dist/ruler.d.ts",
+      "import": "./dist/ruler.js",
+      "require": "./dist/ruler.cjs"
+    },
     "./es/scroll-view": {
       "types": "./dist/scroll-view.d.ts",
       "import": "./dist/scroll-view.js",
       "require": "./dist/scroll-view.cjs"
+    },
+    "./es/selector": {
+      "types": "./dist/selector.d.ts",
+      "import": "./dist/selector.js",
+      "require": "./dist/selector.cjs"
     },
     "./es/skeleton": {
       "types": "./dist/skeleton.d.ts",
@@ -144,6 +214,11 @@
       "import": "./dist/stepper.js",
       "require": "./dist/stepper.cjs"
     },
+    "./es/steps": {
+      "types": "./dist/steps.d.ts",
+      "import": "./dist/steps.js",
+      "require": "./dist/steps.cjs"
+    },
     "./es/swiper": {
       "types": "./dist/swiper.d.ts",
       "import": "./dist/swiper.js",
@@ -154,10 +229,25 @@
       "import": "./dist/switch.js",
       "require": "./dist/switch.cjs"
     },
+    "./es/tab-picker": {
+      "types": "./dist/tab-picker.d.ts",
+      "import": "./dist/tab-picker.js",
+      "require": "./dist/tab-picker.cjs"
+    },
+    "./es/tabs": {
+      "types": "./dist/tabs.d.ts",
+      "import": "./dist/tabs.js",
+      "require": "./dist/tabs.cjs"
+    },
     "./es/tag": {
       "types": "./dist/tag.d.ts",
       "import": "./dist/tag.js",
       "require": "./dist/tag.cjs"
+    },
+    "./es/textarea-item": {
+      "types": "./dist/textarea-item.d.ts",
+      "import": "./dist/textarea-item.js",
+      "require": "./dist/textarea-item.cjs"
     },
     "./es/tip": {
       "types": "./dist/tip.d.ts",
@@ -168,6 +258,16 @@
       "types": "./dist/toast.d.ts",
       "import": "./dist/toast.js",
       "require": "./dist/toast.cjs"
+    },
+    "./es/transition": {
+      "types": "./dist/transition.d.ts",
+      "import": "./dist/transition.js",
+      "require": "./dist/transition.cjs"
+    },
+    "./es/water-mark": {
+      "types": "./dist/water-mark.d.ts",
+      "import": "./dist/water-mark.js",
+      "require": "./dist/water-mark.cjs"
     }
   },
   "files": [
@@ -177,7 +277,7 @@
     "build": "vite build",
     "typecheck": "vue-tsc --noEmit",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "vitest run --coverage --no-file-parallelism",
     "playground": "vite playground"
   },
   "dependencies": {

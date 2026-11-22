@@ -2,7 +2,7 @@
   <img src="docs/public/favicon.png" width="120" alt="CentUI logo">
 </p>
 <h2 align="center">CentUI</h2>
-<p align="center">A mobile UI toolkit for financial scenarios, built on Vue 3 & React — the successor of <a href="https://github.com/didi/mand-mobile">mand-mobile</a>.</p>
+<p align="center">A mobile UI toolkit for financial scenarios, built on Vue 3, React & WeChat mini-program — the successor of <a href="https://github.com/didi/mand-mobile">mand-mobile</a>.</p>
 <p align="center">
   <a href="https://github.com/renkunx/centui/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/renkunx/centui/ci.yml?branch=master&style=flat-square" alt="Build Status"></a>
   <a href="https://www.npmjs.org/package/centui"><img src="https://img.shields.io/npm/v/centui.svg?style=flat-square" alt="npm package"></a>
@@ -15,14 +15,14 @@
 
 **English** | [中文](./README.zh-CN.md)
 
-**CentUI** is a mobile UI component library for financial scenarios. It is the continuation of [mand-mobile](https://github.com/didi/mand-mobile) (by Didi): the component library has been rewritten on Vue 3, ported to React, and rebranded — while staying faithful to the look, feel, and rendering contract of mand-mobile v2.
+**CentUI** is a mobile UI component library for financial scenarios. It is the continuation of [mand-mobile](https://github.com/didi/mand-mobile) (by Didi): the component library has been rewritten on Vue 3, ported to React, reimplemented for WeChat mini-programs, and rebranded — while staying faithful to the look, feel, and rendering contract of mand-mobile v2.
 
 > **Status**: v3 alpha (`3.0.0-alpha.0`). The API is stabilizing but may still change before GA.
 
 ## Features
 
-- **Vue 3 + React, one design** — first-class components for both frameworks, sharing the same styles (`@centui/styles`) and the same framework-agnostic logic (`@centui/core`)
-- **55+ components** for financial scenarios — forms, keyboards, popups, charts, cashier, license plate, image reader, and more
+- **Vue 3 + React + WeChat mini-program, one design** — same component names, props and event semantics across all three platforms, sharing the same styles (`@centui/styles`) and framework-agnostic logic (`@centui/core`: scroller, amount/date/chart math, i18n)
+- **51 components** for financial scenarios — forms, keyboards, popups, charts, cashier, license plate, image reader, and more; the mini-program package adds 10 structural components (check-group, radio-group, popup-title-bar, …)
 - **Rendering contract guaranteed** — every component's rendered HTML is verified by L3 golden tests against the `mand-mobile@2.7.0` contract, so migration from mand-mobile v2 keeps visuals intact
 - **On-demand loading** — per-component JS entries (`centui/es/<component>`) and per-component CSS (`@centui/styles/es/<name>.css`)
 - **Theme customization** — design tokens in Stylus, exposed as CSS custom properties (`--color-primary`, …)
@@ -35,8 +35,8 @@
 | --- | --- |
 | [`centui`](https://www.npmjs.org/package/centui) | Vue 3 component library |
 | [`@centui/react`](https://www.npmjs.org/package/@centui/react) | React 18 component library (same components & styles) |
-| [`@centui/styles`](https://www.npmjs.org/package/@centui/styles) | Design tokens & component styles (Stylus sources + compiled CSS), shared by both frameworks |
-| [`@centui/core`](https://www.npmjs.org/package/@centui/core) | Framework-agnostic core: scroller engine, i18n, utils |
+| [`@centui/styles`](https://www.npmjs.org/package/@centui/styles) | Design tokens & component styles (Stylus sources + compiled CSS), shared by all platforms |
+| [`@centui/core`](https://www.npmjs.org/package/@centui/core) | Framework-agnostic core: scroller engine, amount/date/chart math, i18n, utils |
 | [`@centui/wechat`](https://www.npmjs.org/package/@centui/wechat) | WeChat mini-program components (same components, tokens & behavior; 750rpx design basis) |
 
 ## Install
@@ -49,7 +49,14 @@ npm install centui @centui/styles
 
 # React
 npm install @centui/react @centui/styles
+
+# WeChat mini-program
+npm install @centui/wechat
 ```
+
+> For mini-programs, run "Build npm" in WeChat DevTools, then reference components via
+> `usingComponents` (`@centui/wechat/components/<name>/index`). See
+> [`packages/wechat/README.md`](./packages/wechat/README.md).
 
 > `centui` / `@centui/react` declare `@centui/styles` as a peer dependency — keep the
 > styles package installed alongside (any `>=0.2.0` works today, but always use the

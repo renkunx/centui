@@ -2,7 +2,7 @@
   <img src="docs/public/favicon.png" width="120" alt="CentUI logo">
 </p>
 <h2 align="center">CentUI</h2>
-<p align="center">面向金融场景的移动端 UI 组件库，基于 Vue 3 与 React——<a href="https://github.com/didi/mand-mobile">mand-mobile</a> 的延续之作。</p>
+<p align="center">面向金融场景的移动端 UI 组件库，基于 Vue 3、React 与微信小程序——<a href="https://github.com/didi/mand-mobile">mand-mobile</a> 的延续之作。</p>
 <p align="center">
   <a href="https://github.com/renkunx/centui/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/renkunx/centui/ci.yml?branch=master&style=flat-square" alt="Build Status"></a>
   <a href="https://www.npmjs.org/package/centui"><img src="https://img.shields.io/npm/v/centui.svg?style=flat-square" alt="npm package"></a>
@@ -15,14 +15,14 @@
 
 [English](./README.md) | **中文**
 
-**CentUI** 是一套面向金融场景的移动端 UI 组件库，源自滴滴开源的 [mand-mobile](https://github.com/didi/mand-mobile)：在其基础上完成 Vue 3 重写与 React 移植，并更名为 centui——同时忠实保留 mand-mobile v2 的视觉与渲染契约。
+**CentUI** 是一套面向金融场景的移动端 UI 组件库，源自滴滴开源的 [mand-mobile](https://github.com/didi/mand-mobile)：在其基础上完成 Vue 3 重写、React 移植与微信小程序原生实现，并更名为 centui——同时忠实保留 mand-mobile v2 的视觉与渲染契约。
 
 > **当前状态**：v3 alpha（`3.0.0-alpha.0`），API 趋于稳定，GA 前仍可能有调整。
 
 ## 特性
 
-- **Vue 3 + React 双框架**——两套一等公民组件，共享同一份样式（`@centui/styles`）与跨框架逻辑（`@centui/core`）
-- **55+ 金融场景组件**——表单、键盘、弹层、图表、收银台、车牌、图片读取等
+- **Vue 3 + React + 微信小程序，一套设计**——三端组件同名、同 props/事件语义，共享同一份样式（`@centui/styles`）与跨框架逻辑（`@centui/core`：滚动引擎、金额/日期/图表数学、i18n）
+- **51 个金融场景组件**——表单、键盘、弹层、图表、收银台、车牌、图片读取等；小程序另有 10 个结构性支撑组件（check-group/radio-group/popup-title-bar 等）
 - **渲染契约保障**——每个组件的渲染 HTML 均通过 L3 golden 测试与 `mand-mobile@2.7.0` 契约比对，从 mand-mobile v2 迁移视觉不回归
 - **按需加载**——组件按需入口（`centui/es/<component>`）+ 按需样式（`@centui/styles/es/<name>.css`）
 - **主题定制**——设计令牌以 Stylus 维护，并通过 CSS 自定义属性（`--color-primary` 等）暴露
@@ -49,7 +49,13 @@ npm install centui @centui/styles
 
 # React
 npm install @centui/react @centui/styles
+
+# 微信小程序
+npm install @centui/wechat
 ```
+
+> 小程序安装后需在开发者工具中执行「构建 npm」，再通过 `usingComponents` 引用
+> （`@centui/wechat/components/<name>/index`），详见 [`packages/wechat/README.md`](./packages/wechat/README.md)。
 
 > `centui` / `@centui/react` 以 peer dependency 声明 `@centui/styles`——请保持两者同时安装；
 > 当前任意 `>=0.2.0` 均可运行，但建议始终使用同一发布批次中的版本配对，以保证令牌与 CSS 一致。
@@ -150,7 +156,8 @@ pnpm build        # 构建全部包
 | --- | --- |
 | `packages/vue` | `centui` —— Vue 3 组件 |
 | `packages/react` | `@centui/react` —— React 18 组件 |
-| `packages/core` | `@centui/core` —— 跨框架逻辑 |
+| `packages/wechat` | `@centui/wechat` —— 微信小程序原生组件（750rpx 基准） |
+| `packages/core` | `@centui/core` —— 跨框架逻辑（DOM-free 主入口 + `/web` 子入口） |
 | `packages/styles` | `@centui/styles` —— Stylus 源码、设计令牌、编译产物 |
 | `docs` | 文档站（Astro + Starlight，Vue/React 实时预览） |
 | `test/golden` | L3 golden 基线（采集自 `mand-mobile@2.7.0`） |

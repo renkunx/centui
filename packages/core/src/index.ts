@@ -13,6 +13,7 @@ export const CORE_VERSION: string =
 export * from './lang'
 export * from './format'
 export * from './animate'
+export * from './chart'
 export * from './store'
 export * from './env'
 export * from './debug'

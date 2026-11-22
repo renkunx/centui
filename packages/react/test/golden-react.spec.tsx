@@ -71,8 +71,10 @@ export async function renderToHTML(element: ReactElement): Promise<string> {
     flushSync(() => {
       root!.render(element)
     })
-    // 基线已改为「落定态」采集（flush 渲染队列 + 定时器初始化），React 侧同样 settle
-    await new Promise(r => setTimeout(r, 30))
+    // 基线已改为「落定态」采集（flush 渲染队列 + 定时器初始化），React 侧同样 settle。
+    // coverage 插桩 + 全量 spec 并发时，date-picker/tabs 的 active 类落定明显变慢
+    // （setTimeout 0 链 + passive effect），200ms 为 CI 实测稳定值。
+    await new Promise(r => setTimeout(r, 200))
     return container.innerHTML
   } finally {
     const rootRef = root
