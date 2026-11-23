@@ -11,8 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # engines 要求 node >= 20；发布流水线固定 22（release.yml），CI 双版本验证
-        node-version: [20, 22]
+        # cssnano@9 engines 要求 node ^22.22.3+（packages/wechat build 在 Node 20
+        # 会因 Set.prototype.difference 缺失直接 TypeError）；发布流水线固定 22，
+        # CI 与之对齐只验证 22
+        node-version: [22]
     steps:
       - uses: actions/checkout@v4
 
