@@ -13,3 +13,6 @@ allowBuilds:
 hoistPattern:
   - "*"
   - "!vue"
+overrides:
+  'shell-quote': '>=1.11.0'
+  'undici': '>=8.12.2'
