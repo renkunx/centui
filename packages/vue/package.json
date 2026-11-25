@@ -290,7 +290,7 @@
   "devDependencies": {
     "@centui/styles": "workspace:*",
     "@vitejs/plugin-vue": "^6.0.0",
-    "@vitest/coverage-istanbul": "^5.0.0",
+    "@vitest/coverage-istanbul": "^5.1.1",
     "@vue/test-utils": "^2.4.6",
     "vite-plugin-dts": "^5.1.0",
     "vue": "^3.5.13",

@@ -16,3 +16,14 @@ hoistPattern:
 overrides:
   'shell-quote': '>=1.11.0'
   'undici': '>=8.12.2'
+  # 2026-11-26 依赖安全清扫：brace-expansion 按大版本分段 override（1.x/2.x/4.x→5.x 各自段内修），
+  # 消 devalue/launch-editor/zod/sharp 等高危。zod 3→4 已确认消费方（eslint-plugin-react-hooks 7 /
+  # zod-validation-error 4）peer 兼容 ^4。minimatch 9/10、glob 9+、vue-template-compiler 无段内修复，留观察。
+  'zod': '>=4.6.6'
+  'devalue': '>=5.9.3'
+  'launch-editor': '>=2.14.2'
+  'smol-toml': '>=1.9.0'
+  'postcss-selector-parser': '>=6.1.5'
+  'brace-expansion@<2': '>=1.1.21 <2'
+  'brace-expansion@>=2 <4': '>=2.1.7 <3'
+  'brace-expansion@>=4': '>=5.0.12'
