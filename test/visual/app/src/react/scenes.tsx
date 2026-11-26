@@ -191,7 +191,12 @@ function InputPage() {
       <CuField>
         <CuFieldItem title="卡号" align="right">
           <div data-e2e="input">
-            <CuInputItem value={card} onChange={setCard} type="bankCard" placeholder="银行卡号" />
+            <CuInputItem
+              value={card}
+              onChange={(_, v) => setCard(v)}
+              type="bankCard"
+              placeholder="银行卡号"
+            />
           </div>
         </CuFieldItem>
       </CuField>
