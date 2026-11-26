@@ -357,11 +357,10 @@ importers:
         version: 3.3.11(typescript@5.9.3)
 
   packages/wechat:
-    dependencies:
+    devDependencies:
       '@centui/core':
         specifier: workspace:*
         version: link:../core
-    devDependencies:
       '@vitest/coverage-istanbul':
         specifier: ^5.1.1
         version: 5.1.1(vitest@5.1.1)

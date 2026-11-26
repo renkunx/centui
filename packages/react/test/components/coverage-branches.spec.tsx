@@ -221,7 +221,7 @@ describe('InputItem / Codebox 分支 (react)', () => {
     const onChange = vi.fn()
     const { container } = render(<CuInputItem type="digit" onChange={onChange} />)
     fireEvent.input(container.querySelector('input')!, { target: { value: '12a3' } })
-    expect(onChange).toHaveBeenLastCalledWith('123', 'input-item')
+    expect(onChange).toHaveBeenLastCalledWith('input-item', '123')
   })
 
   it('custom formation overrides default', () => {

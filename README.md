@@ -4,7 +4,7 @@
 <h2 align="center">CentUI</h2>
 <p align="center">A mobile UI toolkit for financial scenarios, built on Vue 3, React & WeChat mini-program — the successor of <a href="https://github.com/didi/mand-mobile">mand-mobile</a>.</p>
 <p align="center">
-  <a href="https://github.com/renkunx/centui/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/renkunx/centui/ci.yml?branch=master&style=flat-square" alt="Build Status"></a>
+  <a href="https://github.com/renkunx/centui/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/renkunx/centui/ci.yml?branch=main&style=flat-square" alt="Build Status"></a>
   <a href="https://www.npmjs.org/package/centui"><img src="https://img.shields.io/npm/v/centui.svg?style=flat-square" alt="npm package"></a>
   <a href="https://www.npmjs.org/package/centui"><img src="https://img.shields.io/npm/l/centui.svg?style=flat-square" alt="License"></a>
   <a href="#"><img src="https://img.shields.io/badge/Vue-3.x-42b883?style=flat-square&logo=vuedotjs&logoColor=white" alt="Vue 3"></a>
@@ -17,7 +17,7 @@
 
 **CentUI** is a mobile UI component library for financial scenarios. It is the continuation of [mand-mobile](https://github.com/didi/mand-mobile) (by Didi): the component library has been rewritten on Vue 3, ported to React, reimplemented for WeChat mini-programs, and rebranded — while staying faithful to the look, feel, and rendering contract of mand-mobile v2.
 
-> **Status**: v3 alpha (`3.0.0-alpha.0`). The API is stabilizing but may still change before GA.
+> **Status**: released to npm — `centui` 3.x (Vue 3), `@centui/react`, `@centui/core`, `@centui/styles`, `@centui/wechat`. The API is stabilizing; smaller adjustments may still land before GA.
 
 ## Features
 

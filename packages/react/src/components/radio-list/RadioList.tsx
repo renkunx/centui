@@ -142,7 +142,7 @@ export const CuRadioList = forwardRef<RadioListExposed, RadioListProps>(function
           title={inputLabel}
           placeholder={inputPlaceholder}
           value={inputValue}
-          onChange={setInputValue}
+          onChange={(_, v) => setInputValue(v)}
           onFocus={() => setInputSelected(true)}
         />
       ) : null}

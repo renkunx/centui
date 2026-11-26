@@ -160,13 +160,13 @@ describe('Swiper 分支第四轮 (vue)', () => {
     await root.trigger('mousemove', { pageX: 20, pageY: 100 })
     await root.trigger('mouseup', { pageX: 20, pageY: 100 })
     await flush(20)
-    // 滚动动画完成 → transitionEndHandler → after-change
+    // 滚动动画完成 → transitionEndHandler → afterChange
     const scroller = scrollerInstances.at(-1) as unknown as {
       opts: { scrollingComplete?: () => void }
     }
     scroller.opts.scrollingComplete?.()
     await flush(10)
-    // after-change 派发（loop 显示索引从 0 出发）
+    // afterChange 派发（loop 显示索引从 0 出发）
     expect(onAfter).toHaveBeenCalled()
     const [fromIdx] = onAfter.mock.calls[0]
     expect(fromIdx).toBe(0)

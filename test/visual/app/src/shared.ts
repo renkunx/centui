@@ -60,6 +60,10 @@ export const SCENE_PAGES: ScenePage[] = [
   { id: 'license-plate', kind: 'interactive' },
   { id: 'image-reader', kind: 'stable' },
   { id: 'transition', kind: 'stable' },
+  { id: 'activity-indicator', kind: 'stable' },
+  { id: 'check-base', kind: 'stable' },
+  { id: 'field-item', kind: 'stable' },
+  { id: 'radio-list', kind: 'stable' },
 ]
 
 export const STABLE_PAGES = SCENE_PAGES.filter(p => p.kind === 'stable').map(p => p.id)

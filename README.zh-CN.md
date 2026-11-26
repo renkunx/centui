@@ -4,7 +4,7 @@
 <h2 align="center">CentUI</h2>
 <p align="center">面向金融场景的移动端 UI 组件库，基于 Vue 3、React 与微信小程序——<a href="https://github.com/didi/mand-mobile">mand-mobile</a> 的延续之作。</p>
 <p align="center">
-  <a href="https://github.com/renkunx/centui/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/renkunx/centui/ci.yml?branch=master&style=flat-square" alt="Build Status"></a>
+  <a href="https://github.com/renkunx/centui/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/renkunx/centui/ci.yml?branch=main&style=flat-square" alt="Build Status"></a>
   <a href="https://www.npmjs.org/package/centui"><img src="https://img.shields.io/npm/v/centui.svg?style=flat-square" alt="npm package"></a>
   <a href="https://www.npmjs.org/package/centui"><img src="https://img.shields.io/npm/l/centui.svg?style=flat-square" alt="License"></a>
   <a href="#"><img src="https://img.shields.io/badge/Vue-3.x-42b883?style=flat-square&logo=vuedotjs&logoColor=white" alt="Vue 3"></a>
@@ -17,7 +17,7 @@
 
 **CentUI** 是一套面向金融场景的移动端 UI 组件库，源自滴滴开源的 [mand-mobile](https://github.com/didi/mand-mobile)：在其基础上完成 Vue 3 重写、React 移植与微信小程序原生实现，并更名为 centui——同时忠实保留 mand-mobile v2 的视觉与渲染契约。
 
-> **当前状态**：v3 alpha（`3.0.0-alpha.0`），API 趋于稳定，GA 前仍可能有调整。
+> **当前状态**：已发布 npm——`centui` 3.x（Vue 3）、`@centui/react`、`@centui/core`、`@centui/styles`、`@centui/wechat`。API 趋于稳定，GA 前仍可能有小幅调整。
 
 ## 特性
 

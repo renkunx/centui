@@ -33,7 +33,7 @@ describe('CuInputItem 虚拟键盘联动 (react)', () => {
 
     const keys = keyboard!.querySelectorAll('.keyboard-number-item')
     fireEvent.click(keys[0]) // 1
-    await waitFor(() => expect(onChange).toHaveBeenLastCalledWith('1', 'input-item'))
+    await waitFor(() => expect(onChange).toHaveBeenLastCalledWith('input-item', '1'))
 
     fireEvent.click(keyboard!.querySelector('.keyboard-operate-item.confirm')!)
     expect(onConfirm).toHaveBeenCalledWith('input-item', '1')

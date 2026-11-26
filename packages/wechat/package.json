@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@vitest/coverage-istanbul": "^5.1.1",
+    "@centui/core": "workspace:*",
     "autoprefixer": "^10.4.20",
     "cssnano": "^9.9.0",
     "esbuild": "^0.28.2",
@@ -26,8 +27,5 @@
     "postcss": "^8.5.31",
     "stylus": "^0.64.0",
     "vite-plugin-dts": "^5.1.0"
-  },
-  "dependencies": {
-    "@centui/core": "workspace:*"
   }
 }

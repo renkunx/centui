@@ -90,7 +90,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (e: 'beforeChange', fromIndex: number, toIndex: number): void
-  (e: 'after-change', fromIndex: number, toIndex: number): void
+  (e: 'afterChange', fromIndex: number, toIndex: number): void
 }>()
 
 const slots = useSlots()
@@ -125,7 +125,7 @@ let touchAngle = 45
 let isUnmounted = false
 /** doTransition 的 10ms 延迟回调句柄，卸载时回收 */
 let transitionTimer: ReturnType<typeof setTimeout> | null = null
-/** fade 模式 opacity() 的 500ms after-change 延迟回调句柄 */
+/** fade 模式 opacity() 的 500ms afterChange 延迟回调句柄 */
 let fadeTimer: ReturnType<typeof setTimeout> | null = null
 
 // Vue3 适配：$children → 注册制（opacity 模式需要取到子组件实例）
@@ -387,7 +387,7 @@ function opacity(animate = true, opacityVal?: number) {
       if (isUnmounted) {
         return
       }
-      emit('after-change', fromIndex.value, toIndex.value)
+      emit('afterChange', fromIndex.value, toIndex.value)
     }, 500)
   }
 }
@@ -569,7 +569,7 @@ function doTransition(towards: 'prev' | 'next' | null, options?: { index: number
         const y = isVertical.value ? lastIndex.value * dimension.value : 0
         scrollerRef.value?.scrollTo(x, y, false)
       }
-      emit('after-change', fromIndex.value, toIndex.value)
+      emit('afterChange', fromIndex.value, toIndex.value)
       transitionEndHandler = null
     }
     translate(swiper.value, -dimension.value * index.value)

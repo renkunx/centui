@@ -316,7 +316,7 @@ describe('CuInputItem (react)', () => {
     const onChange = vi.fn()
     const { container } = render(<CuInputItem type="phone" onChange={onChange} />)
     fireEvent.input(container.querySelector('input')!, { target: { value: '13812345678' } })
-    await waitFor(() => expect(onChange).toHaveBeenLastCalledWith('13812345678', 'input-item'))
+    await waitFor(() => expect(onChange).toHaveBeenLastCalledWith('input-item', '13812345678'))
   })
 
   it('clear button appears on focus and clears', () => {
@@ -326,7 +326,7 @@ describe('CuInputItem (react)', () => {
     const clear = container.querySelector('.cu-input-item-clear')!
     expect(clear.getAttribute('style')).not.toContain('display: none')
     fireEvent.click(clear)
-    expect(onChange).toHaveBeenLastCalledWith('', 'input-item')
+    expect(onChange).toHaveBeenLastCalledWith('input-item', '')
   })
 
   it('error blocks render and is-error class', () => {

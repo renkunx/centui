@@ -286,7 +286,7 @@ describe('Swiper', () => {
     expect(wrapper.container.querySelector('.cu-swiper-item')?.getAttribute('style')).toContain('height')
   })
 
-  it('fade goto drives opacity transition and after-change', async () => {
+  it('fade goto drives opacity transition and afterChange', async () => {
     const onAfterChange = vi.fn()
     const { wrapper, ref } = mountSwiper({ autoplay: 0, transition: 'fade', onAfterChange })
     await flush(120)

@@ -6,6 +6,7 @@ import { useRef, useState, type ComponentType } from 'react'
 import {
   CuActionBar,
   CuActionSheet,
+  CuActivityIndicator,
   CuAgree,
   CuAmount,
   CuBill,
@@ -14,6 +15,7 @@ import {
   CuCaptcha,
   CuCellItem,
   CuChart,
+  CuCheckBaseBox,
   CuCheckList,
   CuCodebox,
   CuDatePicker,
@@ -801,5 +803,39 @@ export const SCENES: Record<string, ComponentType> = {
         <div style={{ padding: '16px 24px', background: '#2f86f7', color: '#ffffff' }}>渐变内容</div>
       </CuTransition>
     </div>
+  ),
+  'activity-indicator': () => (
+    <div className="e2e-row">
+      <CuActivityIndicator type="roller" />
+      <CuActivityIndicator type="spinner" />
+      <CuActivityIndicator type="roller" size={40} color="#FC9153" />
+      <CuActivityIndicator type="carousel" size={30} />
+    </div>
+  ),
+  'check-base': () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <CuCheckBaseBox label="勾选（图标居右）" isChecked />
+      <CuCheckBaseBox label="未选中" />
+      <CuCheckBaseBox label="图标居左" iconPosition="lt" isChecked />
+      <CuCheckBaseBox label="禁用且选中" disabled isChecked />
+    </div>
+  ),
+  'field-item': () => (
+    <CuField>
+      <CuFieldItem title="只读内容" content="建设银行(6222 *** *** 1234)" />
+      <CuFieldItem title="下拉选择" addon="请选择" arrow />
+      <CuFieldItem title="内容居右" alignRight content="¥ 3,000.00" />
+      <CuFieldItem title="禁用项" content="不可修改" disabled />
+    </CuField>
+  ),
+  'radio-list': () => (
+    <CuRadioList
+      value="0"
+      options={[
+        { value: '0', text: '选项一' },
+        { value: '1', text: '选项二', brief: '带说明文案' },
+        { value: '2', text: '禁用项', disabled: true },
+      ]}
+    />
   ),
 }

@@ -8,7 +8,7 @@
         :default-index="currentImgIndex"
         :has-dots="false"
         :is-prevent="false"
-        @after-change="afterChange"
+        @afterChange="afterChange"
       >
         <CuSwiperItem
           v-for="(item, index) in imgs"

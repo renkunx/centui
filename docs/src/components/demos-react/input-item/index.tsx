@@ -26,14 +26,14 @@ export default function InputItemDemo() {
         if (active === 1)
           return (
             <CuField>
-              <CuInputItem title="手机号" type="phone" value={phone} onChange={setPhone} placeholder="phone xxx xxxx xxxx" />
-              <CuInputItem title="储蓄卡号" type="bankCard" value={bankCardNo} onChange={setBankCardNo} clearable />
+              <CuInputItem title="手机号" type="phone" value={phone} onChange={(_, v) => setPhone(v)} placeholder="phone xxx xxxx xxxx" />
+              <CuInputItem title="储蓄卡号" type="bankCard" value={bankCardNo} onChange={(_, v) => setBankCardNo(v)} clearable />
             </CuField>
           )
         if (active === 2)
           return (
             <CuField title="转出金额(元)">
-              <CuInputItem type="money" value={amount} onChange={setAmount} brief="理财提示文案，字符超出10个自动变小" placeholder="最多30万元" isAmount />
+              <CuInputItem type="money" value={amount} onChange={(_, v) => setAmount(v)} brief="理财提示文案，字符超出10个自动变小" placeholder="最多30万元" isAmount />
             </CuField>
           )
         if (active === 3)

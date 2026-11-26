@@ -12,7 +12,7 @@
  *
  * 平台差异（有意为之）：
  *  1. Vue 的 CuSwiper（自研滚动引擎）→ 原生 <swiper>（current + bindchange 语义对齐
- *     after-change：切换完成后更新 currentImgIndex 并派发 change）。
+ *     afterChange：切换完成后更新 currentImgIndex 并派发 change）。
  *  2. 双指缩放：Vue 底层 swiper 支持 pinch 缩放，小程序 swiper 无等价能力，本移植
  *     简化为仅切换（任务允许的声明式简化）。
  *  3. Vue 的 update:modelValue 与 change 两个事件在小程序统一映射为 change（§3 规则 2

@@ -82,7 +82,7 @@ export interface InputItemProps {
   rightSlot?: ReactNode
   errorSlot?: ReactNode
   briefSlot?: ReactNode
-  onChange?: (value: string, name?: string) => void
+  onChange?: (name: string, value: string) => void
   onFocus?: (name?: string) => void
   onBlur?: (name?: string) => void
   onConfirm?: (name?: string, value?: string) => void
@@ -298,7 +298,7 @@ export const CuInputItem = forwardRef<InputItemExposed, InputItemProps>(function
       changeEffectMountedRef.current = true
       // 挂载：仅当初始清洗真实改变了取值（超出格式化分隔符）才补发 change（v2 created 不 emit）
       if (isInputFormative && emitted !== subValue(`${value}`)) {
-        onChange?.(emitted, name)
+        onChange?.(name, emitted)
       }
       return
     }
@@ -307,7 +307,7 @@ export const CuInputItem = forwardRef<InputItemExposed, InputItemProps>(function
       return
     }
     if (emitted !== value) {
-      onChange?.(emitted, name)
+      onChange?.(name, emitted)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue])

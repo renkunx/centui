@@ -514,7 +514,7 @@ export const SCENES: Record<string, ReturnType<typeof page>> = {
 
   swiper: page(
     `
-    <CuSwiper :autoplay="0" ref="swiper" data-e2e="swiper" @after-change="onChange">
+    <CuSwiper :autoplay="0" ref="swiper" data-e2e="swiper" @afterChange="onChange">
       <CuSwiperItem>轮播 1</CuSwiperItem>
       <CuSwiperItem>轮播 2</CuSwiperItem>
       <CuSwiperItem>轮播 3</CuSwiperItem>
@@ -668,5 +668,55 @@ export const SCENES: Record<string, ReturnType<typeof page>> = {
       </CuTransition>
     </div>
     `,
+  ),
+
+  'activity-indicator': page(
+    `
+    <div class="e2e-row">
+      <CuActivityIndicator type="roller" />
+      <CuActivityIndicator type="spinner" />
+      <CuActivityIndicator type="roller" :size="40" color="#FC9153" />
+      <CuActivityIndicator type="carousel" :size="30" />
+    </div>
+    <div class="e2e-row">
+      <CuActivityIndicator type="roller" vertical :size="50" :text-size="10">加载中…</CuActivityIndicator>
+    </div>
+    `,
+  ),
+
+  'check-base': page(
+    `
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <CuCheckBaseBox label="勾选（图标居右）" :is-checked="true" />
+      <CuCheckBaseBox label="未选中" />
+      <CuCheckBaseBox label="图标居左" icon-position="lt" :is-checked="true" />
+      <CuCheckBaseBox label="禁用且选中" disabled :is-checked="true" />
+    </div>
+    `,
+  ),
+
+  'field-item': page(
+    `
+    <CuField>
+      <CuFieldItem title="只读内容" content="建设银行(6222 *** *** 1234)" />
+      <CuFieldItem title="下拉选择" addon="请选择" arrow />
+      <CuFieldItem title="内容居右" align-right content="¥ 3,000.00" />
+      <CuFieldItem title="禁用项" content="不可修改" disabled />
+    </CuField>
+    `,
+  ),
+
+  'radio-list': page(
+    `
+    <CuRadioList v-model="picked" :options="options" data-e2e="radio-list-only" />
+    `,
+    () => ({
+      picked: ref('0'),
+      options: [
+        { value: '0', text: '选项一' },
+        { value: '1', text: '选项二', brief: '带说明文案' },
+        { value: '2', text: '禁用项', disabled: true },
+      ],
+    }),
   ),
 }

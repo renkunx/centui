@@ -8,7 +8,7 @@
  *           defaultIndex(0), hasDots(true), isPrevent, isLoop(true), dragable(true),
  *           useNativeDriver（no-op，差异 5）
  *  events   beforeChange(from, to)（Vue 同名）；
- *           afterChange(from, to)（Vue 'after-change'，统一 camelCase——差异 4）
+ *           afterChange(from, to)（三端统一 camelCase）
  *  slots    默认插槽（cu-swiper-item 子项）
  *  方法     next / prev / goto(displayIndex) / getIndex / play(d) / stop
  *
@@ -19,8 +19,7 @@
  *     ready 异步量取真实 dimension 后才下发尺寸/拷贝/定位，mount 不同步定位）；
  *  3. 快速拖拽判定（<300ms 必翻页）、角度门控（isPageScrolling）与 v2 一致；
  *     isPrevent 保留 API 但触摸层恒 catch:touchmove（等价 preventDefault=true 分支）；
- *  4. Vue emits 'beforeChange' + 'after-change' 命名不一致，小程序统一 camelCase：
- *     beforeChange / afterChange；
+ *  4. 事件命名三端统一 camelCase：beforeChange / afterChange；
  *  5. useNativeDriver 为 Web 渲染层概念，no-op；resize 监听（window resize）无平台
  *     对应物，尺寸变化需重新插入组件或调用 play() 触发重测。
  */

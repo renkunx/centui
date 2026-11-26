@@ -4,7 +4,7 @@
  *   expose API（scrollTo/finishRefresh/finishLoadMore）
  * ScrollViewRefresh：tip 文案三态、process 随 scrollTop
  * ScrollViewMore：loading/finished 文案
- * Swiper：初始渲染（disabled 类、indicators）、next/prev/goto、before/after-change、autoplay、loop 拷贝
+ * Swiper：初始渲染（disabled 类、indicators）、next/prev/goto、beforeChange/afterChange、autoplay、loop 拷贝
  * Slider：v-model 步进取整、range 双柄、边界收敛、disabled 阻断
  */
 import { mount } from '@vue/test-utils'
@@ -207,7 +207,7 @@ describe('CuSwiper (vue)', () => {
         return { onBefore, onAfter }
       },
       template: `
-        <CuSwiper :autoplay="0" @before-change="onBefore" @after-change="onAfter">
+        <CuSwiper :autoplay="0" @beforeChange="onBefore" @afterChange="onAfter">
           <CuSwiperItem>1</CuSwiperItem>
           <CuSwiperItem>2</CuSwiperItem>
           <CuSwiperItem>3</CuSwiperItem>
@@ -225,7 +225,7 @@ describe('CuSwiper (vue)', () => {
     await vi.advanceTimersByTimeAsync(20)
     expect(vm.getIndex()).toBe(1)
     expect(onBefore).toHaveBeenCalled()
-    // after-change 由滚动动画完成回调触发（FakeScroller 手动驱动）
+    // afterChange 由滚动动画完成回调触发（FakeScroller 手动驱动）
     const last = scrollerInstances.at(-1) as unknown as {
       opts: { scrollingComplete?: () => void }
     }
