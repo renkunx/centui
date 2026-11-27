@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- 7209c47: 首发 `@centui/wechat`：微信小程序组件库，与 centui 的 Vue / React 版本共享同一套设计 token 与交互行为（750rpx 设计基准）。此前包只存在于仓库中，未进入发布脚本的包列表，npm 上一直 404。
+
+## 0.1.1
+
+### Patch Changes
+
 - 8c5f732: 补齐三端公共 API 面并统一跨框架逻辑：
 
   - Vue 包补齐 20 个、React 包补齐 2 个此前只存在于主入口的按需子路径（`*/es/<component>`），移动端可按组件引入
