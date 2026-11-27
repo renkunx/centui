@@ -22,6 +22,7 @@ readonly -a PACKAGE_DIRS=(
   packages/styles
   packages/vue
   packages/react
+  packages/wechat
 )
 
 readonly NPM_REGISTRY='https://registry.npmjs.org/'
